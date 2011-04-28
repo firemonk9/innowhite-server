@@ -1,0 +1,176 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<?xml-stylesheet type="text/xsl" media="screen" href="/~d/styles/rss2full.xsl"?><?xml-stylesheet type="text/css" media="screen" href="http://feeds.feedburner.com/~d/styles/itemcontent.css"?><rss xmlns:content="http://purl.org/rss/1.0/modules/content/" xmlns:wfw="http://wellformedweb.org/CommentAPI/" xmlns:dc="http://purl.org/dc/elements/1.1/" xmlns:atom="http://www.w3.org/2005/Atom" xmlns:sy="http://purl.org/rss/1.0/modules/syndication/" xmlns:slash="http://purl.org/rss/1.0/modules/slash/" xmlns:feedburner="http://rssnamespace.org/feedburner/ext/1.0" version="2.0">
+
+<channel>
+	<title>SpringSource Team Blog</title>
+	
+	<link>http://blog.springsource.com</link>
+	<description>The voice of SpringSource</description>
+	<lastBuildDate>Sat, 28 Aug 2010 06:22:40 +0000</lastBuildDate>
+	<language>en</language>
+	<sy:updatePeriod>hourly</sy:updatePeriod>
+	<sy:updateFrequency>1</sy:updateFrequency>
+	<generator>http://wordpress.org/?v=3.0.1</generator>
+		<atom10:link xmlns:atom10="http://www.w3.org/2005/Atom" rel="self" type="application/rss+xml" href="http://feeds.feedburner.com/Interface21TeamBlog" /><feedburner:info uri="interface21teamblog" /><atom10:link xmlns:atom10="http://www.w3.org/2005/Atom" rel="hub" href="http://pubsubhubbub.appspot.com/" /><item>
+		<title>The future of functional web testing?</title>
+		<link>http://feedproxy.google.com/~r/Interface21TeamBlog/~3/3itePvGo6U8/</link>
+		<comments>http://blog.springsource.com/2010/08/28/the-future-of-functional-web-testing/#comments</comments>
+		<pubDate>Sat, 28 Aug 2010 06:22:40 +0000</pubDate>
+		<dc:creator>Peter Ledbrook</dc:creator>
+				<category><![CDATA[Groovy/Grails]]></category>
+		<category><![CDATA[Testing]]></category>
+		<category><![CDATA[Web]]></category>
+
+		<guid isPermaLink="false">http://blog.springsource.com/?p=5578</guid>
+		<description>The Groovy community is a productive bunch, which means there are a plethora of frameworks, libraries, and tools to make your life easier. The area of testing seems to be particularly fertile ground and I&amp;#039;ve recently been looking into a couple of tools that, when combined, promise a step change in your productivity when writing [...]&lt;img src="http://feeds.feedburner.com/~r/Interface21TeamBlog/~4/3itePvGo6U8" height="1" width="1"/&gt;</description>
+		<wfw:commentRss>http://blog.springsource.com/2010/08/28/the-future-of-functional-web-testing/feed/</wfw:commentRss>
+		<slash:comments>0</slash:comments>
+		<feedburner:origLink>http://blog.springsource.com/2010/08/28/the-future-of-functional-web-testing/</feedburner:origLink></item>
+		<item>
+		<title>Introducing RabbitMQ 2.0</title>
+		<link>http://feedproxy.google.com/~r/Interface21TeamBlog/~3/XeIFFjfoivE/</link>
+		<comments>http://blog.springsource.com/2010/08/27/introducing-rabbitmq-2-0/#comments</comments>
+		<pubDate>Fri, 27 Aug 2010 13:31:52 +0000</pubDate>
+		<dc:creator>arichardson</dc:creator>
+				<category><![CDATA[Spring]]></category>
+
+		<guid isPermaLink="false">http://blog.springsource.com/?p=5582</guid>
+		<description>If you would like to read about RabbitMQ 2.0 please check out this blog post on the RabbitMQ site.  I&amp;#039;ll be back here next week to talk about what this means for cloud messaging platforms&amp;#8230;&lt;img src="http://feeds.feedburner.com/~r/Interface21TeamBlog/~4/XeIFFjfoivE" height="1" width="1"/&gt;</description>
+		<wfw:commentRss>http://blog.springsource.com/2010/08/27/introducing-rabbitmq-2-0/feed/</wfw:commentRss>
+		<slash:comments>0</slash:comments>
+		<feedburner:origLink>http://blog.springsource.com/2010/08/27/introducing-rabbitmq-2-0/</feedburner:origLink></item>
+		<item>
+		<title>Reuse your Hibernate/JPA domain model with Grails</title>
+		<link>http://feedproxy.google.com/~r/Interface21TeamBlog/~3/ylMYPY51rQM/</link>
+		<comments>http://blog.springsource.com/2010/08/26/reuse-your-hibernatejpa-domain-model-with-grails/#comments</comments>
+		<pubDate>Thu, 26 Aug 2010 13:09:30 +0000</pubDate>
+		<dc:creator>Peter Ledbrook</dc:creator>
+				<category><![CDATA[Data Access]]></category>
+		<category><![CDATA[Enterprise Integration]]></category>
+		<category><![CDATA[Groovy/Grails]]></category>
+		<category><![CDATA[Java]]></category>
+
+		<guid isPermaLink="false">http://blog.springsource.com/?p=5536</guid>
+		<description>It&amp;#039;s a common story. You have an existing database and now you want to add a web application for it with the minimum of fuss. Is Grails up to the task? Of course it is! Even better, if you already have a domain model based on JPA or Hibernate configuration files, you can reuse it [...]&lt;img src="http://feeds.feedburner.com/~r/Interface21TeamBlog/~4/ylMYPY51rQM" height="1" width="1"/&gt;</description>
+		<wfw:commentRss>http://blog.springsource.com/2010/08/26/reuse-your-hibernatejpa-domain-model-with-grails/feed/</wfw:commentRss>
+		<slash:comments>3</slash:comments>
+		<feedburner:origLink>http://blog.springsource.com/2010/08/26/reuse-your-hibernatejpa-domain-model-with-grails/</feedburner:origLink></item>
+		<item>
+		<title>Spring Roo 1.1.0.M3 Released</title>
+		<link>http://feedproxy.google.com/~r/Interface21TeamBlog/~3/qg-YyMyJre0/</link>
+		<comments>http://blog.springsource.com/2010/08/25/spring-roo-1-1-0-m3-released/#comments</comments>
+		<pubDate>Wed, 25 Aug 2010 11:08:19 +0000</pubDate>
+		<dc:creator>Ben Alex</dc:creator>
+				<category><![CDATA[3.0]]></category>
+		<category><![CDATA[AOP]]></category>
+		<category><![CDATA[Java]]></category>
+		<category><![CDATA[OSGi]]></category>
+		<category><![CDATA[Open Source]]></category>
+		<category><![CDATA[Roo]]></category>
+		<category><![CDATA[Spring]]></category>
+		<category><![CDATA[Tools]]></category>
+		<category><![CDATA[Web]]></category>
+
+		<guid isPermaLink="false">http://blog.springsource.com/?p=5554</guid>
+		<description>Update: SpringSource Tool Suite 3.5.0.M3 will be available on Monday 30 August 2010. It includes the latest Spring Roo 1.1.0.M3 and GWT 2.1.0.M3 support. Many members of the community have been eagerly awaiting Spring Roo 1.1.0.M3, and I&amp;#039;m pleased to announce it is now available (download here). This release incorporates more than 150 new features, [...]&lt;img src="http://feeds.feedburner.com/~r/Interface21TeamBlog/~4/qg-YyMyJre0" height="1" width="1"/&gt;</description>
+		<wfw:commentRss>http://blog.springsource.com/2010/08/25/spring-roo-1-1-0-m3-released/feed/</wfw:commentRss>
+		<slash:comments>9</slash:comments>
+		<feedburner:origLink>http://blog.springsource.com/2010/08/25/spring-roo-1-1-0-m3-released/</feedburner:origLink></item>
+		<item>
+		<title>RabbitMQ Plugin for Grails – Early Access</title>
+		<link>http://feedproxy.google.com/~r/Interface21TeamBlog/~3/qPeeXe7AEEA/</link>
+		<comments>http://blog.springsource.com/2010/08/23/rabbitmq-plugin-for-grails-early-access/#comments</comments>
+		<pubDate>Mon, 23 Aug 2010 15:45:30 +0000</pubDate>
+		<dc:creator>Peter Ledbrook</dc:creator>
+				<category><![CDATA[Enterprise Integration]]></category>
+		<category><![CDATA[Groovy/Grails]]></category>
+		<category><![CDATA[RabbitMQ]]></category>
+
+		<guid isPermaLink="false">http://blog.springsource.com/?p=5423</guid>
+		<description>RabbitMQ is a lightweight, reliable, scalable and portable message broker based on the Advanced Message Queueing Protocol (AMQP). It&amp;#039;s ideal for heterogeneous systems and cloud platforms, but it can be used for pretty much any messaging requirements, big or small. You don&amp;#039;t (typically) access it via the JMS API, and in fact the JMS plugin [...]&lt;img src="http://feeds.feedburner.com/~r/Interface21TeamBlog/~4/qPeeXe7AEEA" height="1" width="1"/&gt;</description>
+		<wfw:commentRss>http://blog.springsource.com/2010/08/23/rabbitmq-plugin-for-grails-early-access/feed/</wfw:commentRss>
+		<slash:comments>4</slash:comments>
+<enclosure url="http://videos.springsource.org/grails/rabbitmq_grails_earlyaccess_web.mov" length="27692197" type="video/quicktime" />
+		<feedburner:origLink>http://blog.springsource.com/2010/08/23/rabbitmq-plugin-for-grails-early-access/</feedburner:origLink></item>
+		<item>
+		<title>(Secure) File Transfer, the Only Way to Fly…err Copy</title>
+		<link>http://feedproxy.google.com/~r/Interface21TeamBlog/~3/smsNBMV3daE/</link>
+		<comments>http://blog.springsource.com/2010/08/23/secure-file-transfer-the-only-way-to-fly/#comments</comments>
+		<pubDate>Mon, 23 Aug 2010 07:06:50 +0000</pubDate>
+		<dc:creator>jolong</dc:creator>
+				<category><![CDATA[Enterprise Integration]]></category>
+		<category><![CDATA[Spring]]></category>
+		<category><![CDATA[Spring Integration]]></category>
+
+		<guid isPermaLink="false">http://blog.springsource.com/?p=5514</guid>
+		<description>There are many ways to skin a cat. Many applications today rely on messaging (AMQP, JMS) to bridge the gap between disparate systems and data. Others rely on RPC (typically web-services, or REST). For a great many applications, however, file transfer is very much a way of life! There are several common ways of supporting [...]&lt;img src="http://feeds.feedburner.com/~r/Interface21TeamBlog/~4/smsNBMV3daE" height="1" width="1"/&gt;</description>
+		<wfw:commentRss>http://blog.springsource.com/2010/08/23/secure-file-transfer-the-only-way-to-fly/feed/</wfw:commentRss>
+		<slash:comments>6</slash:comments>
+		<feedburner:origLink>http://blog.springsource.com/2010/08/23/secure-file-transfer-the-only-way-to-fly/</feedburner:origLink></item>
+		<item>
+		<title>Building RabbitMQ apps using Python</title>
+		<link>http://feedproxy.google.com/~r/Interface21TeamBlog/~3/2gQb6gHywT8/</link>
+		<comments>http://blog.springsource.com/2010/08/19/building-rabbitmq-apps-using-python/#comments</comments>
+		<pubDate>Thu, 19 Aug 2010 15:15:31 +0000</pubDate>
+		<dc:creator>Greg Turnquist</dc:creator>
+				<category><![CDATA[Enterprise Integration]]></category>
+		<category><![CDATA[python]]></category>
+		<category><![CDATA[RabbitMQ]]></category>
+
+		<guid isPermaLink="false">http://blog.springsource.com/?p=5433</guid>
+		<description>RabbitMQ is a powerful messaging broker based on the Advanced Message Queueing Protocol (AMQP). Thanks to the neutral nature of the AMQP spec, it is easy to connect to it from many platforms, including Python. In this blog entry, we will: Create a simple stock ticker Python application Create a brokerage Python application that decides [...]&lt;img src="http://feeds.feedburner.com/~r/Interface21TeamBlog/~4/2gQb6gHywT8" height="1" width="1"/&gt;</description>
+		<wfw:commentRss>http://blog.springsource.com/2010/08/19/building-rabbitmq-apps-using-python/feed/</wfw:commentRss>
+		<slash:comments>7</slash:comments>
+		<feedburner:origLink>http://blog.springsource.com/2010/08/19/building-rabbitmq-apps-using-python/</feedburner:origLink></item>
+		<item>
+		<title>Simplified Spring Security with Grails</title>
+		<link>http://feedproxy.google.com/~r/Interface21TeamBlog/~3/IpW-tZllNUM/</link>
+		<comments>http://blog.springsource.com/2010/08/11/simplified-spring-security-with-grails/#comments</comments>
+		<pubDate>Wed, 11 Aug 2010 11:17:45 +0000</pubDate>
+		<dc:creator>Peter Ledbrook</dc:creator>
+				<category><![CDATA[Groovy/Grails]]></category>
+		<category><![CDATA[Security]]></category>
+
+		<guid isPermaLink="false">http://blog.springsource.com/?p=5385</guid>
+		<description>Spring Security is a powerful library for securing your applications that comes with a bewildering number of options. Based on Spring, it can be readily integrated into a Grails application. But why not save the hassle and use the new improved Grails plugin? The plugin has gone through several evolutionary stages that started with the [...]&lt;img src="http://feeds.feedburner.com/~r/Interface21TeamBlog/~4/IpW-tZllNUM" height="1" width="1"/&gt;</description>
+		<wfw:commentRss>http://blog.springsource.com/2010/08/11/simplified-spring-security-with-grails/feed/</wfw:commentRss>
+		<slash:comments>19</slash:comments>
+<enclosure url="http://grails.org/dist/screencasts/screencast10.mov" length="40239058" type="video/quicktime" />
+<enclosure url="http://grails.org/dist/screencasts/screencast11.mov" length="19196976" type="video/quicktime" />
+		<feedburner:origLink>http://blog.springsource.com/2010/08/11/simplified-spring-security-with-grails/</feedburner:origLink></item>
+		<item>
+		<title>Virgo Milestone M03 Ships</title>
+		<link>http://feedproxy.google.com/~r/Interface21TeamBlog/~3/qUGb-o-ZKKU/</link>
+		<comments>http://blog.springsource.com/2010/08/10/virgo-milestone-m03-ships/#comments</comments>
+		<pubDate>Tue, 10 Aug 2010 13:29:19 +0000</pubDate>
+		<dc:creator>Chris Frost</dc:creator>
+				<category><![CDATA[Spring]]></category>
+
+		<guid isPermaLink="false">http://blog.springsource.com/?p=5399</guid>
+		<description>Virgo 2.1.0.M03-incubator is available from the Virgo website. The changes include: Further performance improvements, especially for Windows users. Update the version of Logback to 0.9.24 and SLF4J to 1.6.1 Minor bug fixes The performance improvement was achieved by adjusting the log level of entry exit tracing. As a result of the new version of Logback [...]&lt;img src="http://feeds.feedburner.com/~r/Interface21TeamBlog/~4/qUGb-o-ZKKU" height="1" width="1"/&gt;</description>
+		<wfw:commentRss>http://blog.springsource.com/2010/08/10/virgo-milestone-m03-ships/feed/</wfw:commentRss>
+		<slash:comments>1</slash:comments>
+		<feedburner:origLink>http://blog.springsource.com/2010/08/10/virgo-milestone-m03-ships/</feedburner:origLink></item>
+		<item>
+		<title>Hyperic Broadens vSphere Support through vCenter APIs in Version 4.4</title>
+		<link>http://feedproxy.google.com/~r/Interface21TeamBlog/~3/pUm3jMlczTY/</link>
+		<comments>http://blog.springsource.com/2010/08/06/hyperic-broadens-vsphere-support-through-vcenter-apis-in-version-4-4/#comments</comments>
+		<pubDate>Fri, 06 Aug 2010 20:00:15 +0000</pubDate>
+		<dc:creator>Charles Lee</dc:creator>
+				<category><![CDATA[Hyperic HQ]]></category>
+		<category><![CDATA[Management Tools]]></category>
+		<category><![CDATA[Spring]]></category>
+		<category><![CDATA[VMware]]></category>
+		<category><![CDATA[ESX]]></category>
+		<category><![CDATA[hyperic]]></category>
+		<category><![CDATA[monitoring]]></category>
+		<category><![CDATA[vCenter]]></category>
+		<category><![CDATA[vSphere]]></category>
+
+		<guid isPermaLink="false">http://blog.springsource.com/?p=5377</guid>
+		<description>SpringSource Hyperic 4.4 was released earlier this week that brings enhanced management of VMware virtualized environments through integration with VMware vCenter.  While Hyperic has long had support for VMware technologies (a.k.a. VMware Infrastructure or VI), the availability of the VI Java API (http://vijava.sf.net) made our jobs much easier, because the power SDK streamlined how a [...]&lt;img src="http://feeds.feedburner.com/~r/Interface21TeamBlog/~4/pUm3jMlczTY" height="1" width="1"/&gt;</description>
+		<wfw:commentRss>http://blog.springsource.com/2010/08/06/hyperic-broadens-vsphere-support-through-vcenter-apis-in-version-4-4/feed/</wfw:commentRss>
+		<slash:comments>2</slash:comments>
+		<feedburner:origLink>http://blog.springsource.com/2010/08/06/hyperic-broadens-vsphere-support-through-vcenter-apis-in-version-4-4/</feedburner:origLink></item>
+	</channel>
+</rss>

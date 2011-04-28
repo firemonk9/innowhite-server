@@ -1,0 +1,93 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE sqlMap PUBLIC "-//ibatis.apache.org//DTD SQL Map 2.0//EN"
+"http://ibatis.apache.org/dtd/sql-map-2.dtd">
+<sqlMap>
+
+
+	<parameterMap id="insertMedia"
+		class="com.innowhite.whiteboard.persistence.beans.ClientMediaVO">
+		<parameter property="contentId" jdbcType="VARCHAR" />
+		<parameter property="contentSource" jdbcType="VARCHAR" />
+		<parameter property="contentType" jdbcType="VARCHAR" />
+		<parameter property="documentXML" jdbcType="VARCHAR" />
+		<parameter property="orgName" jdbcType="VARCHAR" />
+
+	</parameterMap>
+
+
+
+	<parameterMap id="paramUpdateDocXML"
+		class="com.innowhite.whiteboard.persistence.beans.ClientMediaVO">
+		<parameter property="contentId" jdbcType="VARCHAR" />
+		<parameter property="documentXML" jdbcType="VARCHAR" />
+
+	</parameterMap>
+
+	<insert id="saveMedia" parameterMap="insertMedia">
+		INSERT INTO client_media (
+		content_Id,
+		content_Source,
+		content_Type,
+		document_xml,
+		org_name,
+		inserted_Date)
+		VALUES
+		( ?,?,?,?,? ,now())
+		<selectKey keyProperty="id" resultClass="java.lang.Integer">
+			SELECT @@identity
+			</selectKey>
+	</insert>
+
+
+
+
+	<select id="getDocumentXML" parameterClass="java.util.HashMap" resultClass="java.lang.String"
+		>
+		select document_xml from client_media where content_id = #contentId# and    org_name = #orgName#
+		
+			
+		
+	</select>
+
+
+	<update id="updateDocXML" parameterMap="paramUpdateDocXML">
+		update client_media set
+		document_xml= #documentXML#
+		where content_id=#content_id#
+			
+      </update>
+
+	<select id="checkMediaExists" parameterClass="java.util.HashMap"
+		resultClass="java.lang.String">
+		 
+		select content_id from client_media where content_id = #contentId#   and    org_name = #orgName#
+		
+<!--		<dynamic prepend=" and ">-->
+<!--	      <isNotEmpty property="orgName">-->
+<!--	           org_name = #orgName#-->
+<!--	      </isNotEmpty>-->
+<!--   		</dynamic>-->
+		
+      </select>
+
+
+	<delete id="deleteMedia" parameterClass="java.util.HashMap" >
+		delete from client_media where content_id = #contentId# and   org_name = #orgName#
+		
+<!--		<dynamic prepend=" and ">-->
+<!--	      <isNotEmpty property="orgName">-->
+<!--	           org_name = #orgName#-->
+<!--	      </isNotEmpty>-->
+<!--   		</dynamic>-->
+<!--		-->
+		  
+      </delete>
+
+
+	<select id="getContentSource" resultClass="java.lang.String"
+		parameterClass="java.util.HashMap">
+		select content_source from client_media where content_id = #contentId# and   org_name = #orgName#
+	</select>
+
+</sqlMap>
+ 

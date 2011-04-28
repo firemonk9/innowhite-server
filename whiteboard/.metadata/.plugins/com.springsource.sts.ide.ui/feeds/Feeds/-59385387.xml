@@ -1,0 +1,215 @@
+<?xml version="1.0" encoding="utf-8"?>
+<rss version="2.0" xml:base="http://www.springsource.org"  xmlns:dc="http://purl.org/dc/elements/1.1/">
+<channel>
+ <title>SpringSource.org</title>
+ <link>http://www.springsource.org</link>
+ <description>Welcome to the home of Spring, the leading platform to build and run enterprise Java applications. Led and sustained by SpringSource, Spring delivers significant benefits for many projects, increasing development productivity and runtime performance while improving test coverage and application quality.</description>
+ <language>en</language>
+<item>
+ <title>Spring Training in EMEA: Special Offer</title>
+ <link>http://www.springsource.org/node/2781</link>
+ <description>&lt;div style=&quot;float: right; width:258px; padding: 10px&quot;&gt;
+&lt;img src=&quot;/files/EMEASpring.png&quot; width=&quot;200&quot;&gt;
+&lt;/div&gt;&lt;p&gt;Become an expert in Spring now, learn from the creators of Spring and become officialy certified in Spring! Our professional training teaches you to become an expert in, Spring 3.0 - Spring AOP - Spring IOC - Spring JavaConfig - Spring JDBC - Spring MVC - Spring Security - SpringSource Tool Suite and more.
+&lt;/p&gt;
+&lt;p&gt;For all trainings in EMEA we have a special offer available if you register now:
+&lt;ul&gt;&lt;li&gt;Register before September 04, 2010: Receive a 15% discount - use the referral code &lt;strong&gt;springup2&lt;/strong&gt; during the registration process*&lt;/li&gt;
+&lt;li&gt;Volume Discount: Register with 2 people (10% discount on the total price). Register with 3 or more (20%). Discount will be applied automatically after registration*&lt;/li&gt;&lt;/ul&gt;
+&lt;/p&gt;
+&lt;p&gt;Select your country to view the Spring Training near you: &lt;a href=&quot;http://mylearn.vmware.com/mgrReg/courses.cfm?ui=S2&amp;a=det&amp;id_course=76534&quot;&gt;Online&lt;/a&gt; - &lt;a href=&quot;http://mylearn.vmware.com/mgrReg/courses.cfm?ui=S2&amp;a=det&amp;id_course=77385&quot;&gt;Austria&lt;/a&gt; - &lt;a href=&quot;http://mylearn.vmware.com/mgrReg/courses.cfm?ui=S2&amp;a=det&amp;id_course=76328&quot;&gt;Belarus&lt;/a&gt; - &lt;a href=&quot;http://mylearn.vmware.com/mgrreg/courses.cfm?ui=S2&amp;pID=springsource&amp;a=sort&amp;country=Belgium&quot;&gt;Belgium&lt;/a&gt; - &lt;a href=&quot;http://mylearn.vmware.com/mgrReg/courses.cfm?ui=S2&amp;a=det&amp;id_course=76332&quot;&gt;Croatia&lt;/a&gt; - &lt;a href=&quot;http://mylearn.vmware.com/mgrReg/courses.cfm?ui=S2&amp;a=det&amp;id_course=77602&quot;&gt;Czech Republic&lt;/a&gt; - &lt;a href=&quot;http://mylearn.vmware.com/mgrReg/courses.cfm?ui=S2&amp;a=det&amp;id_course=70110&quot;&gt;Denmark&lt;/a&gt; - &lt;a href=&quot;http://mylearn.vmware.com/mgrreg/courses.cfm?ui=S2&amp;pID=springsource&amp;a=sort&amp;country=Finland&quot;&gt;Finland&lt;/a&gt; - &lt;a href=&quot;http://mylearn.vmware.com/mgrReg/courses.cfm?ui=S2&amp;a=det&amp;id_course=74684&quot;&gt;France&lt;/a&gt; - &lt;a href=&quot;http://mylearn.vmware.com/mgrreg/courses.cfm?ui=S2&amp;pID=springsource&amp;a=sort&amp;country=Germany&quot;&gt;Germany&lt;/a&gt; - &lt;a href=&quot;http://mylearn.vmware.com/mgrReg/courses.cfm?ui=S2&amp;a=det&amp;id_course=76168&quot;&gt;Hungary&lt;/a&gt; - &lt;a href=&quot;http://mylearn.vmware.com/mgrreg/courses.cfm?ui=S2&amp;pID=springsource&amp;a=sort&amp;country=Ireland&quot;&gt;Ireland&lt;/a&gt; - &lt;a href=&quot;http://mylearn.vmware.com/mgrReg/courses.cfm?ui=S2&amp;a=det&amp;id_course=76174&quot;&gt;Israel&lt;/a&gt; - &lt;a href=&quot;http://mylearn.vmware.com/mgrReg/courses.cfm?ui=S2&amp;a=det&amp;id_course=76172&quot;&gt;Italy&lt;/a&gt; - &lt;a href=&quot;http://mylearn.vmware.com/mgrReg/courses.cfm?ui=S2&amp;a=det&amp;id_course=76171&quot;&gt;Kenya&lt;/a&gt; - &lt;a href=&quot;http://mylearn.vmware.com/mgrReg/courses.cfm?ui=S2&amp;a=det&amp;id_course=71474&quot;&gt;Norway&lt;/a&gt; - &lt;a href=&quot;http://mylearn.vmware.com/mgrReg/courses.cfm?ui=S2&amp;a=det&amp;id_course=77397&quot;&gt;Poland&lt;/a&gt; - &lt;a href=&quot;http://mylearn.vmware.com/mgrReg/courses.cfm?ui=S2&amp;a=det&amp;id_course=68956&quot;&gt;Portugal&lt;/a&gt; - &lt;a href=&quot;http://mylearn.vmware.com/mgrReg/courses.cfm?ui=S2&amp;a=det&amp;id_course=71734&quot;&gt;Romania&lt;/a&gt; - &lt;a href=&quot;http://mylearn.vmware.com/mgrreg/courses.cfm?ui=S2&amp;pID=springsource&amp;a=sort&amp;country=Russian%20Federation&quot;&gt;Russia&lt;/a&gt; - &lt;a href=&quot;http://mylearn.vmware.com/mgrReg/courses.cfm?ui=S2&amp;a=det&amp;id_course=75069&quot;&gt;Slovakia&lt;/a&gt; - &lt;a href=&quot;http://mylearn.vmware.com/mgrreg/courses.cfm?ui=S2&amp;pID=springsource&amp;a=sort&amp;country=South%20Africa&quot;&gt;South Africa&lt;/a&gt; - &lt;a href=&quot;http://mylearn.vmware.com/mgrreg/courses.cfm?ui=S2&amp;pID=springsource&amp;a=sort&amp;country=Spain&quot;&gt;Spain&lt;/a&gt; - &lt;a href=&quot;http://mylearn.vmware.com/mgrReg/courses.cfm?ui=S2&amp;a=det&amp;id_course=71497&quot;&gt;Sweden&lt;/a&gt; - &lt;a href=&quot;http://mylearn.vmware.com/mgrReg/courses.cfm?ui=S2&amp;a=det&amp;id_course=76333&quot;&gt;Switzerland&lt;/a&gt; - &lt;a href=&quot;http://mylearn.vmware.com/mgrReg/courses.cfm?ui=S2&amp;a=det&amp;id_course=74686&quot;&gt;The Netherlands&lt;/a&gt; - &lt;a href=&quot;http://mylearn.vmware.com/mgrReg/courses.cfm?ui=S2&amp;a=det&amp;id_course=76326&quot;&gt;Turkey&lt;/a&gt; - &lt;a href=&quot;http://mylearn.vmware.com/mgrreg/courses.cfm?ui=S2&amp;pID=springsource&amp;a=sort&amp;country=United%20Kingdom&quot;&gt;United Kingdom&lt;/a&gt; - &lt;/p&gt;
+&lt;p&gt;For questions about our professional trainings, please contact: springsourceuniversity@vmware.com&lt;/p&gt;
+&lt;p&gt;*maximum discount that can be applied = 25%&lt;/p&gt;
+</description>
+ <comments>http://www.springsource.org/node/2781#comments</comments>
+ <enclosure url="http://www.springsource.org/files/EMEASpring.png" length="66741" type="image/png" />
+ <pubDate>Thu, 26 Aug 2010 11:43:41 +0000</pubDate>
+ <dc:creator>Mark Baars</dc:creator>
+ <guid isPermaLink="false">2781 at http://www.springsource.org</guid>
+</item>
+<item>
+ <title>Spring Roo 1.1.0.M3 Released</title>
+ <link>http://www.springsource.org/node/2780</link>
+ <description>&lt;p&gt;We&#039;re pleased to announce the availability of &lt;a href=&quot;http://www.springsource.org/roo&quot;&gt;Spring Roo&lt;/a&gt; 1.1.0.M3. Spring Roo is a lightweight developer tool that makes it fast and easy to deliver instant results for Java developers. This new release includes more than 150 enhancements since Roo 1.1.0.M2, including:&lt;/p&gt;
+&lt;ul&gt;
+&lt;li&gt;Incremental database reverse engineering (DBRE) support&lt;/li&gt;
+&lt;li&gt;Latest Google Web Toolkit 2.1.0.M3 features&lt;/li&gt;
+&lt;li&gt;Automatic JSON support, including in Spring MVC applications&lt;/li&gt;
+&lt;li&gt;16 social media embedding features&lt;/li&gt;
+&lt;li&gt;Library upgrades&lt;/li&gt;
+&lt;li&gt;Automatic Roo annotation JAR upgrades&lt;/li&gt;
+&lt;li&gt;Usability enhancements&lt;/li&gt;
+&lt;/ul&gt;
+&lt;p&gt;Please review our &lt;a href=&quot;http://blog.springsource.com/2010/08/25/spring-roo-1-1-0-m3-released/&quot;&gt;detailed blog entry&lt;/a&gt; to read more about this new release. You can also &lt;a href=&quot;http://www.springsource.com/download/community?project=Spring%20Roo&quot;&gt;download Spring Roo&lt;/a&gt;, read the &lt;a href=&quot;http://static.springsource.org/spring-roo/reference/html/index.html&quot;&gt;reference guide&lt;/a&gt;, or follow &lt;a href=&quot;http://twitter.com/SpringRoo&quot;&gt;@SpringRoo&lt;/a&gt; on Twitter to learn more.&lt;/p&gt;
+&lt;p&gt;We hope you enjoy this new release.&lt;/p&gt;
+</description>
+ <pubDate>Wed, 25 Aug 2010 11:16:40 +0000</pubDate>
+ <dc:creator>Ben Alex</dc:creator>
+ <guid isPermaLink="false">2780 at http://www.springsource.org</guid>
+</item>
+<item>
+ <title>Spring 3.0.4 is Now Available</title>
+ <link>http://www.springsource.org/node/2740</link>
+ <description>&lt;div style=&quot;float: right; width:258px; padding: 10px&quot;&gt;
+&lt;img src=&quot;/files/Logo_Spring_258x151.png&quot; width=&quot;258&quot; height=&quot;151&quot;&gt;
+&lt;/div&gt;&lt;p&gt;&lt;a href=&quot;http://blog.springsource.com/author/arjenp/&quot;&gt;Arjen Poutsma&lt;/a&gt; has just &lt;a href=&quot;http://twitter.com/poutsma&quot;&gt;announced&lt;/a&gt; that Spring 3.0.4 is now available. This release addresses over 80 minor issues and updates Spring&#039;s support for some recent third-party releases including Hibernate Core 3.6, Hibernate Validator 4.1, EclipseLink 2.1, and EHCache 2.2.
+&lt;/p&gt;
+&lt;p&gt;&lt;a target=&quot;_blank&quot; href=&quot;http://www.springsource.com/download/community?project=Spring%20Framework&amp;version=3.0.4.RELEASE&quot;&gt;Download&lt;/a&gt; | &lt;a href=&quot;http://static.springsource.org/spring/docs/3.0.x/spring-framework-reference/html/&quot;&gt;Documentation&lt;/a&gt; | &lt;a target=&quot;_blank&quot; href=&quot;http://static.springsource.org/spring/docs/3.0.x/javadoc-api/&quot;&gt;Javadoc API&lt;/a&gt; | &lt;a target=&quot;_blank&quot; href=&quot;http://static.springsource.org/spring/docs/3.0.4.RELEASE/changelog.txt&quot;&gt;Change Log&lt;/a&gt; | &lt;a href=&quot;http://jira.springframework.org/browse/SPR&quot;&gt;JIRA&lt;/a&gt;
+&lt;/p&gt;
+&lt;p&gt;All the latest features for Spring as well as advanced technical sessions and roadmap discussion will be happening at &lt;a href=&quot;http://www.springone2gx.com&quot;&gt;SpringOne 2GX 2010&lt;/a&gt; in Chicago, October 19th-21st. Be sure to &lt;a href=&quot;http://www.springone2gx.com/conference/chicago/2010/10/register&quot;&gt;register now&lt;/a&gt; to lock in an early registration discount.&lt;/p&gt;
+&lt;p&gt;Don&#039;t forget that Spring users can ask questions in the &lt;a href=&quot;http://forum.springsource.org/forumdisplay.php?f=21&quot;&gt;community forum&lt;/a&gt; and identify issues in &lt;a href=&quot;http://jira.springframework.org/browse/SPR&quot;&gt;JIRA&lt;/a&gt; as well. &lt;/p&gt;
+</description>
+ <comments>http://www.springsource.org/node/2740#comments</comments>
+ <category domain="http://www.springsource.org/taxonomy/term/4">News and Announcements</category>
+ <pubDate>Thu, 19 Aug 2010 17:26:53 +0000</pubDate>
+ <dc:creator>Adam Fitzgerald</dc:creator>
+ <guid isPermaLink="false">2740 at http://www.springsource.org</guid>
+</item>
+<item>
+ <title>Grails 1.3.4 Released </title>
+ <link>http://www.springsource.org/node/2733</link>
+ <description>&lt;p&gt;Grails 1.3.4 has been &lt;a href=&quot;http://grails.org/1.3.4+Release+Notes&quot;&gt;released&lt;/a&gt; and contains numerous bugfixes and small improvements. Please see the &lt;a href=&quot;http://jira.codehaus.org/secure/ReleaseNote.jspa?projectId=11063&amp;amp;version=16615&quot;&gt;changelog&lt;/a&gt; for a list of issues which have been addressed. &lt;/p&gt;
+&lt;p&gt;&lt;a href=&quot;http://grails.org/Download&quot;&gt;Download&lt;/a&gt; | &lt;a href=&quot;http://jira.codehaus.org/secure/ReleaseNote.jspa?projectId=11063&amp;amp;version=16615&quot;&gt;Changelog&lt;/a&gt; | &lt;a href=&quot;http://grails.org/doc/1.3.x&quot;&gt;Documentation&lt;/a&gt; | &lt;a href=&quot;http://forum.springsource.org/forumdisplay.php?f=76&quot;&gt;Forum&lt;/a&gt; &lt;/p&gt;
+&lt;p&gt;Be sure to ask questions in the &lt;strong&gt;new&lt;/strong&gt; &lt;a href=&quot;http://forum.springsource.org/forumdisplay.php?f=76&quot;&gt;Grails forum&lt;/a&gt;. Also, the Groovy and Grails sessions for &lt;a href=&quot;http://www.springone2gx.com&quot;&gt;SpringOne 2GX 2010&lt;/a&gt; have been added to the conference schedule, so be sure to &lt;a href=&quot;http://www.springone2gx.com/conference/chicago/2010/10/register&quot;&gt;register now&lt;/a&gt; for early discounts.&lt;/p&gt;
+</description>
+ <comments>http://www.springsource.org/node/2733#comments</comments>
+ <category domain="http://www.springsource.org/taxonomy/term/4">News and Announcements</category>
+ <pubDate>Mon, 09 Aug 2010 19:41:44 +0000</pubDate>
+ <dc:creator>Adam Fitzgerald</dc:creator>
+ <guid isPermaLink="false">2733 at http://www.springsource.org</guid>
+</item>
+<item>
+ <title>Your Chance to Meet Rod Johnson!</title>
+ <link>http://www.springsource.org/node/2732</link>
+ <description>&lt;p&gt;SpringSource University has got some amazing news!&lt;/p&gt;
+&lt;p&gt;&lt;strong&gt;Rod Johnson will be at the September 7th Core Spring Class in San Francisco!&lt;/strong&gt;&lt;/p&gt;
+&lt;p&gt;Yes, you read that right. He&#039;ll be talking about Spring, where it&#039;s going and let you in on some things you&#039;ll be really excited about. &lt;/p&gt;
+&lt;p&gt;After he&#039;s done, you&#039;ll get a chance to ask him your most burning question in a Q &amp;amp; A session.&lt;/p&gt;
+&lt;p&gt;The class is on September 7-10 in San Francisco and Rod will be dropping in on one of those days.&lt;/p&gt;
+&lt;p&gt;So do not miss this great opportunity!  Click the link below to register:&lt;/p&gt;
+&lt;p&gt;&lt;a href=&quot;http://mylearn.vmware.com/mgrReg/courses.cfm?ui=S2&amp;amp;a=det&amp;amp;id_course=73230&quot;&gt;Yes, I want to Meet Rod Johnson!&lt;/a&gt;&lt;/p&gt;
+&lt;p&gt;Or, you can send an email to springsourceuniversity@vmware.com and we&#039;ll get you signed up.&lt;/p&gt;
+&lt;p&gt;But don&#039;t wait, class size will be limited.&lt;/p&gt;
+&lt;p&gt;Oh...and this is just one of the exciting &quot;celebrity&quot; appearances planned at SpringSource University. To keep updated with the latest, you can now follow us on Twitter!&lt;/p&gt;
+&lt;p&gt;&lt;a href=&quot;http://www.twitter.com/SpringSourceU&quot;&gt;&lt;img src=&quot;http://twitter-badges.s3.amazonaws.com/follow_us-a.png&quot; alt=&quot;Follow SpringSourceU on Twitter&quot;/&gt;&lt;/a&gt;&lt;/p&gt;
+</description>
+ <comments>http://www.springsource.org/node/2732#comments</comments>
+ <category domain="http://www.springsource.org/taxonomy/term/4">News and Announcements</category>
+ <pubDate>Mon, 09 Aug 2010 18:43:57 +0000</pubDate>
+ <dc:creator>Evy Schwartz</dc:creator>
+ <guid isPermaLink="false">2732 at http://www.springsource.org</guid>
+</item>
+<item>
+ <title>SpringSource Releases Hyperic 4.4</title>
+ <link>http://www.springsource.org/node/2730</link>
+ <description>&lt;p&gt;The SpringSource Hyperic product team is pleased to &lt;a href=&quot;http://www.springsource.com/newsevents/hyperic-44-application-monitoring-virtual-infrastructure&quot;&gt;announce&lt;/a&gt; the general availability of &lt;a href=&quot;http://www.springsource.com/products/systems-management&quot;&gt;Hyperic 4.4&lt;/a&gt;, the leading platform for custom web application monitoring and performance management in physical, virtual, and cloud environments. The &lt;a href=&quot;http://www.hyperic.com/blog/announcing-hyperic-4-4-dramatically-simplified-monitoring-of-virtualized-application-infrastructure/&quot;&gt;Hyperic blog&lt;/a&gt; describes most of the new features included in the release, which include:&lt;/p&gt;
+&lt;ul&gt;
+&lt;li&gt;&lt;strong&gt;Rapid Diagnosis of Virtualized Application Performance Problems:&lt;/strong&gt; Hyperic 4.4 now provides visibility into all application infrastructure layers including virtualization, enabling operators to determine whether the root cause of issues lies within an application, its guest operating system, or its ESX host. &lt;/li&gt;
+&lt;li&gt;&lt;strong&gt;Automatic Maintenance of Application Infrastructure Inventory:&lt;/strong&gt; Hyperic 4.4 automatically discovers ESX hosts, virtual machines, and guest operating systems within minutes of their launch, and presents them in a unified topology so users can see which application components are running on which ESX hosts. It even tracks applications when they move to new virtual machines via vMotion.&lt;/li&gt;
+&lt;li&gt;&lt;strong&gt;Virtualization-Aware Alerting:&lt;/strong&gt; Hyperic 4.4 can distinguish between when a guest operating system has shut down unintentionally, and when it has been intentionally powered down or suspended. This prevents false alarms and enables system administrators to elastically scale their application infrastructure without triggering alert storms.&lt;/li&gt;
+&lt;/ul&gt;
+&lt;p&gt;Check out the &lt;a href=&quot;http://SpringSource.com/hyperic44&quot; target=&quot;_blank&quot;&gt;Hyperic 4.4 demo&lt;/a&gt;, download &lt;a href=&quot;http://www.springsource.com/downloads/hyperic-hq-enterprise-downloads&quot; target=&quot;_blank&quot;&gt;Hyperic Enterprise 4.4&lt;/a&gt; or &lt;a href=&quot;http://www.springsource.com/downloads/hyperic-open-source-downloads&quot; target=&quot;_blank&quot;&gt;Hyperic Open Source 4.4&lt;/a&gt;, and dive into the new documentation on &lt;a href=&quot;http://support.hyperic.com/display/DOC/Monitoring+vSphere+Components&quot; target=&quot;_blank&quot;&gt;monitoring vSphere&lt;/a&gt;.&lt;/p&gt;
+</description>
+ <comments>http://www.springsource.org/node/2730#comments</comments>
+ <category domain="http://www.springsource.org/taxonomy/term/4">News and Announcements</category>
+ <pubDate>Wed, 04 Aug 2010 18:35:26 +0000</pubDate>
+ <dc:creator>Adam Fitzgerald</dc:creator>
+ <guid isPermaLink="false">2730 at http://www.springsource.org</guid>
+</item>
+<item>
+ <title>There’s Still Time to Register for These Upcoming Classes in August:</title>
+ <link>http://www.springsource.org/node/2729</link>
+ <description>&lt;p&gt;You still have a chance to register for some of our August Spring classes in your area.&lt;/p&gt;
+&lt;p&gt;Simply click on the class you&#039;re interested in and then click on the &quot;register&quot; link at the top, or you can send an email to springsourceuniversity@vmware.com.&lt;/p&gt;
+&lt;li&gt;North &amp;amp; South America:
+&lt;ul&gt;
+&lt;li&gt;Canada: &lt;a href=&quot;http://mylearn.vmware.com/mgrReg/courses.cfm?ui=S2&amp;amp;a=det&amp;amp;id_course=69624&quot;&gt;Ottawa - Core Spring Framework&lt;br /&gt;
+        &lt;/a&gt;&lt;/li&gt;
+&lt;li&gt;Canada: &lt;a href=&quot;http://mylearn.vmware.com/mgrReg/courses.cfm?ui=S2&amp;amp;a=det&amp;amp;id_course=69625&quot;&gt;Montreal - Core Spring Framework&lt;br /&gt;
+        &lt;/a&gt;&lt;/li&gt;
+&lt;li&gt;New York: &lt;a href=&quot;http://mylearn.vmware.com/mgrReg/courses.cfm?ui=S2&amp;amp;a=det&amp;amp;id_course=69464&quot;&gt;New York - Core Spring Framework&lt;/a&gt;&lt;/li&gt;
+&lt;li&gt;New York: &lt;a href=&quot;http://mylearn.vmware.com/mgrReg/courses.cfm?ui=S2&amp;amp;a=det&amp;amp;id_course=69466&quot;&gt;New York - Spring Web Services&lt;br /&gt;
+        &lt;/a&gt;&lt;/li&gt;
+&lt;li&gt;Virginia: &lt;a href=&quot;http://mylearn.vmware.com/mgrReg/courses.cfm?ui=S2&amp;amp;a=det&amp;amp;id_course=70987&quot;&gt;McLean - Core Spring Framework&lt;br /&gt;
+        &lt;/a&gt;&lt;/li&gt;
+&lt;/ul&gt;
+&lt;/li&gt;
+&lt;li&gt;Europe, Middle East &amp;amp; Africa:
+&lt;ul&gt;
+&lt;li&gt;Austria: &lt;a href=&quot;http://mylearn.vmware.com/mgrReg/courses.cfm?ui=S2&amp;amp;a=det&amp;amp;id_course=68969&quot;&gt;Wien - Core Spring Framework&lt;br /&gt;
+        &lt;/a&gt;&lt;/li&gt;
+&lt;li&gt;Denmark: &lt;a href=&quot;http://mylearn.vmware.com/mgrReg/courses.cfm?ui=S2&amp;amp;a=det&amp;amp;id_course=69921&quot;&gt;Copenhagen - Core Spring Framework&lt;br /&gt;
+        &lt;/a&gt;&lt;/li&gt;
+&lt;li&gt;France: &lt;a href=&quot;http://mylearn.vmware.com/mgrReg/courses.cfm?ui=S2&amp;amp;a=det&amp;amp;id_course=68974&quot;&gt;Paris - Core Spring Framework&lt;br /&gt;
+        &lt;/a&gt;&lt;/li&gt;
+&lt;li&gt;Israel: &lt;a href=&quot;http://mylearn.vmware.com/mgrReg/courses.cfm?ui=S2&amp;amp;a=det&amp;amp;id_course=68951&quot;&gt;Tel Aviv - Core Spring Framework&lt;br /&gt;
+        &lt;/a&gt;&lt;/li&gt;
+&lt;li&gt;Norway: &lt;a href=&quot;http://mylearn.vmware.com/mgrReg/courses.cfm?ui=S2&amp;amp;a=det&amp;amp;id_course=70655&quot;&gt;Oslo - Core Spring Framework&lt;br /&gt;
+        &lt;/a&gt;&lt;/li&gt;
+&lt;li&gt;Russian Federation: &lt;a href=&quot;http://mylearn.vmware.com/mgrReg/courses.cfm?ui=S2&amp;amp;a=det&amp;amp;id_course=68946&quot;&gt;Moscow - Core Spring Framework&lt;br /&gt;
+        &lt;/a&gt;&lt;/li&gt;
+&lt;li&gt;Sweden: &lt;a href=&quot;http://mylearn.vmware.com/mgrReg/courses.cfm?ui=S2&amp;amp;a=det&amp;amp;id_course=71244&quot;&gt;Stockholm - Core Spring Framework&lt;br /&gt;
+        &lt;/a&gt;&lt;/li&gt;
+&lt;li&gt;United Kingdom: &lt;a href=&quot;http://mylearn.vmware.com/mgrReg/courses.cfm?ui=S2&amp;amp;a=det&amp;amp;id_course=73075&quot;&gt;London - Advanced Spring Workshop&lt;br /&gt;
+        &lt;/a&gt;&lt;/li&gt;
+&lt;li&gt;United Kingdom: &lt;a href=&quot;http://mylearn.vmware.com/mgrReg/courses.cfm?ui=S2&amp;amp;a=det&amp;amp;id_course=68932&quot;&gt;London - Enterprise Integration with Spring&lt;br /&gt;
+        &lt;/a&gt;&lt;/li&gt;
+&lt;/ul&gt;
+&lt;/li&gt;
+&lt;p&gt;No training near you?&lt;a href=&quot;http://www.springsource.com/training/findacourse&quot;&gt; Check out our full schedule&lt;/a&gt;&lt;/p&gt;
+</description>
+ <comments>http://www.springsource.org/node/2729#comments</comments>
+ <category domain="http://www.springsource.org/taxonomy/term/4">News and Announcements</category>
+ <pubDate>Wed, 04 Aug 2010 13:37:05 +0000</pubDate>
+ <dc:creator>Evy Schwartz</dc:creator>
+ <guid isPermaLink="false">2729 at http://www.springsource.org</guid>
+</item>
+<item>
+ <title>Upcoming Webinars: Tomcat Performance and Spring DI Styles</title>
+ <link>http://www.springsource.org/node/2728</link>
+ <description>&lt;p&gt;In the next two weeks, SpringSource will host two very interesting webinars for the community. &lt;/p&gt;
+&lt;ul&gt;
+&lt;li&gt;&lt;strong&gt;Performance Tuning Production Tomcat &amp;amp; tc Server - Tuning for Throughput&lt;/strong&gt; (&lt;em&gt;August 5th&lt;/em&gt;): This webinar will examine the Apache Tomcat configuration options that can impact overall throughput but in terms of requests per second and individual response times. Topics covered will include connector selection and configuration, caching, GC tuning and application architectures. When (and when not) to use Apache httpd to improve performance will also be discussed.&lt;br /&gt;
+Register: &lt;strong&gt;Europe&lt;/strong&gt; &lt;a href=&quot;https://vmwareevents.webex.com/vmwareevents/onstage/g.php?t=a&amp;amp;d=669215431&quot;&gt;3:00pm BST/4:00pm CEST&lt;/a&gt;, &lt;strong&gt;North America&lt;/strong&gt; &lt;a href=&quot;https://vmwareevents.webex.com/vmwareevents/onstage/g.php?t=a&amp;amp;d=664721843&quot;&gt;1:00pm EDT /10:00am PDT&lt;/a&gt;
+&lt;/li&gt;
+&lt;li&gt;&lt;strong&gt;Spring Dependency Injection Styles&lt;/strong&gt; (&lt;em&gt;August 12th&lt;/em&gt;): This webinar will provide a hands-on tour of the new dependency injection features in Spring 3.0. Focusing on container configuration, the webinar will show by example the use of XML, Annotated POJOs, and Java @Configuration classes to wire up your application. Just as important to knowing how to configure the container, the presentation will also discuss why you would choose one method over another, how they can be mixed and matched, and how a global view of the application can be viewed inside SpringSource Tool Suite.&lt;br /&gt;
+Register: &lt;strong&gt;Europe&lt;/strong&gt; &lt;a href=&quot;https://vmwareevents.webex.com/vmwareevents/onstage/g.php?t=a&amp;amp;d=665064148&quot;&gt;3:00pm BST/4:00pm CEST&lt;/a&gt;, &lt;strong&gt;North America&lt;/strong&gt; &lt;a href=&quot;https://vmwareevents.webex.com/vmwareevents/onstage/g.php?t=a&amp;amp;d=661174910&quot;&gt;1:00pm EDT /10:00am PDT&lt;/a&gt;&lt;/li&gt;
+&lt;/ul&gt;
+</description>
+ <comments>http://www.springsource.org/node/2728#comments</comments>
+ <category domain="http://www.springsource.org/taxonomy/term/4">News and Announcements</category>
+ <pubDate>Tue, 03 Aug 2010 21:46:49 +0000</pubDate>
+ <dc:creator>Adam Fitzgerald</dc:creator>
+ <guid isPermaLink="false">2728 at http://www.springsource.org</guid>
+</item>
+<item>
+ <title>Spring GemFire 1.0.0.M1 Released for Java and .NET</title>
+ <link>http://www.springsource.org/node/2723</link>
+ <description>&lt;p&gt;Dear Spring Community,&lt;/p&gt;
+&lt;p&gt;We are pleased to announce the first milestone release of the Spring GemFire 1.0 project is now available for both Java and .NET! The Spring GemFire project aims to make it easier to build Spring-powered highly scalable applications using GemFire as distributed data management platform.&lt;/p&gt;
+&lt;p&gt;To learn more about the project, visit the Spring GemFire &lt;a href=&quot;http://www.springsource.org/spring-gemfire&quot;&gt;homepage&lt;/a&gt;.&lt;/p&gt;
+&lt;p&gt;&lt;strong&gt;Download it now&lt;/strong&gt;: &lt;a href=&quot;http://www.springsource.com/download/community?project=Spring%20GemFire&quot;&gt;Spring GemFire for Java&lt;/a&gt; | &lt;a href=&quot;http://www.springsource.com/download/community?project=Spring%20GemFire%20for%20.NET&quot;&gt;Spring GemFire for .NET&lt;/a&gt;&lt;/p&gt;
+&lt;p&gt;We look forward to your feedback!&lt;/p&gt;
+</description>
+ <category domain="http://www.springsource.org/taxonomy/term/4">News and Announcements</category>
+ <pubDate>Tue, 03 Aug 2010 16:13:34 +0000</pubDate>
+ <dc:creator>Costin Leau</dc:creator>
+ <guid isPermaLink="false">2723 at http://www.springsource.org</guid>
+</item>
+<item>
+ <title>Attend Chicago Core Spring Class (Sept 14-17) for a Chance to Win a Ticket to SpringOne 2GX!</title>
+ <link>http://www.springsource.org/node/2721</link>
+ <description>&lt;p&gt;If you&#039;re even remotely thinking about taking a Core Spring class in the Chicago area, now is the time.&lt;/p&gt;
+&lt;p&gt;Two lucky students will walk away with one ticket each to attend SpringOne 2GX. (individual ticket value at time of class $1650)&lt;/p&gt;
+&lt;p&gt;So what are you waiting for? Grab your seat today.&lt;/p&gt;
+&lt;p&gt;&lt;a href=&quot;http://mylearn.vmware.com/mgrReg/courses.cfm?ui=S2&amp;amp;a=det&amp;amp;id_course=71534&quot;&gt;Core Spring Class - Chicago, Sept 14-17&lt;/a&gt;&lt;/p&gt;
+&lt;p&gt;Oh, and don&#039;t forget - class size is small, 15 students maximum so your odds are pretty good.&lt;/p&gt;
+&lt;p&gt;&lt;a href=&quot;http://mylearn.vmware.com/mgrReg/courses.cfm?ui=S2&amp;amp;a=det&amp;amp;id_course=71534&quot;&gt;Register for Core Spring in Chicago&lt;/a&gt; today.&lt;/p&gt;
+</description>
+ <comments>http://www.springsource.org/node/2721#comments</comments>
+ <category domain="http://www.springsource.org/taxonomy/term/4">News and Announcements</category>
+ <pubDate>Mon, 02 Aug 2010 21:15:53 +0000</pubDate>
+ <dc:creator>Evy Schwartz</dc:creator>
+ <guid isPermaLink="false">2721 at http://www.springsource.org</guid>
+</item>
+</channel>
+</rss>
