@@ -1,0 +1,99 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE sqlMap PUBLIC "-//ibatis.apache.org//DTD SQL Map 2.0//EN"
+"http://ibatis.apache.org/dtd/sql-map-2.dtd">
+<sqlMap>
+
+	
+       <resultMap id="userImagesResultMap" class="com.innowhite.whiteboard.docconversion.vo.UserImagesVO">
+	      <result property="id" column="id" />
+	      <result property="userName" column="userName" />
+	      <result property="imageURL" column="mediaURL" />
+	      <result property="imageDescription" column="mediaDescription" />
+	      <result property="imageFolder" column="mediaFolder" />
+	      <result property="imageFolderSeq" column="mediaFolderSeq"/>
+	       <result property="imageGroup" column="mediaGroup" javaType="int"  jdbcType="java.lang.Integer" nullValue="0"/>
+	      <result property="imageName" column="mediaName" />
+	      <result property="imageType" column="mediaType" />
+	      <result property="insertedDate" column="insertedDate" />
+	      
+	   </resultMap>
+	 
+	  <select id="findByProperty" resultMap="userImagesResultMap" parameterClass="java.lang.String">
+     		select * from user_media where userName = #userName# order by mediaType asc, mediaGroup asc,mediaFolderSeq asc;     		
+      </select>
+      
+      
+      <select id="findByID" resultMap="userImagesResultMap" parameterClass="java.lang.Integer">
+      		select * from user_media where id=#id#;      		
+      </select>
+     	 
+      <parameterMap   id="insertImage" class="com.innowhite.whiteboard.docconversion.vo.UserImagesVO">
+      	<parameter property="userName"/>
+      	<parameter property="imageURL"/>
+      	<parameter property="imageDescription"/>
+      	<parameter property="imageFolder"/>
+      	<parameter property="imageFolderSeq"/>
+      	<parameter property="imageGroup"/>
+      	<parameter property="imageName"/>
+      	<parameter property="imageType"/>
+      	<parameter property="thumbnailURL"/>
+      	<parameter property="conversionID"/>
+     
+      </parameterMap>
+      
+       <insert id="saveImage"  parameterMap="insertImage">
+      		INSERT INTO user_media (userName, 
+      			 mediaURL,
+				 mediaDescription,
+				 mediaFolder,
+				 mediaFolderSeq,
+				 mediaGroup,
+				 mediaName,
+				 mediaType,  thumbnailURL, conversionID, insertedDate)
+				VALUES
+				( ?,?,?,?,?,?,?,?, ?, ?, now())     
+			<selectKey keyProperty="id" resultClass="java.lang.Integer" >
+				SELECT @@identity
+			</selectKey> 
+      </insert>
+      
+      
+       <update id="updateUserMediaByConversionID" parameterClass="java.util.HashMap">
+		 update user_media set mediaURL=#mediaURL# where conversionId = #conversionID# and mediaFolderSeq = #sequence#
+	   </update>
+      
+
+<!-- 	<insert id="saveMedia"  parameterMap="insertMedia">-->
+<!--      		INSERT INTO user_media ( -->
+<!--      			 mediaURL,-->
+<!--				 mediaDescription,-->
+<!--				 mediaFolder,-->
+<!--				 mediaFolderSeq,-->
+<!--				 mediaGroup,-->
+<!--				 mediaName,-->
+<!--				 mediaType, insertedDate)-->
+<!--				VALUES-->
+<!--				( ?,?,?,?,?,?,?,?, now())     -->
+<!--			<selectKey keyProperty="id" resultClass="java.lang.Integer" >-->
+<!--				SELECT @@identity-->
+<!--			</selectKey> -->
+<!--      </insert>-->
+
+  <!-- 
+      <delete id="deleteImageByID" parameterClass="int" >
+      	delete from user_media where id=#id#      
+      </delete>
+      
+    
+    <select id="getUserContentSource" resultClass="java.lang.String"
+		parameterClass="java.lang.String">
+		select mediaURL from user_media where id = #content_id#
+	</select>
+    
+    
+      <delete id="deleteImageByIDName" parameterClass="java.util.HashMap" >
+      	delete from user_media where mediaGroup=#id#  and userName = #name#     
+      </delete>
+       -->    
+</sqlMap>
+ 

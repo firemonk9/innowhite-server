@@ -1,0 +1,26 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<classpath>
+	<classpathentry kind="src" path="src"/>
+	<classpathentry kind="con" path="org.eclipse.jdt.launching.JRE_CONTAINER/org.eclipse.jdt.internal.launching.macosx.MacOSXType/JVM Contents (MacOS X Default)">
+		<attributes>
+			<attribute name="owner.project.facets" value="java"/>
+		</attributes>
+	</classpathentry>
+	<classpathentry kind="con" path="org.eclipse.jst.server.core.container/org.eclipsewtp.jst.server.generic.red5.runtimeClasspathProvider/Red5 Server Runtime">
+		<attributes>
+			<attribute name="owner.project.facets" value="jst.web"/>
+		</attributes>
+	</classpathentry>
+	<classpathentry kind="con" path="org.eclipse.jst.j2ee.internal.web.container"/>
+	<classpathentry kind="con" path="org.eclipse.jst.j2ee.internal.module.container"/>
+	<classpathentry kind="var" path="RED5_HOME/lib/com.springsource.slf4j.api-1.6.1.jar"/>
+	<classpathentry kind="var" path="RED5_HOME/lib/com.springsource.slf4j.bridge-1.6.1.jar"/>
+	<classpathentry kind="var" path="RED5_HOME/lib/commons-beanutils-1.8.2.jar"/>
+	<classpathentry kind="var" path="RED5_HOME/lib/log4j-over-slf4j-1.6.1.jar"/>
+	<classpathentry kind="var" path="RED5_HOME/lib/logback-classic-0.9.26.jar"/>
+	<classpathentry kind="var" path="RED5_HOME/lib/logback-core-0.9.26.jar"/>
+	<classpathentry kind="var" path="RED5_HOME/lib/org.springframework.context-3.0.5.RELEASE.jar"/>
+	<classpathentry kind="var" path="RED5_HOME/lib/org.springframework.context.support-3.0.5.RELEASE.jar"/>
+	<classpathentry kind="var" path="RED5_HOME/lib/org.springframework.core-3.0.5.RELEASE.jar"/>
+	<classpathentry kind="output" path="build/classes"/>
+</classpath>
