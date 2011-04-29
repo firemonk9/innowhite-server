@@ -1,0 +1,37 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<configuration>
+
+	<contextName>whiteboard</contextName>
+
+	<jmxConfigurator contextName="whiteboard" />
+
+	<appender name="whiteboard1" class="ch.qos.logback.core.FileAppender">
+		<File>log/whiteboard1.log</File>
+		<Append>false</Append>
+		<Encoding>UTF-8</Encoding>
+		<BufferedIO>false</BufferedIO>
+		<ImmediateFlush>true</ImmediateFlush>
+		<rollingPolicy class="ch.qos.logback.core.rolling.TimeBasedRollingPolicy">
+			<FileNamePattern>log/whiteboard1.%d{yyyy-MM-dd}.log</FileNamePattern>
+			<!-- keep 30 days worth of history -->
+			<MaxHistory>30</MaxHistory>
+		</rollingPolicy>
+
+		<layout class="ch.qos.logback.classic.PatternLayout">
+			<Pattern>%date [%thread] %-5level %logger{35} - %msg%n</Pattern>
+		</layout>
+	</appender>
+
+
+
+	<root>
+	<level value="DEBUG" />
+		<appender-ref ref="whiteboard1" />
+	</root>
+	<!-- <logger name="com.whiteboard.Main"> -->
+	<!-- <level value="DEBUG" /> -->
+	<!-- </logger> -->
+
+
+</configuration>
+

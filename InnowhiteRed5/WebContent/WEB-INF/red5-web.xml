@@ -1,0 +1,115 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans"
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:lang="http://www.springframework.org/schema/lang"
+	xsi:schemaLocation="http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans-2.5.xsd
+                           http://www.springframework.org/schema/lang http://www.springframework.org/schema/lang/spring-lang-2.5.xsd">
+
+	<!-- <bean id="placeholderConfig" class="org.springframework.beans.factory.config.PropertyPlaceholderConfigurer"> -->
+	<!-- <property name="location" value="/WEB-INF/red5-web.properties" /> -->
+	<!-- <value>/WEB-INF/bigbluebutton.properties</value> -->
+	<!-- </bean> -->
+
+	<import resource="messagingContext.xml" />
+	<import resource="innowhite-voice-freeswitch.xml" />
+
+	<bean id="placeholderConfig"
+		class="org.springframework.beans.factory.config.PropertyPlaceholderConfigurer">
+		<property name="locations">
+			<list>
+				<value>/WEB-INF/red5-web.properties</value>
+				<value>/WEB-INF/innowhite.properties</value>
+			</list>
+		</property>
+	</bean>
+
+	<bean id="web.context" class="org.red5.server.Context" autowire="byType" />
+
+	<bean id="web.scope" class="org.red5.server.WebScope" init-method="register">
+		<property name="server" ref="red5.server" />
+		<property name="parent" ref="global.scope" />
+		<property name="context" ref="web.context" />
+		<property name="handler" ref="web.handler" />
+		<property name="contextPath" value="${webapp.contextPath}" />
+		<property name="virtualHosts" value="${webapp.virtualHosts}" />
+	</bean>
+
+	<bean id="web.handler" class="com.innowhite.red5.Main">
+
+		<property name="applicationListeners">
+			<set>
+				<!-- <ref bean="participantsHandler" /> -->
+				<!-- <ref bean="chatHandler" /> -->
+				<!-- <ref bean="presentationHandler" /> -->
+				<ref bean="voiceHandler" />
+				<!-- <ref bean="whiteboardApplication" /> -->
+			</set>
+		</property>
+
+		<property name="freeSwitchServiceProvider">
+			<ref bean="freeSwitchServiceProvider" />
+		</property>
+		
+		<property name="messagingService">
+			<ref bean="messagingService" />
+		</property>
+		
+		
+
+	</bean>
+
+
+	<bean id="mainAudioService" class="com.innowhite.red5.MainAudioService">
+
+		<property name="main">
+			<ref bean="web.handler" />
+		</property>
+
+	</bean>
+
+
+
+	<!-- -->
+	<bean id="voiceService.service" class="com.innowhite.red5.audio.VoiceService">
+
+		<property name="freeSwitchGateway">
+			<ref bean="freeSwitchGateway" />
+		</property>
+
+	</bean>
+
+
+
+	<bean id="voiceHandler" class="com.innowhite.red5.audio.VoiceHandler">
+	</bean>
+
+	<bean id="messagingService" class="com.innowhite.red5.messaging.MessagingService">
+		<property name="roomMessageService">
+			<ref bean="roomMessageService" />
+		</property>
+		
+		<property name="whiteboardDataMessageService">
+			<ref bean="whiteboardDataMessageService" />
+		</property>
+		
+	</bean>
+
+
+
+
+	<!-- NOTE: Change bbb-voice-freeswitch.xml to bbb-voice-asterisk.xml if 
+		you want to use Asterisk -->
+     
+   
+	    
+<!---->
+	<!-- <bean id="audioListener" -->
+	<!-- class="com.innowhite.red5.audio.ExampleClient" > -->
+	<!-- -->
+	<!-- <property name="red5App" value="web.handler" /> -->
+	<!-- -->
+	<!-- </bean> -->
+
+
+
+
+</beans>
