@@ -29,7 +29,7 @@
 
 <bean id="web.handler" class="com.innowhite.red5.stream.Application">
 
-<property name="streamMessageService" ref="streamMessageService" />
+<property name="messagingService" ref="messagingService" />
 
 <property name="plugins">
             <list>
@@ -113,8 +113,8 @@
 
 
 <bean id="messagingService" class="com.innowhite.red5.stream.messaging.MessagingService">
-		<property name="streamMessageService">
-			<ref bean="streamMessageService" />
+		<property name="simpleMessageProducer">
+			<ref bean="simpleMessageProducer" />
 		</property>
 	</bean>
 
