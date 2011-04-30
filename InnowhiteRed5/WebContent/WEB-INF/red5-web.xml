@@ -11,6 +11,7 @@
 
 	<import resource="messagingContext.xml" />
 	<import resource="innowhite-voice-freeswitch.xml" />
+<!-- 	<import resource="db-context.xml" /> -->
 
 	<bean id="placeholderConfig"
 		class="org.springframework.beans.factory.config.PropertyPlaceholderConfigurer">

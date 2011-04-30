@@ -30,7 +30,7 @@
 	<!-- A destination in ActiveMQ --> 
 	<bean id="destination" 
 	    class="org.apache.activemq.command.ActiveMQQueue">
-	<constructor-arg value="FOO.TEST" />
+	<constructor-arg value="Innowhite.docConversion" />
 	</bean>
 	
 	<!-- A JmsTemplate instance that uses the cached connection and destination --> 
