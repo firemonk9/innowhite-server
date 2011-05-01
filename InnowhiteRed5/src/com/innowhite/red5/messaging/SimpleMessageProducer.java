@@ -38,21 +38,21 @@ public class SimpleMessageProducer {
 	String txt=null;
 	
 	public synchronized void  sendMessage(String msg) {
-		txt = msg;
-		MessageCreator creator = new MessageCreator() {
-			public Message createMessage(Session session) {
-				TextMessage message = null;
-				try {
-					message = session.createTextMessage();
-					message.setStringProperty("text", txt);
-				} catch (JMSException e) {
-					e.printStackTrace();
-				}
-				return message;
-			}
-		};
-
-		jmsTemplate.send(destination, creator);
+//		txt = msg;
+//		MessageCreator creator = new MessageCreator() {
+//			public Message createMessage(Session session) {
+//				TextMessage message = null;
+//				try {
+//					message = session.createTextMessage();
+//					message.setStringProperty("text", txt);
+//				} catch (JMSException e) {
+//					e.printStackTrace();
+//				}
+//				return message;
+//			}
+//		};
+//
+//		jmsTemplate.send(destination, creator);
 	}
 
 	// public void sendMessages(final DocConversionBean docBean)

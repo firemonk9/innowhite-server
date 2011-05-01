@@ -9,13 +9,10 @@ package com.innowhite.red5.whiteboard.audio;
 //import org.bigbluebutton.webconference.voice.freeswitch.actions.MuteParticipantCommand;
 //import org.bigbluebutton.webconference.voice.events.ConferenceEventListener;
 //import org.bigbluebutton.webconference.voice.freeswitch.FreeswitchHeartbeatMonitor;
-import java.util.Collections;
 import java.util.HashMap;
 import java.util.Map;
 import java.util.Observable;
 import java.util.logging.Level;
-
-
 
 import org.freeswitch.esl.client.IEslEventListener;
 import org.freeswitch.esl.client.inbound.Client;
@@ -91,7 +88,8 @@ public class FreeSwitchGateway extends Observable implements IEslEventListener {
 	
 	
 	  public void eventReceived(EslEvent event) {
-	        if(event.getEventName().equals(FreeswitchHeartbeatMonitor.EVENT_HEARTBEAT)) {
+	        
+		  if(event.getEventName().equals(FreeswitchHeartbeatMonitor.EVENT_HEARTBEAT)) {
 	            setChanged();
 	            notifyObservers(event);
 	            return; //No need to log.debug or process further the Observer will act on this
@@ -139,9 +137,15 @@ public class FreeSwitchGateway extends Observable implements IEslEventListener {
 	
 	
 	// added innoUserUnique parameter
-    public void conferenceEventJoin(String uniqueId, String confName, int confSize,String innoUserUnique,String callerUsername ,EslEvent event) {
+    public void conferenceEventJoin(String uniqueId, String confName, int confSize,String callerUsername ,EslEvent event) {
        
-    	Integer memberId = this.getMemeberIdFromEvent(event);
+    	
+    	// this will print all the values that come from freeswitch.
+    	 
+    	
+    	Integer memberId = getMemeberIdFromEvent(event);
+    	String innoUserUnique = getInnoUniqueIdFromEvent(event);
+    	
     	StringBuilder sb = new StringBuilder("");
         sb.append(uniqueId);
         Object[] args = new Object[5];
@@ -160,7 +164,7 @@ public class FreeSwitchGateway extends Observable implements IEslEventListener {
         audioEventListener.handleConferenceEvent(pj);
 
         
-        
+      
         log.info("Conference join: uniqueId "+uniqueId+"  confName "+confName+" confSize "+confSize+"  innoUserUnique "+innoUserUnique+"  callerUsername  "+callerUsername+"   event  "+event);
         
        // log.info ("Conference [{}]({}) JOIN [{}] InnoUser [{}] source [{}]", args);
@@ -232,6 +236,10 @@ public class FreeSwitchGateway extends Observable implements IEslEventListener {
         // log.info ("Conference [{}] Action [{}]", confName, sb.toString());
     }
 
+    
+   
+    
+    
     public void conferenceEventTransfer(String uniqueId, String confName, int confSize, EslEvent event) {
         //Noop
     }
@@ -252,9 +260,44 @@ public class FreeSwitchGateway extends Observable implements IEslEventListener {
     {
         return new Integer(e.getEventHeaders().get("Member-ID"));
     }
+    private String getInnoUniqueIdFromEvent(EslEvent e)
+    {
+        return e.getEventHeaders().get("Inno-Unique-ID");
+    }
 
 	public void shutdown() {
 		// TODO Auto-generated method stub
+		
+	}
+
+	@Override
+	public void conferenceEventJoin(String uniqueId, String confName,
+			int confSize, EslEvent event) {
+		Integer memberId = getMemeberIdFromEvent(event);
+    	String innoUserUnique = getInnoUniqueIdFromEvent(event);
+    	
+    	StringBuilder sb = new StringBuilder("");
+        sb.append(uniqueId);
+        Object[] args = new Object[5];
+        args[0] = confName;
+        args[1] = confSize;
+        args[2] = sb.toString();
+        args[3] = innoUserUnique;
+        args[4] = memberId;
+        
+        
+   //     IConnection con = Red5.getConnectionLocal();
+        
+        //Red5.getConnectionLocal().get
+        ParticipantJoinedEvent pj = new ParticipantJoinedEvent(""+memberId, confName,
+        		""+memberId, innoUserUnique, true, true);
+        audioEventListener.handleConferenceEvent(pj);
+
+        
+      
+        log.info("Conference join: uniqueId "+uniqueId+"  confName "+confName+" confSize "+confSize+"  innoUserUnique "+innoUserUnique+"  callerUsername  "+memberId+"   event  "+event);
+        
+ 
 		
 	}
 

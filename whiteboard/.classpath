@@ -57,7 +57,7 @@
 	<classpathentry kind="var" path="RED5_HOME/lib/logback-classic-0.9.26.jar"/>
 	<classpathentry kind="var" path="RED5_HOME/lib/logback-core-0.9.26.jar"/>
 	<classpathentry kind="lib" path="WEB-INF/lib/mysql-connector-java-5.1.7-bin.jar"/>
-	<classpathentry kind="lib" path="WEB-INF/lib/org.freeswitch.esl.client-0.9.0-SNAPSHOT.jar"/>
+	<classpathentry kind="lib" path="WEB-INF/lib/org.freeswitch.esl.client-0.9.0-SNAPSHOT.jar" sourcepath="/org.freeswitch.esl.client.netty"/>
 	<classpathentry kind="lib" path="WEB-INF/lib/netty-3.1.5.GA.jar"/>
 	<classpathentry kind="lib" path="WEB-INF/lib/spring-integration-core-2.0.3.RELEASE.jar"/>
 	<classpathentry kind="output" path="WEB-INF/classes"/>
