@@ -35,24 +35,24 @@ public class SimpleMessageProducer {
 
 	protected int numberOfMessages = 1;
 
-	String txt=null;
+	//String txt=null;
 	
-	public synchronized void  sendMessage(String msg) {
-//		txt = msg;
-//		MessageCreator creator = new MessageCreator() {
-//			public Message createMessage(Session session) {
-//				TextMessage message = null;
-//				try {
-//					message = session.createTextMessage();
-//					message.setStringProperty("text", txt);
-//				} catch (JMSException e) {
-//					e.printStackTrace();
-//				}
-//				return message;
-//			}
-//		};
-//
-//		jmsTemplate.send(destination, creator);
+	public synchronized void  sendMessage(final String msg) {
+		//txt = msg;
+		MessageCreator creator = new MessageCreator() {
+			public Message createMessage(Session session) {
+				TextMessage message = null;
+				try {
+					message = session.createTextMessage();
+					message.setStringProperty("text", msg);
+				} catch (JMSException e) {
+					e.printStackTrace();
+				}
+				return message;
+			}
+		};
+
+		
 	}
 
 	// public void sendMessages(final DocConversionBean docBean)

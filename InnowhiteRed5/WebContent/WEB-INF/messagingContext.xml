@@ -45,7 +45,7 @@
 
 	<bean id="roomMessageService" class="com.innowhite.red5.messaging.SimpleMessageProducer">
 		<property name="jmsTemplate" ref="producerTemplate"></property>
-		<property name="destination" ref="destination"></property>
+		
 
 
 	</bean>
