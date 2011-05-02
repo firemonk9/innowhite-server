@@ -14,7 +14,7 @@
 		<property name="locations">
 			<list>
 				
-				<value>db.properties</value>
+				<value>innowhite.properties</value>
 			</list>
 		</property>
 	</bean>

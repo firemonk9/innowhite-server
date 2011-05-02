@@ -84,7 +84,7 @@ public class WhiteboardDataMessageProducer {
 				// message.setInt("conversionID", docBean.getConversionID());
 				// message.setString("filePath", docBean.getFilePath());
 				// message.setString("serviceType", docBean.getServiceType());
-				message.setIntProperty("messageCount", 1);
+				//message.setIntProperty("messageCount", 1);
 				// message.setString("serverFilePath",
 				// docBean.getServerFilePath());
 

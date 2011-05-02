@@ -11,24 +11,29 @@
 	xmlns:jee="http://www.springframework.org/schema/jee" xmlns:jms="http://www.springframework.org/schema/jms"
 	xmlns:lang="http://www.springframework.org/schema/lang" xmlns:p="http://www.springframework.org/schema/p">
 
-	<!-- Root Context: defines shared resources visible to all other web components -->
-		
-			<!--  A connection to ActiveMQ -->
-	<bean id="amqConnectionFactory"
-		  class="org.apache.activemq.ActiveMQConnectionFactory"
-		  p:brokerURL="tcp://messaging.innowhite.com:61616"/>
-		  
 
-	<!-- A cached connection to wrap the ActiveMQ connection --> 
-<!-- 	<bean id="cachedConnectionFactory"  -->
-<!-- 	    class="org.springframework.jms.connection.CachingConnectionFactory" -->
-<!-- 	    p:targetConnectionFactory-ref="amqConnectionFactory"  -->
-<!-- 	    p:sessionCacheSize="10" /> -->
-		
-		
-		<!-- A POJO that implements the JMS message listener for Whiteboard Data-->
+
+	<import resource="db-context.xml" />
+
+	<!-- Root Context: defines shared resources visible to all other web components -->
+
+	<!-- A connection to ActiveMQ -->
+	<bean id="amqConnectionFactory" class="org.apache.activemq.ActiveMQConnectionFactory"
+		p:brokerURL="tcp://messaging.innowhite.com:61616" />
+
+
+	<!-- A cached connection to wrap the ActiveMQ connection -->
+	<!-- <bean id="cachedConnectionFactory" -->
+	<!-- class="org.springframework.jms.connection.CachingConnectionFactory" -->
+	<!-- p:targetConnectionFactory-ref="amqConnectionFactory" -->
+	<!-- p:sessionCacheSize="10" /> -->
+
+
+	<!-- A POJO that implements the JMS message listener for Whiteboard Data -->
 	<bean id="simpleMessageListener"
 		class="com.innowhite.PlayBackWebApp.messaging.WhiteboardDataMsgListener">
+
+		<property name="whiteboardDataDao" ref="whiteboardDataDao" />
 	</bean>
 
 
@@ -38,5 +43,6 @@
 		<jms:listener destination="Innowhite.whiteboardData" ref="simpleMessageListener"
 			method="onMessage" />
 	</jms:listener-container>
-		
+
+	
 </beans>
