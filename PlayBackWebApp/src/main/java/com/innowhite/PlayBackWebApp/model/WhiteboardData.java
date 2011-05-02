@@ -5,12 +5,14 @@ import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
+import javax.persistence.Table;
 
 
 
 
 
 @Entity
+@Table(name="whiteboard_data")
 public class WhiteboardData {
 
 	@Id
@@ -45,6 +47,7 @@ public class WhiteboardData {
 	
 	// points is a string delimited with # and ,
 	// the format is x,y#x,y#...
+	//@Column(length=3000)
 	String points;
 	String sprText;
 	String txtType;
@@ -213,7 +216,7 @@ public class WhiteboardData {
 	}
 	
 	
-	@Column(length=3000)
+	//@Column(length=3000)
 	public String getPoints() {
 		return points;
 	}
