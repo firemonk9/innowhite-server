@@ -109,6 +109,8 @@ public class Main extends MultiThreadedApplicationAdapter {
 			ISharedObject objectDrawingSO = this.getSharedObject(Red5
 					.getConnectionLocal().getScope(), "ObjectDrawingSO");
 
+			IScope scope = Red5.getConnectionLocal().getScope();
+			
 			// this.get
 			// this.
 			RoomVO roomVO = shapeSeqMap.get(Red5.getConnectionLocal()
@@ -135,8 +137,11 @@ public class Main extends MultiThreadedApplicationAdapter {
 			SavingData.saveToFile(v, Red5.getConnectionLocal().getScope()
 					.getName());
 
+			
+			long l = (new Date()).getTime() -  (Long)scope.getAttribute("START_TIME");
+			
 			messagingService.sendWhiteboardData(v,Red5.getConnectionLocal().getScope()
-					.getName());
+					.getName(),l);
 			
 			// log.debug("     " + num);
 		} catch (Exception e) {

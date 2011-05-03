@@ -32,7 +32,7 @@ public class WhiteboardDataMessageProducer {
 
 	String txt = null;
 
-	public void sendMessages(final ShapeEventsVO docBean, final String roomName)
+	public void sendMessages(final ShapeEventsVO docBean, final String roomName, final long l)
 			throws JmsException {
 
 		// final String payload = "Message [" + i + "] sent at: "+ new Date();
@@ -61,7 +61,7 @@ public class WhiteboardDataMessageProducer {
 				message.setString("secondName", docBean.getSecondName());
 
 				message.setInt("rotation", docBean.getRotation());
-				message.setLong("objDate", docBean.getObjDate());
+				message.setLong("objDate", l);
 
 				message.setInt("penthickness", docBean.getPenthickness());
 				message.setInt("versionNumber", docBean.getVersionNumber());

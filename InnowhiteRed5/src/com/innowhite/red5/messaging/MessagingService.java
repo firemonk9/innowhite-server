@@ -60,9 +60,9 @@ public class MessagingService {
 	
 	
 	/* To send any message about room(room start, room end) Queue.*/
-	public void sendWhiteboardData(ShapeEventsVO msg, String roomName){
+	public void sendWhiteboardData(ShapeEventsVO msg, String roomName, long l){
 		log.debug("entered sendRoomMessage msg:"+msg);
-		whiteboardDataMessageService.sendMessages(msg,roomName);
+		whiteboardDataMessageService.sendMessages(msg,roomName,l);
 	}
 	
 
