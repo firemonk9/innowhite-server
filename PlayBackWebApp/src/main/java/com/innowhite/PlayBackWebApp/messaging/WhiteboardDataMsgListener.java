@@ -6,16 +6,16 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 
-import com.innowhite.PlayBackWebApp.model.WhiteboardDataDao;
+import com.innowhite.PlayBackWebApp.service.WhiteboardDataService;
 
 
 public class WhiteboardDataMsgListener {
 
 	@Autowired
-	WhiteboardDataDao whiteboardDataDao;	
+	WhiteboardDataService whiteboardDataDao;	
 	
 	
-public void setWhiteboardDataDao(WhiteboardDataDao whiteboardDataDao) {
+public void setWhiteboardDataDao(WhiteboardDataService whiteboardDataDao) {
 		this.whiteboardDataDao = whiteboardDataDao;
 	}
 

@@ -13,7 +13,22 @@
 
 
 
-	<import resource="db-context.xml" />
+
+	<import resource="classpath:/app-context.xml"/>	
+
+
+
+	<bean id="placeholderConfig"
+		class="org.springframework.beans.factory.config.PropertyPlaceholderConfigurer">
+		<property name="locations">
+			<list>
+				
+				<value>classpath:db.properties</value>
+			</list>
+		</property>
+	</bean>
+
+<!-- 	<import resource="db-context.xml" /> -->
 
 	<!-- Root Context: defines shared resources visible to all other web components -->
 
@@ -33,7 +48,7 @@
 	<bean id="simpleMessageListener"
 		class="com.innowhite.PlayBackWebApp.messaging.WhiteboardDataMsgListener">
 
-		<property name="whiteboardDataDao" ref="whiteboardDataDao" />
+<!-- 		<property name="whiteboardDataDao" ref="whiteboardDataDao" /> -->
 	</bean>
 
 
@@ -43,6 +58,14 @@
 		<jms:listener destination="Innowhite.whiteboardData" ref="simpleMessageListener"
 			method="onMessage" />
 	</jms:listener-container>
+
+
+	<bean id="whiteboardDataService" name="whiteboardDataService"
+		class="com.innowhite.PlayBackWebApp.service.WhiteboardDataService">
+		
+		<property name="whiteboardDataDao" ref="whiteboardDataDao" />
+		
+	</bean>
 
 	
 </beans>

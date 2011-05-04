@@ -1,22 +1,16 @@
-package com.innowhite.PlayBackWebApp.model;
-
-import javax.persistence.Column;
-import javax.persistence.Entity;
-import javax.persistence.GeneratedValue;
-import javax.persistence.GenerationType;
-import javax.persistence.Id;
-import javax.persistence.Table;
+package com.innowhite.PlayBackWebApp.service;
 
 
 
 
 
-@Entity
-@Table(name="whiteboard_data")
+
+//@Entity
+//@Table(name="whiteboard_data")
 public class WhiteboardData {
 
-	@Id
-	@GeneratedValue(strategy=GenerationType.AUTO)
+//	@Id
+//	@GeneratedValue(strategy=GenerationType.AUTO)
 	private Long id;
 	
 	

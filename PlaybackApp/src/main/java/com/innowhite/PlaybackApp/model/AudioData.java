@@ -29,7 +29,7 @@ public class AudioData implements Serializable{
 	Long endTime;
 	String filePath;
 	String roomName;
-	
+	String temp;
 	public String getRoomName() {
 		return roomName;
 	}
