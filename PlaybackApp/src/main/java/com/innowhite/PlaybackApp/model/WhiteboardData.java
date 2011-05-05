@@ -165,7 +165,7 @@ public class WhiteboardData implements Serializable{
 		if(mainscalex.isNaN())
 			mainscalex=1.0f;
 		
-		System.err.println("mainscalex::"+mainscalex);
+		//System.err.println("mainscalex::"+mainscalex);
 		this.mainscalex = mainscalex;
 	}
 	public float getMainscaley() {
