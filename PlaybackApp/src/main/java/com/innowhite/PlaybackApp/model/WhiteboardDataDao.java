@@ -6,6 +6,7 @@ import java.util.List;
 import org.hibernate.Query;
 import org.hibernate.SessionFactory;
 import org.hibernate.classic.Session;
+import org.hibernate.transform.Transformers;
 import org.springframework.transaction.annotation.Transactional;
 
 public class WhiteboardDataDao {
@@ -18,9 +19,13 @@ public class WhiteboardDataDao {
 		
 		Session session = sessionFactory.getCurrentSession();
 		
-		Query query =  session.createSQLQuery("select * from " +
-				"whiteboard_data a where a.roomname=:roomname")
-		.setString("roomname", roomId);
+		Query query =  session.createSQLQuery("select actionType, bordercolor, fillcolor, imageURL, " +
+				"mainscalex, mainscaley, objDate, objName, objType, penthickness, points," +
+				" roomName, rotation, secondName, secondSeq, seq, shpHeight, shpWidth, sprText, " +
+				"txtFont, txtType, userId, versionNumber, wbNumber, x1, x2, xpos, y1, y2, ypos" +
+				" from whiteboard_data a where a.roomname=:roomname")
+		.setString("roomname", roomId).setResultTransformer(Transformers.aliasToBean(WhiteboardData.class));
+
 		
 		  @SuppressWarnings("rawtypes")
 		List list2 = query.list();

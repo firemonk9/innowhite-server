@@ -32,6 +32,11 @@
 	<bean id="whiteboardDataDestination" class="org.apache.activemq.command.ActiveMQQueue">
 		<constructor-arg value="Innowhite.whiteboardData" />
 	</bean>
+	
+	<bean id="audioDataDestination" class="org.apache.activemq.command.ActiveMQQueue">
+		<constructor-arg value="Innowhite.audioData" />
+	</bean>
+	
 
 	<!-- A JmsTemplate instance that uses the cached connection and destination -->
 	<bean id="producerTemplate" class="org.springframework.jms.core.JmsTemplate"
@@ -42,20 +47,26 @@
 	<bean id="whiteboardDataProducer" class="org.springframework.jms.core.JmsTemplate"
 		p:connectionFactory-ref="cachedConnectionFactory"
 		p:defaultDestination-ref="whiteboardDataDestination" />
+		
+	<bean id="audioDataProducer" class="org.springframework.jms.core.JmsTemplate"
+		p:connectionFactory-ref="cachedConnectionFactory"
+		p:defaultDestination-ref="audioDataDestination" />	
 
 	<bean id="roomMessageService" class="com.innowhite.red5.messaging.SimpleMessageProducer">
 		<property name="jmsTemplate" ref="producerTemplate"></property>
-		
-
 
 	</bean>
 
 	<bean id="whiteboardDataMessageService" class="com.innowhite.red5.messaging.WhiteboardDataMessageProducer">
 		<property name="jmsTemplate" ref="whiteboardDataProducer"></property>
-	
-
-
 	</bean>
+
+	<bean id="audioDataMessageService" class="com.innowhite.red5.messaging.AudioMessageProducer">
+		<property name="jmsTemplate" ref="audioDataProducer"></property>
+	</bean>
+
+
+
 
 
 </beans>

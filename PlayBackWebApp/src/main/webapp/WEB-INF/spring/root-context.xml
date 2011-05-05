@@ -48,7 +48,7 @@
 	<bean id="simpleMessageListener"
 		class="com.innowhite.PlayBackWebApp.messaging.WhiteboardDataMsgListener">
 
-<!-- 		<property name="whiteboardDataDao" ref="whiteboardDataDao" /> -->
+ 		<property name="whiteboardDataService" ref="whiteboardDataService" /> 
 	</bean>
 
 

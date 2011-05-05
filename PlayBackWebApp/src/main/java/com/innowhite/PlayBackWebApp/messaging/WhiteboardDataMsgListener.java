@@ -11,12 +11,15 @@ import com.innowhite.PlayBackWebApp.service.WhiteboardDataService;
 
 public class WhiteboardDataMsgListener {
 
-	@Autowired
-	WhiteboardDataService whiteboardDataDao;	
 	
 	
-public void setWhiteboardDataDao(WhiteboardDataService whiteboardDataDao) {
-		this.whiteboardDataDao = whiteboardDataDao;
+	WhiteboardDataService whiteboardDataService;	
+	
+	
+
+
+public void setWhiteboardDataService(WhiteboardDataService whiteboardDataService) {
+		this.whiteboardDataService = whiteboardDataService;
 	}
 
 private static final Logger log = LoggerFactory.getLogger(WhiteboardDataMsgListener.class);
@@ -28,7 +31,7 @@ private static final Logger log = LoggerFactory.getLogger(WhiteboardDataMsgListe
 		try {
 			
 			
-			whiteboardDataDao.saveWhitebordObj(message);
+			whiteboardDataService.saveWhitebordObj(message);
 			
 
 

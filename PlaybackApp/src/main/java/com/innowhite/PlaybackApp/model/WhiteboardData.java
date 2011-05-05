@@ -278,7 +278,7 @@ public class WhiteboardData implements Serializable{
 	public void setUserId(String userId) {
 		this.userId = userId;
 	}
-	public void setId(Long id) {
+	public void setId(long id) {
 		this.id = id;
 	}
 	public Long getId() {
