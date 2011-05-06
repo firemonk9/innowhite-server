@@ -53,10 +53,6 @@ public class Main extends MultiThreadedApplicationAdapter {
 	FreeswitchServiceProvider freeSwitchServiceProvider;
 	MessagingService messagingService;
 	
-	
-
-
-	
 
 	public void setMessagingService(MessagingService messagingService) {
 		this.messagingService = messagingService;
