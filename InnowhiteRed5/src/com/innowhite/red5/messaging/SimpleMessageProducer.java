@@ -33,7 +33,7 @@ public class SimpleMessageProducer {
 		this.jmsTemplate = jmsTemplate;
 	}
 
-	protected int numberOfMessages = 1;
+	//protected int numberOfMessages = 1;
 
 	//String txt=null;
 	

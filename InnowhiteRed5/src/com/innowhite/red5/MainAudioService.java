@@ -6,13 +6,16 @@ import java.util.List;
 import org.red5.logging.Red5LoggerFactory;
 import org.red5.server.api.so.ISharedObject;
 import org.slf4j.Logger;
+import org.springframework.jms.core.JmsTemplate;
 
+import com.innowhite.red5.audio.events.AudioFileStartStopEvent;
 import com.innowhite.red5.audio.events.ConferenceEvent;
 import com.innowhite.red5.audio.events.ParticipantJoinedEvent;
 import com.innowhite.red5.audio.events.ParticipantLeftEvent;
 import com.innowhite.red5.audio.events.ParticipantLockedEvent;
 import com.innowhite.red5.audio.events.ParticipantMutedEvent;
 import com.innowhite.red5.audio.events.ParticipantTalkingEvent;
+import com.innowhite.red5.messaging.AudioMessageProducer;
 
 public class MainAudioService {
 
@@ -28,6 +31,14 @@ public class MainAudioService {
 	// voiceRooms = new ConcurrentHashMap<String, RoomInfo>();
 	// webRooms = new ConcurrentHashMap<String, RoomInfo>();
 	// }
+
+	
+	private AudioMessageProducer audioDataMessageService;
+	
+	public void setAudioDataMessageService(
+			AudioMessageProducer audioDataMessageService) {
+		this.audioDataMessageService = audioDataMessageService;
+	}
 
 	public void addSharedObject(String webRoom, String voiceRoom,
 			ISharedObject so) {
@@ -200,6 +211,33 @@ public class MainAudioService {
 		}
 	}
 
+	
+	
+	/*Every room, when the audio conf starts, this function gets called to notify of the record file name. and record end state.
+	 * */
+	private void fileRecordStartStop(String confRoom, String participant, String startRecordfile, String stopRecordFile) {
+		log.debug("room ::  " + confRoom + "  Participant " + participant+"  startRecordfile: "+startRecordfile+"  stopRecordFile: "+stopRecordFile);
+		// RoomInfo soi = voiceRooms.get(room);
+
+		String room = UserCacheService.getActualRoom(confRoom);
+		
+		if (room == null) {
+			log.warn(" the room is null for getting the file name --  Participant "
+					+ participant + " room " + room+"  confRoom: "+confRoom+"  startRecordfile: "+startRecordfile+"  stopRecordFile: "+stopRecordFile);
+			return;
+		}
+		
+		if(startRecordfile != null)
+			audioDataMessageService.sendMessage("RECORD_ROOM_START_"+room+"_"+startRecordfile);
+		else if(stopRecordFile != null)
+			audioDataMessageService.sendMessage("RECORD_ROOM_STOP_"+room+"_"+stopRecordFile);
+		
+	}
+	
+	
+	
+	
+	
 	public void handleConferenceEvent(ConferenceEvent event) {
 
 		log.debug("Hurray --------- " + event);
@@ -221,7 +259,11 @@ public class MainAudioService {
 			} else if (event instanceof ParticipantLockedEvent) {
 				ParticipantLockedEvent ple = (ParticipantLockedEvent) event;
 				locked(ple.getRoom(), ple.getParticipantId(), ple.isLocked());
+			}else if (event instanceof AudioFileStartStopEvent) {
+				AudioFileStartStopEvent ple = (AudioFileStartStopEvent) event;
+				fileRecordStartStop(ple.getRoom(), ple.getParticipantId(), ple.getStartFile(),ple.getStopFile());
 			}
+			
 
 		} catch (Exception e) {
 			e.printStackTrace();
@@ -237,4 +279,6 @@ public class MainAudioService {
 		this.main = main;
 	}
 
+	
+	
 }

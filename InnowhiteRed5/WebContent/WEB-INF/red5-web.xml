@@ -11,7 +11,7 @@
 
 	<import resource="messagingContext.xml" />
 	<import resource="innowhite-voice-freeswitch.xml" />
-<!-- 	<import resource="db-context.xml" /> -->
+	<!-- <import resource="db-context.xml" /> -->
 
 	<bean id="placeholderConfig"
 		class="org.springframework.beans.factory.config.PropertyPlaceholderConfigurer">
@@ -49,22 +49,19 @@
 		<property name="freeSwitchServiceProvider">
 			<ref bean="freeSwitchServiceProvider" />
 		</property>
-		
+
 		<property name="messagingService">
 			<ref bean="messagingService" />
 		</property>
-		
-		
+
+
 
 	</bean>
 
 
 	<bean id="mainAudioService" class="com.innowhite.red5.MainAudioService">
-
-		<property name="main">
-			<ref bean="web.handler" />
-		</property>
-
+		<property name="main" ref="web.handler" />
+		<property name="audioDataMessageService" ref="audioDataMessageService" />
 	</bean>
 
 
@@ -87,11 +84,11 @@
 		<property name="roomMessageService">
 			<ref bean="roomMessageService" />
 		</property>
-		
+
 		<property name="whiteboardDataMessageService">
 			<ref bean="whiteboardDataMessageService" />
 		</property>
-		
+
 	</bean>
 
 
