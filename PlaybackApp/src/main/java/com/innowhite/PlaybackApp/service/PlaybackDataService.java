@@ -1,6 +1,5 @@
 package com.innowhite.PlaybackApp.service;
 
-import java.util.ArrayList;
 import java.util.List;
 
 import org.springframework.beans.factory.BeanFactory;
@@ -8,7 +7,6 @@ import org.springframework.context.support.ClassPathXmlApplicationContext;
 
 import com.innowhite.PlaybackApp.model.WhiteboardData;
 import com.innowhite.PlaybackApp.model.WhiteboardDataDao;
-import com.innowhite.PlaybackApp.model.WhitebordDTO;
 
 public class PlaybackDataService {
 

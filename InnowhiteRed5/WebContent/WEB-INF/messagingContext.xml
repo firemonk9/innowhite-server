@@ -22,7 +22,9 @@
 		class="org.springframework.jms.connection.CachingConnectionFactory"
 		p:targetConnectionFactory-ref="amqConnectionFactory"
 		p:sessionCacheSize="10" />
-
+		
+		
+		
 	<!-- A destination in ActiveMQ -->
 	<bean id="destination" class="org.apache.activemq.command.ActiveMQQueue">
 		<constructor-arg value="Innowhite.roomStatus" />
@@ -32,11 +34,47 @@
 	<bean id="whiteboardDataDestination" class="org.apache.activemq.command.ActiveMQQueue">
 		<constructor-arg value="Innowhite.whiteboardData" />
 	</bean>
-	
+
 	<bean id="audioDataDestination" class="org.apache.activemq.command.ActiveMQQueue">
 		<constructor-arg value="Innowhite.audioData" />
 	</bean>
+
+
+
+<!-- 	<bean id="roomConfNameMapMessageListener" -->
+<!-- 		class="com.innowhite.red5.messaging.RoomConfNameMapMessageListener"> -->
+
 	
+<!-- 	</bean> -->
+	
+<!-- 	<jms:listener-container container-type="default" -->
+<!-- 		connection-factory="amqConnectionFactory" acknowledge="auto" destination-type="topic"> -->
+<!-- 		<jms:listener destination="Innowhite.roomSecurity" ref="roomConfNameMapMessageListener" -->
+<!-- 			method="onMessage" /> -->
+<!-- 	</jms:listener-container> -->
+
+
+	<!-- <bean id="messageListenerAdapter" class="org.springframework.jms.listener.adapter.MessageListenerAdapter"> -->
+	<!-- <property name="delegate" ref="messageListener" /> -->
+	<!-- <property name="defaultListenerMethod" value="onMessage" /> -->
+	<!-- <property name="messageConverter" ref="messageConverter" /> -->
+	<!-- </bean> -->
+
+	<!-- <jms:listener-container connection-factory="jmsTopicConnectionFactory" 
+		destination-type="topic" container-type="default"> -->
+	<!-- <jms:listener destination="STATUS" ref="messageListenerAdapter" method="processMyMessage"/> -->
+	<!-- </jms:listener-container> -->
+    
+    
+    
+    <bean name="topicListener" class="com.innowhite.red5.messaging.RoomConfNameMapMessageListener"/>
+
+<jms:listener-container connection-factory="cachedConnectionFactory" cache="none" destination-type="topic">
+  <jms:listener destination="Innowhite.roomSecurity" ref="topicListener" />
+</jms:listener-container>
+    
+    
+
 
 	<!-- A JmsTemplate instance that uses the cached connection and destination -->
 	<bean id="producerTemplate" class="org.springframework.jms.core.JmsTemplate"
@@ -47,17 +85,18 @@
 	<bean id="whiteboardDataProducer" class="org.springframework.jms.core.JmsTemplate"
 		p:connectionFactory-ref="cachedConnectionFactory"
 		p:defaultDestination-ref="whiteboardDataDestination" />
-		
+
 	<bean id="audioDataProducer" class="org.springframework.jms.core.JmsTemplate"
 		p:connectionFactory-ref="cachedConnectionFactory"
-		p:defaultDestination-ref="audioDataDestination" />	
+		p:defaultDestination-ref="audioDataDestination" />
 
 	<bean id="roomMessageService" class="com.innowhite.red5.messaging.SimpleMessageProducer">
 		<property name="jmsTemplate" ref="producerTemplate"></property>
 
 	</bean>
 
-	<bean id="whiteboardDataMessageService" class="com.innowhite.red5.messaging.WhiteboardDataMessageProducer">
+	<bean id="whiteboardDataMessageService"
+		class="com.innowhite.red5.messaging.WhiteboardDataMessageProducer">
 		<property name="jmsTemplate" ref="whiteboardDataProducer"></property>
 	</bean>
 

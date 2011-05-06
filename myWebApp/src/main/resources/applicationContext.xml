@@ -55,6 +55,8 @@
 	<bean id="roomSecurityMessageProducer"
 		class="com.innowhite.transformation.messages.RoomNameMessageProducer">
 		<property name="jmsTemplate" ref="roomSecurityProducerTemplate"></property>
+		<property name="destination" ref="roomSecurityDestination"></property>
+		
 	</bean>
 
 

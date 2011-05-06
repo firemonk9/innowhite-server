@@ -41,6 +41,8 @@ public class Constants {
 		public static final String URL_USER_DELIMITER = "5i7";
 		public static final String COURSE_DELIMITER = ":,:";
 		public static final String API_DELIMITER = "__";
+		public static final String MSG_DELIMITER = "_";
+		
 		public static final String DEFAULT_COURSE = "*";
 		public static final String SPACE = " ";
 		public static final String EMPTY_QUOT = "";
