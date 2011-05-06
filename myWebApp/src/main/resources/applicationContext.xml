@@ -1,0 +1,62 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans"
+	xmlns:p="http://www.springframework.org/schema/p" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xmlns:context="http://www.springframework.org/schema/context"
+	xmlns:jee="http://www.springframework.org/schema/jee" xmlns:jms="http://www.springframework.org/schema/jms"
+	xmlns:lang="http://www.springframework.org/schema/lang" xmlns:util="http://www.springframework.org/schema/util"
+	xsi:schemaLocation="http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans-3.0.xsd
+		http://www.springframework.org/schema/context http://www.springframework.org/schema/context/spring-context-3.0.xsd
+		http://www.springframework.org/schema/jee http://www.springframework.org/schema/jee/spring-jee-3.0.xsd
+		http://www.springframework.org/schema/jms http://www.springframework.org/schema/jms/spring-jms-3.0.xsd
+		http://www.springframework.org/schema/lang http://www.springframework.org/schema/lang/spring-lang-3.0.xsd
+		http://www.springframework.org/schema/util http://www.springframework.org/schema/util/spring-util-3.0.xsd">
+
+
+	<!-- A connection to ActiveMQ -->
+	<bean id="amqConnectionFactory" class="org.apache.activemq.ActiveMQConnectionFactory"
+		p:brokerURL="tcp://messaging.innowhite.com:61616" />
+
+
+	<!-- A cached connection to wrap the ActiveMQ connection -->
+	<bean id="cachedConnectionFactory"
+		class="org.springframework.jms.connection.CachingConnectionFactory"
+		p:targetConnectionFactory-ref="amqConnectionFactory"
+		p:sessionCacheSize="10" />
+
+	<!-- A destination in ActiveMQ -->
+	<bean id="destination" class="org.apache.activemq.command.ActiveMQQueue">
+		<constructor-arg value="FOO.TEST" />
+	</bean>
+
+	<!-- A destination in ActiveMQ -->
+	<bean id="roomSecurityDestination" class="org.apache.activemq.command.ActiveMQTopic">
+		<constructor-arg value="Innowhite.roomSecurity" />
+	</bean>
+
+
+
+	<!-- A JmsTemplate instance that uses the cached connection and destination -->
+	<bean id="producerTemplate" class="org.springframework.jms.core.JmsTemplate"
+		p:connectionFactory-ref="cachedConnectionFactory"
+		p:defaultDestination-ref="destination" />
+
+
+	<!-- A JmsTemplate instance that uses the cached connection and destination -->
+	<bean id="roomSecurityProducerTemplate" class="org.springframework.jms.core.JmsTemplate"
+		p:connectionFactory-ref="cachedConnectionFactory"
+		p:defaultDestination-ref="roomSecurityDestination" />
+
+
+	<bean id="messageProducer"
+		class="com.innowhite.transformation.messages.SimpleMessageProducer">
+		<property name="jmsTemplate" ref="producerTemplate"></property>
+	</bean>
+
+	<bean id="roomSecurityMessageProducer"
+		class="com.innowhite.transformation.messages.RoomNameMessageProducer">
+		<property name="jmsTemplate" ref="roomSecurityProducerTemplate"></property>
+	</bean>
+
+
+
+</beans>

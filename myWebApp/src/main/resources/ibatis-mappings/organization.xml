@@ -1,0 +1,41 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE sqlMap PUBLIC "-//ibatis.apache.org//DTD SQL Map 2.0//EN"
+"http://ibatis.apache.org/dtd/sql-map-2.dtd">
+<sqlMap>
+
+<!--
+
+		
+      <parameterMap id="employeeValues" class="java.util.Map">
+	      <parameter property="empname" jdbcType="INTEGER"/>
+    	  <parameter property="jobdesc" jdbcType="VARCHAR"/>
+      </parameterMap>
+
+      <insert id="setEmployee" parameterMap="employeeValues">
+      		INSERT INTO employee
+           		(empname,jobdesc)
+     		VALUES
+           		(?,?)
+           		           		
+           	<selectKey keyProperty="emp_id" resultClass="java.lang.Integer" >
+				SELECT @@identity
+			</selectKey>
+      </insert>           
+      
+      -->
+      
+      <resultMap id="orgMapId" class="com.innowhite.whiteboard.persistence.beans.OrganizationVO">
+	      <result property="orgId" column="id" />
+	      <result property="parentOrg" column="parent_org" />
+	      <result property="orgName" column="org_name" />
+	      <result property="startDate" column="start_date" />
+	      <result property="expiryDate" column="exp_date" />
+	      <result property="saltKey" column="salt_key" />
+	      <result property="insertedDate" column="inserted_date" />
+	      <result property="updatedDate" column="updated_date" />
+	      </resultMap>
+	      <select id="getOrganizationBean" resultMap="orgMapId" parameterClass="java.lang.String">
+      select id, parent_org, org_name, start_date, exp_date, salt_key, inserted_date, updated_date from organization where parent_org=#parentOrg#;      
+      </select>
+</sqlMap>
+ 
