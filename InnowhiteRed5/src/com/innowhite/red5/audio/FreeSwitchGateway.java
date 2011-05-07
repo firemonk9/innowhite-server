@@ -293,7 +293,7 @@ public class FreeSwitchGateway extends Observable implements IEslEventListener {
 			return new Integer(e.getEventHeaders().get("Member-ID"));
 
 		} catch (Exception ex) {
-			log.error(ex.getMessage(), ex);
+			log.warn("member id is null..");
 		}
 		return 0;
 	}

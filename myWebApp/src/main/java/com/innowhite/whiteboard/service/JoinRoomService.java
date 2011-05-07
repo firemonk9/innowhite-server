@@ -66,16 +66,16 @@ public class JoinRoomService {
 
 		String confNumber = "" + obj.getMeetingNumber();
 
-		if (!roomsMap.containsKey(roomId)) {
-			confNumber = confNumber.substring(2);
+	//	if (!roomsMap.containsKey(roomId)) {
+			//confNumber = confNumber.substring(2);
 			if (getMesgBean() != null) {
-				getMesgBean().sendMessage(roomId + "_" + confNumber);
-				roomsMap.put(roomId, roomId);
+				getMesgBean().sendMessage(roomId + "_" + confNumber+"_"+userId);
+				//roomsMap.put(roomId, roomId);
 			}else{
 				
 				log.warn(" active topic is null... ");
 			}
-		}
+	//	}
 
 		// UserCacheService.addInnoUniqueIDUser(confNumber,userId);
 		// roomSecurityMessageProducer.sendm

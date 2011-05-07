@@ -61,6 +61,8 @@ public class UserCacheService {
 	
 	
 	/*  Get the actual userId from innoUniqueIDUser and set in the con
+	 *   innoUniqueId = the first 2 digits of 6 digit personal extension
+	 *   actualUserID = actual user id.
 	 * */
 	public static void addInnoUniqueIDUser( String innoUniqueId,String actualUserID){
 		

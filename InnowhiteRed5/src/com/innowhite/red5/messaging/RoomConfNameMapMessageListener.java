@@ -35,10 +35,10 @@ public class RoomConfNameMapMessageListener implements MessageListener {
 		// .println("entered  onMessage of RoomConfNameMapMessageListener.."
 		// + message);
 		log.debug("entered  onMessage of RoomConfNameMapMessageListener..");
-
+		System.err.println("entered  onMessage of RoomConfNameMapMessageListener..");
 		if (message instanceof TextMessage) {
 			try {
-				// System.out.println(((TextMessage) message).getText());
+				System.out.println(" the msg is::  "+((TextMessage) message).getText());
 				String msg = ((TextMessage) message).getText();
 
 				populateCache(msg);
@@ -57,6 +57,8 @@ public class RoomConfNameMapMessageListener implements MessageListener {
 
 	private void populateCache(String msg) {
 
+		System.out.println("entered populateCache :: " + msg);
+		log.debug("entered populateCache :: " + msg);
 		if (msg != null) {
 			if (msg.indexOf("_") > 0) {
 				StringTokenizer st = new StringTokenizer(msg,
@@ -64,10 +66,28 @@ public class RoomConfNameMapMessageListener implements MessageListener {
 
 				String roomId = st.nextToken();
 				String confId = st.nextToken();
-
-				UserCacheService.addConfRoom(confId, roomId);
+				String userId = st.nextToken();
+				
+				
+				//roomId + "_" + confNumber+"_"+userId
+				
+				System.out.println("adding addConfRoom  :: roomId" + roomId+"  confId: "+confId+"  userId::"+userId);
+				log.debug("adding addConfRoom  :: roomId" + roomId+"  confId: "+confId+"  userId::"+userId);
+				String extension = confId.substring(2);
+				
+				if(UserCacheService.getActualRoom(extension) == null){	
+					UserCacheService.addConfRoom(extension, roomId);
+				}
+				
+				
+				UserCacheService.addInnoUniqueIDUser(confId, userId);
+				
+				
+				
 			}
 		}
+
+	
 	}
 
 	// private
