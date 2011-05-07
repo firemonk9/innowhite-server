@@ -50,7 +50,7 @@ public class AudioMessageProducer {
 				return message;
 			}
 		};
-
+		jmsTemplate.send(creator);
 		
 	}
 

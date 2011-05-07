@@ -216,10 +216,14 @@ public class MainAudioService {
 	/*Every room, when the audio conf starts, this function gets called to notify of the record file name. and record end state.
 	 * */
 	private void fileRecordStartStop(String confRoom, String participant, String startRecordfile, String stopRecordFile) {
-		log.debug("room ::  " + confRoom + "  Participant " + participant+"  startRecordfile: "+startRecordfile+"  stopRecordFile: "+stopRecordFile);
+		
+		log.debug("enter fileRecordStartStop room ::  " + confRoom + "  Participant " + participant+"  startRecordfile: "+startRecordfile+"  stopRecordFile: "+stopRecordFile);
+		System.err.println("enter fileRecordStartStop room ::  " + confRoom + "  Participant " + participant+"  startRecordfile: "+startRecordfile+"  stopRecordFile: "+stopRecordFile);
 		// RoomInfo soi = voiceRooms.get(room);
 
 		String room = UserCacheService.getActualRoom(confRoom);
+		
+		System.err.println(" in  fileRecordStartStop .. the room is "+room);
 		
 		if (room == null) {
 			log.warn(" the room is null for getting the file name --  Participant "
@@ -227,10 +231,11 @@ public class MainAudioService {
 			return;
 		}
 		
+		
 		if(startRecordfile != null)
-			audioDataMessageService.sendMessage("RECORD_ROOM_START_"+room+"_"+startRecordfile);
+			audioDataMessageService.sendMessage("RECORDSTART_"+room+"_"+startRecordfile);
 		else if(stopRecordFile != null)
-			audioDataMessageService.sendMessage("RECORD_ROOM_STOP_"+room+"_"+stopRecordFile);
+			audioDataMessageService.sendMessage("RECORDSTOP_"+room+"_"+stopRecordFile);
 		
 	}
 	
