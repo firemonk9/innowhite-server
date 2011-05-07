@@ -20,12 +20,17 @@ public class MessagingService {
 	 * @param args
 	 */
 	
-	SimpleMessageProducer simpleMessageProducer;
+	VideoStreamStatusMsgProducer videoMessageService;
 	
 	
 
-	public void setSimpleMessageProducer(SimpleMessageProducer simpleMessageProducer) {
-		this.simpleMessageProducer = simpleMessageProducer;
+	
+
+	
+
+	public void setVideoMessageService(
+			VideoStreamStatusMsgProducer videoMessageService) {
+		this.videoMessageService = videoMessageService;
 	}
 
 	public static void main(String[] args) {
@@ -40,7 +45,7 @@ public class MessagingService {
 	/* To send any message about room(room start, room end) Queue.*/
 	public void sendStreamMessage(String msg){
 		log.debug("entered sendRoomMessage msg:"+msg);
-		simpleMessageProducer.sendMessage(msg);
+		videoMessageService.sendMessage(msg);
 	}
 	
 	

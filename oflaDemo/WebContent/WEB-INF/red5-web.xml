@@ -113,8 +113,8 @@
 
 
 <bean id="messagingService" class="com.innowhite.red5.stream.messaging.MessagingService">
-		<property name="simpleMessageProducer">
-			<ref bean="simpleMessageProducer" />
+		<property name="videoMessageService">
+			<ref bean="videoMessageService" />
 		</property>
 	</bean>
 

@@ -11,10 +11,10 @@ import org.slf4j.LoggerFactory;
 import org.springframework.jms.core.JmsTemplate;
 import org.springframework.jms.core.MessageCreator;
 
-public class SimpleMessageProducer {
+public class VideoStreamStatusMsgProducer {
 
 	private static final Logger log = LoggerFactory
-			.getLogger(SimpleMessageProducer.class);
+			.getLogger(VideoStreamStatusMsgProducer.class);
 
 	protected JmsTemplate jmsTemplate;
 	protected Queue destination;

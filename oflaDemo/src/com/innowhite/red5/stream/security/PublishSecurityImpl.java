@@ -20,4 +20,9 @@ public class PublishSecurityImpl implements IStreamPublishSecurity{
 		return true;
 	}
 
+
+	
+	
+	
+
 }

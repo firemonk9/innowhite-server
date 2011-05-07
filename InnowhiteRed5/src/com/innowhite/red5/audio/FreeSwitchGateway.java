@@ -125,6 +125,17 @@ public class FreeSwitchGateway extends Observable implements IEslEventListener {
 		log.debug("mute called for room [{}] jobid [{}]", confRoom, jobId);
 	}
 
+	
+
+	public void invalidConference(String confRoom, Integer participant, Boolean mute) {
+		MuteParticipantCommand mpc = new MuteParticipantCommand(confRoom,
+				participant, mute, 0);
+		String jobId = managerConnection.getESLClient().sendAsyncApiCommand(
+				mpc.getCommand(), mpc.getCommandArgs());
+		log.debug("mute called for room [{}] jobid [{}]", confRoom, jobId);
+	}
+	
+	
 	// @Override
 	public void eject(String confRoom, Integer participant) {
 		EjectParticipantCommand mpc = new EjectParticipantCommand(confRoom,
