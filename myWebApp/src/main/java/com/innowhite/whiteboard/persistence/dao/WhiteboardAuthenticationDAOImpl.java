@@ -8,11 +8,14 @@ import java.util.Map;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+import org.springframework.beans.factory.BeanFactory;
 
 import com.ibatis.sqlmap.client.SqlMapClient;
+import com.innowhite.transformation.messages.VideoNameMessageProducer;
 import com.innowhite.whiteboard.persistence.IbatisManager;
 import com.innowhite.whiteboard.persistence.beans.OrganizationVO;
 import com.innowhite.whiteboard.persistence.beans.RoomVO;
+import com.innowhite.whiteboard.util.InnowhiteProperties;
 
 public class WhiteboardAuthenticationDAOImpl implements IWhiteboardAuthenticationDAO {
 
@@ -50,7 +53,9 @@ public class WhiteboardAuthenticationDAOImpl implements IWhiteboardAuthenticatio
 		}
 	}
 	
-	
+	/*Create a new stream Id and stores in DB. Sends a msg to topic for red5 apps to cache the streamId for security.
+	 * 
+	 * */
 	public static int createSubRoomID(String roomId, String roomType){
 		int x = 0;
 		try {
@@ -59,6 +64,14 @@ public class WhiteboardAuthenticationDAOImpl implements IWhiteboardAuthenticatio
 			hmMap.put("roomType", roomType);
 			x = (Integer) sqlMapClient.insert("createSubRoomID", hmMap);
 			log.debug(" createSubRoomID returned " + x);
+			
+			// 
+			BeanFactory factory = InnowhiteProperties.getBeanFactory();
+			VideoNameMessageProducer videoSecurityMessageProducer = (VideoNameMessageProducer) factory
+			.getBean("videoSecurityMessageProducer");
+			
+			videoSecurityMessageProducer.sendMessage(x+"_"+roomType);
+			
 		} catch (SQLException e) {
 
 			e.printStackTrace();

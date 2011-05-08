@@ -9,6 +9,7 @@ import org.red5.server.api.stream.IServerStream;
 import org.slf4j.Logger;
 
 import com.innowhite.red5.stream.messaging.MessagingService;
+import com.innowhite.red5.stream.messaging.VideoStreamNameListener;
 import com.innowhite.red5.stream.security.PublishSecurityImpl;
 
 public class Application extends MultiThreadedApplicationAdapter {
@@ -43,14 +44,18 @@ public class Application extends MultiThreadedApplicationAdapter {
     public void streamBroadcastStart(IBroadcastStream stream){
     	log.info("streamPublishStart:: "+stream.getPublishedName());
     	messagingService.sendStreamMessage(stream.getPublishedName()+"_STARTED");
-		System.out.println("streamPublishStart:: "+stream.getPublishedName()); 
+    	log.debug("streamPublishStart:: "+stream.getPublishedName()); 
     }
     
     @Override
     public void streamBroadcastClose(IBroadcastStream stream){
     	log.info("streamBroadcastClose:::  "+stream.getPublishedName());
     	messagingService.sendStreamMessage(stream.getPublishedName()+"_STOPPED");
-    	System.out.println("streamBroadcastClose:: "+stream.getPublishedName()); 
+    	
+    	
+    	VideoStreamNameListener.videoStreamIds.remove(stream.getPublishedName());
+    	
+    	log.debug("streamBroadcastClose:: "+stream.getPublishedName()); 
     }
     
 

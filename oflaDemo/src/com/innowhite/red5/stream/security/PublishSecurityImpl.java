@@ -6,7 +6,7 @@ import org.red5.server.api.stream.IStreamPublishSecurity;
 import org.slf4j.Logger;
 
 import com.innowhite.red5.stream.Application;
-import com.innowhite.red5.stream.messaging.ActiveRoomListener;
+import com.innowhite.red5.stream.messaging.VideoStreamNameListener;
 
 public class PublishSecurityImpl implements IStreamPublishSecurity{
 
@@ -16,7 +16,7 @@ public class PublishSecurityImpl implements IStreamPublishSecurity{
 	public boolean isPublishAllowed(IScope scope, String arg1, String arg2) {
 		
 		
-		if(scope.getName() != null && ActiveRoomListener.activeRoom.contains(scope.getName()))
+		if(scope.getName() != null && VideoStreamNameListener.videoStreamIds.contains(scope.getName()))
 		{
 			System.err.println("remove this isPublishAllowed ... "+scope.getName()+"  ip ");
 			return true;

@@ -12,12 +12,13 @@ import javax.jms.TextMessage;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
-public class ActiveRoomListener implements MessageListener {
+public class VideoStreamNameListener implements MessageListener {
 
-	public static  List<String> activeRoom = new ArrayList<String>();
+	
+	public static  List<String> videoStreamIds = new ArrayList<String>();
 
 	private static final Logger log = LoggerFactory
-			.getLogger(ActiveRoomListener.class);
+			.getLogger(VideoStreamNameListener.class);
 
 	@Override
 	public void onMessage(Message message) {
@@ -56,20 +57,19 @@ public class ActiveRoomListener implements MessageListener {
 			if (msg.indexOf("_") > 0) {
 				StringTokenizer st = new StringTokenizer(msg, "_");
 
-				String roomId = st.nextToken();
-				String confId = st.nextToken();
-				String userId = st.nextToken();
+				String streamId = st.nextToken();
+				String  streamType = st.nextToken();
 
 				// roomId + "_" + confNumber+"_"+userId
 
-				System.out.println("oflademo adding addConfRoom  :: roomId" + roomId
-						+ "  confId: " + confId + "  userId::" + userId);
-				log.debug("oflademo adding addConfRoom  :: roomId" + roomId
-						+ "  confId: " + confId + "  userId::" + userId);
+				System.out.println("oflademo adding addConfRoom  :: streamId" + streamId
+						+ "  streamType: " + streamType );
+				log.debug("oflademo adding addConfRoom  :: streamId" + streamId
+						+ "  streamType: " + streamType);
 				
 				
-				if(!activeRoom.contains(roomId)){
-					activeRoom.add(roomId);
+				if(!videoStreamIds.contains(streamId)){
+					videoStreamIds.add(streamId);
 				}
 				
 //

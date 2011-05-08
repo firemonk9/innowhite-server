@@ -7,6 +7,8 @@ import java.util.Properties;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+import org.springframework.beans.factory.BeanFactory;
+import org.springframework.context.support.ClassPathXmlApplicationContext;
 
 public class InnowhiteProperties {
 
@@ -14,6 +16,18 @@ public class InnowhiteProperties {
 			.getLogger(InnowhiteProperties.class);
 
 	private static Properties prop = null;
+
+	static BeanFactory factory = null;
+
+	public static BeanFactory getBeanFactory() {
+		if (factory == null) {
+			ClassPathXmlApplicationContext appContext = new ClassPathXmlApplicationContext(
+					new String[] { "applicationContext.xml" });
+			// of course, an ApplicationContext is just a BeanFactory
+			factory = (BeanFactory) appContext;
+		}
+		return factory;
+	}
 
 	public static String getPropertyVal(String key) {
 

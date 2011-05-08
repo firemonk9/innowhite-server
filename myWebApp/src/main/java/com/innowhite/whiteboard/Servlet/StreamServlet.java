@@ -15,7 +15,9 @@ import com.innowhite.whiteboard.persistence.dao.WhiteboardAuthenticationDAOImpl;
 import com.innowhite.whiteboard.util.InnowhiteConstants;
 
 /**
- * Servlet implementation class CreateRoomServlet
+ * This servlet is responsible for returning the stream id for screen share/ and also video broadcast..
+ * 
+ * To DO : Need to get the stream id and server info based on server load.
  */
 public class StreamServlet extends HttpServlet {
 	private static final long serialVersionUID = 1L;
@@ -43,6 +45,9 @@ public class StreamServlet extends HttpServlet {
 		String roomId = request.getParameter(InnowhiteConstants.ROOML_ID);
 		
 		int subRoomId = WhiteboardAuthenticationDAOImpl.createSubRoomID(roomId,streamType);
+		
+		
+		// send the stream is to server.
 		
 		response.setContentType("text/xml");
 		PrintWriter out = response.getWriter();
