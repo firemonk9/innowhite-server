@@ -34,8 +34,8 @@ public class RoomConfNameMapMessageListener implements MessageListener {
 		// System.out
 		// .println("entered  onMessage of RoomConfNameMapMessageListener.."
 		// + message);
-		log.debug("entered  onMessage of RoomConfNameMapMessageListener..");
-		System.err.println("entered  onMessage of RoomConfNameMapMessageListener..");
+		log.debug("Innowhitered5 entered  onMessage of RoomConfNameMapMessageListener..");
+		System.err.println("Innowhitered5 entered  onMessage of RoomConfNameMapMessageListener..");
 		if (message instanceof TextMessage) {
 			try {
 				System.out.println(" the msg is::  "+((TextMessage) message).getText());

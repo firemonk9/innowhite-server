@@ -14,7 +14,7 @@ import org.slf4j.LoggerFactory;
 
 public class ActiveRoomListener implements MessageListener {
 
-	public List<String> activeRoom = new ArrayList<String>();
+	public static  List<String> activeRoom = new ArrayList<String>();
 
 	private static final Logger log = LoggerFactory
 			.getLogger(ActiveRoomListener.class);
@@ -34,7 +34,7 @@ public class ActiveRoomListener implements MessageListener {
 						+ ((TextMessage) message).getText());
 				String msg = ((TextMessage) message).getText();
 
-				// populateCache(msg);
+				populateCache(msg);
 
 			} catch (JMSException ex) {
 				throw new RuntimeException(ex);
