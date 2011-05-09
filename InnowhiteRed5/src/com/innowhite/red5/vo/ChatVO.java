@@ -3,10 +3,31 @@ package com.innowhite.red5.vo;
 import java.io.Serializable;
 
 public class ChatVO implements Serializable{
+	
 	String chattext;
 	String textcolor;
 	int seq;
 	String privateChatTo;
+	public String getRecipient() {
+		return recipient;
+	}
+
+	public void setRecipient(String recipient) {
+		this.recipient = recipient;
+	}
+
+	public String getSender() {
+		return sender;
+	}
+
+	public void setSender(String sender) {
+		this.sender = sender;
+	}
+
+	String recipient;
+	String sender;
+	
+	
 	
 	public String getPrivateChatTo() {
 		return privateChatTo;
