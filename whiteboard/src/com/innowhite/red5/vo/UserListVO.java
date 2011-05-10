@@ -8,7 +8,7 @@ public class UserListVO {
 	boolean groupLeader;
 	//String objName;
 	String myStatus;
-	//int loggedInTime;
+	long userJoinedTime;
 //	boolean userDataSynch;
 //	boolean isTalking;
 //	boolean muted;
@@ -20,6 +20,17 @@ public class UserListVO {
 	//int voiceconfjoined;
 	
 	
+
+	
+
+
+	public long getUserJoinedTime() {
+		return userJoinedTime;
+	}
+
+	public void setUserJoinedTime(long userJoinedTime) {
+		this.userJoinedTime = userJoinedTime;
+	}
 
 	//int seq;
 	int whiteboardDrawRights;
@@ -57,6 +68,7 @@ public class UserListVO {
 //		this.isTalking = isTalking;
 //	}
 
+	
 	
 
 	public int getVoiceConfJoined() {

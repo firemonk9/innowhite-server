@@ -166,6 +166,7 @@ public class Main extends MultiThreadedApplicationAdapter {
 
 				int num = roomVO.getSeqNum();
 				uservo.setShapeCount(num);
+				uservo.setUserJoinedTime(new Date().getTime());
 
 				// userListSO.setAttribute(uservo.getUsername(), uservo);
 
