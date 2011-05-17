@@ -1,0 +1,3 @@
+#Sun Aug 29 14:42:38 PDT 2010
+runtimes=<?xml version\="1.0" encoding\="UTF-8" standalone\="no"?>\n<runtimes>\n  <runtime id\="SpringSource tc Server Developer Edition (Runtime) v2.0" id-set\="true" location\="/Users/prashanthj/Downloads/springsource/tc-server-developer-2.0.0.SR01" name\="SpringSource tc Server Developer Edition (Runtime) v2.0" runtime-type-id\="com.springsource.tcserver.runtime.60" timestamp\="0"/>\n  <runtime id\="SpringSource Cloud Foundry (Runtime) v1.0" id-set\="true" name\="SpringSource Cloud Foundry (Runtime) v1.0" runtime-type-id\="com.springsource.cloudfoundryserver.runtime.10" timestamp\="0"/>\n</runtimes>\n
+eclipse.preferences.version=1

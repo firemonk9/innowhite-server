@@ -146,7 +146,7 @@ body {
 // Major version of Flash required
 var requiredMajorVersion = 10;
 // Minor version of Flash required
-var requiredMinorVersion = 2;
+var requiredMinorVersion = 1;
 // Minor version of Flash required
 var requiredRevision = 0;
 // Minor version of Flash required
@@ -202,7 +202,7 @@ function start_screen_share (stream_id)
 
     	//alert(" in start_screen_share"+pluginLoaded);
 		if(pluginIsLoad()){
-			plugin0().start_capture(stream_id, "123","live", "true",75,2);
+			plugin0().start_capture(stream_id, "123","live", "true",75,2,"demo.innowhite.com");
 			return "STARTED";
 		}
 		else

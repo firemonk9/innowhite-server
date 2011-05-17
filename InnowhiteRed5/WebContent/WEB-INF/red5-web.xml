@@ -54,7 +54,7 @@
 			<ref bean="messagingService" />
 		</property>
 
-
+		<property name="enableSecurity" value="{enableSecurity}"/>
 
 	</bean>
 

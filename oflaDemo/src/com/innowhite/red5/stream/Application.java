@@ -20,6 +20,17 @@ public class Application extends MultiThreadedApplicationAdapter {
 	
 	private MessagingService messagingService;
 	
+	private String enableSecurity;
+	
+	
+	public String getEnableSecurity() {
+		return enableSecurity;
+	}
+
+	public void setEnableSecurity(String enableSecurity) {
+		this.enableSecurity = enableSecurity;
+	}
+
 	public void setMessagingService(MessagingService messagingService) {
 		this.messagingService = messagingService;
 	}
@@ -34,7 +45,7 @@ public class Application extends MultiThreadedApplicationAdapter {
 		System.out.println("oflaDemo appStart");  
 		
 		//registerStreamPublishSecurity(new SecurityImpl());
-		registerStreamPublishSecurity(new PublishSecurityImpl());
+		registerStreamPublishSecurity(new PublishSecurityImpl(enableSecurity));
 //		/registerStreamPlaybackSecurity(handler)(new SecurityImpl());
 		appScope = app;
 		return true;
@@ -111,4 +122,6 @@ public class Application extends MultiThreadedApplicationAdapter {
 		}
 		super.appDisconnect(conn);
 	}
+
+	
 }

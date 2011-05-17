@@ -31,6 +31,8 @@
 
 <property name="messagingService" ref="messagingService" />
 
+<property name="enableSecurity" value="{enableSecurity}" /> 
+
 <property name="plugins">
             <list>
                <!--  <bean class="org.red5.server.plugin.PluginDescriptor">

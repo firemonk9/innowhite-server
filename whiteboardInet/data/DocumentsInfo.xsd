@@ -1,0 +1,32 @@
+<?xml version="1.0"?>
+<xs:schema xmlns:xs="http://www.w3.org/2001/XMLSchema">
+
+
+	<xs:element name="glleries">
+		<xs:complexType>
+			<xs:sequence>
+				<xs:element name="gallery" id="flextravel">
+					<xs:complexType>
+						<xs:sequence>
+
+							<xs:element name="photo">
+								<xs:complexType>
+									<xs:sequence>
+
+										<xs:element name="name" />
+										<xs:element name="description" />
+										<xs:element name="source" />
+
+									</xs:sequence>
+								</xs:complexType>
+							</xs:element>
+
+						</xs:sequence>
+					</xs:complexType>
+				</xs:element>
+
+			</xs:sequence>
+		</xs:complexType>
+	</xs:element>
+
+</xs:schema>

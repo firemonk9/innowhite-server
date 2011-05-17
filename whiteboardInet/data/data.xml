@@ -1,0 +1,62 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<galleries>
+	<gallery>
+		<photo>
+			<name>tinku1</name>
+			<source>
+				http://75.111.200.188:5080/whiteboard/UserImages/tinku1__DSC04729.JPG
+			</source>
+			<imageFolderSeq>0</imageFolderSeq>
+		</photo>
+		<presentation>
+		
+			<source>
+					http://75.111.200.188:5080/whiteboard/UserImages/tinku1__Janagama_Prashanth_J2EE/tinku1__Janagama_Prashanth_J2EE_178593-0.png
+				</source>
+				<name>tinku1</name>
+			<photo>
+				<name>tinku1</name>
+				
+				<source>
+					http://75.111.200.188:5080/whiteboard/UserImages/tinku1__Janagama_Prashanth_J2EE/tinku1__Janagama_Prashanth_J2EE_178593-0.png
+				</source>
+				<imageFolderSeq>0</imageFolderSeq>
+			</photo>
+			<photo>
+				<name>tinku1</name>
+				<source>
+					http://75.111.200.188:5080/whiteboard/UserImages/tinku1__Janagama_Prashanth_J2EE/tinku1__Janagama_Prashanth_J2EE_178593-1.png
+				</source>
+				<imageFolderSeq>1</imageFolderSeq>
+			</photo>
+			<photo>
+				<name>tinku1</name>
+				<source>
+					http://75.111.200.188:5080/whiteboard/UserImages/tinku1__Janagama_Prashanth_J2EE/tinku1__Janagama_Prashanth_J2EE_178593-2.png
+				</source>
+				<imageFolderSeq>2</imageFolderSeq>
+			</photo>
+			<photo>
+				<name>tinku1</name>
+				<source>
+					http://75.111.200.188:5080/whiteboard/UserImages/tinku1__Janagama_Prashanth_J2EE/tinku1__Janagama_Prashanth_J2EE_178593-3.png
+				</source>
+				<imageFolderSeq>3</imageFolderSeq>
+			</photo>
+			<photo>
+				<name>tinku1</name>
+				<source>
+					http://75.111.200.188:5080/whiteboard/UserImages/tinku1__Janagama_Prashanth_J2EE/tinku1__Janagama_Prashanth_J2EE_178593-4.png
+				</source>
+				<imageFolderSeq>4</imageFolderSeq>
+			</photo>
+			<photo>
+				<name>tinku1</name>
+				<source>
+					http://75.111.200.188:5080/whiteboard/UserImages/tinku1__Janagama_Prashanth_J2EE/tinku1__Janagama_Prashanth_J2EE_178593-5.png
+				</source>
+				<imageFolderSeq>5</imageFolderSeq>
+			</photo>
+		</presentation>
+	</gallery>
+</galleries>

@@ -12,19 +12,34 @@ public class PublishSecurityImpl implements IStreamPublishSecurity{
 
 	private static Logger log = Red5LoggerFactory.getLogger(Application.class, "oflaDemo");
 
+	private boolean enableSecurity=true;
+	
+	public PublishSecurityImpl(String enableSecurity2) {
+		if(enableSecurity2 != null &&  enableSecurity2.equals("true"))
+			this.enableSecurity = true;
+		else
+			this.enableSecurity = false;
+	}
+
 	@Override
 	public boolean isPublishAllowed(IScope scope, String arg1, String arg2) {
 		
+//		
+		
+		if(enableSecurity == false)
+			return true;
 		
 		if(scope.getName() != null && VideoStreamNameListener.videoStreamIds.contains(scope.getName()))
 		{
-			System.err.println("remove this isPublishAllowed ... "+scope.getName()+"  ip ");
+			//System.err.println("remove this isPublishAllowed ... "+scope.getName()+"  ip ");
 			return true;
 		}
 		
 		log.warn(" ********  unauthorized access to server from room ... "+scope.getName()+"  ip ");
-		System.err.println(" ********  unauthorized access to server from room ... "+scope.getName()+"  ip ");
+//		System.err.println(" ********  unauthorized access to server from room ... "+scope.getName()+"  ip ");
 		return false;
+
+		
 	}
 	
 //	@Override

@@ -40,14 +40,14 @@ public class WBFilter implements Filter {
 			// return;
 		}
 
-		log.debug(" WBFilter bSessionFlag value Entry:   "
-				+ Constants.bsessionFlag);
+//		log.debug(" WBFilter bSessionFlag value Entry:   "
+//				+ Constants.bsessionFlag);
 		boolean bValidRequest = true;
 		HttpServletRequest request = (HttpServletRequest) req;
 		HttpServletResponse response = (HttpServletResponse) res;
 		HttpSession session = request.getSession(true);
-		log.debug("session id: " + session.getId()
-				+ " session created time: " + session.getCreationTime()+"  the file name"+request.getRequestURL().toString());
+//		log.debug("session id: " + session.getId()
+//				+ " session created time: " + session.getCreationTime()+"  the file name"+request.getRequestURL().toString());
 		String checkSum = request.getParameter(InnowhiteConstants.CHECKSUM);
 		String orgName = "";
 		String parentOrg = "";
@@ -56,12 +56,12 @@ public class WBFilter implements Filter {
 
 		if (checkSum != null) {
 			String queryString = request.getQueryString();
-			log.debug("request query String " + queryString);
+//			log.debug("request query String " + queryString);
 			String queryStringArray[] = queryString.split("&checksum=");
 			if (queryStringArray.length > 1) {
 				queryStringWithoutcheckSum = queryStringArray[0];
 			}
-			log.debug(queryStringArray[0]);
+//			log.debug(queryStringArray[0]);
 
 			orgName = request.getParameter(InnowhiteConstants.ORG_NAME);
 			checkSum = request.getParameter(InnowhiteConstants.CHECKSUM);
@@ -70,7 +70,7 @@ public class WBFilter implements Filter {
 			if(parentOrg == null)
 				parentOrg = orgName;
 
-			log.debug("oflaDemo orgName: " + orgName);
+//			log.debug("oflaDemo orgName: " + orgName);
 
 			String hostURL = null;
 			if (orgName.indexOf(Constants.WEB_DELIMITER) > 0 && orgName.contains("INET") ) {

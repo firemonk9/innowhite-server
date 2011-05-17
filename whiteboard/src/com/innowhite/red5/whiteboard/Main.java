@@ -38,8 +38,9 @@ public class Main extends MultiThreadedApplicationAdapter {
 	private IServerStream serverStream;
 	private HashMap<String, RoomVO> shapeSeqMap = new HashMap<String, RoomVO>();
 	private HashMap<String, Integer> chatSeqMap = new HashMap<String, Integer>();
-	//private HashMap<String, Integer> userSeqMap = new HashMap<String, Integer>();
-	
+	// private HashMap<String, Integer> userSeqMap = new HashMap<String,
+	// Integer>();
+
 	private HashMap<String, Integer> videoSeqMap = new HashMap<String, Integer>();
 	private HashMap<String, Map> clientNamesMap = new HashMap<String, Map>();
 
@@ -51,11 +52,6 @@ public class Main extends MultiThreadedApplicationAdapter {
 	// private static Logger log = Red5LoggerFactory.getLogger(Main.class);
 
 	FreeswitchServiceProvider freeSwitchServiceProvider;
-	
-	
-
-
-	
 
 	public void setFreeSwitchServiceProvider(
 			FreeswitchServiceProvider freeSwitchServiceProvider) {
@@ -68,7 +64,7 @@ public class Main extends MultiThreadedApplicationAdapter {
 		// new ExampleClient();
 		try {
 
-			//ExampleClient ec = new ExampleClient(this);
+			// ExampleClient ec = new ExampleClient(this);
 			freeSwitchServiceProvider.startup();
 
 		} catch (Exception e) {
@@ -142,14 +138,22 @@ public class Main extends MultiThreadedApplicationAdapter {
 		try {
 
 			log.debug("  updateUserList " + uservo.getUsername() + "    "
-					+ "   " + uservo.getMyStatus() + "     "
-					+ "   " + uservo.getRemoveMe());
+					+ "   " + uservo.getMyStatus() + "     " + "   "
+					+ uservo.getRemoveMe());
 
 			ISharedObject userListSO = this.getSharedObject(Red5
 					.getConnectionLocal().getScope(), "UserListSO");
 
 			Map<String, String> map = clientNamesMap.get(Red5
 					.getConnectionLocal().getScope().getName());
+
+			if (uservo.getUserJoinedTime() == null) {
+
+				uservo.setUserJoinedTime((new Date().getTime()));
+				System.err.println(" user joined time is "
+						+ uservo.getUserJoinedTime() + " username "
+						+ uservo.getUsername());
+			}
 			// we want to set the time if instructor and get the time for normal
 			// users for the first time.
 			if (map == null || Utility.userFirstTime(uservo.getUsername(), map)) {
@@ -157,16 +161,15 @@ public class Main extends MultiThreadedApplicationAdapter {
 				if (TimeMaintainerService.ifTimeSet(Red5.getConnectionLocal()
 						.getScope().getName(), uservo.isGroupLeader()))
 					;
-//				uservo.setLoggedInTime(TimeMaintainerService.getTimeSession(
-//						Red5.getConnectionLocal().getScope().getName(),
-//						uservo.isGroupLeader()));
+				// uservo.setLoggedInTime(TimeMaintainerService.getTimeSession(
+				// Red5.getConnectionLocal().getScope().getName(),
+				// uservo.isGroupLeader()));
 
 				RoomVO roomVO = shapeSeqMap.get(Red5.getConnectionLocal()
 						.getScope().getName());
 
 				int num = roomVO.getSeqNum();
 				uservo.setShapeCount(num);
-				uservo.setUserJoinedTime(new Date().getTime());
 
 				// userListSO.setAttribute(uservo.getUsername(), uservo);
 
@@ -180,15 +183,15 @@ public class Main extends MultiThreadedApplicationAdapter {
 				// }
 
 			}
-			
-			
+
 			int num = videoSeqMap.get(Red5.getConnectionLocal().getScope()
 					.getName());
-			//v.setSeq(num++);
-			uservo.setSeq(num);	
-			userListSO.setAttribute(""+num++,uservo);
-			
-			videoSeqMap.put(Red5.getConnectionLocal().getScope().getName(), num);
+			// v.setSeq(num++);
+			uservo.setSeq(num);
+			userListSO.setAttribute("" + num++, uservo);
+
+			videoSeqMap
+					.put(Red5.getConnectionLocal().getScope().getName(), num);
 			// Map<String, Object> m = userListSO.getData();
 			// Iterator itert = m.keySet().iterator();
 			// while (itert.hasNext()) {
@@ -265,8 +268,8 @@ public class Main extends MultiThreadedApplicationAdapter {
 		return true;
 	}
 
-	private void userProperCloseConnection(com.innowhite.red5.vo.VideoDisplayVO videovo,
-			String roomName) {
+	private void userProperCloseConnection(
+			com.innowhite.red5.vo.VideoDisplayVO videovo, String roomName) {
 
 		String key = roomName + videovo.getUsername();
 
@@ -403,9 +406,9 @@ public class Main extends MultiThreadedApplicationAdapter {
 			// log.debug(" New room connected : roomStart ");
 			IScopeStatistics sc = room.getStatistics();
 			sc.getCreationTime();
-			
+
 			log.debug("room start time ::" + sc.getCreationTime());
-			
+
 			this.createSharedObject(room, "ObjectDrawingSO", false);
 			// this.createSharedObject(room, "CurrentCounterSO", false);
 			this.createSharedObject(room, "UserListSO", false);
@@ -419,18 +422,20 @@ public class Main extends MultiThreadedApplicationAdapter {
 			roomVO.setMediaTimeNum(0);
 			shapeSeqMap.put(room.getName(), roomVO);
 			chatSeqMap.put(room.getName(), 1);
-		
+
 			videoSeqMap.put(room.getName(), 1);
-			
 
 			log.debug(" setting the seq " + videoSeqMap.size() + " chat soze  "
 					+ chatSeqMap.size());
 
-			ISharedObject userSharedObj = this.getSharedObject(room, "UserListSO");
-			//UserCacheService.addRoomIdUserSharedObj(room.getName(), userSharedObj);
-			
-			//UserCacheService.addRoomIdUserSharedObj(room.getName(),this.getSharedObject(room, room.getName()));
-			
+			ISharedObject userSharedObj = this.getSharedObject(room,
+					"UserListSO");
+			// UserCacheService.addRoomIdUserSharedObj(room.getName(),
+			// userSharedObj);
+
+			// UserCacheService.addRoomIdUserSharedObj(room.getName(),this.getSharedObject(room,
+			// room.getName()));
+
 			// temp code begin
 
 			// log.debug(" :::: "+);
@@ -575,7 +580,6 @@ public class Main extends MultiThreadedApplicationAdapter {
 		return true;
 	}
 
-	
 	public void setApplicationListeners(Set<IApplication> listeners) {
 		int count = 0;
 		Iterator<IApplication> iter = listeners.iterator();
@@ -584,7 +588,7 @@ public class Main extends MultiThreadedApplicationAdapter {
 			count++;
 		}
 	}
-	
+
 	/*
 	 * When ever a user leaves a room, This function is called.
 	 */
@@ -609,19 +613,18 @@ public class Main extends MultiThreadedApplicationAdapter {
 
 				// userListSO.setAttribute(uservo.getUsername(), uservo);
 				boolean removed = false;
-				if (userListSO != null)
-				{	
+				if (userListSO != null) {
 					List<Object> list = new ArrayList<Object>();
 					list.add(uName);
 
-					//UserCacheService.removeparticipantIDUser(participant);
+					// UserCacheService.removeparticipantIDUser(participant);
 					// addparticipantIDUser(participant, innoUniqueId.trim() );
 
-					 userListSO.sendMessage("removeUser", list);
-					//removed = userListSO.removeAttribute(uName);
-				
+					userListSO.sendMessage("removeUser", list);
+					// removed = userListSO.removeAttribute(uName);
+
 				}// SavingData.closeFile(room.getName());
-				// clientNamesMap.put(conn.getScope().getName(), map);
+					// clientNamesMap.put(conn.getScope().getName(), map);
 
 				log.debug(" roomLeave  ###### " + room.getName() + "  uname "
 						+ uName + "  removed " + removed);
@@ -629,27 +632,27 @@ public class Main extends MultiThreadedApplicationAdapter {
 				// to make sure to send requests to all clicts to close the
 				// streams.
 				properUserLogout(uName, room.getName());
-				
+
 				// When a user is disc , remove all objects sent by that user
-				
-				if(userListSO != null)
-				{
-					Map<String,Object> users = userListSO.getAttributes();
-					log.debug(" The length of users list :: "+map.size()+"  the map "+users);
-					for(String s : users.keySet()) {
-						log.debug(" the id is :: "+s);
-						UserListVO userVO = (UserListVO)users.get(s);
-						if(userVO.getUsername().equals(uName)){
+
+				if (userListSO != null) {
+					Map<String, Object> users = userListSO.getAttributes();
+					log.debug(" The length of users list :: " + map.size()
+							+ "  the map " + users);
+					for (String s : users.keySet()) {
+						log.debug(" the id is :: " + s);
+						UserListVO userVO = (UserListVO) users.get(s);
+						if (userVO.getUsername().equals(uName)) {
 							userListSO.removeAttribute(s);
-							log.debug(" removing user with id :"+s+" username: "+uName);
+							log.debug(" removing user with id :" + s
+									+ " username: " + uName);
 						}
 					}
 				}
-				
-				
-				//UserCacheService.addRoomIdUserSharedObj(room.getName(),this.getSharedObject(room, room.getName()));
-				
-				
+
+				// UserCacheService.addRoomIdUserSharedObj(room.getName(),this.getSharedObject(room,
+				// room.getName()));
+
 			}
 		} catch (Exception e) {
 			e.printStackTrace();
@@ -669,7 +672,7 @@ public class Main extends MultiThreadedApplicationAdapter {
 			SavingData.closeFile(scope.getName());
 			shapeSeqMap.remove(scope.getName());
 			chatSeqMap.remove(scope.getName());
-	
+
 			videoSeqMap.remove(scope.getName());
 			TimeMaintainerService.removeRoom(scope.getName());
 			super.roomStop(scope);
@@ -682,29 +685,20 @@ public class Main extends MultiThreadedApplicationAdapter {
 		}
 		// log.info("RoomStop Called for : " + scope.getName());
 	}
-	
-	
-	
-	public void updateUserJoinVoiceConf(String userID,String roomID){
-		
-		
-		
-		//Object o = Red5.get;
-		//System.err.println(o.getClass()+"   ");
-		
-	//	o = Red5.getConnectionLocal().get
-		
-//		UserListVO uservo  = (UserListVO)userListSO.getAttribute("Harry");
-//		uservo.setUserAudioEnter(3);
-//		
-//		userListSO.setAttribute("Harry",uservo);
-		
+
+	public void updateUserJoinVoiceConf(String userID, String roomID) {
+
+		// Object o = Red5.get;
+		// System.err.println(o.getClass()+"   ");
+
+		// o = Red5.getConnectionLocal().get
+
+		// UserListVO uservo = (UserListVO)userListSO.getAttribute("Harry");
+		// uservo.setUserAudioEnter(3);
+		//
+		// userListSO.setAttribute("Harry",uservo);
+
 	}
-	
-	
-	
-	
-	
 
 	/**
 	 * Called when client disconnect from the application

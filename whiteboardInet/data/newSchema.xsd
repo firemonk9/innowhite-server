@@ -1,0 +1,59 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<schema xmlns="http://www.w3.org/2001/XMLSchema" xmlns:xsd="http://www.w3.org/2001/XMLSchema">
+	<element name="galleries">
+		<complexType>
+			<sequence>
+				<element name="gallery">
+					<complexType>
+						<sequence>
+							<element name="description" type="string" />
+							<element name="photo" maxOccurs="unbounded">
+								<complexType>
+									<sequence>
+										<element name="name" type="string" />
+										<element name="description" type="string" />
+										<element name="source" type="string" />
+										<element name="thumbNailsource" type="string" />
+										<element name="imageFolderSeq" type="integer" />
+										<element name="documentName" type="string" />
+										<element name="documentTitle" type="string" />
+										<element name="size" type="integer" />	
+										<element name="uploadedDate" type="dateTime" />
+										<element name="imageID" type="integer" />
+									</sequence>
+								</complexType>
+							</element>
+							<element name="presentation" maxOccurs="unbounded">
+								<complexType>
+									<sequence>
+										<element name="userName" type="string" />
+										<element name="description" type="string" />
+										<element name="source" type="string" />
+										<element name="thumbNailsource" type="string" />
+										<element name="documentName" type="string" />
+										<element name="documentTitle" type="string" />
+										<element name="imageID" type="integer" />	
+										<element name="size" type="integer" />	
+										<element name="uploadedDate" type="dateTime" />
+										<element name="photo" maxOccurs="unbounded">
+										
+											<complexType>
+												<sequence>
+													<element name="name" type="string" />
+													<element name="description" type="string" />
+													<element name="source" type="string" />
+													<element name="imageFolderSeq" type="integer" />
+												</sequence>
+											</complexType>
+										</element>
+									</sequence>
+								</complexType>
+							</element>
+						</sequence>
+						<attribute name="id" type="string" />
+					</complexType>
+				</element>
+			</sequence>
+		</complexType>
+	</element>
+</schema>

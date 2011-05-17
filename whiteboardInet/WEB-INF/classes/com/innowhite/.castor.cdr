@@ -1,0 +1,8 @@
+#Mon May 24 20:13:05 EDT 2010
+com.innowhite.documentManager.Galleries=com.innowhite.documentManager.descriptors.GalleriesDescriptor
+com.innowhite.documentManager.Gallery=com.innowhite.documentManager.descriptors.GalleryDescriptor
+com.innowhite.documentManager.Photos=com.innowhite.documentManager.descriptors.PhotosDescriptor
+com.innowhite.documentManager.Photo=com.innowhite.documentManager.descriptors.PhotoDescriptor
+com.innowhite.documentManager.Presentations=com.innowhite.documentManager.descriptors.PresentationsDescriptor
+com.innowhite.documentManager.Presentation=com.innowhite.documentManager.descriptors.PresentationDescriptor
+com.innowhite.documentManager.Exercises=com.innowhite.documentManager.descriptors.ExercisesDescriptor

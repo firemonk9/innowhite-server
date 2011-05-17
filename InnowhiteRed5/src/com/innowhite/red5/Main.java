@@ -49,7 +49,17 @@ public class Main extends MultiThreadedApplicationAdapter {
 	private static Logger log = Red5LoggerFactory.getLogger(Main.class,
 			"whiteboard");
 
+	private String enableSecurity;
+	
 	// private static Logger log = Red5LoggerFactory.getLogger(Main.class);
+
+	public String getEnableSecurity() {
+		return enableSecurity;
+	}
+
+	public void setEnableSecurity(String enableSecurity) {
+		this.enableSecurity = enableSecurity;
+	}
 
 	FreeswitchServiceProvider freeSwitchServiceProvider;
 	MessagingService messagingService;
@@ -484,8 +494,11 @@ public class Main extends MultiThreadedApplicationAdapter {
 			// String[] arry = (String[])params;
 			// log.debug(" roomconnect :: " + params.length);
 
-			if (UserCacheService.roomExists(conn.getScope().getName()) == false)
-				return false;
+			
+			if(enableSecurity != null &&  enableSecurity.equals("true")){
+				if (UserCacheService.roomExists(conn.getScope().getName()) == false)
+					return false;
+			}
 
 			// RoomVO roomVO = shapeSeqMap.get(conn.getScope().getName());
 			try {
@@ -741,4 +754,6 @@ public class Main extends MultiThreadedApplicationAdapter {
 		}
 		super.appDisconnect(conn);
 	}
+
+	
 }

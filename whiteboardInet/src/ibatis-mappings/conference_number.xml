@@ -1,0 +1,38 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE sqlMap PUBLIC "-//ibatis.apache.org//DTD SQL Map 2.0//EN"
+"http://ibatis.apache.org/dtd/sql-map-2.dtd">
+<sqlMap>
+
+      
+      
+     
+       
+      <resultMap  id="conferenceResult" class="com.innowhite.whiteboard.persistence.beans.ConferenceNumbersVO">
+      	  <result property="phoneNumber" column="conference_phone" />
+	      <result property="meetingNumber" column="conference_meeting_num" />
+	    
+	      
+	  </resultMap>
+      
+      <update id="updateConferenceMeetingId"  parameterClass="java.lang.Integer">
+		
+		update conference_numbers set
+		conference_meeting_num=#meetingId# where
+		id=1;
+			
+      </update>
+      
+      
+        <select id="selectConferencePhoneNum" resultMap="conferenceResult" >
+      	select  conference_phone,conference_meeting_num from conference_numbers where id=1;
+		     
+      </select>
+     
+	   
+	  <select id="selectConferenceMeetingId" resultMap="conferenceResult" >
+      	select  conference_phone,conference_meeting_num from conference_numbers where id=1;
+		     
+      </select>
+      
+</sqlMap>
+ 

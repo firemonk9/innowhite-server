@@ -8,7 +8,7 @@ public class UserListVO {
 	boolean groupLeader;
 	//String objName;
 	String myStatus;
-	long userJoinedTime;
+	Long userJoinedTime=null;
 //	boolean userDataSynch;
 //	boolean isTalking;
 //	boolean muted;
@@ -24,7 +24,7 @@ public class UserListVO {
 	
 
 
-	public long getUserJoinedTime() {
+	public Long getUserJoinedTime() {
 		return userJoinedTime;
 	}
 
