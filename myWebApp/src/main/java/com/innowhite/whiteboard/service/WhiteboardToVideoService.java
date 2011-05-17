@@ -13,7 +13,6 @@ import com.innowhite.whiteboard.persistence.beans.VideoDataVO;
 import com.innowhite.whiteboard.persistence.dao.VideoDataDAO;
 import com.innowhite.whiteboard.util.InnowhiteConstants;
 import com.innowhite.whiteboard.util.InnowhiteProperties;
-import com.innowhite.whiteboard.util.Utility;
 
 public class WhiteboardToVideoService {
 
@@ -43,7 +42,7 @@ public class WhiteboardToVideoService {
 	    os.write(data);
 	    os.flush();
 	} catch (IOException e) {
-	    // TODO Auto-generated catch block
+	    
 	    log.error(e.getMessage(), e);
 	    e.printStackTrace();
 	}
@@ -58,10 +57,12 @@ public class WhiteboardToVideoService {
 		DataOutputStream os = obj.getOs();
 		os.close();
 		boolean val = VideoDataDAO.updateVideoData(obj.getId());
+		if(val == false)
+		    log.warn(" could not update database for update  ");
 		roomFileMap.remove(roomId);
 	    }
 	} catch (IOException e) {
-	    // TODO Auto-generated catch block
+
 	    log.error(e.getMessage(), e);
 	    e.printStackTrace();
 	}
