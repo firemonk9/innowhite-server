@@ -3,39 +3,41 @@
 "http://ibatis.apache.org/dtd/sql-map-2.dtd">
 <sqlMap>
 
-		
-	<parameterMap   id="paramWBData" class="com.innowhite.whiteboard.persistence.beans.WBDataVO">
-      	<parameter property="room_id" jdbcType="VARCHAR"/>
-      	<parameter property="seq"  jdbcType="int"/>
-      	<parameter property="data" jdbcType="VARCHAR"/>
-      	
-     </parameterMap>
-		
+
+	<parameterMap id="paramWBData"
+		class="com.innowhite.whiteboard.persistence.beans.WBDataVO">
+		<parameter property="room_id" jdbcType="VARCHAR" />
+		<parameter property="seq" jdbcType="int" />
+		<parameter property="data" jdbcType="VARCHAR" />
+
+	</parameterMap>
 
 
- 	<insert id="saveWBData"  parameterMap="paramWBData">
-      		INSERT INTO wb_data ( 
-      			 room_id,
-				 seq,
-				 data, 
-				 inserted_Date)
-				VALUES
-				( ?,?,?, now())     
-			<selectKey keyProperty="id" resultClass="java.lang.Integer" >
-				SELECT @@identity
-			</selectKey> 
-      </insert>
 
-   
-    
-      <select id="getWBData" resultClass="java.lang.String"  parameterClass="java.lang.String" >
-      	select data from wb_data where room_id = #roomId#  order by seq desc   
+	<insert id="saveWBData" parameterMap="paramWBData">
+		INSERT INTO wb_data (
+		room_id,
+		seq,
+		data,
+		inserted_Date)
+		VALUES
+		( ?,?,?, now())
+		<selectKey keyProperty="id" resultClass="java.lang.Integer">
+			SELECT @@identity
+			</selectKey>
+	</insert>
+
+
+
+	<select id="getWBData" resultClass="java.lang.String"
+		parameterClass="java.lang.String">
+		select data from wb_data where room_id = #roomId# order by seq desc   
       </select>
-      
-       <delete id="deleteWBData" parameterClass="java.lang.String" >
-      	delete from wb_data where room_id = #roomId#    
+
+	<delete id="deleteWBData" parameterClass="java.lang.String">
+		delete from wb_data where room_id = #roomId#    
       </delete>
-      
-      
+
+
 </sqlMap>
  

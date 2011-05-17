@@ -3,124 +3,138 @@
 "http://ibatis.apache.org/dtd/sql-map-2.dtd">
 <sqlMap>
 
-		
-      <parameterMap id="roomObject" class="com.innowhite.whiteboard.persistence.beans.RoomVO">
-	      <parameter property="roomId" jdbcType="VARCHAR"/>
-	      <parameter property="roomName" jdbcType="VARCHAR"/>
-    	  <parameter property="orgName" jdbcType="VARCHAR"/>
-<!--    	  <parameter property="roomActive"/>-->
-    	  <parameter property="usersCount" />
-    	  <parameter property="viewCount" />
-    	  <parameter property="groupLeader" jdbcType="VARCHAR"/>    	  
-    	  <parameter property="startDate" jdbcType="VARCHAR" />
-    	  <parameter property="endDate" jdbcType="VARCHAR"/>
-    	  <parameter property="insertedDate" jdbcType="VARCHAR"/>
-    	  <parameter property="record" jdbcType="VARCHAR"/>
-    	   <parameter property="course" jdbcType="VARCHAR"/>
-    	   <parameter property="lessonPlanId" jdbcType="VARCHAR"/>
-    	   <parameter property="roomLiveConnectStatus" jdbcType="VARCHAR"/>
-      </parameterMap>
 
-      <insert id="createRoom" parameterMap="roomObject">
-      		INSERT INTO room
-           		(room_id,room_name, org_name,  users_count, view_count, group_leader,  start_date, end_date, inserted_date, record, course, lesson_plan_id,room_live_connect_status)
-     		VALUES
-           		(?,?,?,?,?,?, ?, ?, ?, ?, ?, ?,?)
-           		           		
-           	<selectKey keyProperty="id" resultClass="java.lang.Integer" >
-				SELECT @@identity
+	<parameterMap id="roomObject"
+		class="com.innowhite.whiteboard.persistence.beans.RoomVO">
+		<parameter property="roomId" jdbcType="VARCHAR" />
+		<parameter property="roomName" jdbcType="VARCHAR" />
+		<parameter property="orgName" jdbcType="VARCHAR" />
+		<!-- <parameter property="roomActive"/> -->
+		<parameter property="usersCount" />
+		<parameter property="viewCount" />
+		<parameter property="groupLeader" jdbcType="VARCHAR" />
+		<parameter property="startDate" jdbcType="VARCHAR" />
+		<parameter property="endDate" jdbcType="VARCHAR" />
+		<parameter property="insertedDate" jdbcType="VARCHAR" />
+		<parameter property="record" jdbcType="VARCHAR" />
+		<parameter property="course" jdbcType="VARCHAR" />
+		<parameter property="lessonPlanId" jdbcType="VARCHAR" />
+		<parameter property="roomLiveConnectStatus" jdbcType="VARCHAR" />
+	</parameterMap>
+
+	<insert id="createRoom" parameterMap="roomObject">
+		INSERT INTO room
+		(room_id,room_name, org_name, users_count, view_count, group_leader, start_date,
+		end_date, inserted_date, record, course,
+		lesson_plan_id,room_live_connect_status)
+		VALUES
+		(?,?,?,?,?,?, ?, ?, ?, ?, ?, ?,?)
+
+		<selectKey keyProperty="id" resultClass="java.lang.Integer">
+			SELECT @@identity
 			</selectKey>
-      </insert>           
-      
-      
-      <insert id="createSubRoomID" parameterClass="java.util.HashMap">
-      		INSERT INTO sub_rooms
-           		(room_id, key_type, inserted_date)
-     		VALUES
-           		(#roomId#, #roomType#, NOW() )
-           		           		
-           	<selectKey keyProperty="id" resultClass="java.lang.Integer" >
-				SELECT @@identity
+	</insert>
+
+
+	<insert id="createSubRoomID" parameterClass="java.util.HashMap">
+		INSERT INTO sub_rooms
+		(room_id, key_type, inserted_date)
+		VALUES
+		(#roomId#, #roomType#, NOW() )
+
+		<selectKey keyProperty="id" resultClass="java.lang.Integer">
+			SELECT @@identity
 			</selectKey>
-      </insert>      
-      
-      
-      
-      <update id="updateStartDate" parameterClass="java.lang.String">
-		 update room set start_date = now() , room_active = 'ACTIVE' where room_id = #id#
+	</insert>
+
+
+
+	<update id="updateStartDate" parameterClass="java.lang.String">
+		update room set start_date = now() , room_active = 'ACTIVE' where room_id =
+		#id#
 	 </update>
-	 
-	   <update id="updateEndDate" parameterClass="java.lang.String">
-		 update room set end_date = now() , room_active = 'INACTIVE' where room_id = #id#
+
+	<update id="updateEndDate" parameterClass="java.lang.String">
+		update room set end_date = now() , room_active = 'INACTIVE' where room_id =
+		#id#
 	   </update>
-	   
-	   <update id="updatePlaybackActive" parameterClass="java.lang.String">
-		 update room set playback_active = "ACTIVE" where room_id = #id#
+
+	<update id="updatePlaybackActive" parameterClass="java.lang.String">
+		update room set playback_active = "ACTIVE" where room_id = #id#
 	   </update>
-	   
-	    
-	   <update id="updatePlaybackInActive" parameterClass="java.lang.String">
-		 update room set playback_active = "INACTIVE" where room_id = #id#
+
+
+	<update id="updatePlaybackInActive" parameterClass="java.lang.String">
+		update room set playback_active = "INACTIVE" where room_id = #id#
 	   </update>
-	 
-	 <select id="getRoomStatus" resultClass="java.lang.String" parameterClass="java.lang.String">
-      	select room_active from room where room_id= #id#;      
+
+	<select id="getRoomStatus" resultClass="java.lang.String"
+		parameterClass="java.lang.String">
+		select room_active from room where room_id= #id#;      
      </select>
-      
-      <resultMap  id="roomStatusResult" class="com.innowhite.whiteboard.persistence.beans.RoomVO">
-      	  <result property="roomId" column="room_id" />
-	      <result property="roomName" column="room_name" />
-	      <result property="lessonPlanId" column="lesson_plan_id" />
-	      <result property="course" column="course" />
-	      
-	  </resultMap>
-      <select id="roomActiveList" parameterClass="java.util.HashMap" resultMap="roomStatusResult">
-     	select room_id, room_name, lesson_plan_id,course from room where org_name=#orgName# and room_active=#status# and course = #course_id# and room_archieve !='Y' and room_live_connect_status = 'ALLOW'
-     	
-     	
-     	<dynamic prepend=" and ">
-	      <isNotEmpty property="clientName">
-	           client_name = #clientName#
+
+	<resultMap id="roomStatusResult"
+		class="com.innowhite.whiteboard.persistence.beans.RoomVO">
+		<result property="roomId" column="room_id" />
+		<result property="roomName" column="room_name" />
+		<result property="lessonPlanId" column="lesson_plan_id" />
+		<result property="course" column="course" />
+
+	</resultMap>
+	<select id="roomActiveList" parameterClass="java.util.HashMap"
+		resultMap="roomStatusResult">
+		select room_id, room_name, lesson_plan_id,course from room where
+		org_name=#orgName# and room_active=#status# and course = #course_id#
+		and room_archieve !='Y' and room_live_connect_status = 'ALLOW'
+
+
+		<dynamic prepend=" and ">
+			<isNotEmpty property="clientName">
+				client_name = #clientName#
 	      </isNotEmpty>
-   		</dynamic>
-     	
-     	 order by inserted_date desc
-      </select>
-      
-       <select id="roomsRecordedList" parameterClass="java.util.HashMap" resultMap="roomStatusResult">
-     	select room_id, room_name, lesson_plan_id,course from room where org_name=#orgName# and room_active=#status# and course = #course_id# and record='true' and room_archieve !='Y'
-     	
-     	<dynamic prepend=" and ">
-	      <isNotEmpty property="clientName">
-	           client_name = #clientName#
+		</dynamic>
+
+		order by inserted_date desc
+	</select>
+
+	<select id="roomsRecordedList" parameterClass="java.util.HashMap"
+		resultMap="roomStatusResult">
+		select room_id, room_name, lesson_plan_id,course from room where
+		org_name=#orgName# and room_active=#status# and course = #course_id#
+		and record='true' and room_archieve !='Y'
+
+		<dynamic prepend=" and ">
+			<isNotEmpty property="clientName">
+				client_name = #clientName#
 	      </isNotEmpty>
-   		</dynamic>
-   		
-     	 order by inserted_date desc
-      </select>
-      
-      <delete id="deleteSession" parameterClass="java.util.HashMap">
-        update room set room_archieve='Y' , room_archieved_date=now() where org_name=#orgName#  and room_archieve !='Y'
-        <dynamic prepend=" and ">
-	      <isNotEmpty property="clientName">
-	           client_name = #clientName#
+		</dynamic>
+
+		order by inserted_date desc
+	</select>
+
+	<delete id="deleteSession" parameterClass="java.util.HashMap">
+		update room set room_archieve='Y' , room_archieved_date=now() where
+		org_name=#orgName# and room_archieve !='Y'
+		<dynamic prepend=" and ">
+			<isNotEmpty property="clientName">
+				client_name = #clientName#
 	      </isNotEmpty>
-   		</dynamic>
-   		
-   		<dynamic prepend=" and ">
-	      <isNotEmpty property="course_id">
-	           course = #course_id#
+		</dynamic>
+
+		<dynamic prepend=" and ">
+			<isNotEmpty property="course_id">
+				course = #course_id#
 	      </isNotEmpty>
-   		</dynamic>
-   		
-   		<dynamic prepend=" and ">
-	      <isNotEmpty property="lesson_plan_id">
-	           lesson_plan_id = #lesson_plan_id#
+		</dynamic>
+
+		<dynamic prepend=" and ">
+			<isNotEmpty property="lesson_plan_id">
+				lesson_plan_id = #lesson_plan_id#
 	      </isNotEmpty>
-   		</dynamic>
-   		
-  	</delete>
-      
-      
+		</dynamic>
+
+	</delete>
+
+
 </sqlMap>
  

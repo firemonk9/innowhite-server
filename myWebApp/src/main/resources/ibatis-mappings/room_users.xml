@@ -3,50 +3,51 @@
 "http://ibatis.apache.org/dtd/sql-map-2.dtd">
 <sqlMap>
 
-<!-- This table keeps track(join time and leave time) of every user who joined a room.   -->
-      
-      
-      <insert id="insertUserInRoom" parameterClass="java.util.HashMap">
-      		INSERT INTO room_users
-           		(room_id, user_id, conf_number ,start_time)
-     		VALUES
-           		(#roomId#, #userId#, #confNumber# ,NOW() )
-           		           		
-           	<selectKey keyProperty="id" resultClass="java.lang.Integer" >
-				SELECT @@identity
+	<!-- This table keeps track(join time and leave time) of every user who 
+		joined a room. -->
+
+
+	<insert id="insertUserInRoom" parameterClass="java.util.HashMap">
+		INSERT INTO room_users
+		(room_id, user_id, conf_number ,start_time)
+		VALUES
+		(#roomId#, #userId#, #confNumber# ,NOW() )
+
+		<selectKey keyProperty="id" resultClass="java.lang.Integer">
+			SELECT @@identity
 			</selectKey>
-      </insert>      
-      
-      
-      <update id="updateUserInRoom"  parameterClass="java.util.HashMap">
-		
+	</insert>
+
+
+	<update id="updateUserInRoom" parameterClass="java.util.HashMap">
+
 		update room_users set
 		end_time = NOW()
 		where room_id=#roomId# and
-		user_id = #userId#
+		user_id =
+		#userId#
 			
       </update>
-      
-      
-      
-       
-	   <!--  this will cause problem need to fix 
-	   Fixed by using min() 
-	   -->   
-	  <select id="selectCurrentConfNumber" resultClass="java.lang.String" parameterClass="java.lang.String">
-      	select max(conf_number) from  room_users where room_id=#roomId# 
+
+
+
+
+	<!-- this will cause problem need to fix Fixed by using min() -->
+	<select id="selectCurrentConfNumber" resultClass="java.lang.String"
+		parameterClass="java.lang.String">
+		select max(conf_number) from room_users where room_id=#roomId# 
 		
 		     
       </select>
-     
-	   <!--  this will cause problem need to fix 
-	   Fixed by using min() 
-	   -->   
-	  <select id="selectConfNumber" resultClass="java.lang.String" parameterClass="java.util.HashMap">
-      	select min(conf_number) from room_users where   room_id=#roomId# and
-		user_id = #userId#
+
+	<!-- this will cause problem need to fix Fixed by using min() -->
+	<select id="selectConfNumber" resultClass="java.lang.String"
+		parameterClass="java.util.HashMap">
+		select min(conf_number) from room_users where room_id=#roomId# and
+		user_id =
+		#userId#
 		     
       </select>
-      
+
 </sqlMap>
  

@@ -216,7 +216,16 @@ public class Utility {
 		return s + "" + Math.round(Math.random() * 1000);
 		// return null;
 	}
+	
+	public static String get4DigitRandom() {
 
+		
+		return "" + Math.round(Math.random() * 1000);
+		// return null;
+	}
+
+	
+	
 	public static List<String> getCourseList(String courses) {
 
 		String[] arr = courses.split(Constants.API_DELIMITER);

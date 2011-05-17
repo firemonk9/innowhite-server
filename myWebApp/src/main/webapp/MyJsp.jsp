@@ -120,7 +120,7 @@ Learn more about Flex at http://flex.org
 <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
 
 
-	<script src="http://jquery.com/src/jquery-latest.pack.js">
+<script src="http://jquery.com/src/jquery-latest.pack.js">
 	</script>
 
 <!--  BEGIN Browser History required section -->
@@ -394,16 +394,11 @@ function plugin()
 
 //-->
 </script>
-<noscript>
-
-
-
-</noscript>
-
+<noscript></noscript>
 <body>
 
 
-<script>
+	<script>
 
 // Version check for the Flash Player that has the ability to start Player Product Install (6.0r65)
 var hasProductInstall = DetectFlashVer(6, 0, 65);
@@ -460,52 +455,53 @@ if ( hasProductInstall && !hasRequestedVersion ) {
 
 </script>
 
-<div id="pluginContainer">
- 	<object id="plugin0" type="application/x-innowhite" width="300" height="300">
- 	  	 <param name="onload" value="pluginLoaded" />
- 	<div>
-</div>
- </object><br />
+	<div id="pluginContainer">
+		<object id="plugin0" type="application/x-innowhite" width="300"
+			height="300">
+			<param name="onload" value="pluginLoaded" />
+			<div></div>
+		</object>
+		<br />
 
-</div>
-<div id="downloadPlugin" style="display: none;">
-
- 	<h3>To share your screen, a plugin download is required.
- 	Please click on the "download now" button to start download of Innowhite ScreenShare plugin.</h3>
-  	<a target="_blank" href="" onmousedown="detectPluginSystem(this);">
-   	<img src="/whiteboard/history/download.png" width="30%" style="border:none;position: absolute; bottom: 10px; left: 50%; margin-left: -60px;"/>
-  	</a>
- 	</div>
-
-	<div id="helpWindow" style="display: none;" >
-
-	  	Help Content Coming soon....
- 	</div>
-
- 	<div id="notSapportedBrowser" style="display: none;">
-
-	  	Safari on Mac is not supported to share the screen. Please use Firefox or Google Chrome for sharing Screen.
- 	</div>
- 	<div id="pluginInstalled" style="display: none;">
-
-		Now You can start sharing your screen during Innowhite meting sessions. Enjoy!
 	</div>
-	 <div id="reloadPage" style="display: none;">
+	<div id="downloadPlugin" style="display: none;">
+
+		<h3>To share your screen, a plugin download is required. Please
+			click on the "download now" button to start download of Innowhite
+			ScreenShare plugin.</h3>
+		<a target="_blank" href="" onmousedown="detectPluginSystem(this);">
+			<img src="/whiteboard/history/download.png" width="30%"
+			style="border: none; position: absolute; bottom: 10px; left: 50%; margin-left: -60px;" />
+		</a>
+	</div>
+
+	<div id="helpWindow" style="display: none;">Help Content Coming
+		soon....</div>
+
+	<div id="notSapportedBrowser" style="display: none;">Safari on
+		Mac is not supported to share the screen. Please use Firefox or Google
+		Chrome for sharing Screen.</div>
+	<div id="pluginInstalled" style="display: none;">Now You can
+		start sharing your screen during Innowhite meting sessions. Enjoy!</div>
+	<div id="reloadPage" style="display: none;">
 		<h4>We could not load the plugin dynamically</h4>
-		 
-		  Please quit the browser and open again for plugin to get loaded.
+
+		Please quit the browser and open again for plugin to get loaded.
 	</div>
-	
-	
+
+
 	<div id="popUpTemplate" style="display: none">
-	<a href="" onclick="$.closeDOMWindow();return false;" style="display: block; float:right; margin-right: 10px;">close</a><br />
-	 	<img src="/whiteboard/history/InnowhiteLogo.png" style="position: absolute; top: 10px;"/>
- 		<div style="margin-bottom: 30px;">&nbsp;</div>
+		<a href="" onclick="$.closeDOMWindow();return false;"
+			style="display: block; float: right; margin-right: 10px;">close</a><br />
+		<img src="/whiteboard/history/InnowhiteLogo.png"
+			style="position: absolute; top: 10px;" />
+		<div style="margin-bottom: 30px;">&nbsp;</div>
 		<hr width=100%>
-		<br><br>
+		<br>
+		<br>
 		<div class="DOMWindowContent" stylw="width:100%;height: 100%;"></div>
 	</div>
-<!--
+	<!--
 <object id="plugin0" type="application/x-innowhite" width="300" height="300">
     <param name="onload" value="pluginLoaded" />
 </object>

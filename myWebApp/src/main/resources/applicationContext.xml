@@ -72,7 +72,7 @@
 		class="com.innowhite.transformation.messages.VideoNameMessageProducer">
 		<property name="jmsTemplate" ref="videoSecurityProducerTemplate"></property>
 		<property name="destination" ref="videoSecurityDestination"></property>
-				
+
 	</bean>
 
 

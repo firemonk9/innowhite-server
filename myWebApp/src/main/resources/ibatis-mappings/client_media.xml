@@ -35,15 +35,16 @@
 		( ?,?,?,?,? ,now())
 		<selectKey keyProperty="id" resultClass="java.lang.Integer">
 			SELECT @@identity
-			</selectKey>
+		</selectKey>
 	</insert>
 
 
 
 
-	<select id="getDocumentXML" parameterClass="java.util.HashMap" resultClass="java.lang.String"
-		>
-		select document_xml from client_media where content_id = #contentId# and    org_name = #orgName#
+	<select id="getDocumentXML" parameterClass="java.util.HashMap"
+		resultClass="java.lang.String">
+		select document_xml from client_media
+		where content_id = #contentId# and org_name = #orgName#
 		
 			
 		
@@ -59,34 +60,37 @@
 
 	<select id="checkMediaExists" parameterClass="java.util.HashMap"
 		resultClass="java.lang.String">
-		 
-		select content_id from client_media where content_id = #contentId#   and    org_name = #orgName#
-		
-<!--		<dynamic prepend=" and ">-->
-<!--	      <isNotEmpty property="orgName">-->
-<!--	           org_name = #orgName#-->
-<!--	      </isNotEmpty>-->
-<!--   		</dynamic>-->
-		
-      </select>
+
+		select content_id from client_media where content_id = #contentId# and
+		org_name = #orgName#
+
+		<!-- <dynamic prepend=" and "> -->
+		<!-- <isNotEmpty property="orgName"> -->
+		<!-- org_name = #orgName# -->
+		<!-- </isNotEmpty> -->
+		<!-- </dynamic> -->
+
+	</select>
 
 
-	<delete id="deleteMedia" parameterClass="java.util.HashMap" >
-		delete from client_media where content_id = #contentId# and   org_name = #orgName#
-		
-<!--		<dynamic prepend=" and ">-->
-<!--	      <isNotEmpty property="orgName">-->
-<!--	           org_name = #orgName#-->
-<!--	      </isNotEmpty>-->
-<!--   		</dynamic>-->
-<!--		-->
-		  
-      </delete>
+	<delete id="deleteMedia" parameterClass="java.util.HashMap">
+		delete from client_media where content_id = #contentId# and org_name =
+		#orgName#
+
+		<!-- <dynamic prepend=" and "> -->
+		<!-- <isNotEmpty property="orgName"> -->
+		<!-- org_name = #orgName# -->
+		<!-- </isNotEmpty> -->
+		<!-- </dynamic> -->
+		<!-- -->
+
+	</delete>
 
 
 	<select id="getContentSource" resultClass="java.lang.String"
 		parameterClass="java.util.HashMap">
-		select content_source from client_media where content_id = #contentId# and   org_name = #orgName#
+		select content_source from client_media where
+		content_id = #contentId# and org_name = #orgName#
 	</select>
 
 </sqlMap>

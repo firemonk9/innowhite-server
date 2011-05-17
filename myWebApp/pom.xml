@@ -505,9 +505,9 @@
 				<groupId>org.codehaus.mojo</groupId>
 				<artifactId>tomcat-maven-plugin</artifactId>
 				<version>1.0-beta-1</version>
-<!-- 				<configuration> -->
-<!-- 					<warFile>/Users/firemonk/Desktop/</warFile> -->
-<!-- 				</configuration> -->
+				<!-- <configuration> -->
+				<!-- <warFile>/Users/firemonk/Desktop/</warFile> -->
+				<!-- </configuration> -->
 			</plugin>
 		</plugins>
 	</build>

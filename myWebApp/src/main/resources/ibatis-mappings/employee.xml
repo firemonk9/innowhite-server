@@ -3,31 +3,31 @@
 "http://ibatis.apache.org/dtd/sql-map-2.dtd">
 <sqlMap>
 
-		
-      <parameterMap id="employeeValues" class="java.util.Map">
-	      <parameter property="empname" jdbcType="INTEGER"/>
-    	  <parameter property="jobdesc" jdbcType="VARCHAR"/>
-      </parameterMap>
 
-      <insert id="setEmployee" parameterMap="employeeValues">
-      		INSERT INTO employee
-           		(empname,jobdesc)
-     		VALUES
-           		(?,?)
-           		           		
-           	<selectKey keyProperty="emp_id" resultClass="java.lang.Integer" >
-				SELECT @@identity
+	<parameterMap id="employeeValues" class="java.util.Map">
+		<parameter property="empname" jdbcType="INTEGER" />
+		<parameter property="jobdesc" jdbcType="VARCHAR" />
+	</parameterMap>
+
+	<insert id="setEmployee" parameterMap="employeeValues">
+		INSERT INTO employee
+		(empname,jobdesc)
+		VALUES
+		(?,?)
+
+		<selectKey keyProperty="emp_id" resultClass="java.lang.Integer">
+			SELECT @@identity
 			</selectKey>
-      </insert>           
-      
-      <resultMap id="empHashMap" class="java.util.HashMap">
-      <result property="empId" column="empid" />
-      <result property="empName" column="empname" />
-      <result property="JobDesc" column="jobdesc" />
-      
-      </resultMap>
-      <select id="getEmployee" resultMap="empHashMap">
-      select empid, empname, jobdesc from employee;
+	</insert>
+
+	<resultMap id="empHashMap" class="java.util.HashMap">
+		<result property="empId" column="empid" />
+		<result property="empName" column="empname" />
+		<result property="JobDesc" column="jobdesc" />
+
+	</resultMap>
+	<select id="getEmployee" resultMap="empHashMap">
+		select empid, empname, jobdesc from employee;
       
       </select>
 </sqlMap>
