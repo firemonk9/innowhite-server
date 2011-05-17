@@ -1,14 +1,5 @@
 <?xml version="1.0" encoding="ISO-8859-1"?>
 <web-app xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns="http://java.sun.com/xml/ns/j2ee" xmlns:javaee="http://java.sun.com/xml/ns/javaee" xmlns:web="http://java.sun.com/xml/ns/javaee/web-app_2_5.xsd" xsi:schemaLocation="http://java.sun.com/xml/ns/j2ee http://java.sun.com/xml/ns/j2ee/web-app_2_4.xsd" version="2.4">
-
-<!--   <context-param> -->
-<!--     <javaee:param-name>parentContextKey</javaee:param-name> -->
-<!--     <javaee:param-value>default.context</javaee:param-value> -->
-<!--   </context-param> -->
-<!--   <context-param> -->
-<!--     <javaee:param-name>webAppRootKey</javaee:param-name> -->
-<!--     <javaee:param-value>/myWebApp</javaee:param-value> -->
-<!--   </context-param> -->
   <filter>
     <filter-name>WBFilter</filter-name>
     <filter-class>
@@ -20,8 +11,6 @@
     <url-pattern>/*</url-pattern>
   </filter-mapping>
   <servlet>
-    
-
     <servlet-name>CreateRoomServlet</servlet-name>
     <servlet-class>com.innowhite.whiteboard.Servlet.CreateRoomServlet</servlet-class>
   </servlet>
@@ -30,14 +19,10 @@
     <url-pattern>/CreateRoom</url-pattern>
   </servlet-mapping>
   <servlet>
-    
-
     <servlet-name>StreamServlet</servlet-name>
     <servlet-class>com.innowhite.whiteboard.Servlet.StreamServlet</servlet-class>
   </servlet>
   <servlet>
-    
-
     <servlet-name>ViewRoomServlet</servlet-name>
     <servlet-class>com.innowhite.whiteboard.Servlet.ViewRoomServlet</servlet-class>
   </servlet>
@@ -46,8 +31,6 @@
     <url-pattern>/ViewRoom</url-pattern>
   </servlet-mapping>
   <servlet>
-    
-
     <servlet-name>JoinRoomServlet</servlet-name>
     <servlet-class>com.innowhite.whiteboard.Servlet.JoinRoomServlet</servlet-class>
   </servlet>
@@ -56,8 +39,6 @@
     <url-pattern>/JoinRoom</url-pattern>
   </servlet-mapping>
   <servlet>
-    
-
     <servlet-name>RoomStatusServlet</servlet-name>
     <servlet-class>com.innowhite.whiteboard.Servlet.RoomStatusServlet</servlet-class>
   </servlet>
@@ -66,8 +47,6 @@
     <url-pattern>/RoomStatus</url-pattern>
   </servlet-mapping>
   <servlet>
-    
-
     <servlet-name>RoomServlet</servlet-name>
     <servlet-class>com.innowhite.whiteboard.Servlet.RoomServlet</servlet-class>
   </servlet>
@@ -76,13 +55,10 @@
     <url-pattern>/Rooms</url-pattern>
   </servlet-mapping>
   <servlet>
-    
-
     <servlet-name>uploadFile</servlet-name>
     <servlet-class>com.innowhite.whiteboard.Servlet.UploadFileServlet</servlet-class>
   </servlet>
   <servlet>
-    
     <servlet-name>UploadImages</servlet-name>
     <servlet-class>com.util.UploadImages</servlet-class>
   </servlet>
@@ -217,13 +193,19 @@
     <mime-type>application/x-msi</mime-type>
   </mime-mapping>
   <servlet>
-    
-
     <servlet-name>WBLiveVideo</servlet-name>
     <servlet-class>com.innowhite.whiteboard.Servlet.WBLiveVideo</servlet-class>
   </servlet>
   <servlet-mapping>
     <servlet-name>WBLiveVideo</servlet-name>
     <url-pattern>/servlet/WBLiveVideo</url-pattern>
+  </servlet-mapping>
+  <servlet>
+    <servlet-name>WBDeployer</servlet-name>
+    <servlet-class>com.innowhite.whiteboard.Servlet.WBDeployer</servlet-class>
+  </servlet>
+  <servlet-mapping>
+    <servlet-name>WBDeployer</servlet-name>
+    <url-pattern>/servlet/WBDeployer</url-pattern>
   </servlet-mapping>
 </web-app>

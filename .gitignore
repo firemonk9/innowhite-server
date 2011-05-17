@@ -1,9 +1,11 @@
 whiteboard/WEB-INF/classes/
-oflaDemo/build/
+whiteboardInet/WEB-INF/classes/
+oflaDemo/WebContent/WEB-INF/classes/
 loadBalancer/target/
 DocTransformation/target/
 myWebApp/target/
 PlayBackWebApp/target/
 InnowhiteRed5/build/
 PlaybackApp/target
+InnowhiteRed5/WebContent/WEB-INF/classes
 

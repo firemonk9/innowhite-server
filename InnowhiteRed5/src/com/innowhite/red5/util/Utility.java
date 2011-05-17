@@ -98,7 +98,7 @@ public class Utility {
 	public static boolean userFirstTime(String userName, Map<String, String> map) {
 
 		for (String obj : map.values()) {
-			log.debug("userName :" + userName);
+			//log.debug("userName :" + userName);
 			if (obj != null && obj.equals(userName))
 				return true;
 		}

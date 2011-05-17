@@ -174,6 +174,16 @@ public class Main extends MultiThreadedApplicationAdapter {
 			// users for the first time.
 			if (map == null || Utility.userFirstTime(uservo.getUsername(), map)) {
 
+				
+				if (uservo.getUserJoinedTime() == null) {
+
+					uservo.setUserJoinedTime((new Date().getTime()));
+					System.err.println(" user joined time is "
+							+ uservo.getUserJoinedTime() + " username "
+							+ uservo.getUsername());
+				}
+
+				
 				// if (TimeMaintainerService.ifTimeSet(Red5.getConnectionLocal()
 				// .getScope().getName(), uservo.isGroupLeader()))
 				// ;

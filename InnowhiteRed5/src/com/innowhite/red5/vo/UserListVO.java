@@ -8,18 +8,11 @@ public class UserListVO {
 	boolean groupLeader;
 	//String objName;
 	String myStatus;
+	Long userJoinedTime=null;
 	//int loggedInTime;
 //	boolean userDataSynch;
 //	boolean isTalking;
 //	boolean muted;
-	
-	
-
-	// this variable is 0 by default which means the user has not entered audio conf.
-	// it can be 1 or more which means the user has entered into conf with more than 1 phone.s
-	//int voiceconfjoined;
-	
-	
 
 	//int seq;
 	int whiteboardDrawRights;
@@ -57,7 +50,13 @@ public class UserListVO {
 //		this.isTalking = isTalking;
 //	}
 
-	
+	public Long getUserJoinedTime() {
+		return userJoinedTime;
+	}
+
+	public void setUserJoinedTime(Long userJoinedTime) {
+		this.userJoinedTime = userJoinedTime;
+	}
 
 	public int getVoiceConfJoined() {
 		return voiceConfJoined;

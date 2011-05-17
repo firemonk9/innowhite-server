@@ -24,5 +24,5 @@
 	<classpathentry kind="var" path="RED5_HOME/lib/log4j-over-slf4j-1.6.1.jar"/>
 	<classpathentry kind="var" path="RED5_HOME/lib/org.springframework.asm-3.0.5.RELEASE.jar"/>
 	<classpathentry kind="var" path="RED5_HOME/lib/org.springframework.expression-3.0.5.RELEASE.jar"/>
-	<classpathentry kind="output" path="build/classes"/>
+	<classpathentry kind="output" path="WebContent/WEB-INF/classes"/>
 </classpath>

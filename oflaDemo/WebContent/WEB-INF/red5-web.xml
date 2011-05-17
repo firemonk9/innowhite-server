@@ -121,13 +121,13 @@
 	</bean>
 
 
-<bean id="streamFilenameGenerator" 
-    class="org.red5.server.webapp.oflaDemo.CustomFilenameGenerator" >
- 	<property name="recordPath" value="${recordPath}" /> 
-   <property name="playbackPath" value="${playbackPath}" /> 
-   <property name="absolutePath" value="${absolutePath}" /> 
+<!-- <bean id="streamFilenameGenerator"  -->
+<!--     class="org.red5.server.webapp.oflaDemo.CustomFilenameGenerator" > -->
+<!--  	<property name="recordPath" value="${recordPath}" />  -->
+<!--    <property name="playbackPath" value="${playbackPath}" />  -->
+<!--    <property name="absolutePath" value="${absolutePath}" />  -->
  
- </bean> 
+<!--  </bean>  -->
 
     
 </beans>
