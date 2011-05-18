@@ -60,7 +60,7 @@
 		class="org.springframework.orm.hibernate3.annotation.AnnotationSessionFactoryBean">
 		<property name="dataSource" ref="dataSource" />
 		<property name="packagesToScan" value="com.innowhite.PlaybackApp" />
-		<property name="schemaUpdate" value="true" />
+		<property name="schemaUpdate" value="false" />
 		<property name="configurationClass" value="org.hibernate.cfg.AnnotationConfiguration" />
 
 
@@ -84,4 +84,12 @@
 		<property name="sessionFactory" ref="sessionFactory" />
 		
 	</bean>
+	
+		<bean id="audioDataDao" name="audioDataDao"
+		class="com.innowhite.PlaybackApp.model.AudioDataDao">
+		
+		<property name="sessionFactory" ref="sessionFactory" />
+		
+	</bean>
+	
 </beans>

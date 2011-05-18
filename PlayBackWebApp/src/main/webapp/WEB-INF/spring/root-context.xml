@@ -58,6 +58,30 @@
 		<jms:listener destination="Innowhite.whiteboardData" ref="simpleMessageListener"
 			method="onMessage" />
 	</jms:listener-container>
+	
+	
+	<!-- A POJO that implements the JMS message listener for Whiteboard Data -->
+	<bean id="audioMessageListener"
+		class="com.innowhite.PlayBackWebApp.messaging.AudioDataMsgListener">
+
+ 		<property name="audioDataService" ref="audioDataService" /> 
+	</bean>
+	
+	
+		<!-- The Spring message listener container configuration -->
+	<jms:listener-container container-type="default"
+		connection-factory="amqConnectionFactory" acknowledge="auto">
+		<jms:listener destination="Innowhite.audioData" ref="audioMessageListener"
+			method="onMessage" />
+	</jms:listener-container>
+	
+
+	<bean id="audioDataService" name="audioDataService"
+		class="com.innowhite.PlayBackWebApp.service.AudioDataService">
+		
+		<property name="audioDataDao" ref="audioDataDao" />
+		
+	</bean>
 
 
 	<bean id="whiteboardDataService" name="whiteboardDataService"
