@@ -231,11 +231,12 @@ public class MainAudioService {
 			return;
 		}
 		
+		String delimt="#";
 		
 		if(startRecordfile != null)
-			audioDataMessageService.sendMessage("RECORDSTART_"+room+"_"+startRecordfile);
+			audioDataMessageService.sendMessage("RECORDSTART"+delimt+room+delimt+startRecordfile);
 		else if(stopRecordFile != null)
-			audioDataMessageService.sendMessage("RECORDSTOP_"+room+"_"+stopRecordFile);
+			audioDataMessageService.sendMessage("RECORDSTOP"+delimt+room+delimt+stopRecordFile);
 		
 	}
 	

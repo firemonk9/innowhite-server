@@ -40,10 +40,17 @@
 	<logger name="org.springframework.web">
 		<level value="info" />
 	</logger>
+	
+	<logger name="org.apache.activemq.transport.InactivityMonitor">
+		<level value="info" />
+	</logger>
 
+	<logger name="com">
+		<level value="debug" />
+	</logger>
 	<!-- Root Logger -->
 	<root>
-		<level value="DEBUG" />
+		<level value="INFO" />
 		<appender-ref ref="FA" />
 		<appender-ref ref="console" />
 	</root>

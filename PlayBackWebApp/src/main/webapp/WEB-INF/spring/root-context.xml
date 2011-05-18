@@ -38,10 +38,10 @@
 
 
 	<!-- A cached connection to wrap the ActiveMQ connection -->
-	<!-- <bean id="cachedConnectionFactory" -->
-	<!-- class="org.springframework.jms.connection.CachingConnectionFactory" -->
-	<!-- p:targetConnectionFactory-ref="amqConnectionFactory" -->
-	<!-- p:sessionCacheSize="10" /> -->
+	<bean id="cachedConnectionFactory"
+	class="org.springframework.jms.connection.CachingConnectionFactory"
+	p:targetConnectionFactory-ref="amqConnectionFactory"
+	p:sessionCacheSize="10" />
 
 
 	<!-- A POJO that implements the JMS message listener for Whiteboard Data -->
@@ -54,7 +54,7 @@
 
 	<!-- The Spring message listener container configuration -->
 	<jms:listener-container container-type="default"
-		connection-factory="amqConnectionFactory" acknowledge="auto">
+		connection-factory="cachedConnectionFactory" acknowledge="auto">
 		<jms:listener destination="Innowhite.whiteboardData" ref="simpleMessageListener"
 			method="onMessage" />
 	</jms:listener-container>
@@ -70,7 +70,7 @@
 	
 		<!-- The Spring message listener container configuration -->
 	<jms:listener-container container-type="default"
-		connection-factory="amqConnectionFactory" acknowledge="auto">
+		connection-factory="cachedConnectionFactory" acknowledge="auto">
 		<jms:listener destination="Innowhite.audioData" ref="audioMessageListener"
 			method="onMessage" />
 	</jms:listener-container>

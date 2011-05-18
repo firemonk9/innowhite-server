@@ -12,7 +12,7 @@
 
 	<!-- Application Loggers -->
 	<logger name="com.innowhite.PlayBackWebApp">
-		<level value="info" />
+		<level value="debug" />
 	</logger>
 
 	<!-- 3rdparty Loggers -->
@@ -29,6 +29,10 @@
 	</logger>
 
 	<logger name="org.springframework.web">
+		<level value="info" />
+	</logger>
+
+	<logger name="org.apache.activemq.transport.InactivityMonitor">
 		<level value="info" />
 	</logger>
 
@@ -57,7 +61,7 @@
 
 	<!-- Root Logger -->
 	<root>
-		<priority value="info" />
+		<priority value="debug" />
 		<appender-ref ref="console" />
 	</root>
 

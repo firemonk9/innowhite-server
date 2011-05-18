@@ -22,7 +22,7 @@ public class AudioDataDao {
 	this.sessionFactory = sessionFactory;
     }
 
-   
+    @Transactional
     public void saveWhitebordObj(String recordStatus, String filePath, String roomName) {
 
 	log.debug("entered saveWhitebordObj");

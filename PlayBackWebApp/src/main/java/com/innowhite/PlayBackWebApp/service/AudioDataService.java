@@ -1,7 +1,5 @@
 package com.innowhite.PlayBackWebApp.service;
 
-import java.util.StringTokenizer;
-
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -22,14 +20,19 @@ public class AudioDataService {
      */
     public void saveAudioData(String m) {
 	try {
-	    log.debug("entered saveAudioData");
+	    log.debug("entered saveAudioData msg:" + m);
 	    if (m != null) {
-		StringTokenizer st = new StringTokenizer(m, "_");
+		String[] arr = m.split("#");
 
-		String recordStatus = st.nextToken();
-		String roomId = st.nextToken();
-		String fileName = st.nextToken();
-		audioDataDao.saveWhitebordObj(recordStatus, fileName, roomId);
+		if (arr != null && arr.length == 3) {
+		    String recordStatus = arr[0];
+		    String roomId = arr[1];
+		    String fileName = arr[2];
+		    log.debug("recordStatus   " + recordStatus + "  roomId " + roomId + "  fileName " + fileName);
+		    audioDataDao.saveWhitebordObj(recordStatus, fileName, roomId);
+		} else
+		    log.warn("expecting three tokens and got " + m);
+
 	    }
 	    // whiteboardDataDao.saveWhitebordObj(m);
 	} catch (Exception e) {
