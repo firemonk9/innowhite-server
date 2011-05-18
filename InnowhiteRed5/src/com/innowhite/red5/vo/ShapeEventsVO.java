@@ -15,12 +15,7 @@ public class ShapeEventsVO implements Serializable {
 	float y2;
 	float shpHeight;
 	float shpWidth;
-	float ma;
-	float mb;
-	float mc;
-	float md;
-	float mtx;
-	float mty;
+
 	float mainscalex;
 	float mainscaley;
 	String bordercolor;
@@ -32,7 +27,7 @@ public class ShapeEventsVO implements Serializable {
 	long objDate;
 	int penthickness;
 	int versionNumber;
-	ArrayList elems;
+	ArrayList<PointVO> elems;
 	String sprText;
 	String txtType;
 	String txtFont;
@@ -264,54 +259,7 @@ public class ShapeEventsVO implements Serializable {
 		this.penthickness = penthickness;
 	}
 
-	public float getMa() {
-		return ma;
-	}
-
-	public void setMa(float ma) {
-		this.ma = ma;
-	}
-
-	public float getMb() {
-		return mb;
-	}
-
-	public void setMb(float mb) {
-		this.mb = mb;
-	}
-
-	public float getMc() {
-		return mc;
-	}
-
-	public void setMc(float mc) {
-		this.mc = mc;
-	}
-
-	public float getMtx() {
-		return mtx;
-	}
-
-	public void setMtx(float mtx) {
-		this.mtx = mtx;
-	}
-
-	public float getMty() {
-		return mty;
-	}
-
-	public void setMty(float mty) {
-		this.mty = mty;
-	}
-
-	public float getMd() {
-		return md;
-	}
-
-	public void setMd(float md) {
-		this.md = md;
-	}
-
+	
 	public float getX1() {
 		return x1;
 	}
