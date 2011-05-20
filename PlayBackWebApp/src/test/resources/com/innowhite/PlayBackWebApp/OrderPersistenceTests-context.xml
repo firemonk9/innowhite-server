@@ -38,12 +38,12 @@
 		<property name="sessionFactory" ref="sessionFactory" />
 	</bean>
 
-	<bean id="placeholderConfig"
+ <bean id="placeholderConfig"
 		class="org.springframework.beans.factory.config.PropertyPlaceholderConfigurer">
 		<property name="locations">
 			<list>
 				
-				<value>classpath:innowhite.properties</value>
+				<value>innowhite.properties</value>
 			</list>
 		</property>
 	</bean>
@@ -59,7 +59,7 @@
 	<bean id="sessionFactory"
 		class="org.springframework.orm.hibernate3.annotation.AnnotationSessionFactoryBean">
 		<property name="dataSource" ref="dataSource" />
-		<property name="packagesToScan" value="com.innowhite.PlayBackWebApp" />
+		<property name="packagesToScan" value="com.innowhite.PlaybackApp" />
 		<property name="schemaUpdate" value="false" />
 		<property name="configurationClass" value="org.hibernate.cfg.AnnotationConfiguration" />
 
@@ -91,13 +91,5 @@
 		<property name="sessionFactory" ref="sessionFactory" />
 		
 	</bean>
-	
-		<bean id="videoDataDao" name="videoDataDao"
-		class="com.innowhite.PlayBackWebApp.dao.VideoDataDao">
-		
-		<property name="sessionFactory" ref="sessionFactory" />
-		
-	</bean>
-	
 	
 </beans>

@@ -8,14 +8,19 @@ import javax.jms.TextMessage;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
-import com.innowhite.PlayBackWebApp.service.AudioDataService;
+import com.innowhite.PlayBackWebApp.service.AudioVideoDataService;
 
 public class AudioDataMsgListener implements MessageListener{
 
-    AudioDataService audioDataService;
+    AudioVideoDataService audioVideoDataService;
 
-    public void setAudioDataService(AudioDataService audioDataService) {
-	this.audioDataService = audioDataService;
+ 
+    public AudioVideoDataService getAudioVideoDataService() {
+        return audioVideoDataService;
+    }
+
+    public void setAudioVideoDataService(AudioVideoDataService audioVideoDataService) {
+        this.audioVideoDataService = audioVideoDataService;
     }
 
     private static final Logger log = LoggerFactory.getLogger(AudioDataMsgListener.class);
@@ -31,7 +36,12 @@ public class AudioDataMsgListener implements MessageListener{
 	    try {
 
 		String msg =message.getStringProperty("text");
-		audioDataService.saveAudioData(msg);
+		String msgType = message.getStringProperty("MSG_TYPE");
+		String curTime = message.getStringProperty("CURRENT_TIME");
+		
+		
+		
+		audioVideoDataService.saveAudioData(msg,msgType,curTime);
 		
 	    } catch (JMSException ex) {
 		log.error(ex.getMessage(), ex);

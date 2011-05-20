@@ -10,6 +10,5 @@
 			<attribute name="org.eclipse.jst.component.dependency" value="/WEB-INF/lib"/>
 		</attributes>
 	</classpathentry>
-	<classpathentry kind="lib" path="/PlaybackApp/target/PlaybackApp-utility-1.0.0.CI-SNAPSHOT.jar" sourcepath="/PlaybackApp"/>
 	<classpathentry kind="output" path="target/classes"/>
 </classpath>

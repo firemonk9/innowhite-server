@@ -6,7 +6,7 @@
 	<jmxConfigurator contextName="oflaDemo" />
 
 	<appender name="OFLA" class="ch.qos.logback.core.FileAppender">
-		<File>log/oflademo.log</File>
+		<File>/opt/InnowhiteData/logs/oflaDemo.log</File>
 		<Append>false</Append>
 		<Encoding>UTF-8</Encoding>
 		<BufferedIO>false</BufferedIO>

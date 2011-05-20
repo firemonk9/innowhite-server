@@ -2,7 +2,7 @@ package com.innowhite.PlayBackWebApp.service;
 
 import java.util.HashMap;
 
-import com.innowhite.PlaybackApp.model.WhiteboardDataDao;
+import com.innowhite.PlayBackWebApp.dao.WhiteboardDataDao;
 
 public class WhiteboardDataService {
 

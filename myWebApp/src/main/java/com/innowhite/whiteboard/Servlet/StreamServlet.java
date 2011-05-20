@@ -44,7 +44,7 @@ public class StreamServlet extends HttpServlet {
 		String streamType = request.getParameter(InnowhiteConstants.STREAM_TYPE);
 		String roomId = request.getParameter(InnowhiteConstants.ROOML_ID);
 		
-		int subRoomId = WhiteboardAuthenticationDAOImpl.createSubRoomID(roomId,streamType);
+		Long subRoomId = WhiteboardAuthenticationDAOImpl.createSubRoomID(roomId,streamType);
 		
 		
 		// send the stream is to server.

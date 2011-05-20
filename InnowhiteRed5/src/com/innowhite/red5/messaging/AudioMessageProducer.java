@@ -43,6 +43,7 @@ public class AudioMessageProducer {
 				TextMessage message = null;
 				try {
 					message = session.createTextMessage();
+					message.setStringProperty("MSG_TYPE", "AUDIO");
 					message.setStringProperty("text", msg);
 				} catch (JMSException e) {
 					e.printStackTrace();

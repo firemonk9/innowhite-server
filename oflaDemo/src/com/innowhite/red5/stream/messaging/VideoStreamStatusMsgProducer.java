@@ -1,5 +1,7 @@
 package com.innowhite.red5.stream.messaging;
 
+import java.util.Date;
+
 import javax.jms.JMSException;
 import javax.jms.Message;
 import javax.jms.Queue;
@@ -19,9 +21,7 @@ public class VideoStreamStatusMsgProducer {
 	protected JmsTemplate jmsTemplate;
 	protected Queue destination;
 
-	public void setDestination(Queue destination) {
-		this.destination = destination;
-	}
+	
 
 	public void setJmsTemplate(JmsTemplate jmsTemplate) {
 		this.jmsTemplate = jmsTemplate;
@@ -32,13 +32,17 @@ public class VideoStreamStatusMsgProducer {
 	String txt=null;
 	
 	public synchronized void  sendMessage(String msg) {
+	    	log.debug("entered sendMessage -- sending "+msg+" to queue ");
 		txt = msg;
 		MessageCreator creator = new MessageCreator() {
 			public Message createMessage(Session session) {
 				TextMessage message = null;
 				try {
 					message = session.createTextMessage();
+					message.setStringProperty("MSG_TYPE", "VIDEO");
 					message.setStringProperty("text", txt);
+					message.setStringProperty("CURRENT_TIME", String.valueOf(new Date().getTime()));
+					
 				} catch (JMSException e) {
 					e.printStackTrace();
 				}
@@ -46,7 +50,7 @@ public class VideoStreamStatusMsgProducer {
 			}
 		};
 
-		jmsTemplate.send(destination, creator);
+		jmsTemplate.send( creator);
 	}
 
 	// public void sendMessages(final DocConversionBean docBean)

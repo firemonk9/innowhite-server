@@ -37,12 +37,12 @@
 
 
 	<insert id="createSubRoomID" parameterClass="java.util.HashMap">
-		INSERT INTO sub_rooms
-		(room_id, key_type, inserted_date)
+		INSERT INTO video_Data
+		(room_id, video_type, inserted_date)
 		VALUES
 		(#roomId#, #roomType#, NOW() )
 
-		<selectKey keyProperty="id" resultClass="java.lang.Integer">
+		<selectKey keyProperty="id" resultClass="java.lang.Long">
 			SELECT @@identity
 			</selectKey>
 	</insert>

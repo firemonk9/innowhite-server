@@ -22,7 +22,17 @@ public class Application extends MultiThreadedApplicationAdapter {
 	
 	private String enableSecurity;
 	
+	private String recordPath;
 	
+	
+	public String getRecordPath() {
+	    return recordPath;
+	}
+
+	public void setRecordPath(String recordPath) {
+	    this.recordPath = recordPath;
+	}
+
 	public String getEnableSecurity() {
 		return enableSecurity;
 	}
@@ -47,6 +57,9 @@ public class Application extends MultiThreadedApplicationAdapter {
 		//registerStreamPublishSecurity(new SecurityImpl());
 		registerStreamPublishSecurity(new PublishSecurityImpl(enableSecurity));
 //		/registerStreamPlaybackSecurity(handler)(new SecurityImpl());
+		
+		//re
+		
 		appScope = app;
 		return true;
 	}
@@ -54,18 +67,16 @@ public class Application extends MultiThreadedApplicationAdapter {
     @Override
     public void streamBroadcastStart(IBroadcastStream stream){
     	log.info("streamPublishStart:: "+stream.getPublishedName());
-    	messagingService.sendStreamMessage(stream.getPublishedName()+"_STARTED");
-    	log.debug("streamPublishStart:: "+stream.getPublishedName()); 
+    	
+    	messagingService.sendStreamMessage("RECORDSTART#"+stream.getPublishedName()+"#"+recordPath+stream.getPublishedName()+".flv");
+    	//log.debug("streamPublishStart:: "+stream.getPublishedName()); 
     }
     
     @Override
     public void streamBroadcastClose(IBroadcastStream stream){
     	log.info("streamBroadcastClose:::  "+stream.getPublishedName());
-    	messagingService.sendStreamMessage(stream.getPublishedName()+"_STOPPED");
-    	
-    	
+    	messagingService.sendStreamMessage("RECORDSTOP#"+stream.getPublishedName()+"#FILENAME");
     	VideoStreamNameListener.videoStreamIds.remove(stream.getPublishedName());
-    	
     	log.debug("streamBroadcastClose:: "+stream.getPublishedName()); 
     }
     

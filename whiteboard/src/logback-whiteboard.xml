@@ -12,7 +12,7 @@
 		<BufferedIO>false</BufferedIO>
 		<ImmediateFlush>true</ImmediateFlush>
 		<rollingPolicy class="ch.qos.logback.core.rolling.TimeBasedRollingPolicy">
-			<FileNamePattern>log/whiteboard1.%d{yyyy-MM-dd}.log</FileNamePattern>
+			<FileNamePattern>t/InnowhiteData/logs/whiteboard1.%d{yyyy-MM-dd}.log</FileNamePattern>
 			<!-- keep 30 days worth of history -->
 			<MaxHistory>30</MaxHistory>
 		</rollingPolicy>

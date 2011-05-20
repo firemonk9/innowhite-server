@@ -14,19 +14,19 @@
 
 
 
-	<import resource="classpath:/app-context.xml"/>	
+	<import resource="db-context.xml"/>	
 
 
 
-	<bean id="placeholderConfig"
-		class="org.springframework.beans.factory.config.PropertyPlaceholderConfigurer">
-		<property name="locations">
-			<list>
+<!-- 	<bean id="placeholderConfig" -->
+<!-- 		class="org.springframework.beans.factory.config.PropertyPlaceholderConfigurer"> -->
+<!-- 		<property name="locations"> -->
+<!-- 			<list> -->
 				
-				<value>classpath:db.properties</value>
-			</list>
-		</property>
-	</bean>
+<!-- 				<value>classpath:db.properties</value> -->
+<!-- 			</list> -->
+<!-- 		</property> -->
+<!-- 	</bean> -->
 
 <!-- 	<import resource="db-context.xml" /> -->
 
@@ -64,7 +64,7 @@
 	<bean id="audioMessageListener"
 		class="com.innowhite.PlayBackWebApp.messaging.AudioDataMsgListener">
 
- 		<property name="audioDataService" ref="audioDataService" /> 
+ 		<property name="audioVideoDataService" ref="audioVideoDataService" /> 
 	</bean>
 	
 	
@@ -76,10 +76,11 @@
 	</jms:listener-container>
 	
 
-	<bean id="audioDataService" name="audioDataService"
-		class="com.innowhite.PlayBackWebApp.service.AudioDataService">
+	<bean id="audioVideoDataService" name="audioVideoDataService"
+		class="com.innowhite.PlayBackWebApp.service.AudioVideoDataService">
 		
 		<property name="audioDataDao" ref="audioDataDao" />
+		<property name="videoDataDao" ref="videoDataDao" />
 		
 	</bean>
 

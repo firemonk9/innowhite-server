@@ -9,6 +9,14 @@
 			<param name="ConversionPattern" value="%-5p: %c - %m%n" />
 		</layout>
 	</appender>
+	<appender name="FA" class="org.apache.log4j.FileAppender">
+		<param name="File" value="/opt/InnowhiteData/logs/myWebApp.log" />
+
+		<layout class="org.apache.log4j.PatternLayout">
+			<param name="ConversionPattern" value="%-4r [%t] %-5p %c %x - %m%n" />
+		</layout>
+
+	</appender>
 
 	<!-- Application Loggers -->
 	<logger name="com.innowhite.PlayBackWebApp">
@@ -37,23 +45,23 @@
 	</logger>
 
 
-<!-- 	<logger name="log4j.logger.net.sf.hibernate.type"> -->
-<!-- 		<level value="debug" /> -->
-<!-- 	</logger> -->
+	<!-- <logger name="log4j.logger.net.sf.hibernate.type"> -->
+	<!-- <level value="debug" /> -->
+	<!-- </logger> -->
 
-<!-- 	<logger name="log4j.logger.org.hibernate.jdbc"> -->
-<!-- 		<level value="debug" /> -->
-<!-- 	</logger> -->
-<!-- 	<logger name="log4j.logger.org.hibernate"> -->
-<!-- 		<level value="debug" /> -->
-<!-- 	</logger> -->
+	<!-- <logger name="log4j.logger.org.hibernate.jdbc"> -->
+	<!-- <level value="debug" /> -->
+	<!-- </logger> -->
+	<!-- <logger name="log4j.logger.org.hibernate"> -->
+	<!-- <level value="debug" /> -->
+	<!-- </logger> -->
 
-<!-- 	<logger name="log4j.logger.org.hibernate"> -->
-<!-- 		<level value="trace" /> -->
-<!-- 	</logger> -->
-<!-- 	<logger name="log4j.logger.net.sf.hibernate"> -->
-<!-- 		<level value="debug" /> -->
-<!-- 	</logger> -->
+	<!-- <logger name="log4j.logger.org.hibernate"> -->
+	<!-- <level value="trace" /> -->
+	<!-- </logger> -->
+	<!-- <logger name="log4j.logger.net.sf.hibernate"> -->
+	<!-- <level value="debug" /> -->
+	<!-- </logger> -->
 
 
 
@@ -61,8 +69,10 @@
 
 	<!-- Root Logger -->
 	<root>
-		<priority value="debug" />
+		<priority value="info" />
 		<appender-ref ref="console" />
+		<appender-ref ref="FA" />
+
 	</root>
 
 </log4j:configuration>
