@@ -7,5 +7,6 @@ myWebApp/target/
 PlayBackWebApp/target/
 InnowhiteRed5/build/
 PlaybackApp/target
-InnowhiteRed5/WebContent/WEB-INF/classes
+InnowhiteRed5/WebContent/WEB-INF/classes/
 springbatchconverter/
+*.swf

@@ -10,7 +10,7 @@ import org.slf4j.LoggerFactory;
 
 import com.innowhite.PlayBackWebApp.service.AudioVideoDataService;
 
-public class AudioDataMsgListener implements MessageListener{
+public class AudioVideoDataMsgListener implements MessageListener{
 
     AudioVideoDataService audioVideoDataService;
 
@@ -23,14 +23,14 @@ public class AudioDataMsgListener implements MessageListener{
         this.audioVideoDataService = audioVideoDataService;
     }
 
-    private static final Logger log = LoggerFactory.getLogger(AudioDataMsgListener.class);
+    private static final Logger log = LoggerFactory.getLogger(AudioVideoDataMsgListener.class);
 
     public void onMessage(Message message) {
 
 	// System.out
 	// .println("entered  onMessage of RoomConfNameMapMessageListener.."
 	// + message);
-	log.debug(" entered  onMessage of AudioDataMsgListener..");
+	log.debug(" entered  onMessage of AudioVideoDataMsgListener..");
 
 	if (message instanceof TextMessage) {
 	    try {

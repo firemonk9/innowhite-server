@@ -16,7 +16,7 @@
 	<insert id="saveVideoData" parameterMap="insertVideoData">
 		INSERT INTO video_data (
 		flv_File_Path,
-		room_Name,
+		room_Id,
 		video_Type,
 		start_Time)
 		VALUES
@@ -41,7 +41,7 @@
 	<select id="getLatestWhitebordId" parameterClass="java.lang.String"
 		resultClass="java.lang.Integer">
 		select max(id) from video_data
-		where room_name = #room_name# 
+		where room_id = #room_name# 
 		
 	</select>
 

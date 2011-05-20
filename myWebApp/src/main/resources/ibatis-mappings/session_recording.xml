@@ -1,0 +1,41 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE sqlMap PUBLIC "-//ibatis.apache.org//DTD SQL Map 2.0//EN"
+"http://ibatis.apache.org/dtd/sql-map-2.dtd">
+<sqlMap>
+
+<parameterMap id="sessionRoomId"
+		class="com.innowhite.whiteboard.persistence.beans.SessionRecordingDataVO">
+		<parameter property="roomId" jdbcType="VARCHAR" />
+
+	</parameterMap>
+	
+
+
+	<insert id="startSessionRecording" parameterMap="sessionRoomId">
+		INSERT INTO session_recording (
+		room_id,
+		start_Time)
+		VALUES
+		( ?, now())
+		<selectKey keyProperty="id" resultClass="java.lang.Integer">
+			SELECT @@identity
+		</selectKey>
+	</insert>
+
+
+
+
+
+
+	<update id="endSessionRecording" parameterClass="java.lang.String">
+		update session_recording
+		set
+		end_time = now()
+		where room_id=#id# and end_time is null 
+			
+      </update>
+
+
+
+</sqlMap>
+ 

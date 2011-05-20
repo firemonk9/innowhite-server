@@ -26,7 +26,7 @@
 
 	<!-- A destination for Video in ActiveMQ -->
 	<bean id="VideoStatusDestination" class="org.apache.activemq.command.ActiveMQQueue">
-		<constructor-arg value="Innowhite.audioData" />
+		<constructor-arg value="Innowhite.AudioVideoData" />
 	</bean>
 	
 	<bean id="videoProducerTemplate" class="org.springframework.jms.core.JmsTemplate"

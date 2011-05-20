@@ -16,15 +16,12 @@ import org.slf4j.Logger;
 
 import com.innowhite.whiteboard.persistence.beans.ClientMediaVO;
 import com.innowhite.whiteboard.persistence.dao.ClientMediaDAO;
-import com.innowhite.whiteboard.util.InnowhiteConstants;
 import com.util.AeSimpleMD5;
-import com.util.Constants;
 import com.util.InnowhiteProperties;
 import com.util.Utility;
-import com.vireka.business.ProcessConversion;
 
 public class DownloadThread implements Runnable {
-	private int sleepTime; // random sleep time for thread
+	//private int sleepTime; // random sleep time for thread
 
 	private ClientMediaVO clientMediaVO; // name of thread
 

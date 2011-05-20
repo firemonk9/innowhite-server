@@ -36,7 +36,7 @@
 	</bean>
 
 	<bean id="audioDataDestination" class="org.apache.activemq.command.ActiveMQQueue">
-		<constructor-arg value="Innowhite.audioData" />
+		<constructor-arg value="Innowhite.AudioVideoData" />
 	</bean>
 
 

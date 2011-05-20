@@ -1,5 +1,7 @@
 package com.innowhite.red5.messaging;
 
+import java.util.Date;
+
 import javax.jms.JMSException;
 import javax.jms.Message;
 import javax.jms.Queue;
@@ -44,6 +46,7 @@ public class AudioMessageProducer {
 				try {
 					message = session.createTextMessage();
 					message.setStringProperty("MSG_TYPE", "AUDIO");
+					message.setStringProperty("CURRENT_TIME", String.valueOf(new Date().getTime()));
 					message.setStringProperty("text", msg);
 				} catch (JMSException e) {
 					e.printStackTrace();
