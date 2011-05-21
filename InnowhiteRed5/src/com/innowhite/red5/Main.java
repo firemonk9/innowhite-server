@@ -36,6 +36,13 @@ public class Main extends MultiThreadedApplicationAdapter {
     private IScope appScope;
     long keyIndex = 0;
     private IServerStream serverStream;
+    
+    private boolean enableWhiteboardDataRecord;
+    
+    public void setEnableWhiteboardDataRecord(boolean enableWhiteboardDataRecord) {
+        this.enableWhiteboardDataRecord = enableWhiteboardDataRecord;
+    }
+
     private HashMap<String, RoomVO> shapeSeqMap = new HashMap<String, RoomVO>();
     private HashMap<String, Integer> chatSeqMap = new HashMap<String, Integer>();
     // private HashMap<String, Integer> userSeqMap = new HashMap<String,
@@ -140,7 +147,8 @@ public class Main extends MultiThreadedApplicationAdapter {
 
 	    long l = (new Date()).getTime() - (Long) scope.getAttribute("START_TIME");
 
-	    messagingService.sendWhiteboardData(v, Red5.getConnectionLocal().getScope().getName(), l);
+	   if(enableWhiteboardDataRecord)
+	       messagingService.sendWhiteboardData(v, Red5.getConnectionLocal().getScope().getName(), l);
 
 	    // log.debug("     " + num);
 	} catch (Exception e) {

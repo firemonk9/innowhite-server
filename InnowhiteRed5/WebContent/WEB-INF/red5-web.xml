@@ -55,6 +55,8 @@
 		</property>
 
 		<property name="enableSecurity" value="{enableSecurity}"/>
+		<property name="enableWhiteboardDataRecord" value="{enableWhiteboardDataRecord}"/>
+		
 
 	</bean>
 
