@@ -36,7 +36,7 @@ public class WBLiveVideo extends HttpServlet {
      *      response)
      */
     protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-	// TODO Auto-generated method stub
+	doPost(request, response);
     }
 
     DataOutputStream os1 = null;
@@ -55,7 +55,7 @@ public class WBLiveVideo extends HttpServlet {
 	    String roomId = request.getParameter("roomId");
 
 	    roomId = roomId.trim();
-	    log.debug(" entered doPost with  roomId :"+roomId+"  ");
+	   // log.debug(" entered doPost with  roomId :"+roomId+"  ");
 	    
 	    // int available = request.getContentLength();
 	    // byte[] input = new byte[available];
