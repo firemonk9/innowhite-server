@@ -37,10 +37,10 @@ public class SessionRecording extends HttpServlet {
 	    // maybe I should be using a BufferedInputStream
 	    // instead of the InputStream directly?
 	    String roomId = request.getParameter("roomId");
-	    String recordStatus = request.getParameter("RECORD_STATUS");
-	    if (recordStatus != null && recordStatus.equals("RECORD_START")) {
+	    String recordStatus = request.getParameter("recordStatus");
+	    if (recordStatus != null && recordStatus.equals("recordStart")) {
 		SessionRecordingDAO.startSessionRecording(roomId);
-	    } else {
+	    } else  if (recordStatus != null && recordStatus.equals("recordStop")) {
 		SessionRecordingDAO.endSessionRecording(roomId);
 	    }
 
