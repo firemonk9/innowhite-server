@@ -11,7 +11,7 @@
 	</appender>
 
 	<appender name="FA" class="org.apache.log4j.FileAppender">
-		<param name="File" value="/opt/InnowhiteData/webApp.log" />
+		<param name="File" value="/opt/InnowhiteData/logs/myWebApp.log" />
 
 		<layout class="org.apache.log4j.PatternLayout">
 			<param name="ConversionPattern" value="%-4r [%t] %-5p %c %x - %m%n" />
@@ -45,7 +45,7 @@
 		<level value="info" />
 	</logger>
 
-	<logger name="com">
+	<logger name="com.innowhite">
 		<level value="debug" />
 	</logger>
 	<!-- Root Logger -->

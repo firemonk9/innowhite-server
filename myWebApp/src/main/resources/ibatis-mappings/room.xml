@@ -37,7 +37,7 @@
 
 
 	<insert id="createSubRoomID" parameterClass="java.util.HashMap">
-		INSERT INTO video_Data
+		INSERT INTO video_data
 		(room_id, video_type, inserted_date)
 		VALUES
 		(#roomId#, #roomType#, NOW() )
