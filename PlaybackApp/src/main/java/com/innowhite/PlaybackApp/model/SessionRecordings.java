@@ -11,32 +11,27 @@ import javax.persistence.Id;
 import javax.persistence.Table;
 
 @Entity
-@Table(name = "audio_data")
-public class AudioData implements Serializable {
+@Table(name = "session_recording")
+public class SessionRecordings implements Serializable {
 
     /**
 	 * 
 	 */
-   // private static final long serialVersionUID = 1L;
+    private static final long serialVersionUID = 1L;
 
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
     private Long id;
 
-    
     @Column(name = "start_time")
     Date startTime;
-    
-    
+
     @Column(name = "end_time")
     Date endTime;
-    
-    @Column(name = "file_path")
-    String filePath;
-    
-    @Column(name = "room_name")
+
+    @Column(name = "room_id")
     String roomName;
-      
+
     public String getRoomName() {
 	return roomName;
     }
@@ -45,7 +40,6 @@ public class AudioData implements Serializable {
 	this.roomName = roomName;
     }
 
-    @Column(name = "start_time")   
     public Date getStartTime() {
 	return startTime;
     }
@@ -53,7 +47,7 @@ public class AudioData implements Serializable {
     public void setStartTime(Date startTime) {
 	this.startTime = startTime;
     }
-    
+
     public Date getEndTime() {
 	return endTime;
     }
@@ -62,16 +56,9 @@ public class AudioData implements Serializable {
 	this.endTime = endTime;
     }
 
-  
-    public String getFilePath() {
-	return filePath;
+    public static long getSerialversionuid() {
+	return serialVersionUID;
     }
-
-    public void setFilePath(String filePath) {
-	this.filePath = filePath;
-    }
-
-   
 
     public void setId(Long id) {
 	this.id = id;
@@ -82,7 +69,7 @@ public class AudioData implements Serializable {
     }
 
     public static void main(String[] args) {
-	//whiteboard
+	// whiteboard
     }
 
 }

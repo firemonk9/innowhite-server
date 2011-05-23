@@ -1,4 +1,4 @@
-package com.innowhite.PlaybackApp.model;
+package com.innowhite.PlaybackApp.main;
 
 import java.util.HashMap;
 import java.util.List;
@@ -10,6 +10,8 @@ import org.hibernate.transform.Transformers;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.transaction.annotation.Transactional;
+
+import com.innowhite.PlaybackApp.model.WhiteboardData;
 
 public class WhiteboardDataDao {
 
@@ -26,7 +28,9 @@ public class WhiteboardDataDao {
 		.createSQLQuery(
 			"select actionType, bordercolor, fillcolor, imageURL, " + "mainscalex, mainscaley, objDate, objName, objType, penthickness, points,"
 				+ " roomName, rotation, secondName, secondSeq, seq, shpHeight, shpWidth, sprText, " + "txtFont, txtType, userId, versionNumber, wbNumber, x1, x2, xpos, y1, y2, ypos"
-				+ " from whiteboard_data a where a.roomname=:roomname").setString("roomname", roomId).setResultTransformer(Transformers.aliasToBean(WhiteboardData.class));
+				+ " from whiteboard_data a where a.roomname=:roomname")
+				.setString("roomname", roomId)
+				.setResultTransformer(Transformers.aliasToBean(WhiteboardData.class));
 
 	@SuppressWarnings("rawtypes")
 	List list2 = query.list();

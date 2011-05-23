@@ -18,9 +18,17 @@ package com.innowhite.PlaybackApp;
 import static org.junit.Assert.assertEquals;
 
 import java.util.Date;
+import java.util.List;
 
+import org.aspectj.bridge.Message;
+import org.hibernate.Criteria;
+import org.hibernate.Query;
 import org.hibernate.SessionFactory;
 import org.hibernate.classic.Session;
+import org.hibernate.criterion.Order;
+import org.hibernate.criterion.Restrictions;
+import org.hibernate.transform.Transformers;
+import org.hibernate.type.Type;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -29,6 +37,7 @@ import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
 import org.springframework.transaction.annotation.Transactional;
 
 import com.innowhite.PlaybackApp.model.AudioData;
+import com.innowhite.PlaybackApp.model.VideoData;
 import com.innowhite.PlaybackApp.model.WhiteboardData;
 
 @ContextConfiguration
@@ -62,6 +71,9 @@ public class OrderPersistenceTests {
 	wb.setFilePath("file1" + (int) (Math.random() * 10000));
 	wb.setStartTime(new Date());
 	session.save(wb);
+
+	// wb.getAudioDataList("test123");
+
 	session.flush();
 	// Otherwise the query returns the existing order (and we didn't set the
 	// parent in the item)...
@@ -69,7 +81,53 @@ public class OrderPersistenceTests {
 	assertEquals(1, 1);
 
 	int val = updateAudioData(wb);
-	//assertEquals(1, val);
+	assertEquals(1, val);
+    }
+    
+    @Test
+    @Transactional
+    public void testVideoGetList() {
+
+	String roomId = "room1";
+	Session session = sessionFactory.getCurrentSession();
+
+	Criteria crit = session.createCriteria(VideoData.class);
+	@SuppressWarnings("unchecked")
+	List<VideoData> list2 = crit.add(Restrictions.eq("roomName", roomId)).
+	addOrder( Order.asc("id")).
+	list();
+	System.err.println(" the video returned "+list2.size());
+	session.clear();
+	session.flush();
+	
+
+    }
+
+    
+
+    @Test
+    @Transactional
+    public void testAudioGetList() throws Exception {
+	Session session = sessionFactory.getCurrentSession();
+
+	String roomId = "test123";
+
+	
+	Criteria crit = session.createCriteria(AudioData.class);
+	@SuppressWarnings("unchecked")
+	List<AudioData> list2 = crit.add(Restrictions.eq("roomName", roomId)).
+	addOrder( Order.asc("id")).
+	list();
+	
+	for(AudioData a : list2){
+	    
+	    System.err.println(a.getFilePath());
+	}
+	System.err.println(list2);
+	session.clear();
+	session.flush();
+
+	// assertEquals(1, val);
     }
 
     @Transactional

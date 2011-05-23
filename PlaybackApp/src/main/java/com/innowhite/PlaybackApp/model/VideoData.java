@@ -11,13 +11,13 @@ import javax.persistence.Id;
 import javax.persistence.Table;
 
 @Entity
-@Table(name = "audio_data")
-public class AudioData implements Serializable {
+@Table(name = "video_data")
+public class VideoData implements Serializable {
 
     /**
 	 * 
 	 */
-   // private static final long serialVersionUID = 1L;
+    private static final long serialVersionUID = 1L;
 
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
@@ -31,12 +31,26 @@ public class AudioData implements Serializable {
     @Column(name = "end_time")
     Date endTime;
     
-    @Column(name = "file_path")
+    @Column(name = "flv_file_path")
     String filePath;
     
-    @Column(name = "room_name")
+    @Column(name = "room_id")
     String roomName;
+    
+    
+    @Column(name = "video_type")
+    String videoType;
+    
+    
       
+    public String getVideoType() {
+        return videoType;
+    }
+
+    public void setVideoType(String videoType) {
+        this.videoType = videoType;
+    }
+
     public String getRoomName() {
 	return roomName;
     }
@@ -45,7 +59,7 @@ public class AudioData implements Serializable {
 	this.roomName = roomName;
     }
 
-    @Column(name = "start_time")   
+   
     public Date getStartTime() {
 	return startTime;
     }
@@ -71,7 +85,9 @@ public class AudioData implements Serializable {
 	this.filePath = filePath;
     }
 
-   
+    public static long getSerialversionuid() {
+	return serialVersionUID;
+    }
 
     public void setId(Long id) {
 	this.id = id;
