@@ -1,5 +1,7 @@
 package com.innowhite.red5.stream;
 
+import java.util.Date;
+
 import org.red5.logging.Red5LoggerFactory;
 import org.red5.server.adapter.MultiThreadedApplicationAdapter;
 import org.red5.server.api.IConnection;
@@ -52,7 +54,7 @@ public class Application extends MultiThreadedApplicationAdapter {
 	public boolean appStart(IScope app) {
 	    super.appStart(app);
 		log.info("oflaDemo appStart");
-		System.out.println("oflaDemo appStart");  
+		//System.out.println("oflaDemo appStart");  
 		
 		//registerStreamPublishSecurity(new SecurityImpl());
 		registerStreamPublishSecurity(new PublishSecurityImpl(enableSecurity));
@@ -66,7 +68,7 @@ public class Application extends MultiThreadedApplicationAdapter {
 
     @Override
     public void streamBroadcastStart(IBroadcastStream stream){
-    	log.info("streamPublishStart:: "+stream.getPublishedName());
+    	log.debug("streamPublishStart:: "+stream.getPublishedName()+" time "+new Date().getTime());
     	
     	messagingService.sendStreamMessage("RECORDSTART#"+stream.getPublishedName()+"#"+recordPath+stream.getPublishedName()+".flv");
     	//log.debug("streamPublishStart:: "+stream.getPublishedName()); 
@@ -74,10 +76,10 @@ public class Application extends MultiThreadedApplicationAdapter {
     
     @Override
     public void streamBroadcastClose(IBroadcastStream stream){
-    	log.info("streamBroadcastClose:::  "+stream.getPublishedName());
+    	log.debug("streamBroadcastClose:::  "+stream.getPublishedName()+" time "+new Date().getTime());
     	messagingService.sendStreamMessage("RECORDSTOP#"+stream.getPublishedName()+"#FILENAME");
     	VideoStreamNameListener.videoStreamIds.remove(stream.getPublishedName());
-    	log.debug("streamBroadcastClose:: "+stream.getPublishedName()); 
+    	
     }
     
 

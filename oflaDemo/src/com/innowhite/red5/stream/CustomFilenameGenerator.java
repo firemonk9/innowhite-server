@@ -11,7 +11,7 @@ public class CustomFilenameGenerator implements IStreamFilenameGenerator {
     /** Path that contains VOD streams. */
     public String playbackPath = "videoStreams/";
     /** Set if the path is absolute or relative */
-    public boolean resolvesAbsolutePath = false;
+    public boolean resolvesAbsolutePath = true;
 
     private MessagingService messagingService;
 
