@@ -205,7 +205,7 @@ function start_screen_share (stream_id,recordStatus)
 
     	//alert(" in start_screen_share"+pluginLoaded);
 		if(pluginIsLoad()){
-			plugin0().start_capture(stream_id, "123",recordStatus, "true",75,2,"demo.innowhite.com");
+			plugin0().start_capture(stream_id, "123",recordStatus, "true",75,2,"aud1.innowhite.com");
 			screen_sharing=true;
 			return "STARTED";
 		}

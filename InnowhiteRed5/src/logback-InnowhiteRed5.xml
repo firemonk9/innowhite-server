@@ -1,0 +1,33 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<configuration>
+
+	<contextName>InnowhiteRed5</contextName>
+
+	<jmxConfigurator contextName="InnowhiteRed5" />
+
+	<appender name="mainAppRed5" class="ch.qos.logback.core.FileAppender">
+		<File>/opt/InnowhiteData/logs/InnowhiteRed5.log</File>
+		<Append>false</Append>
+		<Encoding>UTF-8</Encoding>
+		<BufferedIO>false</BufferedIO>
+		<ImmediateFlush>true</ImmediateFlush>
+		<layout class="ch.qos.logback.classic.PatternLayout">
+			<Pattern>
+				%date [%thread] %-5level %logger{35} - %msg%n
+			</Pattern>
+		</layout>
+	</appender>
+
+
+
+	<root>
+	<level value="DEBUG" />
+		<appender-ref ref="mainAppRed5" />
+	</root>
+	<!-- <logger name="com.whiteboard.Main"> -->
+	<!-- <level value="DEBUG" /> -->
+	<!-- </logger> -->
+
+
+</configuration>
+

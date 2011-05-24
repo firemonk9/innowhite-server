@@ -11,7 +11,7 @@
 	</context-param>
 	<context-param>
 		<param-name>webAppRootKey</param-name>
-		<param-value>/whiteboard</param-value>
+		<param-value>/InnowhiteRed5</param-value>
 	</context-param>
 
 	<listener>

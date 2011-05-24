@@ -42,7 +42,7 @@ public class CustomFilenameGenerator implements IStreamFilenameGenerator {
 	if (extension != null)
 	    filename += extension;
 
-	messagingService.sendStreamMessage("RECORDSTART#" + name + "#" + filename);
+	//messagingService.sendStreamMessage("RECORDSTART#" + name + "#" + filename);
 
 	return filename;
     }
