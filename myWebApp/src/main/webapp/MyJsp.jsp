@@ -252,6 +252,16 @@ function stop_screen_share()
 
 }
 
+var recording=false;
+var roomName="";
+
+function setRecordingStatus(myRecordStatus, myRoomName){
+	recording= myRecordStatus;
+	roomName = myRoomName;
+	
+}
+
+
 
 
 function openHelpWindow()
@@ -293,12 +303,32 @@ function plugin()
 }
 
 
-  window.onbeforeunload = function() {
+  var loadUrl = "servlet/SessionRecording"; 
+  window.onbeforeunload = exitCheck;
+  window.onunload = test;
+  function test(){
+	  if(recording == true)
+	  {
+		  
+		 // alert("sending to net");
+		  $.get(loadUrl, { roomId: roomName, recordStatus: "recordStop" } );
+		  alert(" Session Recording is stopping");
+		 // $("#result").html(ajax_load).load(loadUrl, "language=php&version=5");    
+	  }
+  	//<? header("Location:logout.php"); ?>
+  	//alert('user is exiting');
+  }
+  
+  function exitCheck(evt){
+  	return "Do yuo want to close this session ?"
+  }
+  
+ /*  window.onbeforeunload = function() {
 
 
         return "Do yuo want to close this session ?"
 
-    }
+    } */
 
 
 //////blugin detection
@@ -392,7 +422,6 @@ function plugin()
 //-->
 
 
-//-->
 </script>
 <noscript></noscript>
 <body>
