@@ -186,7 +186,7 @@ var innowhitePluginLoaded = false;
 
 var screen_sharing=false;
 
-function start_screen_share (stream_id,recordStatus)
+function start_screen_share (stream_id,recordStatus, serverUrl)
 {
 	var userAgent = typeof(window.navigator.userAgent) != 'udefined' ? window.navigator.userAgent : '';
 	if(userAgent.search(/Firefox/) == -1 && userAgent.search(/Chrome/) == -1 && userAgent.search(/MSIE/) == -1)
@@ -202,10 +202,12 @@ function start_screen_share (stream_id,recordStatus)
 	//plugin().start_screen_share(stream_id);
 	try
     {
-
+		
+		if(serverUrl == null)
+			serverUrl='main.innowhite.com';
     	//alert(" in start_screen_share"+pluginLoaded);
 		if(pluginIsLoad()){
-			plugin0().start_capture(stream_id, "123",recordStatus, "true",75,2,"aud1.innowhite.com");
+			plugin0().start_capture(stream_id, "123",recordStatus, "true",75,2,serverUrl);
 			screen_sharing=true;
 			return "STARTED";
 		}

@@ -3,9 +3,11 @@ package com.innowhite.red5.stream;
 import java.util.Date;
 
 import org.red5.logging.Red5LoggerFactory;
+import org.red5.server.adapter.IApplication;
 import org.red5.server.adapter.MultiThreadedApplicationAdapter;
 import org.red5.server.api.IConnection;
 import org.red5.server.api.IScope;
+import org.red5.server.api.so.ISharedObject;
 import org.red5.server.api.stream.IBroadcastStream;
 import org.red5.server.api.stream.IServerStream;
 import org.red5.server.stream.ClientBroadcastStream;
@@ -15,18 +17,16 @@ import com.innowhite.red5.stream.messaging.MessagingService;
 import com.innowhite.red5.stream.messaging.VideoStreamNameListener;
 import com.innowhite.red5.stream.security.PublishSecurityImpl;
 
-public class Application extends MultiThreadedApplicationAdapter {
+public class Application extends MultiThreadedApplicationAdapter implements IApplication {
 
     private IScope appScope;
 
     private IServerStream serverStream;
 
     private MessagingService messagingService;
-
     private String enableSecurity;
-
     private String recordPath;
-
+    private static final String INNOWHITE_STREAM_STATUS_SO = "ScreenShareSO";
     public String getRecordPath() {
 	return recordPath;
     }
@@ -49,6 +49,38 @@ public class Application extends MultiThreadedApplicationAdapter {
 
     private static Logger log = Red5LoggerFactory.getLogger(Application.class, "oflaDemo");
 
+    
+    /*when ever a new room is created, this is called.*/
+    @Override
+    public boolean roomConnect(IConnection connection, Object[] params) {
+	log.debug("${APP}:roomConnect "+connection.getScope().getName());
+	
+	ISharedObject so = getSharedObject(connection.getScope(), INNOWHITE_STREAM_STATUS_SO);
+	ISharedObject screenShareSo = getSharedObject(connection.getScope(), INNOWHITE_STREAM_STATUS_SO);
+
+	// String voiceBridge = getBbbSession().getVoiceBridge();
+	
+
+	//UserCacheService.addRoomIdUserSharedObj(connection.getScope().getName(), so);
+	// clientManager.addSharedObject(connection.getScope().getName(),
+	// voiceBridge, so);
+	// conferenceService.createConference(voiceBridge);
+	return true;
+    }
+
+    @Override
+    public void roomStop(IScope scope) {
+	log.debug("${APP}:roomStop ${scope.name} removing the shared object");
+
+	// conferenceService.destroyConference(scope.getName());
+	// clientManager.removeSharedObject(scope.getName());
+	if (!hasSharedObject(scope, INNOWHITE_STREAM_STATUS_SO)) {
+	    clearSharedObjects(scope, INNOWHITE_STREAM_STATUS_SO);
+	}
+	
+    }
+
+    
     /** {@inheritDoc} */
     @Override
     public boolean appStart(IScope app) {
@@ -86,6 +118,7 @@ public class Application extends MultiThreadedApplicationAdapter {
 	if (stream instanceof ClientBroadcastStream) {
 	    ClientBroadcastStream obj = (ClientBroadcastStream) stream;
 	    if (obj.isRecording() == true) {
+		
 		messagingService.sendStreamMessage("RECORDSTOP#" + stream.getPublishedName() + "#FILENAME");
 		VideoStreamNameListener.videoStreamIds.remove(stream.getPublishedName());
 		// messagingService.sendStreamMessage("RECORDSTART#"+stream.getPublishedName()+"#"+recordPath+stream.getPublishedName()+".flv");
@@ -100,42 +133,7 @@ public class Application extends MultiThreadedApplicationAdapter {
     public boolean appConnect(IConnection conn, Object[] params) {
 	log.info("oflaDemo appConnect");
 
-	// Trigger calling of "onBWDone", required for some FLV players
-
-	// commenting out the bandwidth code as it is replaced by the mina
-	// filters
-	// measureBandwidth(conn);
-	// if (conn instanceof IStreamCapableConnection) {
-	// IStreamCapableConnection streamConn = (IStreamCapableConnection)
-	// conn;
-	// SimpleConnectionBWConfig bwConfig = new SimpleConnectionBWConfig();
-	// bwConfig.getChannelBandwidth()[IBandwidthConfigure.OVERALL_CHANNEL] =
-	// 1024 * 1024;
-	// bwConfig.getChannelInitialBurst()[IBandwidthConfigure.OVERALL_CHANNEL]
-	// =
-	// 128 * 1024;
-	// streamConn.setBandwidthConfigure(bwConfig);
-	// }
-
-	// if (appScope == conn.getScope()) {
-	// serverStream = StreamUtils.createServerStream(appScope, "live0");
-	// SimplePlayItem item = new SimplePlayItem();
-	// item.setStart(0);
-	// item.setLength(10000);
-	// item.setName("on2_flash8_w_audio");
-	// serverStream.addItem(item);
-	// item = new SimplePlayItem();
-	// item.setStart(20000);
-	// item.setLength(10000);
-	// item.setName("on2_flash8_w_audio");
-	// serverStream.addItem(item);
-	// serverStream.start();
-	// try {
-	// serverStream.saveAs("aaa", false);
-	// serverStream.saveAs("bbb", false);
-	// } catch (Exception e) {}
-	// }
-
+	
 	return super.appConnect(conn, params);
     }
 
