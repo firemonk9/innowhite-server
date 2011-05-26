@@ -36,17 +36,13 @@ public class Main extends MultiThreadedApplicationAdapter {
     private IScope appScope;
     long keyIndex = 0;
     private IServerStream serverStream;
-    
- 
-    private boolean enableWhiteboardDataRecord=false;
-    
-   
+
+    private boolean enableWhiteboardDataRecord = false;
 
     public void setEnableWhiteboardDataRecord(String enableWhiteboardDataRecord) {
-        if(enableWhiteboardDataRecord != null && enableWhiteboardDataRecord.equals("true"))
-            this.enableWhiteboardDataRecord=true;
-	
-	
+	if (enableWhiteboardDataRecord != null && enableWhiteboardDataRecord.equals("true"))
+	    this.enableWhiteboardDataRecord = true;
+
     }
 
     private HashMap<String, RoomVO> shapeSeqMap = new HashMap<String, RoomVO>();
@@ -153,8 +149,8 @@ public class Main extends MultiThreadedApplicationAdapter {
 
 	    long l = (new Date()).getTime() - (Long) scope.getAttribute("START_TIME");
 
-	   if( enableWhiteboardDataRecord == true)
-	       messagingService.sendWhiteboardData(v, Red5.getConnectionLocal().getScope().getName(), l);
+	    if (enableWhiteboardDataRecord == true)
+		messagingService.sendWhiteboardData(v, Red5.getConnectionLocal().getScope().getName(), l);
 
 	    // log.debug("     " + num);
 	} catch (Exception e) {
@@ -174,21 +170,15 @@ public class Main extends MultiThreadedApplicationAdapter {
 	    Map<String, String> map = clientNamesMap.get(Red5.getConnectionLocal().getScope().getName());
 	    // we want to set the time if instructor and get the time for normal
 	    // users for the first time.
+
+	    if (uservo.getUserJoinedTime() == null) {
+
+		uservo.setUserJoinedTime((new Date().getTime()));
+		log.debug(" user joined time is " + uservo.getUserJoinedTime() + " username " + uservo.getUsername());
+	    }
 	    if (map == null || Utility.userFirstTime(uservo.getUsername(), map)) {
 
-		if (uservo.getUserJoinedTime() == null) {
-
-		    uservo.setUserJoinedTime((new Date().getTime()));
-		    System.err.println(" user joined time is " + uservo.getUserJoinedTime() + " username " + uservo.getUsername());
-		}
-
-		// if (TimeMaintainerService.ifTimeSet(Red5.getConnectionLocal()
-		// .getScope().getName(), uservo.isGroupLeader()))
-		// ;
-		// uservo.setLoggedInTime(TimeMaintainerService.getTimeSession(
-		// Red5.getConnectionLocal().getScope().getName(),
-		// uservo.isGroupLeader()));
-
+		
 		RoomVO roomVO = shapeSeqMap.get(Red5.getConnectionLocal().getScope().getName());
 
 		int num = roomVO.getSeqNum();

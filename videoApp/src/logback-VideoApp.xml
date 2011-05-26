@@ -1,12 +1,12 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <configuration>
 
-	<contextName>oflaDemo</contextName>
+	<contextName>VideoApp</contextName>
 	
-	<jmxConfigurator contextName="oflaDemo" />
+	<jmxConfigurator contextName="VideoApp" />
 
 	<appender name="OFLA" class="ch.qos.logback.core.FileAppender">
-		<File>/opt/InnowhiteData/logs/oflaDemo.log</File>
+		<File>/opt/InnowhiteData/logs/VideoApp.log</File>
 		<Append>false</Append>
 		<Encoding>UTF-8</Encoding>
 		<BufferedIO>false</BufferedIO>

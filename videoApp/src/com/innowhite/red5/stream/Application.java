@@ -1,5 +1,6 @@
 package com.innowhite.red5.stream;
 
+import java.util.ArrayList;
 import java.util.Date;
 
 import org.red5.logging.Red5LoggerFactory;
@@ -27,6 +28,7 @@ public class Application extends MultiThreadedApplicationAdapter implements IApp
     private String enableSecurity;
     private String recordPath;
     private static final String INNOWHITE_STREAM_STATUS_SO = "ScreenShareSO";
+
     public String getRecordPath() {
 	return recordPath;
     }
@@ -49,19 +51,23 @@ public class Application extends MultiThreadedApplicationAdapter implements IApp
 
     private static Logger log = Red5LoggerFactory.getLogger(Application.class, "oflaDemo");
 
-    
-    /*when ever a new room is created, this is called.*/
+    ISharedObject screenShareSo = null;
+
+    /* when ever a new room is created, this is called. */
     @Override
     public boolean roomConnect(IConnection connection, Object[] params) {
-	log.debug("${APP}:roomConnect "+connection.getScope().getName());
-	
-	ISharedObject so = getSharedObject(connection.getScope(), INNOWHITE_STREAM_STATUS_SO);
-	ISharedObject screenShareSo = getSharedObject(connection.getScope(), INNOWHITE_STREAM_STATUS_SO);
+	log.debug("${APP}:roomConnect " + connection.getScope().getName());
 
+	// ISharedObject so = getSharedObject(connection.getScope(),
+	// INNOWHITE_STREAM_STATUS_SO);
+	
+	createSharedObject(connection.getScope(), INNOWHITE_STREAM_STATUS_SO, false);
+	screenShareSo = getSharedObject(connection.getScope(), INNOWHITE_STREAM_STATUS_SO);
+	
 	// String voiceBridge = getBbbSession().getVoiceBridge();
-	
 
-	//UserCacheService.addRoomIdUserSharedObj(connection.getScope().getName(), so);
+	// UserCacheService.addRoomIdUserSharedObj(connection.getScope().getName(),
+	// so);
 	// clientManager.addSharedObject(connection.getScope().getName(),
 	// voiceBridge, so);
 	// conferenceService.createConference(voiceBridge);
@@ -77,10 +83,9 @@ public class Application extends MultiThreadedApplicationAdapter implements IApp
 	if (!hasSharedObject(scope, INNOWHITE_STREAM_STATUS_SO)) {
 	    clearSharedObjects(scope, INNOWHITE_STREAM_STATUS_SO);
 	}
-	
+
     }
 
-    
     /** {@inheritDoc} */
     @Override
     public boolean appStart(IScope app) {
@@ -103,8 +108,10 @@ public class Application extends MultiThreadedApplicationAdapter implements IApp
 
 	if (stream instanceof ClientBroadcastStream) {
 	    ClientBroadcastStream obj = (ClientBroadcastStream) stream;
-	    if (obj.isRecording() == true)
+	    if (obj.isRecording() == true) {
 		messagingService.sendStreamMessage("RECORDSTART#" + stream.getPublishedName() + "#" + recordPath + stream.getPublishedName() + ".flv");
+		invokeStopScreenShare();
+	    }
 	}
 	log.debug("streamPublishStart:: " + stream.getPublishedName() + " time " + new Date().getTime());
 
@@ -118,14 +125,26 @@ public class Application extends MultiThreadedApplicationAdapter implements IApp
 	if (stream instanceof ClientBroadcastStream) {
 	    ClientBroadcastStream obj = (ClientBroadcastStream) stream;
 	    if (obj.isRecording() == true) {
-		
+
+		ISharedObject screenShareSo = getSharedObject(stream.getScope(), INNOWHITE_STREAM_STATUS_SO);
+		screenShareSo.sendMessage("screenShareStopped", new ArrayList<Object>());
+		// stream.getScope().getS
 		messagingService.sendStreamMessage("RECORDSTOP#" + stream.getPublishedName() + "#FILENAME");
 		VideoStreamNameListener.videoStreamIds.remove(stream.getPublishedName());
 		// messagingService.sendStreamMessage("RECORDSTART#"+stream.getPublishedName()+"#"+recordPath+stream.getPublishedName()+".flv");
 	    }
 	}
+    }
 
-	// stream.getMetaData();
+    private void invokeStopScreenShare() {
+
+	new java.util.Timer().schedule(new java.util.TimerTask() {
+	    @Override
+	    public void run() {
+		screenShareSo.sendMessage("screenShareStopped", new ArrayList<Object>());
+	    }
+	}, 30000);
+
     }
 
     /** {@inheritDoc} */
@@ -133,7 +152,6 @@ public class Application extends MultiThreadedApplicationAdapter implements IApp
     public boolean appConnect(IConnection conn, Object[] params) {
 	log.info("oflaDemo appConnect");
 
-	
 	return super.appConnect(conn, params);
     }
 

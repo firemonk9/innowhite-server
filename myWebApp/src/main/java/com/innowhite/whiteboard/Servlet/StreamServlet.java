@@ -56,7 +56,7 @@ public class StreamServlet extends HttpServlet {
 		out.println("SUCCESS");
 		out.println("</returnStatus> <roomId>");
 		out.println(subRoomId);
-		out.println("</roomId><server>ser1.innowhite.com</server></response>");
+		out.println("</roomId><server>main.innowhite.com</server></response>");
 
 	}
 
