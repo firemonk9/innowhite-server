@@ -78,6 +78,14 @@
 		</property>
 	</bean>
 
+
+
+
+	<bean id="playBackPlayListDao" name="playBackPlayListDao"
+		class="com.innowhite.PlaybackApp.dao.PlayBackPlayListDao">
+		<property name="sessionFactory" ref="sessionFactory" />
+	</bean>
+
 	<bean id="whiteboardDataDao" name="whiteboardDataDao"
 		class="com.innowhite.PlaybackApp.dao.WhiteboardDataDao">
 		<property name="sessionFactory" ref="sessionFactory" />
