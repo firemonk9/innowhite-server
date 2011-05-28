@@ -37,6 +37,7 @@ import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
 import org.springframework.transaction.annotation.Transactional;
 
 import com.innowhite.PlaybackApp.model.AudioData;
+import com.innowhite.PlaybackApp.model.PlayBackPlayList;
 import com.innowhite.PlaybackApp.model.VideoData;
 import com.innowhite.PlaybackApp.model.WhiteboardData;
 
@@ -62,6 +63,27 @@ public class OrderPersistenceTests {
 
     }
 
+    
+    
+    @Test
+    @Transactional
+    public void testSaveAndPlayList() throws Exception {
+	Session session = sessionFactory.getCurrentSession();
+	PlayBackPlayList wb = new PlayBackPlayList();
+	wb.setFilePath("dummy_PATH");
+	wb.setInsertedDate(new Date());
+	wb.setRoomName("roomName");
+	session.save(wb);
+	session.flush();
+	// Otherwise the query returns the existing order (and we didn't set the
+	// parent in the item)...
+	session.clear();
+	assertEquals(1, 1);
+
+    }
+
+    
+    
     @Test
     @Transactional
     public void testAudioSaveAndFind() throws Exception {
