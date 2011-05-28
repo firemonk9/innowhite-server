@@ -21,7 +21,7 @@ public class PlayBackPlayList implements Serializable {
 
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
-    private Long id;
+    private String id;
 
     @Column(name = "inserted_date")
     Date insertedDate;
@@ -58,16 +58,16 @@ public class PlayBackPlayList implements Serializable {
 
    
 
-    public void setId(Long id) {
+    public void setId(String id) {
 	this.id = id;
     }
 
-    public Long getId() {
+    public String getId() {
 	return id;
     }
-
-    public static void main(String[] args) {
-	//whiteboard
-    }
+//
+//    public static void main(String[] args) {
+//	//whiteboard
+//    }
 
 }
