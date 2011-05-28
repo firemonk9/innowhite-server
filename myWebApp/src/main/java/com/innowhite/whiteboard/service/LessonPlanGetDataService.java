@@ -57,7 +57,7 @@ public class LessonPlanGetDataService {
 			//
 			// String baseURL =
 			// Utility.getServerURL("http://127.0.0.1:5080/whiteboard/asd",
-			// "whiteboard");
+			// InnowhiteConstants.APP_NAME);
 			//
 			// log.debug(" the result of map is :: " + map);
 			//

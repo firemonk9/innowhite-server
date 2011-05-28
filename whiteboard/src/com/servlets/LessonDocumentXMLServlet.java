@@ -19,7 +19,7 @@ import com.vireka.business.ProcessConversion;
 
 public class LessonDocumentXMLServlet extends HttpServlet {
 
-	private static Logger log = Red5LoggerFactory.getLogger(LessonDocumentXMLServlet.class, "whiteboard");
+	private static Logger log = Red5LoggerFactory.getLogger(LessonDocumentXMLServlet.class, InnowhiteConstants.APP_NAME);
 	/**
 	 * Constructor of the object.
 	 */

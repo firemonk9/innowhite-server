@@ -16,8 +16,8 @@ public class LessonPlanXMLDAO {
 
 	private static SqlMapClient sqlMapClient = IbatisManager.getSqlMap();
 
-//	/private static Logger log = Red5LoggerFactor.getLogger(LessonPlanXMLDAO.class,"whiteboard");
-	private static Logger log = Red5LoggerFactory.getLogger(LessonPlanXMLDAO.class, "whiteboard");
+//	/private static Logger log = Red5LoggerFactor.getLogger(LessonPlanXMLDAO.class,InnowhiteConstants.APP_NAME);
+	private static Logger log = Red5LoggerFactory.getLogger(LessonPlanXMLDAO.class, InnowhiteConstants.APP_NAME);
 	static boolean val = false;
 
 	public static void main(String[] args) {

@@ -17,7 +17,7 @@ import com.innowhite.webservice.client.HttpClientTutorial;
  */
 public class MessagingMain {
 
-	private static Logger log = Red5LoggerFactory.getLogger(MessagingMain.class, "whiteboard");
+	private static Logger log = Red5LoggerFactory.getLogger(MessagingMain.class, InnowhiteConstants.APP_NAME);
 	/**
 	 * @param args
 	 */

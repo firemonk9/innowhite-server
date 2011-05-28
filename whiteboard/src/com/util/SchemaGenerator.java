@@ -10,7 +10,7 @@ import org.slf4j.Logger;
 
 public class SchemaGenerator {
 
-	private static Logger log = Red5LoggerFactory.getLogger(SchemaGenerator.class, "whiteboard");
+	private static Logger log = Red5LoggerFactory.getLogger(SchemaGenerator.class, InnowhiteConstants.APP_NAME);
 	
 private static void addImagestoDB(String path){
 		

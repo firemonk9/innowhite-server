@@ -16,14 +16,17 @@ import com.innowhite.red5.audio.events.ParticipantLockedEvent;
 import com.innowhite.red5.audio.events.ParticipantMutedEvent;
 import com.innowhite.red5.audio.events.ParticipantTalkingEvent;
 import com.innowhite.red5.messaging.AudioMessageProducer;
+import com.innowhite.red5.util.InnowhiteConstants;
 
 public class MainAudioService {
 
 	private Main main;
 
 	private static Logger log = Red5LoggerFactory.getLogger(
-			MainAudioService.class, "whiteboard");
-
+			MainAudioService.class, InnowhiteConstants.APP_NAME);
+//InnowhiteConstants.APP_NAME
+	
+	
 	// private final ConcurrentMap<String, RoomInfo> voiceRooms;
 	// private final ConcurrentMap<String, RoomInfo> webRooms;
 
@@ -152,6 +155,9 @@ public class MainAudioService {
 			 list.add(muted);
 			
 			 so.sendMessage("userMute", list);
+			 //When a user is muted send a message of talking= false.
+			 talking(confRoom,participant,false);
+			 
 		}
 	}
 

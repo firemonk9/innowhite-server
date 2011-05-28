@@ -11,7 +11,7 @@ import org.slf4j.Logger;
 
 public class InnowhiteProperties {
 
-	private static Logger log = Red5LoggerFactory.getLogger(InnowhiteProperties.class, "whiteboard");
+	private static Logger log = Red5LoggerFactory.getLogger(InnowhiteProperties.class, InnowhiteConstants.APP_NAME);
 	
 	private static Properties prop=null;
 	

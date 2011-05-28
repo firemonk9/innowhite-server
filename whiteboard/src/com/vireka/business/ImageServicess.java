@@ -20,7 +20,7 @@ import com.util.MakeExectuable;
 public class ImageServicess {
 	// private static final Log log = LogFactory.getLog(ImageServicess.class);
 	public static final float DECREASE_PERSENT = 0.93f;
-	private static Logger log = Red5LoggerFactory.getLogger(ImageServicess.class, "whiteboard");
+	private static Logger log = Red5LoggerFactory.getLogger(ImageServicess.class, InnowhiteConstants.APP_NAME);
 	
 	/*This function minimizes the images when the size of image is greater then 
 	 * 

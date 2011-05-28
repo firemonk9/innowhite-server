@@ -26,7 +26,7 @@ import com.vireka.service.ImageService;
  * */
 public class MakeSWFFiles {
 
-	private static Logger log = Red5LoggerFactory.getLogger(MakeSWFFiles.class, "whiteboard");
+	private static Logger log = Red5LoggerFactory.getLogger(MakeSWFFiles.class, InnowhiteConstants.APP_NAME);
 	
 	private static void createImagesfromPDF(String inputFile, String user, String desc, String documentName) {
 

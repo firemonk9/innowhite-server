@@ -12,7 +12,7 @@ import com.innowhite.whiteboard.persistence.IbatisManager;
 public class RoomUsersDAO {
 
 	private static SqlMapClient sqlMapClient =IbatisManager.getSqlMap();
-	private static Logger log = Red5LoggerFactory.getLogger(RoomUsersDAO.class, "whiteboard");
+	private static Logger log = Red5LoggerFactory.getLogger(RoomUsersDAO.class, InnowhiteConstants.APP_NAME);
 
 	
 	/**

@@ -18,7 +18,7 @@ import com.innowhite.whiteboard.util.InnowhiteConstants;
 public class DeleteSession extends HttpServlet {
 
 	
-	private static Logger log = Red5LoggerFactory.getLogger(DeleteSession.class, "whiteboard");
+	private static Logger log = Red5LoggerFactory.getLogger(DeleteSession.class, InnowhiteConstants.APP_NAME);
 	/**
 	 * Constructor of the object.
 	 */

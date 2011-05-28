@@ -26,7 +26,7 @@ import com.util.InnowhiteProperties;
 public class WBFilter implements Filter {
 
 	public static boolean firstTime = false;
-	private static Logger log = Red5LoggerFactory.getLogger(WBFilter.class, "whiteboard");
+	private static Logger log = Red5LoggerFactory.getLogger(WBFilter.class, InnowhiteConstants.APP_NAME);
 	public void doFilter(ServletRequest req, ServletResponse res,
 			FilterChain chain) throws IOException, ServletException {
 

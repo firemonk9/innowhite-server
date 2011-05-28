@@ -21,7 +21,7 @@ import org.xml.sax.XMLReader;
 
 public class SAXCopy {
 	
-	private static Logger log = Red5LoggerFactory.getLogger(SAXCopy.class, "whiteboard");
+	private static Logger log = Red5LoggerFactory.getLogger(SAXCopy.class, InnowhiteConstants.APP_NAME);
 	
 	static public void main(String[] arg) {
 		String infilename = "/Users/firemonk/Desktop/room1.xml";
@@ -65,7 +65,7 @@ public class SAXCopy {
 
 class MyCopyHandler implements ContentHandler {
 	
-	private static Logger log = Red5LoggerFactory.getLogger(MyCopyHandler.class, "whiteboard");
+	private static Logger log = Red5LoggerFactory.getLogger(MyCopyHandler.class, InnowhiteConstants.APP_NAME);
 	
 	private boolean namespaceBegin = false;
 
@@ -186,7 +186,7 @@ class MyCopyHandler implements ContentHandler {
 
 class MyErrorHandler implements ErrorHandler {
 	
-	private static Logger log = Red5LoggerFactory.getLogger(MyErrorHandler.class, "whiteboard");
+	private static Logger log = Red5LoggerFactory.getLogger(MyErrorHandler.class, InnowhiteConstants.APP_NAME);
 	public void warning(SAXParseException e) throws SAXException {
 		show("Warning", e);
 		throw (e);

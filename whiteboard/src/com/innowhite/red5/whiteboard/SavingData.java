@@ -25,7 +25,7 @@ public class SavingData {
 	public static HashMap<String, ObjectOutputStream> fileMap = new HashMap<String, ObjectOutputStream>();
 	static XStream xstream=null;
 	
-	private static Logger log = Red5LoggerFactory.getLogger(SavingData.class, "whiteboard");
+	private static Logger log = Red5LoggerFactory.getLogger(SavingData.class, InnowhiteConstants.APP_NAME);
 	
 	static{
 		 xstream = new XStream();

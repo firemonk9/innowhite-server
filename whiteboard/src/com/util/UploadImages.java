@@ -12,7 +12,7 @@ import com.servlets.WTest;
 
 public class UploadImages  {
 
-	private static Logger log = Red5LoggerFactory.getLogger(UploadImages.class, "whiteboard");
+	private static Logger log = Red5LoggerFactory.getLogger(UploadImages.class, InnowhiteConstants.APP_NAME);
 	
 	public static File createUploadedFile(String encodedStr,String fileName) {
 

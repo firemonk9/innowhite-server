@@ -8,6 +8,7 @@ import org.red5.logging.Red5LoggerFactory;
 import org.slf4j.Logger;
 
 import com.innowhite.red5.Main;
+import com.innowhite.red5.util.InnowhiteConstants;
 
 /**
  *
@@ -15,7 +16,7 @@ import com.innowhite.red5.Main;
  */
 public class ExampleClient {
     //private final Logger log = Red5LoggerFactory.getLogger( ExampleClient.class );
-    private static Logger log = Red5LoggerFactory.getLogger(ExampleClient.class, "whiteboard");
+    private static Logger log = Red5LoggerFactory.getLogger(ExampleClient.class, InnowhiteConstants.APP_NAME);
     private String host = "demo.innowhite.com";
     private int port = 8021;
     private String password = "InnO123WhitE";

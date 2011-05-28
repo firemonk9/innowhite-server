@@ -21,7 +21,7 @@ public class WhiteboardAuthenticationDAOImpl implements IWhiteboardAuthenticatio
 	private static SqlMapClient sqlMapClient = IbatisManager.getSqlMap();
 
 	static boolean val = false;
-	private static Logger log = Red5LoggerFactory.getLogger(WhiteboardAuthenticationDAOImpl.class, "whiteboard");
+	private static Logger log = Red5LoggerFactory.getLogger(WhiteboardAuthenticationDAOImpl.class, InnowhiteConstants.APP_NAME);
 	public OrganizationVO getOrganizationDetails(String parentOrg) {
 		
 		OrganizationVO orgBean = null;

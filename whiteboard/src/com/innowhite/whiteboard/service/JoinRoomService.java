@@ -20,7 +20,7 @@ public class JoinRoomService {
 	/**
 	 * @param args
 	 */
-	private static Logger log = Red5LoggerFactory.getLogger(JoinRoomService.class, "whiteboard");
+	private static Logger log = Red5LoggerFactory.getLogger(JoinRoomService.class, InnowhiteConstants.APP_NAME);
 	public static void main(String[] args) {
 		// TODO Auto-generated method stub
 		

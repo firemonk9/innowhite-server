@@ -8,7 +8,7 @@ import com.innowhite.whiteboard.persistence.dao.CustomUserImagesDAO;
 import com.util.MakeExectuable;
 
 public class DocumentManagement {
-	private static Logger log = Red5LoggerFactory.getLogger(DocumentManagement.class, "whiteboard");
+	private static Logger log = Red5LoggerFactory.getLogger(DocumentManagement.class, InnowhiteConstants.APP_NAME);
 	
 	public static void main(String args[])
 	{

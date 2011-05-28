@@ -32,9 +32,10 @@ import org.red5.server.api.so.ISharedObject;
 import org.slf4j.Logger;
 
 import com.innowhite.red5.UserCacheService;
+import com.innowhite.red5.util.InnowhiteConstants;
 
 public class VoiceHandler extends ApplicationAdapter implements IApplication {
-    private static Logger log = Red5LoggerFactory.getLogger(VoiceHandler.class, "whiteboard");
+    private static Logger log = Red5LoggerFactory.getLogger(VoiceHandler.class, InnowhiteConstants.APP_NAME);
 
     // private static final String VOICE = "VOICE";
     // private static final String VOICE_SO = "meetMeUsersSO";

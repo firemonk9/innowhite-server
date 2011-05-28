@@ -47,7 +47,7 @@ public class Main extends MultiThreadedApplicationAdapter {
 	private HashMap<String, List<VideoDisplayVO>> disconnectUser = new HashMap<String, List<VideoDisplayVO>>();
 
 	private static Logger log = Red5LoggerFactory.getLogger(Main.class,
-			"whiteboard");
+			InnowhiteConstants.APP_NAME);
 
 	// private static Logger log = Red5LoggerFactory.getLogger(Main.class);
 

@@ -34,8 +34,8 @@ public class WBFilter implements Filter {
 
 			Constants.HOST_IP = req.getLocalAddr();
 			firstTime = true;
-			Constants.RTMP_BASE_URL = Constants.RTMP_URL + Constants.HOST_IP
-					+ "/" + Constants.RTMP_APP + "/";
+//			Constants.RTMP_BASE_URL = Constants.RTMP_URL + Constants.HOST_IP
+//					+ "/" + Constants.RTMP_APP + "/";
 			// chain.doFilter(req, res);
 			// return;
 		}

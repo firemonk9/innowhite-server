@@ -41,7 +41,7 @@ import com.innowhite.whiteboard.util.InnowhiteConstants;
 public class HttpClientService {
 
 	
-	private static Logger log = Red5LoggerFactory.getLogger(HttpClientService.class, "whiteboard");
+	private static Logger log = Red5LoggerFactory.getLogger(HttpClientService.class, InnowhiteConstants.APP_NAME);
 	public static String createSession(String userID, String orgName, String courses, String date) throws InnowhiteServiceException {
 
 		DefaultHttpClient httpclient = new DefaultHttpClient();

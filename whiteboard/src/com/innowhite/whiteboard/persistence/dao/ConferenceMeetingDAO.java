@@ -13,7 +13,7 @@ import com.innowhite.whiteboard.persistence.beans.ConferenceNumbersVO;
 public class ConferenceMeetingDAO {
 
 	private static SqlMapClient sqlMapClient =IbatisManager.getSqlMap();
-	private static Logger log = Red5LoggerFactory.getLogger(LiveDocConvDAO.class, "whiteboard");
+	private static Logger log = Red5LoggerFactory.getLogger(LiveDocConvDAO.class, InnowhiteConstants.APP_NAME);
 
 	
 	/**

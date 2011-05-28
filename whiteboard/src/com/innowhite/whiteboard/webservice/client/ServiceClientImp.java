@@ -21,7 +21,7 @@ public class ServiceClientImp  {
 	 * @see com.innowhite.whiteboard.webservice.client.IServiceClient#createFutureSession(java.lang.String, java.lang.String, java.lang.String)
 	 */
 	
-	private static Logger log = Red5LoggerFactory.getLogger(ServiceClientImp.class, "whiteboard");
+	private static Logger log = Red5LoggerFactory.getLogger(ServiceClientImp.class, InnowhiteConstants.APP_NAME);
 	
 
 	

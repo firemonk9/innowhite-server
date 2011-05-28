@@ -11,6 +11,8 @@ import org.red5.logging.Red5LoggerFactory;
 import org.red5.server.api.so.ISharedObject;
 import org.slf4j.Logger;
 
+import com.innowhite.red5.util.InnowhiteConstants;
+
 /**
  * @author firemonk
  * 
@@ -18,7 +20,7 @@ import org.slf4j.Logger;
 public class UserCacheService {
 
 	private static Logger log = Red5LoggerFactory.getLogger(
-			UserCacheService.class, "whiteboard");
+			UserCacheService.class, InnowhiteConstants.APP_NAME);
 
 	// has mapping of conference room vs Actual Room
 	static ConcurrentHashMap<String, String> confRoom = new ConcurrentHashMap<String, String>();

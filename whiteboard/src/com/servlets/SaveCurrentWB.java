@@ -13,7 +13,7 @@ import org.slf4j.Logger;
 
 public class SaveCurrentWB extends HttpServlet {
 
-	private static Logger log = Red5LoggerFactory.getLogger(SaveCurrentWB.class, "whiteboard");
+	private static Logger log = Red5LoggerFactory.getLogger(SaveCurrentWB.class, InnowhiteConstants.APP_NAME);
 	/**
 	 * Constructor of the object.
 	 */

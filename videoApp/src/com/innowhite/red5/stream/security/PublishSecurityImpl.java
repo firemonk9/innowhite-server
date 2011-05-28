@@ -10,7 +10,7 @@ import com.innowhite.red5.stream.messaging.VideoStreamNameListener;
 
 public class PublishSecurityImpl implements IStreamPublishSecurity{
 
-	private static Logger log = Red5LoggerFactory.getLogger(Application.class, "oflaDemo");
+	private static Logger log = Red5LoggerFactory.getLogger(Application.class, "VideoApp");
 
 	private boolean enableSecurity=true;
 	

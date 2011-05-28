@@ -11,7 +11,7 @@ import com.innowhite.webservice.client.HttpClientTutorial;
 
 public class WhiteBoardSHA1 {
 
-	private static Logger log = Red5LoggerFactory.getLogger(WhiteBoardSHA1.class, "whiteboard");
+	private static Logger log = Red5LoggerFactory.getLogger(WhiteBoardSHA1.class, InnowhiteConstants.APP_NAME);
 	
 	 private static String convertToHex(byte[] data) {
 	        StringBuffer buf = new StringBuffer();

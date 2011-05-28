@@ -27,7 +27,7 @@ import com.util.Utility;
  */
 public class RoomServlet extends HttpServlet {
 	private static final long serialVersionUID = 1L;
-	private static Logger log = Red5LoggerFactory.getLogger(RoomServlet.class, "whiteboard");
+	private static Logger log = Red5LoggerFactory.getLogger(RoomServlet.class, InnowhiteConstants.APP_NAME);
 	/**
 	 * @see HttpServlet#HttpServlet()
 	 */

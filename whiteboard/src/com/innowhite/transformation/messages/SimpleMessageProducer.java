@@ -21,7 +21,7 @@ import com.innowhite.webservice.client.HttpClientTutorial;
 
 public class SimpleMessageProducer {
     
-	private static Logger log = Red5LoggerFactory.getLogger(SimpleMessageProducer.class, "whiteboard");
+	private static Logger log = Red5LoggerFactory.getLogger(SimpleMessageProducer.class, InnowhiteConstants.APP_NAME);
    
     protected JmsTemplate jmsTemplate; 
     

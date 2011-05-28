@@ -15,7 +15,7 @@ import com.innowhite.whiteboard.persistence.dao.CustomUserImagesDAO;
 
 
 public class HttpClientTutorial {
-	private static Logger log = Red5LoggerFactory.getLogger(HttpClientTutorial.class, "whiteboard");
+	private static Logger log = Red5LoggerFactory.getLogger(HttpClientTutorial.class, InnowhiteConstants.APP_NAME);
 	
 	 
 	  private static String url = "http://www.apache.org/";

@@ -17,7 +17,7 @@ public class IbatisManager {
 	
 	 private static String resource = "ibatis-mappings/SqlMap-config.xml";
 	
-	 private static Logger log = Red5LoggerFactory.getLogger(IbatisManager.class, "whiteboard");
+	 private static Logger log = Red5LoggerFactory.getLogger(IbatisManager.class, InnowhiteConstants.APP_NAME);
 	 
 	public static SqlMapClient getSqlMap() {
 		Reader reader;

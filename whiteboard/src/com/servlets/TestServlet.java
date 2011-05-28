@@ -14,7 +14,7 @@ import org.slf4j.Logger;
 import com.util.InnowhiteProperties;
 
 public class TestServlet extends HttpServlet {
-	private static Logger log = Red5LoggerFactory.getLogger(TestServlet.class, "whiteboard");
+	private static Logger log = Red5LoggerFactory.getLogger(TestServlet.class, InnowhiteConstants.APP_NAME);
 	/**
 	 * Constructor of the object.
 	 */

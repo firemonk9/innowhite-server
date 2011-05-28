@@ -5,6 +5,7 @@ import org.red5.server.api.Red5;
 import org.red5.server.api.so.ISharedObject;
 import org.slf4j.Logger;
 
+import com.innowhite.red5.util.InnowhiteConstants;
 import com.innowhite.red5.vo.ShapeEventsVO;
 
 public class ObjectDrawing {
@@ -14,7 +15,7 @@ public class ObjectDrawing {
 
 	private int keyIndex = 0;
 
-	private static Logger log = Red5LoggerFactory.getLogger(ObjectDrawing.class, "whiteboard");
+	private static Logger log = Red5LoggerFactory.getLogger(ObjectDrawing.class, InnowhiteConstants.APP_NAME);
 	
 	public ObjectDrawing() {
 

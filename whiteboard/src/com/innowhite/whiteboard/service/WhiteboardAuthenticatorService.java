@@ -17,7 +17,7 @@ import com.innowhite.whiteboard.util.WhiteBoardUtil;
 public class WhiteboardAuthenticatorService {
 
 	
-	private static Logger log = Red5LoggerFactory.getLogger(WhiteboardAuthenticatorService.class, "whiteboard");
+	private static Logger log = Red5LoggerFactory.getLogger(WhiteboardAuthenticatorService.class, InnowhiteConstants.APP_NAME);
 	
 	public static String  validateRequest(String queryStringWithoutCheckSum, String parentOrg, String checksum){
 		

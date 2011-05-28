@@ -15,7 +15,7 @@ import org.slf4j.Logger;
 import com.util.Constants;
 
 public class UserImagesList extends HttpServlet {
-	private static Logger log = Red5LoggerFactory.getLogger(UserImagesList.class, "whiteboard");
+	private static Logger log = Red5LoggerFactory.getLogger(UserImagesList.class, InnowhiteConstants.APP_NAME);
 	/**
 	 * Constructor of the object.
 	 */

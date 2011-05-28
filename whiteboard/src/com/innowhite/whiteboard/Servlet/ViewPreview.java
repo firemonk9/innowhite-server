@@ -17,7 +17,7 @@ import com.innowhite.whiteboard.util.ServletUtil;
 
 public class ViewPreview extends HttpServlet {
 
-	private static Logger log = Red5LoggerFactory.getLogger(WhiteboardAuthenticatorService.class, "whiteboard");
+	private static Logger log = Red5LoggerFactory.getLogger(WhiteboardAuthenticatorService.class, InnowhiteConstants.APP_NAME);
 	
 	/**
 	 * Constructor of the object.

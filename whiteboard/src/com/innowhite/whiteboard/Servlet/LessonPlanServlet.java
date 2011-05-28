@@ -18,7 +18,7 @@ import com.util.Constants;
 public class LessonPlanServlet extends HttpServlet {
 
 	
-	private static Logger log = Red5LoggerFactory.getLogger(LessonPlanServlet.class, "whiteboard");
+	private static Logger log = Red5LoggerFactory.getLogger(LessonPlanServlet.class, InnowhiteConstants.APP_NAME);
 	/**
 	 * Constructor of the object.
 	 */

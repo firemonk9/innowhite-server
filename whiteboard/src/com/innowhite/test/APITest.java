@@ -14,7 +14,7 @@ import com.util.Constants;
 public class APITest {
 
 	
-	private static Logger log = Red5LoggerFactory.getLogger(APITest.class, "whiteboard");
+	private static Logger log = Red5LoggerFactory.getLogger(APITest.class, InnowhiteConstants.APP_NAME);
 	/**
 	 * @param args
 	 */

@@ -22,7 +22,7 @@ public class BeanService {
 	smp.sendMessages(docBean);
 */
 	
-	private static Logger log = Red5LoggerFactory.getLogger(BeanService.class, "whiteboard");
+	private static Logger log = Red5LoggerFactory.getLogger(BeanService.class, InnowhiteConstants.APP_NAME);
 	
 	static ApplicationContext context=null;
 	

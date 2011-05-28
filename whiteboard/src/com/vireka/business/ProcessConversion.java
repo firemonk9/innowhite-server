@@ -37,7 +37,7 @@ public class ProcessConversion {
 	 */
 	
 	
-	private static Logger log = Red5LoggerFactory.getLogger(ProcessConversion.class, "whiteboard");
+	private static Logger log = Red5LoggerFactory.getLogger(ProcessConversion.class, InnowhiteConstants.APP_NAME);
 	
 	SimpleMessageProducer smp = null;
 

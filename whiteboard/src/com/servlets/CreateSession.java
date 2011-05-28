@@ -17,7 +17,7 @@ import com.innowhite.whiteboard.webservice.client.ServiceClientImp;
 public class CreateSession extends HttpServlet {
 
 	
-	private static Logger log = Red5LoggerFactory.getLogger(CreateSession.class, "whiteboard");
+	private static Logger log = Red5LoggerFactory.getLogger(CreateSession.class, InnowhiteConstants.APP_NAME);
 	/**
 	 * Constructor of the object.
 	 */

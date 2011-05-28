@@ -24,7 +24,7 @@ import com.util.Constants;
 public class JoinRoomServlet extends HttpServlet {
 	private static final long serialVersionUID = 1L;
        
-	private static Logger log = Red5LoggerFactory.getLogger(JoinRoomServlet.class, "whiteboard");
+	private static Logger log = Red5LoggerFactory.getLogger(JoinRoomServlet.class, InnowhiteConstants.APP_NAME);
 	
     /**
      * @see HttpServlet#HttpServlet()

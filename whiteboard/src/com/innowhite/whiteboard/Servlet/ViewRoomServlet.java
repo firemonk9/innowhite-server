@@ -21,7 +21,7 @@ import com.util.Utility;
  */
 public class ViewRoomServlet extends HttpServlet {
 	private static final long serialVersionUID = 1L;
-	private static Logger log = Red5LoggerFactory.getLogger(ViewRoomServlet.class, "whiteboard");
+	private static Logger log = Red5LoggerFactory.getLogger(ViewRoomServlet.class, InnowhiteConstants.APP_NAME);
     /**
      * @see HttpServlet#HttpServlet()
      */

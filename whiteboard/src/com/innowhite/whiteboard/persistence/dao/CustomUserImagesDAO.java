@@ -18,7 +18,7 @@ public class CustomUserImagesDAO {
 
 	private static SqlMapClient sqlMapClient = IbatisManager.getSqlMap();
 
-	private static Logger log = Red5LoggerFactory.getLogger(CustomUserImagesDAO.class, "whiteboard");
+	private static Logger log = Red5LoggerFactory.getLogger(CustomUserImagesDAO.class, InnowhiteConstants.APP_NAME);
 	
 	public int deleteById(int userimageid) {
 		int noOfRowsDeleted = 0;

@@ -15,7 +15,7 @@ import com.vireka.business.TimeMaintainerService;
 public class BusinessService {
 
 	
-	private static Logger log = Red5LoggerFactory.getLogger(BusinessService.class, "whiteboard");
+	private static Logger log = Red5LoggerFactory.getLogger(BusinessService.class, InnowhiteConstants.APP_NAME);
 	/**
 	 * @param args
 	 */

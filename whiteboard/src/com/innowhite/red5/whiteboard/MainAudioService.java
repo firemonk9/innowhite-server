@@ -23,7 +23,7 @@ public class MainAudioService {
 	private Main main;
 
 	private static Logger log = Red5LoggerFactory.getLogger(
-			MainAudioService.class, "whiteboard");
+			MainAudioService.class, InnowhiteConstants.APP_NAME);
 
 	// private final ConcurrentMap<String, RoomInfo> voiceRooms;
 	// private final ConcurrentMap<String, RoomInfo> webRooms;

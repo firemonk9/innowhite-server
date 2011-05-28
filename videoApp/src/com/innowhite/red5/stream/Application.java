@@ -2,6 +2,7 @@ package com.innowhite.red5.stream;
 
 import java.util.ArrayList;
 import java.util.Date;
+import java.util.HashMap;
 
 import org.red5.logging.Red5LoggerFactory;
 import org.red5.server.adapter.IApplication;
@@ -29,6 +30,8 @@ public class Application extends MultiThreadedApplicationAdapter implements IApp
     private String recordPath;
     private static final String INNOWHITE_STREAM_STATUS_SO = "ScreenShareSO";
 
+    private HashMap<String, ISharedObject> screenShareSharedObjectMap = new HashMap<String, ISharedObject>();
+
     public String getRecordPath() {
 	return recordPath;
     }
@@ -49,21 +52,21 @@ public class Application extends MultiThreadedApplicationAdapter implements IApp
 	this.messagingService = messagingService;
     }
 
-    private static Logger log = Red5LoggerFactory.getLogger(Application.class, "oflaDemo");
+    private static Logger log = Red5LoggerFactory.getLogger(Application.class, "VideoApp");
 
-    ISharedObject screenShareSo = null;
+    // ISharedObject screenShareSo = null;
 
     /* when ever a new room is created, this is called. */
     @Override
     public boolean roomConnect(IConnection connection, Object[] params) {
-	log.debug("${APP}:roomConnect " + connection.getScope().getName());
+	log.debug("${APP}:roomConnect " + connection.getScope().getName() + " scope  " + connection.getScope());
 
 	// ISharedObject so = getSharedObject(connection.getScope(),
 	// INNOWHITE_STREAM_STATUS_SO);
-	
+
 	createSharedObject(connection.getScope(), INNOWHITE_STREAM_STATUS_SO, false);
-	screenShareSo = getSharedObject(connection.getScope(), INNOWHITE_STREAM_STATUS_SO);
-	
+	ISharedObject screenShareSo = getSharedObject(connection.getScope(), INNOWHITE_STREAM_STATUS_SO);
+	screenShareSharedObjectMap.put(connection.getScope().getName(), screenShareSo);
 	// String voiceBridge = getBbbSession().getVoiceBridge();
 
 	// UserCacheService.addRoomIdUserSharedObj(connection.getScope().getName(),
@@ -76,12 +79,14 @@ public class Application extends MultiThreadedApplicationAdapter implements IApp
 
     @Override
     public void roomStop(IScope scope) {
-	log.debug("${APP}:roomStop ${scope.name} removing the shared object");
+	log.debug("${APP}:roomStop ${scope.name} removing the shared object:: " + scope.getName());
 
 	// conferenceService.destroyConference(scope.getName());
 	// clientManager.removeSharedObject(scope.getName());
-	if (!hasSharedObject(scope, INNOWHITE_STREAM_STATUS_SO)) {
+	if (hasSharedObject(scope, INNOWHITE_STREAM_STATUS_SO)) {
+	    screenShareSharedObjectMap.remove(scope.getName());
 	    clearSharedObjects(scope, INNOWHITE_STREAM_STATUS_SO);
+	    
 	}
 
     }
@@ -108,26 +113,33 @@ public class Application extends MultiThreadedApplicationAdapter implements IApp
 
 	if (stream instanceof ClientBroadcastStream) {
 	    ClientBroadcastStream obj = (ClientBroadcastStream) stream;
+	    // invokeStopScreenShare();
 	    if (obj.isRecording() == true) {
 		messagingService.sendStreamMessage("RECORDSTART#" + stream.getPublishedName() + "#" + recordPath + stream.getPublishedName() + ".flv");
-		invokeStopScreenShare();
+
 	    }
 	}
-	log.debug("streamPublishStart:: " + stream.getPublishedName() + " time " + new Date().getTime());
+	log.debug("streamPublishStart:: " + stream.getPublishedName() + " time " + new Date().getTime() + "  get parent  " + stream.getScope().getParent() + " scope  " + stream.getScope());
 
 	// log.debug("streamPublishStart:: "+stream.getPublishedName());
     }
 
     @Override
     public void streamBroadcastClose(IBroadcastStream stream) {
-	log.debug("streamBroadcastClose:::  " + stream.getPublishedName() + " time " + new Date().getTime());
+	log.debug("streamBroadcastClose:::  " + stream.getPublishedName() + " time " + new Date().getTime() + "  get parent  " + stream.getScope().getParent() + " scope  " + stream.getScope());
 
 	if (stream instanceof ClientBroadcastStream) {
 	    ClientBroadcastStream obj = (ClientBroadcastStream) stream;
+
+	    // ISharedObject screenShareSo =
+	    // getSharedObject(stream.getScope().getParent(),
+	    // INNOWHITE_STREAM_STATUS_SO);
+
+	    ISharedObject screenShareSo = screenShareSharedObjectMap.get(stream.getScope().getName());
+	    screenShareSo.sendMessage("screenShareStopped", new ArrayList<Object>());
+	    
 	    if (obj.isRecording() == true) {
 
-		ISharedObject screenShareSo = getSharedObject(stream.getScope(), INNOWHITE_STREAM_STATUS_SO);
-		screenShareSo.sendMessage("screenShareStopped", new ArrayList<Object>());
 		// stream.getScope().getS
 		messagingService.sendStreamMessage("RECORDSTOP#" + stream.getPublishedName() + "#FILENAME");
 		VideoStreamNameListener.videoStreamIds.remove(stream.getPublishedName());
@@ -136,16 +148,17 @@ public class Application extends MultiThreadedApplicationAdapter implements IApp
 	}
     }
 
-    private void invokeStopScreenShare() {
-
-	new java.util.Timer().schedule(new java.util.TimerTask() {
-	    @Override
-	    public void run() {
-		screenShareSo.sendMessage("screenShareStopped", new ArrayList<Object>());
-	    }
-	}, 30000);
-
-    }
+    // private void invokeStopScreenShare() {
+    //
+    // new java.util.Timer().schedule(new java.util.TimerTask() {
+    // @Override
+    // public void run() {
+    // //screenShareSo.sendMessage("screenShareStopped", new
+    // ArrayList<Object>());
+    // }
+    // }, 30000);
+    //
+    // }
 
     /** {@inheritDoc} */
     @Override

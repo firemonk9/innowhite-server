@@ -14,7 +14,7 @@ import com.innowhite.whiteboard.test.InnowhiteServiceTest;
 
 public class ServletUtil {
 
-	private static Logger log = Red5LoggerFactory.getLogger(ServletUtil.class, "whiteboard");
+	private static Logger log = Red5LoggerFactory.getLogger(ServletUtil.class, InnowhiteConstants.APP_NAME);
 	
 	public static void setCutomRequestProp(HttpServletRequest request, HttpServletResponse response, boolean prevousSession, ConferenceNumbersVO confNumber) throws ServletException,
 			IOException {

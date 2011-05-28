@@ -23,7 +23,7 @@ import com.util.Constants;
  */
 public class StreamServlet extends HttpServlet {
 	private static final long serialVersionUID = 1L;
-	private static Logger log = Red5LoggerFactory.getLogger(StreamServlet.class, "whiteboard");
+	private static Logger log = Red5LoggerFactory.getLogger(StreamServlet.class, InnowhiteConstants.APP_NAME);
 	/**
 	 * @see HttpServlet#HttpServlet()
 	 */

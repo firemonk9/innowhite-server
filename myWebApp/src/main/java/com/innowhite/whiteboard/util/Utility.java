@@ -28,7 +28,7 @@ public class Utility {
 	 */
 	public static void main(String[] args) {
 		// TODO Auto-generated method stub
-		getServerURLWithContext("http://192.168.1.100:5080/whiteboard/servlet/UserImagesList","whiteboard");
+		//getServerURLWithContext("http://192.168.1.100:5080/whiteboard/servlet/UserImagesList",InnowhiteConstants.APP_NAME);
 		log.debug(removeSpace("qw eqw   e.doc"));
 
 	}

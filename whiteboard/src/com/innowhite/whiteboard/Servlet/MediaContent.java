@@ -25,7 +25,7 @@ import com.vireka.service.ImageService;
 public class MediaContent extends HttpServlet {
 
 	
-	private static Logger log = Red5LoggerFactory.getLogger(MediaContent.class, "whiteboard");
+	private static Logger log = Red5LoggerFactory.getLogger(MediaContent.class, InnowhiteConstants.APP_NAME);
 	/**
 	 * 
 	 */

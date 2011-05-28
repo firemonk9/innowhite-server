@@ -12,7 +12,7 @@ public class InnowhiteConstants {
 	public static final String SECRETKEY = "secret_key";
 	public static final String WB_SESSION_ID = "session_id";
 	
-	
+	public static final String APP_NAME = "InnowhiteRed5";
 	public static final String DATEPICKER = "datepicker";
 	public static final String SECRETKEYVALUE = "cb5869d542f60ab3dd0eeecbe8ac8e18abe44353875e4db636a40153021e07be3c56209091ee08620cb7b0c403d079f1ef2094ff658f99da54a06c38d380b30d";
 	public static final String USERID = "web_session[user_id]";

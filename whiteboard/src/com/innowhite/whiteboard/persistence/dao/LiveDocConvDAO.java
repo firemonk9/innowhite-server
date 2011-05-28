@@ -13,7 +13,7 @@ import com.innowhite.whiteboard.persistence.beans.LiveDocConversion;
 public class LiveDocConvDAO {
 
 	private static SqlMapClient sqlMapClient =IbatisManager.getSqlMap();
-	private static Logger log = Red5LoggerFactory.getLogger(LiveDocConvDAO.class, "whiteboard");
+	private static Logger log = Red5LoggerFactory.getLogger(LiveDocConvDAO.class, InnowhiteConstants.APP_NAME);
 	public static int save(String userID) {
 		int conversionID = -1;
 		try {

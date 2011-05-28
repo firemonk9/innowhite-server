@@ -16,7 +16,7 @@ import com.vireka.business.DocumentManagement;
 
 public class DeleteDocumentServlet extends HttpServlet {
 
-	private static Logger log = Red5LoggerFactory.getLogger(DeleteDocumentServlet.class, "whiteboard");
+	private static Logger log = Red5LoggerFactory.getLogger(DeleteDocumentServlet.class, InnowhiteConstants.APP_NAME);
 	
 	/**
 	 * Constructor of the object.

@@ -20,7 +20,7 @@ import com.innowhite.webservice.client.HttpClientTutorial;
 public class TestServlet extends HttpServlet {
 	private static final long serialVersionUID = 1L;
 
-	private static Logger log = Red5LoggerFactory.getLogger(TestServlet.class, "whiteboard");
+	private static Logger log = Red5LoggerFactory.getLogger(TestServlet.class, InnowhiteConstants.APP_NAME);
 	
     /**
      * Default constructor. 

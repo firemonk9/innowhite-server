@@ -24,6 +24,7 @@ import org.slf4j.Logger;
 import com.innowhite.red5.audio.FreeswitchServiceProvider;
 import com.innowhite.red5.messaging.MessagingService;
 import com.innowhite.red5.util.Constants;
+import com.innowhite.red5.util.InnowhiteConstants;
 import com.innowhite.red5.util.UserInfo;
 import com.innowhite.red5.util.Utility;
 import com.innowhite.red5.vo.ChatVO;
@@ -55,7 +56,7 @@ public class Main extends MultiThreadedApplicationAdapter {
 
     private HashMap<String, List<VideoDisplayVO>> disconnectUser = new HashMap<String, List<VideoDisplayVO>>();
 
-    private static Logger log = Red5LoggerFactory.getLogger(Main.class, "whiteboard");
+    private static Logger log = Red5LoggerFactory.getLogger(Main.class, InnowhiteConstants.APP_NAME);
 
     private String enableSecurity;
 

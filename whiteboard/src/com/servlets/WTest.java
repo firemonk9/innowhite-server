@@ -24,7 +24,7 @@ import com.util.Constants;
 
 
 public class WTest extends HttpServlet {
-	private static Logger log = Red5LoggerFactory.getLogger(WTest.class, "whiteboard");
+	private static Logger log = Red5LoggerFactory.getLogger(WTest.class, InnowhiteConstants.APP_NAME);
 	/**
 	 * Constructor of the object.
 	 */

@@ -34,7 +34,7 @@ import com.vireka.service.ImageService;
 @SuppressWarnings("serial")
 public class UploadFileServlet extends HttpServlet {
 	private static Logger log = Red5LoggerFactory.getLogger(
-			UploadFileServlet.class, "whiteboard");
+			UploadFileServlet.class, InnowhiteConstants.APP_NAME);
 
 	/**
 	 * Constructor of the object.

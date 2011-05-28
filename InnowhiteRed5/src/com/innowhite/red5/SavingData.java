@@ -8,6 +8,7 @@ import org.red5.logging.Red5LoggerFactory;
 import org.red5.server.api.so.ISharedObject;
 import org.slf4j.Logger;
 
+import com.innowhite.red5.util.InnowhiteConstants;
 import com.innowhite.red5.vo.ChatVO;
 import com.innowhite.red5.vo.ShapeEventsVO;
 
@@ -17,7 +18,7 @@ public class SavingData {
 	//static XStream xstream = null;
 
 	private static Logger log = Red5LoggerFactory.getLogger(SavingData.class,
-			"whiteboard");
+			InnowhiteConstants.APP_NAME);
 
 //	static {
 //		xstream = new XStream();

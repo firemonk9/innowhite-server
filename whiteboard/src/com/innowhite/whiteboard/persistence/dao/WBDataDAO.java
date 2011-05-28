@@ -16,7 +16,7 @@ public class WBDataDAO {
 	private static SqlMapClient sqlMapClient = IbatisManager.getSqlMap();
 
 	static boolean val = false;
-	private static Logger log = Red5LoggerFactory.getLogger(WBDataDAO.class, "whiteboard");
+	private static Logger log = Red5LoggerFactory.getLogger(WBDataDAO.class, InnowhiteConstants.APP_NAME);
 	public static void main(String[] args) {
 
 		LessonPlanVO lessonPlanVO = new LessonPlanVO();

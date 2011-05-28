@@ -14,7 +14,7 @@ public class ObjectDrawing {
 
 	private int keyIndex = 0;
 
-	private static Logger log = Red5LoggerFactory.getLogger(ObjectDrawing.class, "whiteboard");
+	private static Logger log = Red5LoggerFactory.getLogger(ObjectDrawing.class, InnowhiteConstants.APP_NAME);
 	
 	public ObjectDrawing() {
 

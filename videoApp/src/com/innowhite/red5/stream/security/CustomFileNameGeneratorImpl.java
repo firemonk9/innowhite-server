@@ -9,7 +9,7 @@ import com.innowhite.red5.stream.Application;
 
 public class CustomFileNameGeneratorImpl implements IStreamFilenameGenerator{
 
-	private static Logger log = Red5LoggerFactory.getLogger(Application.class, "oflaDemo");
+	private static Logger log = Red5LoggerFactory.getLogger(Application.class, "VideoApp");
 
 	@Override
 	public String generateFilename(IScope arg0, String arg1, GenerationType arg2) {

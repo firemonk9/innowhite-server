@@ -21,7 +21,7 @@ import com.vireka.business.ProcessConversion;
 
 public class LiveFileUpload extends HttpServlet {
 
-	private static Logger log = Red5LoggerFactory.getLogger(LiveFileUpload.class, "whiteboard");
+	private static Logger log = Red5LoggerFactory.getLogger(LiveFileUpload.class, InnowhiteConstants.APP_NAME);
 	/**
 	 * Constructor of the object.
 	 */

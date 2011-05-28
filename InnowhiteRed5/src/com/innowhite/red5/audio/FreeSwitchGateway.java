@@ -29,6 +29,7 @@ import com.innowhite.red5.audio.events.ParticipantJoinedEvent;
 import com.innowhite.red5.audio.events.ParticipantLeftEvent;
 import com.innowhite.red5.audio.events.ParticipantMutedEvent;
 import com.innowhite.red5.audio.events.ParticipantTalkingEvent;
+import com.innowhite.red5.util.InnowhiteConstants;
 
 /**
  * 
@@ -37,7 +38,7 @@ import com.innowhite.red5.audio.events.ParticipantTalkingEvent;
 public class FreeSwitchGateway extends Observable implements IEslEventListener {
     // private final Logger log = Red5LoggerFactory.getLogger(
     // EslEventListener.class );
-    private static Logger log = Red5LoggerFactory.getLogger(FreeSwitchGateway.class, "whiteboard");
+    private static Logger log = Red5LoggerFactory.getLogger(FreeSwitchGateway.class, InnowhiteConstants.APP_NAME);
 
     private ManagerConnection managerConnection;
     // private ConferenceEventListener conferenceEventListener;

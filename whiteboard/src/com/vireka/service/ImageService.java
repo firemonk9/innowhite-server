@@ -29,7 +29,7 @@ import com.util.Utility;
 
 public class ImageService {
 
-	private static Logger log = Red5LoggerFactory.getLogger(ImageService.class, "whiteboard");
+	private static Logger log = Red5LoggerFactory.getLogger(ImageService.class, InnowhiteConstants.APP_NAME);
 	
 	/**
 	 * @param args

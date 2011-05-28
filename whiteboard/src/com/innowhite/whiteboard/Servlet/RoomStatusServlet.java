@@ -19,7 +19,7 @@ import com.innowhite.whiteboard.service.WhiteboardAuthenticatorService;
  */
 public class RoomStatusServlet extends HttpServlet {
 	private static final long serialVersionUID = 1L;
-	private static Logger log = Red5LoggerFactory.getLogger(RoomStatusServlet.class, "whiteboard");
+	private static Logger log = Red5LoggerFactory.getLogger(RoomStatusServlet.class, InnowhiteConstants.APP_NAME);
     /**
      * @see HttpServlet#HttpServlet()
      */

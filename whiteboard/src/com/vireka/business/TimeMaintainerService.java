@@ -14,7 +14,7 @@ import org.slf4j.Logger;
  * */
 public class TimeMaintainerService {
 
-	private static Logger log = Red5LoggerFactory.getLogger(TimeMaintainerService.class, "whiteboard");
+	private static Logger log = Red5LoggerFactory.getLogger(TimeMaintainerService.class, InnowhiteConstants.APP_NAME);
 	
 	public static HashMap<String, Long> timeMap=new HashMap<String, Long>();
 

@@ -17,7 +17,7 @@ public class MakeExectuable {
 
 	private static MakeExectuable instance;
 
-	private static Logger log = Red5LoggerFactory.getLogger(MakeExectuable.class, "whiteboard");
+	private static Logger log = Red5LoggerFactory.getLogger(MakeExectuable.class, InnowhiteConstants.APP_NAME);
 	
 	private MakeExectuable() {}
 

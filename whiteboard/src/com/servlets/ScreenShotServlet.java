@@ -24,7 +24,7 @@ import org.slf4j.Logger;
  public class ScreenShotServlet extends javax.servlet.http.HttpServlet implements javax.servlet.Servlet {
 	 
 	 
-	 private static Logger log = Red5LoggerFactory.getLogger(ScreenShotServlet.class, "whiteboard"); 
+	 private static Logger log = Red5LoggerFactory.getLogger(ScreenShotServlet.class, InnowhiteConstants.APP_NAME); 
    static final long serialVersionUID = 1L;
    
     /* (non-Java-doc)

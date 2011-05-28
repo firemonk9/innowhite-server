@@ -24,10 +24,12 @@ package com.innowhite.red5.audio;
 import org.red5.server.adapter.ApplicationAdapter;
 import org.slf4j.Logger;
 
+import com.innowhite.red5.util.InnowhiteConstants;
+
 
 public class VoiceService extends ApplicationAdapter{
 	
-	private static Logger log = Red5LoggerFactory.getLogger( VoiceService.class, "whiteboard" );
+	private static Logger log = Red5LoggerFactory.getLogger( VoiceService.class, InnowhiteConstants.APP_NAME );
 	
 	
 	private FreeSwitchGateway freeSwitchGateway;

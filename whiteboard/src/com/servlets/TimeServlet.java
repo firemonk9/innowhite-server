@@ -12,7 +12,7 @@ import org.red5.logging.Red5LoggerFactory;
 import org.slf4j.Logger;
 
 public class TimeServlet extends HttpServlet {
-	private static Logger log = Red5LoggerFactory.getLogger(TimeServlet.class, "whiteboard");
+	private static Logger log = Red5LoggerFactory.getLogger(TimeServlet.class, InnowhiteConstants.APP_NAME);
 	/**
 	 * Constructor of the object.
 	 */

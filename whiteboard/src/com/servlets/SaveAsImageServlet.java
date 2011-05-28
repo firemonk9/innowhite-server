@@ -25,7 +25,7 @@ import com.vireka.business.DocumentManagement;
 public class SaveAsImageServlet extends HttpServlet {
 
 	
-	private static Logger log = Red5LoggerFactory.getLogger(SaveAsImageServlet.class, "whiteboard");
+	private static Logger log = Red5LoggerFactory.getLogger(SaveAsImageServlet.class, InnowhiteConstants.APP_NAME);
 	/**
 	 * Constructor of the object.
 	 */

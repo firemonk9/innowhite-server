@@ -15,7 +15,7 @@ import com.innowhite.whiteboard.webservice.client.ServiceClientImp;
  */
 public class InnowhiteServiceTest {
 
-	private static Logger log = Red5LoggerFactory.getLogger(InnowhiteServiceTest.class, "whiteboard");
+	private static Logger log = Red5LoggerFactory.getLogger(InnowhiteServiceTest.class, InnowhiteConstants.APP_NAME);
 	/**
 	 * @param args
 	 */

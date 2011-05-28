@@ -53,7 +53,7 @@ public class Constants {
 		
 		public static  String  RTMP_URL="rtmp://";
 		public static  String  HOST_IP;
-		public static  String  RTMP_APP="oflaDemo";
+		//public static  String  RTMP_APP="VideoApp";
 		public static  String  RTMP_BASE_URL;
 		
 		public static String INET="INET";

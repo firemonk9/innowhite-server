@@ -31,7 +31,7 @@ public class DownloadThread implements Runnable {
 	// private static Random generator = new Random();
 
 	
-	private static Logger log = Red5LoggerFactory.getLogger(DownloadThread.class, "whiteboard");
+	private static Logger log = Red5LoggerFactory.getLogger(DownloadThread.class, InnowhiteConstants.APP_NAME);
 	
 	public static void main(String args[]) {
 		// log.debug(createSecureURL("http://223.27.120.34/frontend.php/helper/library/content/image/stream/35"));

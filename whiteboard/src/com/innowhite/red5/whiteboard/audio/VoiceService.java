@@ -27,7 +27,7 @@ import org.slf4j.Logger;
 
 public class VoiceService extends ApplicationAdapter{
 	
-	private static Logger log = Red5LoggerFactory.getLogger( VoiceService.class, "whiteboard" );
+	private static Logger log = Red5LoggerFactory.getLogger( VoiceService.class, InnowhiteConstants.APP_NAME );
 	
 	
 	private FreeSwitchGateway freeSwitchGateway;

@@ -8,7 +8,7 @@ import org.slf4j.Logger;
 
 public class UserInfo {
 
-	private static Logger log = Red5LoggerFactory.getLogger(UserInfo.class, "whiteboard");
+	private static Logger log = Red5LoggerFactory.getLogger(UserInfo.class, InnowhiteConstants.APP_NAME);
 	
 	private static Map userMap=new HashMap<String, String>();
 	

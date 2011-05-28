@@ -17,7 +17,7 @@ public class ClientMediaDAO {
 
 	static boolean val = false;
 
-	private static Logger log = Red5LoggerFactory.getLogger(ClientMediaDAO.class, "whiteboard");
+	private static Logger log = Red5LoggerFactory.getLogger(ClientMediaDAO.class, InnowhiteConstants.APP_NAME);
 	
 	public static void main(String[] args) {
 //
