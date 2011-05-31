@@ -45,52 +45,64 @@
 
 
 	<!-- A POJO that implements the JMS message listener for Whiteboard Data -->
-	<bean id="simpleMessageListener"
+	<bean id="whiteboardDataMsgListener"
 		class="com.innowhite.PlayBackWebApp.messaging.WhiteboardDataMsgListener">
-
  		<property name="whiteboardDataService" ref="whiteboardDataService" /> 
+	</bean>
+
+
+<!-- A POJO that implements the JMS message listener for Room Data -->
+	<bean id="roomStatusMsgListener"
+		class="com.innowhite.PlayBackWebApp.messaging.RoomStatusMsgListener">
+ 		<property name="roomStatusService" ref="roomStatusService" /> 
+	</bean>
+
+<!-- A POJO that implements the JMS message listener for Whiteboard Data -->
+	<bean id="audioVideoMessageListener"
+		class="com.innowhite.PlayBackWebApp.messaging.AudioVideoDataMsgListener">
+ 		<property name="audioVideoDataService" ref="audioVideoDataService" /> 
 	</bean>
 
 
 	<!-- The Spring message listener container configuration -->
 	<jms:listener-container container-type="default"
 		connection-factory="cachedConnectionFactory" acknowledge="auto">
-		<jms:listener destination="Innowhite.whiteboardData" ref="simpleMessageListener"
+		<jms:listener destination="Innowhite.whiteboardData" ref="whiteboardDataMsgListener"
 			method="onMessage" />
 	</jms:listener-container>
 	
 	
-	<!-- A POJO that implements the JMS message listener for Whiteboard Data -->
-	<bean id="audioVideoMessageListener"
-		class="com.innowhite.PlayBackWebApp.messaging.AudioVideoDataMsgListener">
-
- 		<property name="audioVideoDataService" ref="audioVideoDataService" /> 
-	</bean>
+	<!-- The Spring message listener container configuration to listen for room start stop info-->
+	<jms:listener-container container-type="default"
+		connection-factory="cachedConnectionFactory" acknowledge="auto">
+		<jms:listener destination="Innowhite.roomStatus" ref="roomStatusMsgListener"
+			method="onMessage" />
+	</jms:listener-container>
 	
 	
-		<!-- The Spring message listener container configuration -->
+	<!-- The Spring message listener container configuration -->
 	<jms:listener-container container-type="default"
 		connection-factory="cachedConnectionFactory" acknowledge="auto">
 		<jms:listener destination="Innowhite.AudioVideoData" ref="audioVideoMessageListener"
 			method="onMessage" />
 	</jms:listener-container>
 	
-
+	
 	<bean id="audioVideoDataService" name="audioVideoDataService"
 		class="com.innowhite.PlayBackWebApp.service.AudioVideoDataService">
-		
 		<property name="audioDataDao" ref="audioDataDao" />
 		<property name="videoDataDao" ref="videoDataDao" />
-		
 	</bean>
 
 
 	<bean id="whiteboardDataService" name="whiteboardDataService"
 		class="com.innowhite.PlayBackWebApp.service.WhiteboardDataService">
-		
 		<property name="whiteboardDataDao" ref="whiteboardDataDao" />
-		
 	</bean>
 
+	<bean id="roomStatusService" name="roomStatusService"
+		class="com.innowhite.PlayBackWebApp.service.RoomStatusService">
+		
+	</bean>
 	
 </beans>

@@ -25,8 +25,8 @@
 		
 		
 		
-	<!-- A destination in ActiveMQ -->
-	<bean id="destination" class="org.apache.activemq.command.ActiveMQQueue">
+	<!-- A roomStatusDestination in ActiveMQ -->
+	<bean id="roomStatusDestination" class="org.apache.activemq.command.ActiveMQQueue">
 		<constructor-arg value="Innowhite.roomStatus" />
 	</bean>
 
@@ -77,9 +77,9 @@
 
 
 	<!-- A JmsTemplate instance that uses the cached connection and destination -->
-	<bean id="producerTemplate" class="org.springframework.jms.core.JmsTemplate"
+	<bean id="roomStatusproducerTemplate" class="org.springframework.jms.core.JmsTemplate"
 		p:connectionFactory-ref="cachedConnectionFactory"
-		p:defaultDestination-ref="destination" />
+		p:defaultDestination-ref="roomStatusDestination" />
 
 
 	<bean id="whiteboardDataProducer" class="org.springframework.jms.core.JmsTemplate"
@@ -91,7 +91,7 @@
 		p:defaultDestination-ref="audioDataDestination" />
 
 	<bean id="roomMessageService" class="com.innowhite.red5.messaging.SimpleMessageProducer">
-		<property name="jmsTemplate" ref="producerTemplate"></property>
+		<property name="jmsTemplate" ref="roomStatusproducerTemplate"></property>
 
 	</bean>
 

@@ -146,7 +146,7 @@ public class Main extends MultiThreadedApplicationAdapter {
 	    // shapeSeqMap.put(Red5.getConnectionLocal().getScope().getName(),
 	    // num);
 
-	    SavingData.saveToFile(v, Red5.getConnectionLocal().getScope().getName());
+	    //SavingData.saveToFile(v, Red5.getConnectionLocal().getScope().getName());
 
 	    long l = (new Date()).getTime() - (Long) scope.getAttribute("START_TIME");
 

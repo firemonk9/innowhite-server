@@ -186,15 +186,15 @@ var innowhitePluginLoaded = false;
 
 var screen_sharing=false;
 
-function start_screen_share (stream_id,recordStatus, serverUrl)
+function start_screen_share (stream_id,recordStatus, serverUrl,roomId)
 {
 	var userAgent = typeof(window.navigator.userAgent) != 'udefined' ? window.navigator.userAgent : '';
-	if(userAgent.search(/Firefox/) == -1 && userAgent.search(/Chrome/) == -1 && userAgent.search(/MSIE/) == -1)
+	/* if(userAgent.search(/Firefox/) == -1 && userAgent.search(/Chrome/) == -1 && userAgent.search(/MSIE/) == -1)
 	{
 		$.openDOMWindow({windowSourceID:'#popUpTemplate'});
 		setTimeout("$('#DOMWindow .DOMWindowContent').html($('#notSapportedBrowser').html())",300);
 		return false;
-	}
+	} */
 	if(!pluginIsLoad())
 	{
 		pluginRefresh();
@@ -207,7 +207,7 @@ function start_screen_share (stream_id,recordStatus, serverUrl)
 			serverUrl='main.innowhite.com';
     	//alert(" in start_screen_share"+pluginLoaded);
 		if(pluginIsLoad()){
-			plugin0().start_capture(stream_id, "123",recordStatus, "true",75,2,serverUrl);
+			plugin0().start_capture(stream_id, recordStatus, 75,2,serverUrl,roomId);
 			screen_sharing=true;
 			return "STARTED";
 		}
@@ -346,7 +346,7 @@ function plugin()
 		{
 			return false;
 		}
-		if(!object.echo)
+		if(!object.inno_get_version)
 		{
 			return false;
 		}
@@ -405,7 +405,7 @@ function plugin()
 		}
 		if(platform.indexOf('Mac') != -1)
 		{
-			downloadElement.href = 'http://demo.innowhite.com/whiteboard/InnowhitePlugin.pkg';
+			downloadElement.href = 'http://demo.innowhite.com/InnowhitePlugin.pkg';
 		}
 		if(platform.indexOf('Mac') != -1 && window.navigator.userAgent.search(/Chrome/) != -1)
 		{

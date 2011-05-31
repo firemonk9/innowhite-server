@@ -46,7 +46,7 @@ public class MessagingService {
 		ApplicationContext context = new ClassPathXmlApplicationContext("messagingContext.xml");
 		SimpleMessageProducer smp = (SimpleMessageProducer)context.getBean("roomMessageService");
 		 
-		smp.sendMessage("");
+		smp.sendMessage("TEXT");
 		
 
 	}
@@ -61,7 +61,7 @@ public class MessagingService {
 	
 	/* To send any message about room(room start, room end) Queue.*/
 	public void sendWhiteboardData(ShapeEventsVO msg, String roomName, long l){
-		log.debug("entered sendRoomMessage msg:"+msg);
+		log.debug("entered sendWhiteboardData msg:"+msg);
 		whiteboardDataMessageService.sendMessages(msg,roomName,l);
 	}
 	
