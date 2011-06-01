@@ -1,11 +1,20 @@
 package com.innowhite.PlaybackApp.model;
 
+import java.util.ArrayList;
 import java.util.List;
 
 public class SessionBucket {
 
 	public List<AudioData> audioDataList;
 	public List<VideoData> videoDataList;
+	
+	
+	public SessionBucket()
+	{
+		this.audioDataList=new ArrayList<AudioData>();
+		this.videoDataList=new ArrayList<VideoData>();
+	}
+	
 	/**
 	 * @return the audioDataList
 	 */

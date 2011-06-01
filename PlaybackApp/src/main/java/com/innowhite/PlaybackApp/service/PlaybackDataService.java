@@ -41,7 +41,7 @@ public class PlaybackDataService {
 	// of course, an ApplicationContext is just a BeanFactory
 	BeanFactory factory = (BeanFactory) appContext;
 
-	String roomId = "123123";
+	String roomId = "room200";
 
 	SessionRecordingDao sessionRecordingsDao = (SessionRecordingDao) factory.getBean("sessionRecordingsDao");
 	List<SessionRecordings> sessionRecordingsList = sessionRecordingsDao.getSessionRecordingList(roomId);
@@ -52,7 +52,7 @@ public class PlaybackDataService {
 	VideoDataDao videoDataDao = (VideoDataDao) factory.getBean("videoDataDao");
 	List<VideoData> videoDataList = videoDataDao.getVideoDataList(roomId);
 
-	PlaybackUtil.updatePathWindows("C:/Users/sony/Desktop/INNOWHITE/playback/myPlayback/", audioDataList, videoDataList);
+	PlaybackUtil.updatePathWindows("C:/Users/sony/Desktop/INNOWHITE/playback/video_playlist", audioDataList, videoDataList);
 	
 	// WhiteboardDataDao whiteboardDataDao = (WhiteboardDataDao)
 	// factory.getBean("whiteboardDataDao");
@@ -65,10 +65,10 @@ public class PlaybackDataService {
 		
 		long sessionStartTime = sessionRecordingsList.get(i).getStartTime().getTime();
 		long sessionEndTime = sessionRecordingsList.get(i).getEndTime().getTime();
-		System.out.println("session Start Time::"+sessionRecordingsList.get(i).getStartTime());
-		System.out.println("session End Time::"+sessionRecordingsList.get(i).getEndTime());
+		System.out.println("session Start Time::"+sessionRecordingsList.get(i).getStartTime().getTime());
+		System.out.println("session End Time::"+sessionRecordingsList.get(i).getEndTime().getTime());
 		
-		/*sessionBucket for each Session
+		/* sessionBucket for each Session
 		 * contains audios, videos in the session
 		 * audios & videos are trimmed and audio format is changed to "same-name".mp3
 		 */
@@ -83,76 +83,95 @@ public class PlaybackDataService {
 		System.out.println("SessionBucket.VideoData :: "+sb.videoDataList);
 		hm.put(sessionRecordingsList.get(i), sb);
 	}
+	System.out.println("preparing session buckets done!");
 	//iterate through the Session Buckets .. Set of keys(sessions) 
-	Iterator itr = hm.keySet().iterator();
-	String cmd = null;
-	while(itr.hasNext()){
-		SessionRecordings sessions = (SessionRecordings) itr.next();
-		long sessionStartTime = sessions.getStartTime().getTime();
-		long sessionEndTime = sessions.getEndTime().getTime();;
-
-		SessionBucket sessionBucket = hm.get(sessions);
-		List<AudioData> audios = sessionBucket.getAudioDataList();
-		List<VideoData> videos = sessionBucket.getVideoDataList();
-		
-		for(int i=0; i < videos.size(); i++){
-			finalVideoPlaylist.add(videos.get(i).getFilePath());
-		}
-		
-		System.out.println("key::"+sessions);
-		System.out.println("value::"+hm.get(sessionBucket));
-		
-		for(int j=0; j<audios.size(); j++){
-			mapAudioToVideoStartBetween(audios.get(j), videos, sessionStartTime, sessionEndTime);
-		}
-		PlayBackPlayList playlist = null;
-		List<PlayBackPlayList> listPlayback = new ArrayList<PlayBackPlayList>();
-		for(int i=0; i<finalVideoPlaylist.size();i++){
-			playlist = new PlayBackPlayList();
-			playlist.setFilePath(finalVideoPlaylist.get(i));
-			playlist.setInsertedDate(new Date());
-			playlist.setRoomName(roomId);
-		}
-		updateFinalVideoTable(listPlayback);
+//	Iterator itr = hm.keySet().iterator();
+//	String cmd = null;
+//	while(itr.hasNext()){
+//		SessionRecordings sessions = (SessionRecordings) itr.next();
+//		long sessionStartTime = sessions.getStartTime().getTime();
+//		long sessionEndTime = sessions.getEndTime().getTime();;
+//		System.out.println("Session Start Time::"+sessionStartTime);
+//		System.out.println("Session End Time::"+sessionEndTime);
+//		
+//		SessionBucket sessionBucket = hm.get(sessions);
+//		List<AudioData> audios = sessionBucket.getAudioDataList();
+//		List<VideoData> videos = sessionBucket.getVideoDataList();
+//		
+//		for(int i=0; i < videos.size(); i++){
+//			finalVideoPlaylist.add(videos.get(i).getFilePath());
+//			System.out.println("finalPlayList"+i+"::"+finalVideoPlaylist.get(i));
+//		}
+//		
+//		System.out.println("key::"+sessions);
+//		System.out.println("value::"+hm.get(sessionBucket));
+//		
+//		for(int j=0; j<audios.size(); j++){
+//			mapAudioToVideoStartBetween(audios.get(j), videos, sessionStartTime, sessionEndTime);
+//		}
+//		PlayBackPlayList playlist = null;
+//		List<PlayBackPlayList> listPlayback = new ArrayList<PlayBackPlayList>();
+//		for(int i=0; i<finalVideoPlaylist.size();i++){
+//			playlist = new PlayBackPlayList();
+//			playlist.setFilePath(finalVideoPlaylist.get(i));
+//			playlist.setInsertedDate(new Date());
+//			playlist.setRoomName(roomId);
+//		}
+//		updateFinalVideoTable(listPlayback);
+//	}
 	}
-    }
 
 	private static void prepareVideoForSessionBucket(SessionBucket sb, int j, VideoData videoData,long sessionStartTime, long sessionEndTime) {
 		long videoStartTime = videoData.getStartTime().getTime();
-		long videoEndTime = videoData.getStartTime().getTime();
+		long videoEndTime = videoData.getEndTime().getTime();
+		System.out.println("videoStartTime::"+videoStartTime);
+		System.out.println("videoEndTime::"+videoEndTime);
 		String videoPath = videoData.getFilePath();
 		String cmd = null;
 		VideoData vd = null;
-		if(videoStartTime <= sessionStartTime &&  videoEndTime <= sessionEndTime){
+		if(videoStartTime<=sessionStartTime && videoEndTime<=sessionEndTime && videoEndTime>=sessionStartTime){
 			String newVideoPath = PlaybackUtil.getUnique();
-			cmd = "ffmpeg.exe -i "+videoPath+" -ss "+sessionStartTime+" -t "+ videoEndTime + " " +videoPath.replace(".flv", newVideoPath+".flv");
+			cmd = "-i "+videoPath+" -ss "+(sessionStartTime-videoStartTime)+" -t "+(videoEndTime-sessionStartTime)+" " +videoPath.replace(".flv", newVideoPath+".flv");
 			invokeProcess(cmd);
 			vd = new VideoData();
 			vd.setFilePath(videoPath.replace(".flv", newVideoPath+".flv"));
 			vd.setStartTime(new Date(sessionStartTime));
 			vd.setEndTime(new Date(videoEndTime));
 		}
-		else if(videoStartTime <= sessionStartTime && videoEndTime >= sessionEndTime){
+		else if(videoStartTime<=sessionStartTime && videoEndTime>=sessionEndTime){
+			int seconds = (int) (((sessionStartTime-videoStartTime) / 1000) % 60);
+			int minutes = (int) (((sessionStartTime-videoStartTime) / 1000) / 60);
+			int hours   = (int) (((sessionStartTime-videoStartTime)/ 1000) / 3600);
+			String cutFrom = hours+":"+minutes+":"+seconds;
+			System.out.println("cutFrom String::"+cutFrom);
+
+			seconds = (int) (((sessionEndTime-sessionStartTime) / 1000) % 60);
+			minutes = (int) (((sessionEndTime-sessionStartTime) / 1000) / 60);
+			hours   = (int) (((sessionEndTime-sessionStartTime) / 1000) / 3600);
+			String cutTo = hours+":"+minutes+":"+seconds;
+			System.out.println("cutTill String::"+cutTo);
+
+			
 			String newVideoPath = PlaybackUtil.getUnique();
-			cmd = "ffmpeg.exe -i "+videoPath+" -ss "+sessionStartTime+" -t "+ sessionEndTime + " " +videoPath.replace(".flv", newVideoPath+".flv");
+			cmd = "-i "+videoPath+" -ss "+cutFrom+" -t "+cutTo+" "+videoPath.replace(".flv", newVideoPath+".flv");
 			invokeProcess(cmd);
 			vd = new VideoData();
 			vd.setFilePath(videoPath.replace(".flv", newVideoPath+".flv"));
 			vd.setStartTime(new Date(sessionStartTime));
 			vd.setEndTime(new Date(sessionEndTime));
 		}
-		else if(videoStartTime >= sessionStartTime &&  videoEndTime <= sessionEndTime){
+		else if(videoStartTime>=sessionStartTime && videoStartTime<=sessionEndTime && videoEndTime<=sessionEndTime && videoEndTime>=sessionStartTime){
 			String newVideoPath = PlaybackUtil.getUnique();
-			cmd = "ffmpeg.exe -i "+videoPath+" -ss "+videoStartTime+" -t "+ videoEndTime + " " +videoPath.replace(".flv", newVideoPath+".flv");
+			cmd = "-i "+videoPath+" -ss 00:00:00 -t "+(videoEndTime-videoStartTime)+" "+videoPath.replace(".flv", newVideoPath+".flv");
 			invokeProcess(cmd);
 			vd = new VideoData();
 			vd.setFilePath(videoPath.replace(".flv", newVideoPath+".flv"));
 			vd.setStartTime(new Date(videoStartTime));
 			vd.setEndTime(new Date(videoEndTime));
 		}
-		else if(videoStartTime >= sessionStartTime && videoEndTime >= sessionEndTime){
+		else if(videoStartTime>=sessionStartTime && videoStartTime<=sessionEndTime && videoEndTime>=sessionEndTime){
 			String newVideoPath = PlaybackUtil.getUnique();
-			cmd = "ffmpeg.exe -i "+videoPath+" -ss "+videoStartTime+" -t "+ sessionEndTime + " " +videoPath.replace(".flv", newVideoPath+".flv");
+			cmd = "-i "+videoPath+" -ss 00:00:00 -t "+(sessionEndTime-videoStartTime)+" "+videoPath.replace(".flv", newVideoPath+".flv");
 			invokeProcess(cmd);
 			vd = new VideoData();
 			vd.setFilePath(videoPath.replace(".flv", newVideoPath+".flv"));
@@ -168,40 +187,56 @@ public class PlaybackDataService {
 
 	private static void prepareAudioForSessionBucket(SessionBucket sb, int j, AudioData audioData,long sessionStartTime, long sessionEndTime) {
 		long audioStartTime = audioData.getStartTime().getTime();
-		long audioEndTime = audioData.getStartTime().getTime();
+		long audioEndTime = audioData.getEndTime().getTime();
+		System.out.println("audioStartStime::"+audioStartTime);
+		System.out.println("audioEndStime::"+audioEndTime);
 		String audioPath = audioData.getFilePath();
 		String cmd = null;
 		AudioData ad = null;
-		if(audioStartTime <= sessionStartTime &&  audioEndTime <= sessionEndTime){
+		if(audioStartTime<=sessionStartTime && audioEndTime<=sessionEndTime && audioEndTime>=sessionStartTime){
 			String newAudioPath = PlaybackUtil.getUnique();
-			cmd = "ffmpeg.exe -i "+audioPath+" -ss "+sessionStartTime+" -t "+ audioEndTime + "  -ab 32k -acodec libmp3lame " +audioPath.replace(".wav", newAudioPath+".mp3");
+			cmd = "-i "+audioPath+" -ss "+(sessionStartTime-audioStartTime)+" -t "+(audioEndTime-sessionStartTime)+" -ab 32k -acodec libmp3lame " +audioPath.replace(".wav", newAudioPath+".mp3");
 			invokeProcess(cmd);
 			ad = new AudioData();
 			ad.setFilePath(audioPath.replace(".wav", newAudioPath+".mp3"));
 			ad.setStartTime(new Date(sessionStartTime));
 			ad.setEndTime(new Date(audioEndTime));
 		}
-		else if(audioStartTime <= sessionStartTime && audioEndTime >= sessionEndTime){
+		else if(audioStartTime<=sessionStartTime && audioEndTime>=sessionEndTime){
 			String newAudioPath = PlaybackUtil.getUnique();
-			cmd = "ffmpeg.exe -i "+audioPath+" -ss "+sessionStartTime+" -t "+ sessionEndTime + "  -ab 32k -acodec libmp3lame " +audioPath.replace(".wav", newAudioPath+".mp3");
+			int seconds = (int) (((sessionStartTime-audioStartTime) / 1000) % 60);
+			int minutes = (int) (((sessionStartTime-audioStartTime) / 1000) / 60);
+			int hours   = (int) (((sessionStartTime-audioStartTime)/ 1000) / 3600);
+			String cutFrom = hours+":"+minutes+":"+seconds;
+			System.out.println("cutFrom String::"+cutFrom);
+
+			seconds = (int) (((sessionEndTime-sessionStartTime) / 1000) % 60);
+			minutes = (int) (((sessionEndTime-sessionStartTime) / 1000) / 60);
+			hours   = (int) (((sessionEndTime-sessionStartTime) / 1000) / 3600);
+			String cutTo = hours+":"+minutes+":"+seconds;
+			System.out.println("cutTill String::"+cutTo);
+			
+			cmd = "-i "+audioPath+" -ss "+cutFrom+" -t "+cutTo+" -ab 32k -acodec libmp3lame " +audioPath.replace(".wav", newAudioPath+".mp3");
 			invokeProcess(cmd);
 			ad = new AudioData();
 			ad.setFilePath(audioPath.replace(".wav", newAudioPath+".mp3"));
 			ad.setStartTime(new Date(sessionStartTime));
 			ad.setEndTime(new Date(sessionEndTime));
 		}
-		else if(audioStartTime >= sessionStartTime &&  audioEndTime <= sessionEndTime){
+		//audio in b/w the session
+		else if(audioStartTime>=sessionStartTime && audioStartTime<=sessionEndTime && audioEndTime<=sessionEndTime && audioEndTime>=sessionStartTime){
 			String newAudioPath = PlaybackUtil.getUnique();
-			cmd = "ffmpeg.exe -i "+audioPath+" -ss "+audioStartTime+" -t "+ audioEndTime + "  -ab 32k -acodec libmp3lame " +audioPath.replace(".wav", newAudioPath+".mp3");
+			cmd = "-i "+audioPath+" -ss 00:00:00 -t "+(audioEndTime-audioStartTime)+"  -ab 32k -acodec libmp3lame " +audioPath.replace(".wav", newAudioPath+".mp3");
 			invokeProcess(cmd);
 			ad = new AudioData();
 			ad.setFilePath(audioPath.replace(".wav", newAudioPath+".mp3"));
 			ad.setStartTime(new Date(audioStartTime));
 			ad.setEndTime(new Date(audioEndTime));
 		}
-		else if(audioStartTime >= sessionStartTime && audioEndTime >= sessionEndTime){
+		//starts in b/w and ends after
+		else if(audioStartTime >= sessionStartTime && audioStartTime<=sessionEndTime && audioEndTime >= sessionEndTime){
 			String newAudioPath = PlaybackUtil.getUnique();
-			cmd = "ffmpeg.exe -i "+audioPath+" -ss "+audioStartTime+" -t "+ sessionEndTime + "  -ab 32k -acodec libmp3lame " +audioPath.replace(".wav", newAudioPath+".mp3");
+			cmd = "-i "+audioPath+" -ss 00:00:00 -t "+(sessionEndTime-audioStartTime)+"  -ab 32k -acodec libmp3lame " +audioPath.replace(".wav", newAudioPath+".mp3");
 			invokeProcess(cmd);
 			ad = new AudioData();
 			ad.setFilePath(audioPath.replace(".wav", newAudioPath+".mp3"));
@@ -221,7 +256,7 @@ public class PlaybackDataService {
 
 	private static void invokeProcess(String cmd) {
 		ProcessExecutor pe = new ProcessExecutor();
-		System.out.println(pe.executeProcess(cmd));
+		System.out.println(pe.executeProcess("C:/ffmpeg/ffmpeg.exe "+cmd));
 	}
 
 	private static void mapAudioToVideoStartBetween(AudioData audioData,List<VideoData> videos, long sessionStartTime, long sessionEndTime) {
@@ -229,6 +264,8 @@ public class PlaybackDataService {
 		String audioPath = audioData.getFilePath();
 		long audioStartTime = audioData.getStartTime().getTime();
 		long audioEndTime = audioData.getEndTime().getTime();
+		System.out.println("audioStartStime::"+audioStartTime);
+		System.out.println("audioEndStime::"+audioEndTime);
 		
 		int videoStartIndex=0,videoStopIndex=0;
 		long videoStartTime=0, videoEndTime=0;
@@ -254,30 +291,46 @@ public class PlaybackDataService {
 		 * update video filepath in playlist
 		 */
 		if(videoStartIndex==videoStopIndex){
+//			videoStartTime = videos.get(k).getStartTime().getTime();
+//			videoEndTime = videos.get(k).getEndTime().getTime();
 			String newVideoPath = PlaybackUtil.getUnique();
-			cmd = "ffmpeg.exe -i "+videos.get(videoStartIndex).getFilePath()+" -i "+audioPath+" -ar 11025 "+ videos.get(videoStartIndex).getFilePath().replace(".flv", "playlist"+newVideoPath+".flv");
+			cmd = "-i "+videos.get(videoStartIndex).getFilePath()+" -i "+audioPath+" -ar 11025 "+ videos.get(videoStartIndex).getFilePath().replace(".flv", "playlist"+newVideoPath+".flv");
 			invokeProcess(cmd);
 			finalVideoPlaylist.set(videoStartIndex, videos.get(videoStartIndex).getFilePath().replace(".flv", "playlist"+newVideoPath+".flv"));
 		}
 		else{
 			for(int l=videoStartIndex; l<=videoStopIndex; l++){
-				if(audioStartTime>=videoStartTime && audioStartTime<=videoEndTime){
+				videoStartTime = videos.get(l).getStartTime().getTime();
+				videoEndTime = videos.get(l).getEndTime().getTime();
+				if(audioStartTime>=videoStartTime && audioStartTime<=videoEndTime && audioEndTime>videoEndTime){
 					//cut audio and merge with video
 					String newAudioPath = PlaybackUtil.getUnique();
-					cmd = "ffmpeg.exe -i "+audioPath+" -ss "+audioStartTime+" -t "+videos.get(l).getEndTime()+" "+audioPath.replace(".mp3", newAudioPath+".mp3");
+					cmd = "-i "+audioPath+" -ss 00:00:00 -t "+(videoEndTime-audioStartTime)+" "+audioPath.replace(".mp3", newAudioPath+".mp3");
 					invokeProcess(cmd);
+					
 					String newVideoPath = PlaybackUtil.getUnique();
-					cmd = "ffmpeg.exe -i "+videos.get(l).getFilePath()+" -i "+audioPath.replace(".mp3", newAudioPath+".mp3")+" -ar 11025 "+videos.get(l).getFilePath().replace(".flv","playlist"+newVideoPath+".flv");
+					cmd = "-i "+videos.get(l).getFilePath()+" -i "+audioPath.replace(".mp3", newAudioPath+".mp3")+" -ar 11025 "+videos.get(l).getFilePath().replace(".flv","playlist"+newVideoPath+".flv");
 					invokeProcess(cmd);
 					finalVideoPlaylist.set(l, videos.get(l).getFilePath().replace(".flv","playlist"+newVideoPath+".flv"));
 				}
-				else if(audioStartTime>=videoStartTime && audioStartTime<=videoEndTime){
+				else if(audioStartTime<videoStartTime && audioEndTime>videoEndTime){
 					//cut audio and merge with video
 					String newAudioPath = PlaybackUtil.getUnique();
-					cmd = "ffmpeg.exe -i "+audioPath+" -ss "+videos.get(l).getStartTime()+" -t "+audioEndTime+" "+audioPath.replace(".mp3", newAudioPath+".mp3");
+					cmd = "-i "+audioPath+" -ss "+(videoStartTime-audioStartTime)+" -t "+(videoEndTime-videoStartTime)+" "+audioPath.replace(".mp3", newAudioPath+".mp3");
+					invokeProcess(cmd);
+					
+					String newVideoPath = PlaybackUtil.getUnique();
+					cmd = "-i "+videos.get(l).getFilePath()+" -i "+audioPath.replace(".mp3", newAudioPath+".mp3")+" -ar 11025 "+videos.get(l).getFilePath().replace(".flv","playlist"+newVideoPath+".flv");
+					invokeProcess(cmd);
+					finalVideoPlaylist.set(l, videos.get(l).getFilePath().replace(".flv","playlist"+newVideoPath+".flv"));
+				}
+				else if(audioStartTime<videoStartTime && audioEndTime>=videoStartTime && audioEndTime<=videoEndTime){
+					//cut audio and merge with video
+					String newAudioPath = PlaybackUtil.getUnique();
+					cmd = "-i "+audioPath+" -ss "+(videoStartTime-audioStartTime)+" -t "+(audioEndTime-videoStartTime)+" "+audioPath.replace(".mp3", newAudioPath+".mp3");
 					invokeProcess(cmd);
 					String newVideoPath = PlaybackUtil.getUnique();
-					cmd = "ffmpeg.exe -i "+videos.get(l).getFilePath()+" -i "+audioPath.replace(".mp3", newAudioPath+".mp3")+" -ar 11025 "+videos.get(l).getFilePath().replace(".flv","playlist"+newVideoPath+".flv");
+					cmd = "-i "+videos.get(l).getFilePath()+" -i "+audioPath.replace(".mp3", newAudioPath+".mp3")+" -ar 11025 "+videos.get(l).getFilePath().replace(".flv","playlist"+newVideoPath+".flv");
 					invokeProcess(cmd);
 					finalVideoPlaylist.set(l, videos.get(l).getFilePath().replace(".flv","playlist"+newVideoPath+".flv"));
 				}
