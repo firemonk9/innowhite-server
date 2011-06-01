@@ -1,0 +1,27 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE sqlMap PUBLIC "-//ibatis.apache.org//DTD SQL Map 2.0//EN"
+"http://ibatis.apache.org/dtd/sql-map-2.dtd">
+<sqlMap>
+
+
+
+	<resultMap id="serversMapId"
+		class="com.innowhite.whiteboard.persistence.beans.ServerVO">
+		<result property="id" column="id" />
+		<result property="creationTime" column="creation_time" />
+		<result property="serverActive" column="server_active" />
+		<result property="serverAddr" column="server_addr" />
+		<result property="serverName" column="server_name" />
+		<result property="orgName" column="org_name" />
+		<result property="appName" column="app_name" />
+	</resultMap>
+
+
+	<select id="getServerQuery" resultMap="serversMapId" parameterClass="java.lang.String">
+		select
+		id,creation_time,server_active,server_addr,server_name,org_name,app_name from server where server_active=1 and app_name=#appName#;
+	</select>
+
+
+</sqlMap>
+ 

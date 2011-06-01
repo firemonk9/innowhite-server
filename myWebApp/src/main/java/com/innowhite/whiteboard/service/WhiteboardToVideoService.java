@@ -28,6 +28,9 @@ public class WhiteboardToVideoService {
 		os = obj.getOs();
 
 	    } else if (roomFileMap.get(roomId) == null) {
+		
+		log.debug("writing data to new file for the first time..."+data.length+"  the length is "+data);
+		
 		String filePath = InnowhiteProperties.getPropertyVal(InnowhiteConstants.VIDEOS_PATH) + roomId + "_" + VideoDataDAO.getLatestWhiteboardRoomId(roomId) + ".flv";
 		os = new DataOutputStream(new FileOutputStream(filePath));
 
@@ -58,7 +61,7 @@ public class WhiteboardToVideoService {
 		os.close();
 		boolean val = VideoDataDAO.updateVideoData(obj.getId());
 		if(val == false)
-		    log.warn(" could not update database for update  ");
+		    log.error(" could not update database for update  ");
 		roomFileMap.remove(roomId);
 	    }
 	} catch (IOException e) {
