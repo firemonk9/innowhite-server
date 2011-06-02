@@ -4,13 +4,11 @@ import java.io.IOException;
 import java.io.UnsupportedEncodingException;
 import java.security.NoSuchAlgorithmException;
 
-import org.apache.http.HttpEntity;
 import org.apache.http.HttpResponse;
 import org.apache.http.client.ClientProtocolException;
 import org.apache.http.client.HttpClient;
 import org.apache.http.client.methods.HttpGet;
 import org.apache.http.impl.client.DefaultHttpClient;
-import org.apache.http.util.EntityUtils;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -25,6 +23,11 @@ public class InvokeRemoteHttpService {
 	roomCloseService("12312312");
     }
 
+    
+    /*This is a temporary fix. The saltkey and the url needs to be read from database based on orgname.
+     * 
+     * */
+    
     public static void roomCloseService(String roomId) {
 
 	log.debug(" Enterd roomCloseService roomID " + roomId);
