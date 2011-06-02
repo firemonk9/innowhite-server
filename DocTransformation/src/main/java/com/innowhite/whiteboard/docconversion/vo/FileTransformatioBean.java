@@ -15,7 +15,7 @@ public class FileTransformatioBean {
 	private String originalDir;
 	private String thumbServerBasePath;
 	private String originalServerBasePath;
-	
+	private String symlinkBatFilePath;
 	
 	private String thumbsCommand;
 	private String actualFileCommand;
@@ -123,6 +123,18 @@ public class FileTransformatioBean {
 				+ originalFileNameStripped + ", thumbnailBatFileContent="
 				+ thumbnailBatFileContent + ", swfBatFileContent="
 				+ swfBatFileContent + ", originalDir=" + originalDir + "]";
+	}
+	/**
+	 * @param symlinkBatFilePath the symlinkBatFilePath to set
+	 */
+	public void setSymlinkBatFilePath(String symlinkBatFilePath) {
+	    this.symlinkBatFilePath = symlinkBatFilePath;
+	}
+	/**
+	 * @return the symlinkBatFilePath
+	 */
+	public String getSymlinkBatFilePath() {
+	    return symlinkBatFilePath;
 	}
 	
 	

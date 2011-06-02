@@ -20,6 +20,13 @@ public class ConversionMessageListener implements MessageListener {
 			.getLogger(ConversionMessageListener.class);
 
 	public static Hashtable<Integer, Boolean> hTable = new Hashtable<Integer, Boolean>();
+	
+	
+	private String thumbsCommand;
+	private String imgActualFileCommand;
+	private String swfActualFileCommand;
+	private String convertType;
+	
 
 	public String getThumbsCommand() {
 		return thumbsCommand;
@@ -30,16 +37,36 @@ public class ConversionMessageListener implements MessageListener {
 		this.thumbsCommand = thumbsCommand;
 	}
 
-	public String getActualFileCommand() {
-		return actualFileCommand;
+	
+
+	
+	public String getImgActualFileCommand() {
+	    return imgActualFileCommand;
 	}
 
-	public void setActualFileCommand(String actualFileCommand) {
-		this.actualFileCommand = actualFileCommand;
+	public void setImgActualFileCommand(String imgActualFileCommand) {
+	    this.imgActualFileCommand = imgActualFileCommand;
 	}
 
-	private String thumbsCommand;
-	private String actualFileCommand;
+	public String getSwfActualFileCommand() {
+	    return swfActualFileCommand;
+	}
+
+	public void setSwfActualFileCommand(String swfActualFileCommand) {
+	    this.swfActualFileCommand = swfActualFileCommand;
+	}
+
+	public String getConvertType() {
+	    return convertType;
+	}
+
+	public void setConvertType(String convertType) {
+	    this.convertType = convertType;
+	}
+
+
+
+	
 
 	public void onMessage(Message message) {
 		MapMessage mapMessage = (MapMessage) message;
@@ -56,7 +83,7 @@ public class ConversionMessageListener implements MessageListener {
 
 			hTable.put(docBean.getConversionID(), false);
 			
-			fileTransBean.setActualFileCommand(actualFileCommand);
+			fileTransBean.setActualFileCommand(swfActualFileCommand);
 			fileTransBean.setThumbsCommand(thumbsCommand);
 			
 			

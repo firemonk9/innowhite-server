@@ -29,8 +29,9 @@
 	<bean id="simpleMessageListener"
 		class="com.innowhite.whiteboard.docconversion.messages.ConversionMessageListener">
 		<property name="thumbsCommand" value="${thumbsCommand}" />
-		<property name="actualFileCommand" value="${actualFileCommand}" />
-
+		<property name="imgActualFileCommand" value="${imgActualFileCommand}" />
+		<property name="swfActualFileCommand" value="${swfActualFileCommand}" />
+		
 	</bean>
 
 

@@ -17,6 +17,8 @@ import com.innowhite.whiteboard.docconversion.vo.UserImagesVO;
 
 public class ThumbnailThread extends Thread {
 
+    
+    
 	private DocConversionBean docBean = null;
 	private FileTransformatioBean fileTransBean = null;
 
@@ -32,7 +34,7 @@ public class ThumbnailThread extends Thread {
 		this.fileTransBean = fileTransBean;
 	}
 
-	private static final Logger LOG = Logger.getLogger(ThumbnailThread.class);
+	private static final Logger log = Logger.getLogger(ThumbnailThread.class);
 
 	public void run() {
 		boolean b = false;
@@ -48,7 +50,7 @@ public class ThumbnailThread extends Thread {
 			}
 
 			// Thread.sleep(10000);
-			LOG.info("IN Thread in Listener: ++++++++++++++++++++ ");
+			log.info("IN Thread in Listener: ++++++++++++++++++++ ");
 
 		} catch (Exception e) {
 
@@ -58,7 +60,7 @@ public class ThumbnailThread extends Thread {
 	}
 
 	private void createBatchFile()  throws Exception {
-		LOG.info("ENTER createBatchFile...... ");
+		log.info("ENTER createBatchFile...... ");
 		BufferedWriter out = null;
 		try {
 			boolean bCreated = false;
@@ -73,7 +75,7 @@ public class ThumbnailThread extends Thread {
 			
 			fileTransBean.setOriginalFileName(f.getName());
 
-			LOG.debug(" the file name :: "+f.getName()+"   "+fileTransBean.getOriginalFileName());
+			log.debug(" the file name :: "+f.getName()+"   "+fileTransBean.getOriginalFileName());
 			
 			// Batch File Content
 			StringBuilder sb = new StringBuilder();
@@ -87,7 +89,7 @@ public class ThumbnailThread extends Thread {
 			sb.append("\"" +  originalFilePath  + "\" ");
 			sb.append(" \"\"");
 			thumbnailBatFileContent = sb.toString();
-			LOG.info(sb.toString());
+			log.info(sb.toString());
 			// BatchFile path
 			String originalDir = f.getParent(); // C:/Documents and
 												// Settings/Administrator/Desktop
@@ -95,7 +97,7 @@ public class ThumbnailThread extends Thread {
 			String thumbnailBatFilePath = originalDir + separator
 					+ "thumbs.bat"; // C:/Documents and
 									// Settings/Administrator/Desktop/thumbs.bat
-			LOG.info("thumbnailBatFilePath...... " + thumbnailBatFilePath);
+			log.info("thumbnailBatFilePath...... " + thumbnailBatFilePath);
 			fileTransBean.setOriginalFilePath(originalFilePath);
 			fileTransBean.setThumbsFolder(thumbsFolder);
 			fileTransBean.setThumbnailBatFileContent(thumbnailBatFileContent);
@@ -115,49 +117,49 @@ public class ThumbnailThread extends Thread {
 			}
 
 		} catch (IOException ioException) {
-			LOG.error("createBatchFile " + ioException);
+			log.error("createBatchFile " + ioException);
 			ioException.printStackTrace();
 		} catch (Exception exception) {
-			LOG.error("createBatchFile " + exception);
+			log.error("createBatchFile " + exception);
 			exception.printStackTrace();
 		} finally {
 			try {
 				out.close();
 			} catch (Exception e) {
-				LOG.error("createBatchFile finally block: " + e);
+				log.error("createBatchFile finally block: " + e);
 			}
 		}
-		LOG.info(fileTransBean);
-		LOG.info("EXIT createBatchFile........");
+		log.info(fileTransBean);
+		log.info("EXIT createBatchFile........");
 	}
 
 	private boolean invokeProcess() {
 		boolean bFlag = false;
-		String args[] = new String[2];
-		args[0] = fileTransBean.getThumbnailBatFilePath();
+//		String args[] = new String[2];
+//		args[0] = fileTransBean.getThumbnailBatFilePath();
 		try {
-			int x = CommandExec.invoke(args);
-			LOG.debug("x " + x);
+			int x = CommandExec.invoke(fileTransBean.getThumbnailBatFilePath());
+			log.debug("x " + x);
 			if (x == 0)
 				bFlag = true;
 		} catch (Exception e) {
-			LOG.error(e);
+			log.error(e);
 		}
 		return bFlag;
 	}
 
 	private boolean saveThumbnailsToDB(boolean bInvoked) {
-		LOG.info("ENTER saveThumbnailsToDB........");
+		log.info("ENTER saveThumbnailsToDB........");
 		boolean bSavedToDB = false;
-		LOG.debug("bInvoked " + bInvoked);
+		log.debug("bInvoked " + bInvoked);
 		MessagePersistenceDAO mdao = new MessagePersistenceDAO();
 		if (bInvoked) {
 			String fileArray[] = DocTransUtil.getSortedImagesArr(fileTransBean,
 					DocTransUtil.THUMBNAIL);
 			for (int i = 0; i < fileArray.length; i++) {
-				LOG.debug(fileArray[i]);
+				log.debug(fileArray[i]);
 				UserImagesVO userImagesVO = new UserImagesVO();
-				LOG.debug("docbean convid "
+				log.debug("docbean convid "
 						+ docBean.getConversionID());
 				userImagesVO.setConversionID(docBean.getConversionID());
 				userImagesVO.setImageFolder("true");
@@ -167,7 +169,7 @@ public class ThumbnailThread extends Thread {
 				userImagesVO.setImageFolderSeq(i+1);
 				userImagesVO.setImageType(2);
 				userImagesVO.setImageGroup(docBean.getConversionID());
-				LOG.debug(userImagesVO);
+				log.debug(userImagesVO);
 				mdao.saveImage(userImagesVO);
 			}
 
@@ -175,24 +177,24 @@ public class ThumbnailThread extends Thread {
 					DocTransUtil.CREATED);
 			bSavedToDB = true;
 		} else {
-			LOG.debug("Else block ");
+			log.debug("Else block ");
 			mdao.updateLDCThumbnailURL(docBean.getConversionID(),
 					DocTransUtil.ERROR);
 			bSavedToDB = true;
 		}
-		LOG.info("EXIT saveThumbnailsToDB........");
+		log.info("EXIT saveThumbnailsToDB........");
 		return bSavedToDB;
 	}
 
 	private boolean createThumbnails() {
-		LOG.debug("ENTER createThumbnails.. ");
+		log.debug("ENTER createThumbnails.. ");
 		boolean bCreated = false;
 		String originalFilePath = docBean != null ? docBean.getFilePath() : "";
-		LOG.debug("filePath: " + originalFilePath);
+		log.debug("filePath: " + originalFilePath);
 		File f = new File(originalFilePath);
 		String outFolder = f.getParent() + separator + DocTransUtil.THUMBNAIL;
 
-		LOG.debug("outFolder: " + outFolder);
+		log.debug("outFolder: " + outFolder);
 		MessagePersistenceDAO mdao = new MessagePersistenceDAO();
 		if (execCommandLine(originalFilePath, outFolder)) {
 			String fileArray[] = DocTransUtil.getThumbnails(originalFilePath,
@@ -217,13 +219,13 @@ public class ThumbnailThread extends Thread {
 			mdao.updateLDCThumbnailURL(docBean.getConversionID(),
 					DocTransUtil.ERROR);
 		}
-		LOG.debug("EXIT createThumbnails.. ");
+		log.debug("EXIT createThumbnails.. ");
 		return bCreated;
 	}
 
 	private boolean execCommandLine(String originalFilePath, String outfolder) {
-		LOG.debug("ENTER execCommandLine.. ");
-		LOG.debug("arguments: originalFilePath: " + originalFilePath
+		log.debug("ENTER execCommandLine.. ");
+		log.debug("arguments: originalFilePath: " + originalFilePath
 				+ " outfolder: " + outfolder);
 		boolean bExecuted = false;
 		StringBuilder sb = new StringBuilder();
@@ -234,27 +236,26 @@ public class ThumbnailThread extends Thread {
 		sb.append("\"" + originalFilePath + "\" ");
 		File f = new File(originalFilePath);
 		String dir = f.getParent();
-		LOG.debug("dir: " + dir);
+		log.debug("dir: " + dir);
 		String folderName = f.getName();
-		LOG.debug("folderName: " + folderName);
+		log.debug("folderName: " + folderName);
 		String batchFile = dir + separator + folderName + separator
 				+ "thumbs.bat";
-		LOG.debug("batch file syntax : " + dir + separator
+		log.debug("batch file syntax : " + dir + separator
 				+ "thumbs.bat");
 		String folder = dir + separator + DocTransUtil.THUMBNAIL + separator
 				+ folderName;
-		LOG.debug("folder: " + folder);
+		log.debug("folder: " + folder);
 		try {
 			File f1 = new File(folder);
 			Boolean bFolderCreated = f1.mkdirs();
-			LOG.debug("Folder created " + bFolderCreated);
+			log.debug("Folder created " + bFolderCreated);
 			BufferedWriter out = new BufferedWriter(new FileWriter(new File(
 					batchFile)));
 			out.write(sb.toString());
 			out.close();
-			String args[] = new String[10];
-			args[0] = batchFile;
-			int x = CommandExec.invoke(args);
+			
+			int x = CommandExec.invoke(batchFile);
 			if (x == 0) {
 				bExecuted = true;
 			}
@@ -263,7 +264,7 @@ public class ThumbnailThread extends Thread {
 		} catch (Exception ea) {
 			ea.printStackTrace();
 		}
-		LOG.debug("EXIT execCommandLine.. ");
+		log.debug("EXIT execCommandLine.. ");
 		// C:\Program Files\Ppt2SwfSDK\SDK>Ppt2SwfSampleCSharpConsole.exe
 		// "Dhiraj Peechara - Vireka LLC" "d4f0ec7829702966119f20d2a5a74837" -t
 		// jpg 600 800 "C:\Users\Administrator\Desktop\thumbs"
@@ -297,7 +298,7 @@ public class ThumbnailThread extends Thread {
 		File f = new File("test.bat");
 		String pathSeparator = System.getProperty(f.pathSeparator);
 		String separator = System.getProperty("file.separator");
-		LOG.debug("path separator " + pathSeparator);
-		LOG.debug("separator " + separator);
+		log.debug("path separator " + pathSeparator);
+		log.debug("separator " + separator);
 	}
 }
