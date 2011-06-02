@@ -37,6 +37,7 @@ public class RoomStatusMsgListener implements MessageListener{
 		
 		
 		 roomStatusService.saveRoomStatus("  "+msg);
+		 
 		
 	    } catch (JMSException ex) {
 		log.error(ex.getMessage(), ex);
