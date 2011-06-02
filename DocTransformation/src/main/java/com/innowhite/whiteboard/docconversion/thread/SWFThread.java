@@ -32,9 +32,9 @@ public class SWFThread extends Thread {
 		this.fileTransBean = fileTransBean;
 	}
 	
-	//private static final Logger LOG = Logger.getLogger(SWFThread.class);
+	//private static final Logger log = Logger.getLogger(SWFThread.class);
 
-	private static final org.slf4j.Logger LOG = org.slf4j.LoggerFactory
+	private static final org.slf4j.Logger log = org.slf4j.LoggerFactory
 	.getLogger(SWFThread.class);
 	
 	public void run() {
@@ -45,7 +45,7 @@ public class SWFThread extends Thread {
 			createBatchFile();
 			b = invokeProcess();
 			while(!conversionFlag){
-				System.out.println("conversion Flag......... "+conversionFlag);
+				log.debug("conversion Flag......... "+conversionFlag);
 				conversionFlag = ConversionMessageListener.hTable.get(docBean.getConversionID());
 				
 				sleep(sleepInterval);
@@ -57,7 +57,7 @@ public class SWFThread extends Thread {
 			}
 			saveImagesToDB(b);
 			
-			LOG.info("IN Thread in Listener: ++++++++++++++++++++ ");
+			log.info("IN Thread in Listener: ++++++++++++++++++++ ");
 		} catch (Exception e) {
 			e.printStackTrace();
 		}
@@ -67,7 +67,7 @@ public class SWFThread extends Thread {
 	
 
 	protected void createBatchFile(){
-		LOG.info("ENTER SWF createBatchFile...... ");
+		log.info("ENTER SWF createBatchFile...... ");
 		 BufferedWriter out = null;
 		try{
 		boolean bCreated = false;
@@ -109,22 +109,22 @@ public class SWFThread extends Thread {
 		}
 		catch(IOException ioException) 
 		{
-			LOG.error("createBatchFile "+ioException);
+			log.error("createBatchFile "+ioException);
 		}
 		catch (Exception exception)
 		{
-			LOG.error("createBatchFile "+exception);
+			log.error("createBatchFile "+exception);
 		}
 		finally{
 			try{
 			out.close();
 			}
 			catch(Exception e){
-				LOG.error("createBatchFile finally block: "+ e);
+				log.error("createBatchFile finally block: "+ e);
 			}
 		}
-		LOG.info(fileTransBean.getClass().toString());
-		LOG.info("EXIT createBatchFile........");
+		log.info(fileTransBean.getClass().toString());
+		log.info("EXIT createBatchFile........");
 	}
 	
 	
@@ -133,7 +133,7 @@ public class SWFThread extends Thread {
 		boolean bFlag = false;
 		String args[] = new String[2];
 		args[0] = fileTransBean.getSwfBatFilePath();
-		System.out.println("args[0]: "+args[0]);
+		log.debug("args[0]: "+args[0]);
 		int x =-1;
 		try {
 			 
@@ -141,27 +141,27 @@ public class SWFThread extends Thread {
 				//String command = "C:/sharedFloder/pptx/1021/thumbs.bat";
 			    Process child = Runtime.getRuntime().exec(args[0]);
 				x = child.waitFor();
-				System.out.println(child.exitValue());
+				log.debug(""+child.exitValue());
 			
 			 //int x = CommandExec.invoke(args);
-			 System.out.println("x "+x);
+			 log.debug("x "+x);
 			 if(x==0)
 				 bFlag=true;
 		} catch (Exception e) {
-			LOG.error(" exception ",e.fillInStackTrace());
+			log.error(" exception ",e.fillInStackTrace());
 		}
 		return bFlag;
 	}
 	
 	private boolean saveImagesToDB(boolean bInvoked){
-		LOG.info("ENTER saveThumbnailsToDB........");
+		log.info("ENTER saveThumbnailsToDB........");
 		boolean bSavedToDB = false;
-		System.out.println("bInvoked "+bInvoked);
+		log.debug("bInvoked "+bInvoked);
 		MessagePersistenceDAO mdao = new MessagePersistenceDAO();
 		if(bInvoked){
 	    	String fileArray[] =   DocTransUtil.getSortedImagesArr(fileTransBean, DocTransUtil.SWF);
 	    	for (int i = 0; i < fileArray.length; i++) {
-	    		System.out.println(fileArray[i]);
+	    		log.debug(fileArray[i]);
 	    		mdao.updateImageURL(docBean.getConversionID(), docBean.getServerFilePath()+"/"+docBean.getConversionID()+"/"+DocTransUtil.SWF+"/"+fileArray[i], i+1);
 	    		
 			}
@@ -170,11 +170,11 @@ public class SWFThread extends Thread {
 	    	bSavedToDB = true;
 	      }
 	      else{
-	    	  System.out.println("Else block ");
+	    	  log.debug("Else block ");
 	    	  mdao.updateLDCSWFURL(docBean.getConversionID(), DocTransUtil.ERROR);
 	    	  bSavedToDB = true;
 	      }
-		LOG.info("EXIT saveThumbnailsToDB........");
+		log.info("EXIT saveThumbnailsToDB........");
 		return bSavedToDB;
 	}
 	
