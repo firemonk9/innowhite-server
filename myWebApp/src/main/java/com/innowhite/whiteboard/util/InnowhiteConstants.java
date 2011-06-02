@@ -13,6 +13,10 @@ public class InnowhiteConstants {
 	public static final String WB_SESSION_ID = "session_id";
 	
 	
+	// below two constants are application names in Red5.
+	public static final String VIDEO_APP = "VideoApp";
+	public static final String DATA_APP = "DataApp";
+	
 	public static final String DATEPICKER = "datepicker";
 	public static final String SECRETKEYVALUE = "cb5869d542f60ab3dd0eeecbe8ac8e18abe44353875e4db636a40153021e07be3c56209091ee08620cb7b0c403d079f1ef2094ff658f99da54a06c38d380b30d";
 	public static final String USERID = "web_session[user_id]";

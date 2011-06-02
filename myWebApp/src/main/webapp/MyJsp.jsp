@@ -346,7 +346,7 @@ function plugin()
 		{
 			return false;
 		}
-		if(!object.inno_get_version)
+		if(!object.get_inno_version)
 		{
 			return false;
 		}

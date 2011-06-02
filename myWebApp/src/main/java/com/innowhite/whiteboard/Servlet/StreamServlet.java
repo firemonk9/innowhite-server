@@ -12,6 +12,7 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
 import com.innowhite.whiteboard.persistence.dao.WhiteboardAuthenticationDAOImpl;
+import com.innowhite.whiteboard.service.LoadBalancerService;
 import com.innowhite.whiteboard.util.InnowhiteConstants;
 
 /**
@@ -56,7 +57,7 @@ public class StreamServlet extends HttpServlet {
 		out.println("SUCCESS");
 		out.println("</returnStatus> <roomId>");
 		out.println(subRoomId);
-		out.println("</roomId><server>demo.innowhite.com</server></response>");
+		out.println("</roomId><server>"+LoadBalancerService.getServerURL(InnowhiteConstants.VIDEO_APP, null)+"</server></response>");
 
 	}
 
