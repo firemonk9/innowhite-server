@@ -5,19 +5,18 @@ import java.io.File;
 import java.io.FileWriter;
 import java.io.IOException;
 
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
+import org.apache.log4j.Logger;
 
 import com.innowhite.whiteboard.docconversion.messages.ConversionMessageListener;
 import com.innowhite.whiteboard.docconversion.persistence.dao.MessagePersistenceDAO;
 import com.innowhite.whiteboard.docconversion.util.DocTransUtil;
+import com.innowhite.whiteboard.docconversion.util.ProcessExecutor;
 import com.innowhite.whiteboard.docconversion.vo.DocConversionBean;
 import com.innowhite.whiteboard.docconversion.vo.FileTransformatioBean;
 
 public class SWFThread extends Thread {
 
-    private static final Logger log = LoggerFactory.getLogger(SWFThread.class);
-
+    private static final Logger log = Logger.getLogger(SWFThread.class);
     private DocConversionBean docBean = null;
     private FileTransformatioBean fileTransBean = null;
 
@@ -37,9 +36,7 @@ public class SWFThread extends Thread {
 	this.fileTransBean = fileTransBean;
     }
 
-    // private static final Logger LOG = Logger.getLogger(SWFThread.class);
-
-    private static final org.slf4j.Logger LOG = org.slf4j.LoggerFactory.getLogger(SWFThread.class);
+    // private static final Logger log = Logger.getLogger(SWFThread.class);
 
     public void run() {
 	boolean conversionFlag = false;
@@ -48,7 +45,7 @@ public class SWFThread extends Thread {
 
 	    createBatchFile();
 	    b = invokeProcess();
-	    executeSymlinkProcess();
+	   // executeSymlinkProcess();
 	    while (!conversionFlag) {
 		log.debug("conversion Flag......... " + conversionFlag);
 		conversionFlag = ConversionMessageListener.hTable.get(docBean.getConversionID());
@@ -62,14 +59,14 @@ public class SWFThread extends Thread {
 	    }
 	    saveImagesToDB(b);
 
-	    LOG.info("IN Thread in Listener: ++++++++++++++++++++ ");
+	    log.info("IN SWF Thread Before Completing Listener: ++++++++++++++++++++ ");
 	} catch (Exception e) {
 	    e.printStackTrace();
 	}
     }
 
     protected void createBatchFile() {
-	LOG.info("ENTER SWF createBatchFile...... ");
+	log.info("ENTER SWF createBatchFile...... ");
 	BufferedWriter out = null;
 	try {
 	    boolean bCreated = false;
@@ -77,9 +74,21 @@ public class SWFThread extends Thread {
 										    // and
 										    // Settings/Administrator/Desktop/Presentation1.pptx
 	    File f = new File(originalFilePath);
-	    String swfFolder = f.getParent() + separator + DocTransUtil.SWF; // C:/Documents
-									     // and
-									     // Settings/Administrator/Desktop/SWF
+	    String swfFolder = null;
+	    if (fileTransBean.isSwf() == true) {
+		
+		File originFile = new File(originalFilePath);
+		String strippedName = originFile.getName().substring(0, originFile.getName().lastIndexOf("."));
+		if(originalFilePath.endsWith("pptx"))
+		{
+		    strippedName=strippedName+"x";
+		}
+		fileTransBean.setOriginalFileNameStripped(strippedName);
+		
+		swfFolder = f.getParent() + separator + strippedName; // C:/Documents
+	    } else {// and
+		swfFolder = f.getParent() + separator + DocTransUtil.SWF; // C:/Documents
+	    }
 	    String swfBatFileContent = "";
 
 	    // Batch File Content
@@ -92,7 +101,9 @@ public class SWFThread extends Thread {
 
 	    sb.append("\"" + swfFolder + "\" ");
 	    sb.append("\"" + originalFilePath + "\" ");
-	    sb.append(" \"\"");
+	    if (fileTransBean.isSwf() == false) {
+		sb.append(" \"\"");
+	    }
 	    swfBatFileContent = sb.toString();
 
 	    // BatchFile path
@@ -113,29 +124,40 @@ public class SWFThread extends Thread {
 	    out.write(swfBatFileContent);
 	    out.close();
 	    // C:/Documen and Settings/Administrator/Desktop/s.bat
-	    String symlinkBatFilePath = originalDir + separator + "symlink.bat";
-	    f = new File(symlinkBatFilePath);
-	    sb = new StringBuffer();
-	    sb.append("mklink \\j " + originalDir + "/fullimages/" + "  " + originalDir + "/" + fileTransBean.getOriginalFileNameStripped() + "x");
-	    out = new BufferedWriter(new FileWriter(f));
-	    out.write(sb.toString());
-	    out.close();
-	    fileTransBean.setSymlinkBatFilePath(symlinkBatFilePath);
+
+//	    if (fileTransBean.isSwf()) {
+//
+//		File originFile = new File(originalFilePath);
+//		String strippedName = originFile.getName().substring(0, originFile.getName().lastIndexOf("."));
+//
+//		String symlinkBatFilePath = originalDir + separator + "symlink.bat";
+//		f = new File(symlinkBatFilePath);
+//		sb = new StringBuffer();
+//		sb.append("mklink /j " + DocTransUtil.SWF + "  " + strippedName);
+//		if(originalFilePath.endsWith("pptx"))
+//		{
+//		    sb.append("x");
+//		}
+//		out = new BufferedWriter(new FileWriter(f));
+//		out.write(sb.toString());
+//		out.close();
+//		fileTransBean.setSymlinkBatFilePath(symlinkBatFilePath);
+//	    }
 	    // Create symlink batch file ..
 
 	} catch (IOException ioException) {
-	    LOG.error("createBatchFile " + ioException);
+	    log.error("createBatchFile " + ioException);
 	} catch (Exception exception) {
-	    LOG.error("createBatchFile " + exception);
+	    log.error("createBatchFile " + exception);
 	} finally {
 	    try {
 		out.close();
 	    } catch (Exception e) {
-		LOG.error("createBatchFile finally block: " + e);
+		log.error("createBatchFile finally block: " + e);
 	    }
 	}
-	LOG.info(fileTransBean.getClass().toString());
-	LOG.info("EXIT createBatchFile........");
+	log.info(fileTransBean.getClass().toString());
+	log.info("EXIT createBatchFile........");
     }
 
     private boolean invokeProcess() {
@@ -145,43 +167,36 @@ public class SWFThread extends Thread {
 	try {
 
 	    // String command = "C:/sharedFloder/pptx/1021/thumbs.bat";
-	    Process child = Runtime.getRuntime().exec(fileTransBean.getSwfBatFilePath());
-	    x = child.waitFor();
-	    log.debug("" + child.exitValue());
+	    // Process child =
+	    // Runtime.getRuntime().exec(fileTransBean.getSwfBatFilePath());
+	    bFlag = new ProcessExecutor().executeProcess(fileTransBean.getSwfBatFilePath());
 
-	    // int x = CommandExec.invoke(args);
-	    log.debug("x " + x);
-	    if (x == 0)
-		bFlag = true;
 	} catch (Exception e) {
-	    LOG.error(" exception ", e.fillInStackTrace());
+	    log.error(" exception ", e.fillInStackTrace());
 	}
 	return bFlag;
     }
 
-    private boolean executeSymlinkProcess() {
-	boolean bFlag = false;
-	log.debug(" entered  executeSymlinkProcess ");
-	int x = -1;
-	try {
-
-	    // String command = "C:/sharedFloder/pptx/1021/thumbs.bat";
-	    Process child = Runtime.getRuntime().exec(fileTransBean.getSymlinkBatFilePath());
-	    x = child.waitFor();
-	    log.debug("" + child.exitValue());
-
-	    // int x = CommandExec.invoke(args);
-	    log.debug("x " + x);
-	    if (x == 0)
-		bFlag = true;
-	} catch (Exception e) {
-	    LOG.error(" exception ", e.fillInStackTrace());
-	}
-	return bFlag;
-    }
+//    private boolean executeSymlinkProcess() {
+//	boolean bFlag = false;
+//	log.debug(" entered  executeSymlinkProcess ");
+//	int x = -1;
+//	try {
+//
+//	    // String command = "C:/sharedFloder/pptx/1021/thumbs.bat";
+//	    // Process child =
+//	    // Runtime.getRuntime().exec(fileTransBean.getSymlinkBatFilePath());
+//
+//	    bFlag = new ProcessExecutor().executeProcess(fileTransBean.getSymlinkBatFilePath());
+//
+//	} catch (Exception e) {
+//	    log.error(" exception ", e.fillInStackTrace());
+//	}
+//	return bFlag;
+//    }
 
     private boolean saveImagesToDB(boolean bInvoked) {
-	LOG.info("ENTER saveThumbnailsToDB........");
+	log.info("ENTER saveSwfsToDB........"+bInvoked);
 	boolean bSavedToDB = false;
 	log.debug("bInvoked " + bInvoked);
 	MessagePersistenceDAO mdao = new MessagePersistenceDAO();
@@ -189,8 +204,13 @@ public class SWFThread extends Thread {
 	    String fileArray[] = DocTransUtil.getSortedImagesArr(fileTransBean, DocTransUtil.SWF);
 	    for (int i = 0; i < fileArray.length; i++) {
 		log.debug(fileArray[i]);
-		mdao.updateImageURL(docBean.getConversionID(), docBean.getServerFilePath() + "/" + docBean.getConversionID() + "/" + DocTransUtil.SWF + "/" + fileArray[i], i + 1);
-
+		
+		if(fileTransBean.isSwf())
+		    mdao.updateImageURL(docBean.getConversionID(), docBean.getServerFilePath() + "/" + docBean.getConversionID() + "/" +fileTransBean.getOriginalFileNameStripped() + "/" + fileArray[i], i + 1);
+		else
+		    mdao.updateImageURL(docBean.getConversionID(), docBean.getServerFilePath() + "/" + docBean.getConversionID() + "/" +DocTransUtil.SWF + "/" + fileArray[i], i + 1);
+		
+		
 	    }
 
 	    mdao.updateLDCSWFURL(docBean.getConversionID(), DocTransUtil.CREATED);
@@ -200,7 +220,7 @@ public class SWFThread extends Thread {
 	    mdao.updateLDCSWFURL(docBean.getConversionID(), DocTransUtil.ERROR);
 	    bSavedToDB = true;
 	}
-	LOG.info("EXIT saveThumbnailsToDB........");
+	log.info("EXIT save SWF To DB........");
 	return bSavedToDB;
     }
 

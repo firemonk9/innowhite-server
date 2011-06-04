@@ -88,9 +88,9 @@ public class LiveFileUpload extends HttpServlet {
 		
 		factory.setRepository(new File(urlPath));
 
-		ServletFileUpload upload = new ServletFileUpload(factory);
+		//ServletFileUpload upload = new ServletFileUpload(factory);
 		// maximum size before a FileUploadException will be thrown
-		upload.setSizeMax(5000000);
+		//upload.setSizeMax(-1);
 		File f = null;
 		// if image is graph
 		String fileNameTe= request.getParameter(Constants.FILE_NAME);

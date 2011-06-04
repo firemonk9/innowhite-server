@@ -31,6 +31,7 @@
 		<property name="thumbsCommand" value="${thumbsCommand}" />
 		<property name="imgActualFileCommand" value="${imgActualFileCommand}" />
 		<property name="swfActualFileCommand" value="${swfActualFileCommand}" />
+		<property name="convertType" value="${convertType}" />
 		
 	</bean>
 

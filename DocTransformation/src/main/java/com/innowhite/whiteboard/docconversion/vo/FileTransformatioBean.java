@@ -16,7 +16,13 @@ public class FileTransformatioBean {
 	private String thumbServerBasePath;
 	private String originalServerBasePath;
 	private String symlinkBatFilePath;
-	
+	private boolean  isSwf=false;
+	public boolean isSwf() {
+	    return isSwf;
+	}
+	public void setSwf(boolean isSwf) {
+	    this.isSwf = isSwf;
+	}
 	private String thumbsCommand;
 	private String actualFileCommand;
 	

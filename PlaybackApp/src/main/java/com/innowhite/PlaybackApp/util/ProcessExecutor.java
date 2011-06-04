@@ -7,10 +7,7 @@ import java.io.InputStreamReader;
 
 public class ProcessExecutor {
 	
-	private String executable;
-	private String input;
-	private String params;
-	private String output;
+
 		
 	public boolean executeProcess(String cmd) {
 
