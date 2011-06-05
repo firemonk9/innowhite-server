@@ -74,6 +74,7 @@ public class InnowhiteConstants {
 	public static final String PHONE_NUM = "PHONE_NUM";
 	public static final String MEETING_NUM = "MEETING_NUM";
 	public static final String TEMP_LOCATION = "TEMP_LOCATION";
+	public static final String REFRESH_CACHE = "REFRESH_CACHE";
 	
 	public static String CONTEXT_PATH = null;
 	 

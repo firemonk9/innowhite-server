@@ -207,7 +207,7 @@ function start_screen_share (stream_id,recordStatus, serverUrl,roomId)
 			serverUrl='main.innowhite.com';
     	//alert(" in start_screen_share"+pluginLoaded);
 		if(pluginIsLoad()){
-			plugin0().start_capture(stream_id, recordStatus, 75,2,serverUrl,roomId);
+			plugin0().start_capture(stream_id, recordStatus, 75,2,serverUrl,roomId,1935,roomId);
 			screen_sharing=true;
 			return "STARTED";
 		}

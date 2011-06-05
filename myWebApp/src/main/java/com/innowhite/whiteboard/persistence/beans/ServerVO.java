@@ -7,6 +7,7 @@ public class ServerVO {
     private Long id;
     private String serverName;
     private String serverAddr;
+    private String serverPort;
     private Date creationTime;
     private boolean serverActive;
     private String orgName;
@@ -18,6 +19,13 @@ public class ServerVO {
 
     public void setId(Long id) {
         this.id = id;
+    }
+    public String getServerPort() {
+        return serverPort;
+    }
+
+    public void setServerPort(String serverPort) {
+        this.serverPort = serverPort;
     }
 
     public String getServerName() {

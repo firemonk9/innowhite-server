@@ -11,6 +11,7 @@
 		<result property="creationTime" column="creation_time" />
 		<result property="serverActive" column="server_active" />
 		<result property="serverAddr" column="server_addr" />
+		<result property="serverPort" column="server_port" />
 		<result property="serverName" column="server_name" />
 		<result property="orgName" column="org_name" />
 		<result property="appName" column="app_name" />
@@ -19,7 +20,7 @@
 
 	<select id="getServerQuery" resultMap="serversMapId" parameterClass="java.lang.String">
 		select
-		id,creation_time,server_active,server_addr,server_name,org_name,app_name from server where server_active=1 and app_name=#appName#;
+		id,creation_time,server_active,server_addr,server_port,server_name,org_name,app_name from server_data where server_active=1 and app_name=#appName#;
 	</select>
 
 
