@@ -50,6 +50,12 @@ public class InnowhiteConstants {
 	 public static final String GROUP_EADER = "groupLeader";
 	 public static final String CLIENT_NAME = "clientname";	
 	 public static final String JOIN_ROOM = "joinroom";
+	 
+	 
+	 public static final String WHITEBOARD_SERVER_DATA = "WHITEBOARD";
+	 public static final String WHITEBOARD_SERVER = "wbSer";
+	 public static final String WHITEBOARD_SERVER_PORT = "wbSerPort";
+	 
 	 public static final String PREVIOUS_SESSION = "previousSession";
 	public static final String ORG_NAME = "orgName";
 	public static final String PARENT_ORG = "parentOrg";

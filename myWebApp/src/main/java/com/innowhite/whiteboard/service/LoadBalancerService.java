@@ -40,7 +40,7 @@ public class LoadBalancerService {
 
 	    int val = serversCounter.get(appName);
 
-	    System.err.println("appName:  " + appName + "  val " + val + " serverList.size " + serverList.size());
+	    log.debug("appName:  " + appName + "  val " + val + " serverList.size " + serverList.size());
 	    ServerVO obj = serverList.get(val);
 	    if (obj != null) {
 		if ((val + 1) == serverList.size())

@@ -12,7 +12,9 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
 import com.innowhite.whiteboard.persistence.beans.ConferenceNumbersVO;
+import com.innowhite.whiteboard.persistence.beans.ServerVO;
 import com.innowhite.whiteboard.service.JoinRoomService;
+import com.innowhite.whiteboard.service.LoadBalancerService;
 import com.innowhite.whiteboard.util.Constants;
 import com.innowhite.whiteboard.util.InnowhiteConstants;
 import com.innowhite.whiteboard.util.ServletUtil;
@@ -69,6 +71,8 @@ public class JoinRoomServlet extends HttpServlet {
 		  
 		String userId = request.getParameter(InnowhiteConstants.USER);
 		String roomId = request.getParameter(InnowhiteConstants.ROOML_ID);
+		String appName = InnowhiteConstants.WHITEBOARD_SERVER_DATA;
+		ServerVO serverObj = LoadBalancerService.getServerURL(appName, null);
 		
 		
 		ConferenceNumbersVO confNumber =null;
@@ -77,7 +81,7 @@ public class JoinRoomServlet extends HttpServlet {
 		}
 		
 
-		ServletUtil.setCutomRequestProp(request, response,false,confNumber);
+		ServletUtil.setCutomRequestProp(request, response,false,confNumber,serverObj);
 		
 		
 		getServletConfig().getServletContext().getRequestDispatcher("/MyJsp.jsp").forward(request, response);

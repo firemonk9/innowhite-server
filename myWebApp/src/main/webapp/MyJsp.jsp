@@ -31,8 +31,11 @@ if(userName==null || userName.equals("null")){
 	String classRoom = (String) request.getParameter("classRoom");
 	String orgName = (String) request.getParameter("orgName");
 	String view = (String) request.getParameter("view");
-	String lessonId = (String) request.getParameter("lesson_plan_id");
-	String courseId = (String) request.getParameter("course_id");
+	
+
+	// Whiteboard server and port
+	String wbSer = (String) request.getAttribute(InnowhiteConstants.WHITEBOARD_SERVER);
+	String wbSerPort = (String) request.getAttribute(InnowhiteConstants.WHITEBOARD_SERVER_PORT);
 
 	String phoneNum = (String) request.getAttribute(InnowhiteConstants.PHONE_NUM);
 	String meetingNum = (String) request.getAttribute(InnowhiteConstants.MEETING_NUM);
@@ -79,7 +82,6 @@ if(userName==null || userName.equals("null")){
 
 	System.err.println(" previousSession" + previousSession
 			+ " joinroom " + joinroom + "  view  " + view
-			+ "  lessonId  " + lessonId + " course_id " + courseId
 			+ " orgName  " + orgName + "  clientname:" + clientname
 			+ "  groupLeader:" + groupLeader);
 
@@ -472,7 +474,7 @@ if ( hasProductInstall && !hasRequestedVersion ) {
 			"id", "<%=userName%>",
 			"quality", "high",
 			"bgcolor", "#ffffff",
-			"flashVars","phoneNum=<%=phoneNum%>&meetingNum=<%=meetingNum%>&classRoom=<%=classRoom%>&courseId=<%=courseId%>&orgName=<%=orgName%>&view=<%=view%>&lessonId=<%=lessonId%>&previousSession=<%=previousSession%>&joinroom=<%=joinroom%>&clientname=<%=clientname%>&groupLeader=<%=groupLeader%>",
+			"flashVars","wbSer=<%=wbSer%>&wbSerPort=<%=wbSerPort%>&phoneNum=<%=phoneNum%>&meetingNum=<%=meetingNum%>&orgName=<%=orgName%>&view=<%=view%>&joinroom=<%=joinroom%>&clientname=<%=clientname%>&groupLeader=<%=groupLeader%>",
 				"name", "<%=userName%>", "allowScriptAccess", "sameDomain",
 				"type", "application/x-shockwave-flash", "pluginspage",
 				"http://www.adobe.com/go/getflashplayer", "allowFullScreen",
