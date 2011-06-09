@@ -24,6 +24,12 @@
 	</bean>
 
 
+	<bean id="videoService.service" class="com.innowhite.red5.stream.VideoService">
+
+	
+
+	</bean>
+
 
 	<bean id="web.handler" class="com.innowhite.red5.stream.Application">
 
