@@ -15,23 +15,23 @@ import com.innowhite.whiteboard.docconversion.vo.DocConversionBean;
 import com.innowhite.whiteboard.docconversion.vo.FileTransformatioBean;
 import com.innowhite.whiteboard.docconversion.vo.UserImagesVO;
 
-public class ThumbnailThread extends Thread {
+public class PDFThumbnailThread extends Thread {
 
     private DocConversionBean docBean = null;
     private FileTransformatioBean fileTransBean = null;
 
     static String separator = System.getProperty("file.separator");
 
-    public ThumbnailThread() {
+    public PDFThumbnailThread() {
 	// TODO Auto-generated constructor stub
     }
 
-    public ThumbnailThread(DocConversionBean docBean, FileTransformatioBean fileTransBean) {
+    public PDFThumbnailThread(DocConversionBean docBean, FileTransformatioBean fileTransBean) {
 	this.docBean = docBean;
 	this.fileTransBean = fileTransBean;
     }
 
-    private static final Logger log = Logger.getLogger(ThumbnailThread.class);
+    private static final Logger log = Logger.getLogger(PDFThumbnailThread.class);
 
     public void run() {
 	boolean b = false;
@@ -59,18 +59,13 @@ public class ThumbnailThread extends Thread {
 	log.info("ENTER createBatchFile...... ");
 	BufferedWriter out = null;
 	try {
-	//    boolean bCreated = false;
+	    boolean bCreated = false;
 	    String originalFilePath = docBean != null ? docBean.getFilePath() : ""; // C:/Documents
 										    // and
 										    // Settings/Administrator/Desktop/Presentation1.pptx
 	    File f = new File(originalFilePath);
-	    if(!f.exists()){
-		
-		log.error(" There is a problem wiht the file :: "+originalFilePath);
-		return;
-	    }
-	    
-	    String thumbsFolder = f.getParent() + separator + DocTransUtil.THUMBNAIL; // C:/Documents										      // and
+	    String thumbsFolder = f.getParent() + separator + DocTransUtil.THUMBNAIL; // C:/Documents
+										      // and
 										      // Settings/Administrator/Desktop/THUMBNAIL
 	    String thumbnailBatFileContent = "";
 
@@ -208,10 +203,9 @@ public class ThumbnailThread extends Thread {
 
 	    mdao.updateLDCThumbnailURL(docBean.getConversionID(), DocTransUtil.CREATED);
 
-	// } else {
-	// mdao.updateLDCThumbnailURL(docBean.getConversionID(),
-	// DocTransUtil.ERROR);
-	// }
+	//} else {
+	 //   mdao.updateLDCThumbnailURL(docBean.getConversionID(), DocTransUtil.ERROR);
+	//}
 	log.debug("EXIT createThumbnails.. ");
 	return bCreated;
     }

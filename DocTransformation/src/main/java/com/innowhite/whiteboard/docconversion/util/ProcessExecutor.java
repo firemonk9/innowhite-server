@@ -8,19 +8,16 @@ import java.io.InputStreamReader;
 
 import org.apache.log4j.Logger;
 
-import com.innowhite.whiteboard.docconversion.thread.SWFThread;
-
 public class ProcessExecutor {
 
-    
     private static final Logger log = Logger.getLogger(ProcessExecutor.class);
-    
+
     public boolean executeProcess(String cmd) {
 
 	try {
 	    // String cmd = executable + " -i " + input + " " + params + " " +
 	    // output;
-	    log.debug(" executing the command executeProcess :: "+cmd);
+	    log.debug(" executing the command executeProcess :: " + cmd);
 
 	    Runtime rt = Runtime.getRuntime();
 	    Process proc = rt.exec(cmd);
@@ -28,16 +25,16 @@ public class ProcessExecutor {
 	    StreamGobbler errorGobbler = new StreamGobbler(new BufferedInputStream(proc.getErrorStream()), "ERR");
 	    // any output?
 	    StreamGobbler outputGobbler = new StreamGobbler(new BufferedInputStream(proc.getInputStream()), "OUT");
-	   
+
 	    // Start the threads
 	    errorGobbler.start();
 	    outputGobbler.start();
-	   
+
 	    // any error???
 	    // Appears to be blocking operation
 	    int exitVal = proc.waitFor();
 	    // System.out.println("ExitValue: " + exitVal);
-	    log.debug("The return or exit value is :: "+exitVal);
+	    log.debug("The return or exit value is :: " + exitVal);
 	    if (exitVal == 0) {
 		return true;
 	    }

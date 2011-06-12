@@ -1,7 +1,7 @@
 /**
  * 
  */
-package com.innowhite.whiteboard.util;
+package com.innowhite.whiteboard.docconversion.util;
 
 import java.util.Arrays;
 import java.util.Calendar;
@@ -14,14 +14,12 @@ import java.util.Set;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
-import com.innowhite.business.DocumentManagement;
-
 /**
  * @author firemonk
  * 
  */
 public class Utility {
-	private static final Logger log = LoggerFactory.getLogger(DocumentManagement.class);
+	private static final Logger log = LoggerFactory.getLogger(Utility.class);
 	
 	/**
 	 * @param args
@@ -120,8 +118,8 @@ public class Utility {
 		return false;
 	}
 
-	/*pptx, ppt, and pdf files are allowed*/
-	public static boolean allowedFilesProceessedonServer(String fileName) {
+	
+	public static boolean allowedPptx(String fileName) {
 		if (fileName != null) {
 			String arr[] = fileName.split("\\.");
 			if (arr != null && arr.length > 0) {
@@ -132,10 +130,6 @@ public class Utility {
 		}
 		return false;
 	}
-	
-	
-	
-	
 	
 	public static String stripExtension(String filePath) {
 

@@ -15,6 +15,7 @@ import org.red5.server.api.stream.IBroadcastStream;
 import org.red5.server.api.stream.IClientBroadcastStream;
 import org.red5.server.api.stream.IServerStream;
 import org.red5.server.stream.ClientBroadcastStream;
+import org.red5.server.stream.StreamService;
 import org.slf4j.Logger;
 
 import com.innowhite.red5.stream.messaging.MessagingService;
@@ -117,7 +118,7 @@ public class Application extends MultiThreadedApplicationAdapter implements IApp
 
 	if (stream instanceof ClientBroadcastStream) {
 	
-	   
+	    StreamService ss = new StreamService();
 	    
 	    ClientBroadcastStream obj = (ClientBroadcastStream) stream;
 	    log.debug(" stream id ::: "+((ClientBroadcastStream)stream).getStreamId()+" is recording "+obj.isRecording());

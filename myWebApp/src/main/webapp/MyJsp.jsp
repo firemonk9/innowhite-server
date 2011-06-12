@@ -403,7 +403,7 @@ function plugin()
 		var platform = window.navigator.platform;
 		if(platform.indexOf('Win') != -1)
 		{
-			downloadElement.href = 'http://demo.innowhite.com/whiteboard/InnowhitePlugin.msi';
+			downloadElement.href = 'http://demo.innowhite.com/InnowhitePlugin.msi';
 		}
 		if(platform.indexOf('Mac') != -1)
 		{

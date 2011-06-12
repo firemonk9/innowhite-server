@@ -4,7 +4,6 @@ import java.io.File;
 
 import org.apache.log4j.Logger;
 
-import com.innowhite.whiteboard.docconversion.thread.ThumbnailThread;
 import com.innowhite.whiteboard.docconversion.vo.FileTransformatioBean;
 
 public class DocTransUtil {
@@ -15,7 +14,7 @@ public class DocTransUtil {
     public final static String SWF = "fullimages";
     public static String separator = System.getProperty("file.separator");
 
-    private static final Logger log = Logger.getLogger(ThumbnailThread.class);
+    private static final Logger log = Logger.getLogger(DocTransUtil.class);
 
     public static int convertToInt(String s) {
 	int x = -1;
@@ -30,7 +29,7 @@ public class DocTransUtil {
     public static String[] getSortedImagesArr(FileTransformatioBean fileTransBean, String type) {
 	log.info("ENTER getSortedImagesArr..");
 
-	System.out.println("fileTransBean: " + fileTransBean);
+	log.debug("fileTransBean: " + fileTransBean);
 	FileTransformatioBean fileTransfBean = fileTransBean != null ? fileTransBean : new FileTransformatioBean();
 	String thumbsFolder = fileTransfBean.getThumbsFolder();
 	String imageFolder = fileTransfBean.getSwfFolder();
@@ -63,7 +62,7 @@ public class DocTransUtil {
 
 	    sortedFileArray[jpgNumber - 1] = fileArray[i].getName();
 	}
-	System.out.println("sortedFileArray: " + sortedFileArray);
+	log.debug("sortedFileArray: " + sortedFileArray);
 	// for (int i = 0; i < sortedFileArray.length; i++) {
 	// System.out.println(sortedFileArray[i]);
 	// }

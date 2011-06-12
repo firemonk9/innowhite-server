@@ -28,72 +28,72 @@ public class MakeSWFFiles {
 
 	private static final Logger log = LoggerFactory.getLogger(MakeSWFFiles.class);
 	
-	private static void createImagesfromPDF(String inputFile, String user, String desc, String documentName) {
-
-		String[] Command = null;
-
-		try {
-
-			log.debug(" entered  createImagesfromPDF");
-
-			String fileName = Utility.stripExtension(inputFile);
-
-			StringBuffer sr = new StringBuffer();
-
-			String ext = new String("" + Math.round((Math.random() * 1000000)));
-
-			String modifiedFileName = fileName + "_" + ext;
-
-			String urlPath = Constants.UBUNTU_FOLDER_PATH_COMMAND + modifiedFileName;
-			urlPath = urlPath.replaceAll(Constants.APP_NAME, InnowhiteConstants.CONTEXT_PATH);
-
-			String urlPathUbun = Constants.UBUNTU_FOLDER_PATH_COMMAND;
-			urlPath = urlPath.replaceAll(Constants.APP_NAME, InnowhiteConstants.CONTEXT_PATH);
-
-			// String outPutDir = urlPath;
-
-			boolean val = (new File(urlPath)).mkdir();
-
-			sr.append("convert" + " " + urlPathUbun + inputFile + " " + urlPathUbun + modifiedFileName + "//" + modifiedFileName + ".png");
-
-			sr.append("\n");
-
-			sr.append("convert \"" + urlPathUbun + modifiedFileName + "//" + modifiedFileName + "-0" + ".png\""
-					+ " -thumbnail 250x90 -unsharp 0x.5 \"" + urlPathUbun + modifiedFileName + "//" + "thumbnail" + ".png\"");
-
-			urlPath = Constants.TEMP_LOCATION + ext + ".sh";
-			urlPath = urlPath.replaceAll(Constants.APP_NAME, InnowhiteConstants.CONTEXT_PATH);
-
-			File f = new File(urlPath);
-			FileOutputStream fos = new FileOutputStream(f);
-			// char[] c = new char(sr);
-			fos.write(sr.toString().getBytes());
-			fos.close();
-
-			MakeExectuable.getInstance().setExecutable(f.getAbsolutePath());
-
-			log.debug(" executing command  " + f.getAbsolutePath());
-
-			Command = new String[1];
-			Command[0] = f.getAbsolutePath();
-
-			Process Findspace = Runtime.getRuntime().exec(Command);
-
-			BufferedReader Resultset = new BufferedReader(new InputStreamReader(Findspace.getInputStream()));
-
-			String line;
-			while ((line = Resultset.readLine()) != null) {
-				log.debug(" out put from command execution  " + line);
-			}
-
-			// addImagestoDB(modifiedFileName, user, desc, documentName);
-
-		} catch (IOException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
-		}
-
-	}
+//	private static void createImagesfromPDF(String inputFile, String user, String desc, String documentName) {
+//
+//		String[] Command = null;
+//
+//		try {
+//
+//			log.debug(" entered  createImagesfromPDF");
+//
+//			String fileName = Utility.stripExtension(inputFile);
+//
+//			StringBuffer sr = new StringBuffer();
+//
+//			String ext = new String("" + Math.round((Math.random() * 1000000)));
+//
+//			String modifiedFileName = fileName + "_" + ext;
+//
+//			String urlPath = Constants.UBUNTU_FOLDER_PATH_COMMAND + modifiedFileName;
+//			urlPath = urlPath.replaceAll(Constants.APP_NAME, InnowhiteConstants.CONTEXT_PATH);
+//
+//			String urlPathUbun = Constants.UBUNTU_FOLDER_PATH_COMMAND;
+//			urlPath = urlPath.replaceAll(Constants.APP_NAME, InnowhiteConstants.CONTEXT_PATH);
+//
+//			// String outPutDir = urlPath;
+//
+//			boolean val = (new File(urlPath)).mkdir();
+//
+//			sr.append("convert" + " " + urlPathUbun + inputFile + " " + urlPathUbun + modifiedFileName + "//" + modifiedFileName + ".png");
+//
+//			sr.append("\n");
+//
+//			sr.append("convert \"" + urlPathUbun + modifiedFileName + "//" + modifiedFileName + "-0" + ".png\""
+//					+ " -thumbnail 250x90 -unsharp 0x.5 \"" + urlPathUbun + modifiedFileName + "//" + "thumbnail" + ".png\"");
+//
+//			urlPath = Constants.TEMP_LOCATION + ext + ".sh";
+//			urlPath = urlPath.replaceAll(Constants.APP_NAME, InnowhiteConstants.CONTEXT_PATH);
+//
+//			File f = new File(urlPath);
+//			FileOutputStream fos = new FileOutputStream(f);
+//			// char[] c = new char(sr);
+//			fos.write(sr.toString().getBytes());
+//			fos.close();
+//
+//			MakeExectuable.getInstance().setExecutable(f.getAbsolutePath());
+//
+//			log.debug(" executing command  " + f.getAbsolutePath());
+//
+//			Command = new String[1];
+//			Command[0] = f.getAbsolutePath();
+//
+//			Process Findspace = Runtime.getRuntime().exec(Command);
+//
+//			BufferedReader Resultset = new BufferedReader(new InputStreamReader(Findspace.getInputStream()));
+//
+//			String line;
+//			while ((line = Resultset.readLine()) != null) {
+//				log.debug(" out put from command execution  " + line);
+//			}
+//
+//			// addImagestoDB(modifiedFileName, user, desc, documentName);
+//
+//		} catch (IOException e) {
+//			// TODO Auto-generated catch block
+//			e.printStackTrace();
+//		}
+//
+//	}
 
 	
 	
