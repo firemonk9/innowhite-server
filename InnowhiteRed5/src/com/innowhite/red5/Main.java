@@ -146,7 +146,8 @@ public class Main extends MultiThreadedApplicationAdapter {
 	    // shapeSeqMap.put(Red5.getConnectionLocal().getScope().getName(),
 	    // num);
 
-	    //SavingData.saveToFile(v, Red5.getConnectionLocal().getScope().getName());
+	    // SavingData.saveToFile(v,
+	    // Red5.getConnectionLocal().getScope().getName());
 
 	    long l = (new Date()).getTime() - (Long) scope.getAttribute("START_TIME");
 
@@ -172,14 +173,14 @@ public class Main extends MultiThreadedApplicationAdapter {
 	    // we want to set the time if instructor and get the time for normal
 	    // users for the first time.
 
-	    if (uservo.getUserJoinedTime() == null) {
-
-		uservo.setUserJoinedTime((new Date().getTime()));
-		log.debug(" user joined time is " + uservo.getUserJoinedTime() + " username " + uservo.getUsername());
-	    }
 	    if (map == null || Utility.userFirstTime(uservo.getUsername(), map)) {
 
-		
+		if (uservo.getUserJoinedTime() == 0) {
+
+		    uservo.setUserJoinedTime((new Date().getTime()));
+		    log.debug(" user joined time is " + uservo.getUserJoinedTime() + " username " + uservo.getUsername());
+		}
+
 		RoomVO roomVO = shapeSeqMap.get(Red5.getConnectionLocal().getScope().getName());
 
 		int num = roomVO.getSeqNum();

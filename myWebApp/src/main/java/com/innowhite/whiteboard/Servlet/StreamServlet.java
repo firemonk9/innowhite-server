@@ -47,24 +47,32 @@ public class StreamServlet extends HttpServlet {
 		String roomId = request.getParameter(InnowhiteConstants.ROOML_ID);
 		
 		
-		String serverApp= null;
-		if(streamType != null && streamType.equals("DESKTOP")){
-		    serverApp="DESKTOP";
-		}else if(streamType != null && streamType.equals("VIDEO")){
-		    serverApp="VIDEO";
-		}else if(streamType != null && streamType.equals("AUDIO")){
-		    serverApp="AUDIO";
-		}
+		String serverApp= streamType;
+//		if(streamType != null && streamType.equals("DESKTOP")){
+//		    serverApp="DESKTOP";
+//		}else if(streamType != null && streamType.equals("VIDEO")){
+//		    serverApp="VIDEO";
+//		}else if(streamType != null && streamType.equals("AUDIO")){
+//		    serverApp="AUDIO";
+//		}
+		
 		// send the stream is to server.
 		Long subRoomId=null;
-		if(serverApp != null && !serverApp.equals("AUDIO"))
-		    subRoomId = WhiteboardAuthenticationDAOImpl.createSubRoomID(roomId,streamType);
+		
 		
 		if(request.getParameter(InnowhiteConstants.REFRESH_CACHE) != null && request.getParameter(InnowhiteConstants.REFRESH_CACHE).equals("true")){
 		    LoadBalancerService.forceClearCache();
 		}
 		
+		
+		
 		ServerVO serverVO = LoadBalancerService.getServerURL(serverApp, null);
+		
+		if(serverVO == null)
+		    return;
+		
+		if(serverApp != null && ( serverApp.equals("VIDEO") || serverApp.equals("DESKTOP") ))
+		    subRoomId = WhiteboardAuthenticationDAOImpl.createSubRoomID(roomId,streamType);
 		
 		response.setContentType("text/xml");
 		PrintWriter out = response.getWriter();

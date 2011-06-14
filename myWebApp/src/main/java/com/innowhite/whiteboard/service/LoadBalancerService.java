@@ -53,6 +53,8 @@ public class LoadBalancerService {
 	    }
 	}
 
+	log.warn(" did not find any server for appName:: "+appName);
+	
 	return null;
     }
 
