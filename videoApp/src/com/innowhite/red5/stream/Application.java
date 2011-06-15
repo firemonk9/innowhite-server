@@ -9,15 +9,19 @@ import org.red5.server.adapter.IApplication;
 import org.red5.server.adapter.MultiThreadedApplicationAdapter;
 import org.red5.server.api.IConnection;
 import org.red5.server.api.IScope;
+import org.red5.server.api.Red5;
 import org.red5.server.api.so.ISharedObject;
 import org.red5.server.api.stream.IBroadcastStream;
+import org.red5.server.api.stream.IClientBroadcastStream;
 import org.red5.server.api.stream.IServerStream;
 import org.red5.server.stream.ClientBroadcastStream;
+import org.red5.server.stream.StreamService;
 import org.slf4j.Logger;
 
 import com.innowhite.red5.stream.messaging.MessagingService;
 import com.innowhite.red5.stream.messaging.VideoStreamNameListener;
 import com.innowhite.red5.stream.security.PublishSecurityImpl;
+import com.innowhite.red5.stream.util.InnowhiteConstants;
 
 public class Application extends MultiThreadedApplicationAdapter implements IApplication {
 
@@ -31,6 +35,7 @@ public class Application extends MultiThreadedApplicationAdapter implements IApp
     private static final String INNOWHITE_STREAM_STATUS_SO = "ScreenShareSO";
 
     private HashMap<String, ISharedObject> screenShareSharedObjectMap = new HashMap<String, ISharedObject>();
+    public static HashMap<String, IClientBroadcastStream> screenShareStremIdMap = new HashMap<String, IClientBroadcastStream>();
 
     public String getRecordPath() {
 	return recordPath;
@@ -52,7 +57,7 @@ public class Application extends MultiThreadedApplicationAdapter implements IApp
 	this.messagingService = messagingService;
     }
 
-    private static Logger log = Red5LoggerFactory.getLogger(Application.class, "VideoApp");
+    private static Logger log = Red5LoggerFactory.getLogger(Application.class, InnowhiteConstants.APP_NAME);
 
     // ISharedObject screenShareSo = null;
 
@@ -86,7 +91,7 @@ public class Application extends MultiThreadedApplicationAdapter implements IApp
 	if (hasSharedObject(scope, INNOWHITE_STREAM_STATUS_SO)) {
 	    screenShareSharedObjectMap.remove(scope.getName());
 	    clearSharedObjects(scope, INNOWHITE_STREAM_STATUS_SO);
-	    
+
 	}
 
     }
@@ -112,15 +117,25 @@ public class Application extends MultiThreadedApplicationAdapter implements IApp
     public void streamBroadcastStart(IBroadcastStream stream) {
 
 	if (stream instanceof ClientBroadcastStream) {
+	
+	    StreamService ss = new StreamService();
+	    
 	    ClientBroadcastStream obj = (ClientBroadcastStream) stream;
+	    log.debug(" stream id ::: "+((ClientBroadcastStream)stream).getStreamId()+" is recording "+obj.isRecording());
+	    String publishedName =stream.getPublishedName();
 	    // invokeStopScreenShare();
 	    if (obj.isRecording() == true) {
 		messagingService.sendStreamMessage("RECORDSTART#" + stream.getPublishedName() + "#" + recordPath + stream.getPublishedName() + ".flv");
-
+		screenShareStremIdMap.put(publishedName,obj);	
+		log.debug(" the hashmap :: "+screenShareSharedObjectMap+" stream name "+publishedName);
 	    }
 	}
+	
+	
+	
 	log.debug("streamPublishStart:: " + stream.getPublishedName() + " time " + new Date().getTime() + "  get parent  " + stream.getScope().getParent() + " scope  " + stream.getScope());
-
+	
+	
 	// log.debug("streamPublishStart:: "+stream.getPublishedName());
     }
 
@@ -137,12 +152,13 @@ public class Application extends MultiThreadedApplicationAdapter implements IApp
 
 	    ISharedObject screenShareSo = screenShareSharedObjectMap.get(stream.getScope().getName());
 	    screenShareSo.sendMessage("screenShareStopped", new ArrayList<Object>());
-	    
+
 	    if (obj.isRecording() == true) {
 
 		// stream.getScope().getS
 		messagingService.sendStreamMessage("RECORDSTOP#" + stream.getPublishedName() + "#FILENAME");
 		VideoStreamNameListener.videoStreamIds.remove(stream.getPublishedName());
+		screenShareStremIdMap.remove(stream.getPublishedName());
 		// messagingService.sendStreamMessage("RECORDSTART#"+stream.getPublishedName()+"#"+recordPath+stream.getPublishedName()+".flv");
 	    }
 	}
@@ -159,6 +175,20 @@ public class Application extends MultiThreadedApplicationAdapter implements IApp
     // }, 30000);
     //
     // }
+
+
+    
+    
+//    public void stopStream(String roomId) {
+//	
+//	
+//	log.debug(" stop the stream is invoked from client for stream id:: "+roomId);
+//	//StreamServiceHelper.closeStream(Red5.getConnectionLocal(),Integer.parseInt(roomId));
+//	//StremSe(Red5.getConnectionLocal(),roomId);
+//	//String conference = getConfId(roomId);
+//	//log.debug("Mute all users in room[$conference]");
+//	// freeSwitchGateway.mute(conference, mute);
+//    }
 
     /** {@inheritDoc} */
     @Override

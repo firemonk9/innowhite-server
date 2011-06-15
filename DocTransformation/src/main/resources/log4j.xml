@@ -10,9 +10,24 @@
 		</layout>
 	</appender>
 	
+
+	
+	
+	<appender name="FA" class="org.apache.log4j.FileAppender">
+		<param name="File" value="c:\\logs\\DocConversion.log" />
+<!-- 		<param name="File" value="/opt/InnowhiteData/logs/DocConversion.log" /> -->
+		
+
+		<layout class="org.apache.log4j.PatternLayout">
+			<param name="ConversionPattern" value="%-4r [%t] %-5p %c %x - %m%n" />
+		</layout>
+
+	</appender>
+	
+	
 	<!-- Application Loggers -->
-	<logger name="com.innowhite.whiteboard">
-		<level value="DEBUG" />
+	<logger name="com.innowhite">
+		<level value="debug" />
 	</logger>
 	
 	<!-- 3rdparty Loggers -->
@@ -34,8 +49,10 @@
 
 	<!-- Root Logger -->
 	<root>
-		<priority value="warn" />
+		<priority value="debug" />
 		<appender-ref ref="console" />
+		<appender-ref ref="FA" />
+		
 	</root>
 	
 </log4j:configuration>

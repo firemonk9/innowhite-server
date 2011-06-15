@@ -120,8 +120,8 @@ public class Utility {
 		return false;
 	}
 
-	
-	public static boolean allowedPptx(String fileName) {
+	/*pptx, ppt, and pdf files are allowed*/
+	public static boolean allowedFilesProceessedonServer(String fileName) {
 		if (fileName != null) {
 			String arr[] = fileName.split("\\.");
 			if (arr != null && arr.length > 0) {
@@ -132,6 +132,10 @@ public class Utility {
 		}
 		return false;
 	}
+	
+	
+	
+	
 	
 	public static String stripExtension(String filePath) {
 

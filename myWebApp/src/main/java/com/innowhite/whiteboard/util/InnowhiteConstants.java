@@ -13,6 +13,10 @@ public class InnowhiteConstants {
 	public static final String WB_SESSION_ID = "session_id";
 	
 	
+	// below two constants are application names in Red5.
+	public static final String VIDEO_APP = "VideoApp";
+	public static final String DATA_APP = "DataApp";
+	
 	public static final String DATEPICKER = "datepicker";
 	public static final String SECRETKEYVALUE = "cb5869d542f60ab3dd0eeecbe8ac8e18abe44353875e4db636a40153021e07be3c56209091ee08620cb7b0c403d079f1ef2094ff658f99da54a06c38d380b30d";
 	public static final String USERID = "web_session[user_id]";
@@ -46,6 +50,12 @@ public class InnowhiteConstants {
 	 public static final String GROUP_EADER = "groupLeader";
 	 public static final String CLIENT_NAME = "clientname";	
 	 public static final String JOIN_ROOM = "joinroom";
+	 
+	 
+	 public static final String WHITEBOARD_SERVER_DATA = "WHITEBOARD";
+	 public static final String WHITEBOARD_SERVER = "wbSer";
+	 public static final String WHITEBOARD_SERVER_PORT = "wbSerPort";
+	 
 	 public static final String PREVIOUS_SESSION = "previousSession";
 	public static final String ORG_NAME = "orgName";
 	public static final String PARENT_ORG = "parentOrg";
@@ -70,6 +80,7 @@ public class InnowhiteConstants {
 	public static final String PHONE_NUM = "PHONE_NUM";
 	public static final String MEETING_NUM = "MEETING_NUM";
 	public static final String TEMP_LOCATION = "TEMP_LOCATION";
+	public static final String REFRESH_CACHE = "REFRESH_CACHE";
 	
 	public static String CONTEXT_PATH = null;
 	 

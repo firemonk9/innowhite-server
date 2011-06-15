@@ -11,7 +11,9 @@ import javax.servlet.http.HttpServletResponse;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
+import com.innowhite.whiteboard.persistence.beans.ServerVO;
 import com.innowhite.whiteboard.persistence.dao.WhiteboardAuthenticationDAOImpl;
+import com.innowhite.whiteboard.service.LoadBalancerService;
 import com.innowhite.whiteboard.util.InnowhiteConstants;
 
 /**
@@ -44,10 +46,33 @@ public class StreamServlet extends HttpServlet {
 		String streamType = request.getParameter(InnowhiteConstants.STREAM_TYPE);
 		String roomId = request.getParameter(InnowhiteConstants.ROOML_ID);
 		
-		Long subRoomId = WhiteboardAuthenticationDAOImpl.createSubRoomID(roomId,streamType);
 		
+		String serverApp= streamType;
+//		if(streamType != null && streamType.equals("DESKTOP")){
+//		    serverApp="DESKTOP";
+//		}else if(streamType != null && streamType.equals("VIDEO")){
+//		    serverApp="VIDEO";
+//		}else if(streamType != null && streamType.equals("AUDIO")){
+//		    serverApp="AUDIO";
+//		}
 		
 		// send the stream is to server.
+		Long subRoomId=null;
+		
+		
+		if(request.getParameter(InnowhiteConstants.REFRESH_CACHE) != null && request.getParameter(InnowhiteConstants.REFRESH_CACHE).equals("true")){
+		    LoadBalancerService.forceClearCache();
+		}
+		
+		
+		
+		ServerVO serverVO = LoadBalancerService.getServerURL(serverApp, null);
+		
+		if(serverVO == null)
+		    return;
+		
+		if(serverApp != null && ( serverApp.equals("VIDEO") || serverApp.equals("DESKTOP") ))
+		    subRoomId = WhiteboardAuthenticationDAOImpl.createSubRoomID(roomId,streamType);
 		
 		response.setContentType("text/xml");
 		PrintWriter out = response.getWriter();
@@ -56,8 +81,15 @@ public class StreamServlet extends HttpServlet {
 		out.println("SUCCESS");
 		out.println("</returnStatus> <roomId>");
 		out.println(subRoomId);
-		out.println("</roomId><server>main.innowhite.com</server></response>");
-
+		out.println("</roomId><server>"+serverVO.getServerAddr()+"</server>");
+		out.println("<port>");
+		out.println(serverVO.getServerPort());
+		out.println("</port>");
+		
+		out.println("</response>");
+		
+		//out.println("</roomId><server>demo.innowhite.com</server></response>");
+		//LoadBalancerService.getServerURL(InnowhiteConstants.VIDEO_APP, null);
 	}
 
 	/**

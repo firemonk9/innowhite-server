@@ -10,13 +10,14 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
 import com.innowhite.whiteboard.persistence.beans.ConferenceNumbersVO;
+import com.innowhite.whiteboard.persistence.beans.ServerVO;
 import com.innowhite.whiteboard.webservice.client.ServiceClientImp;
 
 public class ServletUtil {
 
 	private static final Logger log = LoggerFactory.getLogger(ServiceClientImp.class);
 	
-	public static void setCutomRequestProp(HttpServletRequest request, HttpServletResponse response, boolean prevousSession, ConferenceNumbersVO confNumber) throws ServletException,
+	public static void setCutomRequestProp(HttpServletRequest request, HttpServletResponse response, boolean prevousSession, ConferenceNumbersVO confNumber, ServerVO serverObj) throws ServletException,
 			IOException {
 
 		try {
@@ -61,13 +62,14 @@ public class ServletUtil {
 			request.setAttribute(InnowhiteConstants.CLIENT_NAME, userId);
 			//request.setAttribute(InnowhiteConstants.GROUP_EADER, "false");
 			request.setAttribute(InnowhiteConstants.JOIN_ROOM, wbSession);
-			
-			
+			request.setAttribute(InnowhiteConstants.WHITEBOARD_SERVER, serverObj.getServerAddr());
+			request.setAttribute(InnowhiteConstants.WHITEBOARD_SERVER_PORT, serverObj.getServerPort());
 			
 			
 
 		} catch (Exception e) {
 			// TODO Auto-generated catch block
+		    	log.error(e.getMessage());
 			e.printStackTrace();
 		}
 

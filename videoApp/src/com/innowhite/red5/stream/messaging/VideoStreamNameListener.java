@@ -27,11 +27,10 @@ public class VideoStreamNameListener implements MessageListener {
 		// .println("entered  onMessage of RoomConfNameMapMessageListener.."
 		// + message);
 		log.debug("oflademo entered  onMessage of RoomConfNameMapMessageListener..");
-		System.err
-				.println("oflademo entered  onMessage of RoomConfNameMapMessageListener..");
+		
 		if (message instanceof TextMessage) {
 			try {
-				System.out.println(" the msg is::  "
+				log.debug(" the msg is::  "
 						+ ((TextMessage) message).getText());
 				String msg = ((TextMessage) message).getText();
 
@@ -51,7 +50,7 @@ public class VideoStreamNameListener implements MessageListener {
 
 	private void populateCache(String msg) {
 
-		System.out.println("oflademo entered populateCache :: " + msg);
+		
 		log.debug("oflademo entered populateCache :: " + msg);
 		if (msg != null) {
 			if (msg.indexOf("_") > 0) {
@@ -62,8 +61,7 @@ public class VideoStreamNameListener implements MessageListener {
 
 				// roomId + "_" + confNumber+"_"+userId
 
-				System.out.println("oflademo adding addConfRoom  :: streamId" + streamId
-						+ "  streamType: " + streamType );
+				
 				log.debug("oflademo adding addConfRoom  :: streamId" + streamId
 						+ "  streamType: " + streamType);
 				

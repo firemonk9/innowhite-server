@@ -32,6 +32,7 @@ PUBLIC "-//ibatis.apache.org//DTD SQL Map Config 2.0//EN"
 	<sqlMap resource="ibatis-mappings/conference_number.xml" />
 	<sqlMap resource="ibatis-mappings/video_data.xml" />
 	<sqlMap resource="ibatis-mappings/session_recording.xml" />
+	<sqlMap resource="ibatis-mappings/server.xml" />
 
 
 

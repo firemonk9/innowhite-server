@@ -38,13 +38,13 @@ public class ImageService {
 	 */
 	public static void main(String[] args) {
 
-		// try {
-		// // log.debug(getImageXMLNew("Anita",
-		// // "http://127.0.0.1:5080/whiteboard/servlet/UserImageList"));
-		// } catch (IOException e) {
-		// // TODO Auto-generated catch block
-		// e.printStackTrace();
-		// }
+	    String actualURL = "/mnt/win/pptx//1200/Thumbnail/24.jpg";
+	    int count  = actualURL.lastIndexOf("/");
+	    String temp =actualURL.substring(0, count+1);
+	    String temp1 = actualURL.substring(count+1);
+	    String actualFile = temp+"Slide"+temp1;
+	    System.err.println(actualFile);
+	    
 	}
 
 	/*
@@ -476,9 +476,23 @@ public class ImageService {
 				{
 					log.debug(" thumbsURL "+thumbsURL+"  THUMBS "+Constants.THUMBS_PATH+" ACTUAL "+Constants.ACTUAL_PATH);
 					String actualURL = thumbsURL.replace(Constants.THUMBS_PATH, Constants.ACTUAL_PATH);
+					
 					File actFile = new File(actualURL);
 					if(actFile.exists())
 						return actFile.getAbsolutePath();
+					else{ // check for swf file
+					    
+					    log.debug(" checking if the file is  swf ");
+					    int count  = actualURL.lastIndexOf("/");
+					    String temp =actualURL.substring(0, count+1);
+					    String temp1 = actualURL.substring(count+1);
+					    String actualFile = temp+"Slide"+temp1;
+					    actFile = new File(actualFile);
+						if(actFile.exists())
+							return actFile.getAbsolutePath();
+					}
+				
+				
 				}
 			}
 		}

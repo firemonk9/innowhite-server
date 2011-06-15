@@ -32,7 +32,8 @@ public class Constants {
 		public static  String TEMP_LOCATION = "TEMP_LOCATION";
 		
 		public static final String ALLOWED_INPUT_FILES="doc,ppt,odt,pdf,pps,pptx";
-		public static final String ALLOWED_PPTX_INPUT_FILES="ppt,pptx";
+		public static final String ALLOWED_PPTX_INPUT_FILES="ppt,pptx,pdf";
+		
 		
 		
 		public static final String USER_DELIMITER = "##P##";

@@ -1,6 +1,8 @@
 package com.innowhite.whiteboard.service;
 
-import org.hsqldb.lib.HashMap;
+
+import java.util.HashMap;
+
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.BeanFactory;

@@ -65,7 +65,7 @@ public class ViewRoomServlet extends HttpServlet {
 		//  if(validServiceStatus.equals(InnowhiteConstants.SUCCESS)){
 			  Utility.usersInPlayBackMap.put(roomId, roomId);
 			  WhiteboardAuthenticationDAOImpl.updatePlayBackActive(roomId);
-			  ServletUtil.setCutomRequestProp(request, response,true,null);
+			  ServletUtil.setCutomRequestProp(request, response,true,null,null);
 			  getServletConfig().getServletContext().getRequestDispatcher("/collab.jsp").forward(request, response);
 
 		 // }
