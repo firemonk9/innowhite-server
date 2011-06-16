@@ -172,7 +172,8 @@ var innowhitePluginLoaded = false;
      {
 
     	// alert(" in close session .. take the user to another window.");
-    	 var url="/whiteboard/wbusers.jsp";
+    	allowConfirm=false;
+    	 var url="http://innowhite.com";
     	 if(moderator != null)
     	 {
     			if(moderator == true){
@@ -307,8 +308,11 @@ function plugin()
 }
 
 
+  // boolean value
+  var allowConfirm=true;
+  
   var loadUrl = "servlet/SessionRecording"; 
-  window.onbeforeunload = exitCheck;
+  window.onbeforeunload = confirmExit;
   window.onunload = test;
   function test(){
 	  if(recording == true)
@@ -323,9 +327,15 @@ function plugin()
   	//alert('user is exiting');
   }
   
-  function exitCheck(evt){
-  	return "Do yuo want to close this session ?"
+ 
+  
+  function confirmExit(evt)
+  {
+    if(allowConfirm == true)
+        return "Are you sure you want to close this session ?";
+   
   }
+  
   
  /*  window.onbeforeunload = function() {
 
