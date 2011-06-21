@@ -37,8 +37,11 @@ public class VideoDataDao {
 
 	Criteria crit = session.createCriteria(VideoData.class);
 	@SuppressWarnings("unchecked")
-	List<VideoData> list2 = crit.add(Restrictions.eq("roomName", roomId)).list();
-
+	
+	List<VideoData> list2 = crit.add(Restrictions.eq("roomName", roomId))
+	       .add( Restrictions.in( "videoType", new String[] { "DESKTOP", "WHITEBOARD" } ) )
+	    .list();
+	
 	session.clear();
 	session.flush();
 	return list2;
