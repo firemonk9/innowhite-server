@@ -148,7 +148,7 @@ body {
 // Major version of Flash required
 var requiredMajorVersion = 10;
 // Minor version of Flash required
-var requiredMinorVersion = 1;
+var requiredMinorVersion = 2;
 // Minor version of Flash required
 var requiredRevision = 0;
 // Minor version of Flash required
@@ -192,12 +192,12 @@ var screen_sharing=false;
 function start_screen_share (stream_id,recordStatus, serverUrl,roomId)
 {
 	var userAgent = typeof(window.navigator.userAgent) != 'udefined' ? window.navigator.userAgent : '';
-	/* if(userAgent.search(/Firefox/) == -1 && userAgent.search(/Chrome/) == -1 && userAgent.search(/MSIE/) == -1)
+	 if( userAgent.search(/MSIE/) >= 0)
 	{
 		$.openDOMWindow({windowSourceID:'#popUpTemplate'});
 		setTimeout("$('#DOMWindow .DOMWindowContent').html($('#notSapportedBrowser').html())",300);
 		return false;
-	} */
+	} 
 	if(!pluginIsLoad())
 	{
 		pluginRefresh();
@@ -419,9 +419,9 @@ function plugin()
 		{
 			downloadElement.href = 'http://demo.innowhite.com/InnowhitePlugin.pkg';
 		}
-		if(platform.indexOf('Mac') != -1 && window.navigator.userAgent.search(/Chrome/) != -1)
+		if(platform.indexOf('Mac') != -1 && (( window.navigator.userAgent.search(/Chrome/) != -1 ) ||  (window.navigator.userAgent.search(/Safari/) != -1 )))
 		{
-			setTimeout('showReloadPage()',25000);
+			setTimeout('showReloadPage()',10000);
 		} 
 		pluginDetection();
 	}
@@ -521,15 +521,15 @@ if ( hasProductInstall && !hasRequestedVersion ) {
 	<div id="helpWindow" style="display: none;">Help Content Coming
 		soon....</div>
 
-	<div id="notSapportedBrowser" style="display: none;">Safari on
-		Mac is not supported to share the screen. Please use Firefox or Google
+	<div id="notSapportedBrowser" style="display: none;">Internet Explorer
+		 is not supported to share the screen. Please use Firefox or Google
 		Chrome for sharing Screen.</div>
 	<div id="pluginInstalled" style="display: none;">Now You can
 		start sharing your screen during Innowhite meting sessions. Enjoy!</div>
 	<div id="reloadPage" style="display: none;">
-		<h4>We could not load the plugin dynamically</h4>
+		<h4>Plugin cannot be loaded dynamically for Safari and Chrome in Mac</h4>
 
-		Please quit the browser and open again for plugin to get loaded.
+		Please <b>quit</b> your browser and open again for plugin to get loaded and enjoy screen share.
 	</div>
 
 
