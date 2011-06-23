@@ -40,8 +40,6 @@ public class AudioMessageProducer {
 	
 	public synchronized void  sendMessage(final String msg) {
 		//txt = msg;
-	    	
-	    	log.debug(" entered sendMessage ::  "+msg);
 		MessageCreator creator = new MessageCreator() {
 			public Message createMessage(Session session) {
 				TextMessage message = null;

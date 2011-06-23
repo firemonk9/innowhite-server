@@ -3,8 +3,6 @@
  */
 package com.innowhite.whiteboard.test;
 
-import java.util.Date;
-
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -23,15 +21,10 @@ public class InnowhiteServiceTest {
 	public static void main(String[] args) throws Exception {
 		//ServiceClientImp service = new ServiceClientImp();
 		//String content = service.createSession("teacher", "xyz");
-//		String content = ServiceClientImp.createFutureSession("teacher", "xyz","math" ,"03/20/2010");
-//		
-//		log.debug("content in main method "+content);
+		String content = ServiceClientImp.createFutureSession("teacher", "xyz","math" ,"03/20/2010");
+		
+		log.debug("content in main method "+content);
 
-	    	Date d =new Date();
-	    	d.setTime(1308793201730l);
-	    		
-	    	System.err.println(d);
-	    	
 		//deleteRooms("","","");
 		
 	}

@@ -224,12 +224,12 @@ public class MainAudioService {
 	private void fileRecordStartStop(String confRoom, String participant, String startRecordfile, String stopRecordFile) {
 		
 		log.debug("enter fileRecordStartStop room ::  " + confRoom + "  Participant " + participant+"  startRecordfile: "+startRecordfile+"  stopRecordFile: "+stopRecordFile);
-		//log.debug("enter fileRecordStartStop room ::  " + confRoom + "  Participant " + participant+"  startRecordfile: "+startRecordfile+"  stopRecordFile: "+stopRecordFile);
+		System.err.println("enter fileRecordStartStop room ::  " + confRoom + "  Participant " + participant+"  startRecordfile: "+startRecordfile+"  stopRecordFile: "+stopRecordFile);
 		// RoomInfo soi = voiceRooms.get(room);
 
 		String room = UserCacheService.getActualRoom(confRoom);
 		
-		log.debug(" in  fileRecordStartStop .. the room is "+room);
+		System.err.println(" in  fileRecordStartStop .. the room is "+room);
 		
 		if (room == null) {
 			log.warn(" the room is null for getting the file name --  Participant "

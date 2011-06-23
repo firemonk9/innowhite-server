@@ -39,7 +39,7 @@ public class AudioVideoDataMsgListener implements MessageListener{
 		String msgType = message.getStringProperty("MSG_TYPE");
 		String curTime = message.getStringProperty("CURRENT_TIME");
 		
-		log.debug(" msg "+msg+"  curTime "+curTime);
+		
 		
 		audioVideoDataService.saveAudioData(msg,msgType,curTime);
 		
