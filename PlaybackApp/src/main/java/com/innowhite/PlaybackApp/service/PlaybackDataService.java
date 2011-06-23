@@ -21,6 +21,7 @@ import com.innowhite.PlaybackApp.model.SessionBucket;
 import com.innowhite.PlaybackApp.model.SessionRecordings;
 import com.innowhite.PlaybackApp.model.VideoData;
 import com.innowhite.PlaybackApp.util.PlaybackUtil;
+import com.innowhite.PlaybackApp.util.PlaybackVO;
 
 public class PlaybackDataService {
 
@@ -29,6 +30,8 @@ public class PlaybackDataService {
 
     private static final Logger log = LoggerFactory.getLogger(PlaybackDataService.class);
 
+    static PlaybackVO  playbackVO=null;
+    
     public static void loadInit() {
 	ClassPathXmlApplicationContext appContext = new ClassPathXmlApplicationContext(new String[] { "app-context.xml" });
 	// of course, an ApplicationContext is just a BeanFactory
@@ -46,6 +49,8 @@ public class PlaybackDataService {
 	if (args != null && args.length == 1) {
 	    roomId = args[0];
 	}
+	
+	
 
 	SessionRecordingDao sessionRecordingsDao = (SessionRecordingDao) factory.getBean("sessionRecordingsDao");
 	List<SessionRecordings> sessionRecordingsList = sessionRecordingsDao.getSessionRecordingList(roomId);
@@ -55,7 +60,10 @@ public class PlaybackDataService {
 
 	VideoDataDao videoDataDao = (VideoDataDao) factory.getBean("videoDataDao");
 	List<VideoData> videoDataList = videoDataDao.getVideoDataList(roomId);
-
+	
+	playbackVO= (PlaybackVO) factory.getBean("playBackVO");
+	PlaybackUtil.setPlaybackVO(playbackVO);
+	
 	// replace unix file path to windows file path.
 
 	if (PlaybackUtil.isWindows()) {
@@ -158,7 +166,7 @@ public class PlaybackDataService {
 	    if (videoStartTime <= sessionStartTime && videoEndTime <= sessionEndTime && videoEndTime >= sessionStartTime) {
 		log.debug("videoStartTime<=sessionStartTime && videoEndTime<=sessionEndTime && videoEndTime>=sessionStartTime");
 		String newVideoPath = PlaybackUtil.getUnique();
-		cmd = "-i " + videoPath + " -ss " + PlaybackUtil.secondsToHours(sessionStartTime - videoStartTime) + "-an -t " + PlaybackUtil.secondsToHours(videoEndTime - sessionStartTime) + " "
+		cmd = "-i " + videoPath + " -ss " + PlaybackUtil.secondsToHours(sessionStartTime - videoStartTime) + " -an -t " + PlaybackUtil.secondsToHours(videoEndTime - sessionStartTime) + " "
 			+ videoPath.replace(".flv", newVideoPath + ".avi");
 		PlaybackUtil.invokeProcess(cmd);
 		vd = new VideoData();
@@ -168,7 +176,7 @@ public class PlaybackDataService {
 	    } else if (videoStartTime <= sessionStartTime && videoEndTime >= sessionEndTime) {
 		log.debug("videoStartTime<=sessionStartTime && videoEndTime>=sessionEndTime");
 		String newVideoPath = PlaybackUtil.getUnique();
-		cmd = "-i " + videoPath + " -ss " + PlaybackUtil.secondsToHours(sessionStartTime - videoStartTime) + "-an -t " + PlaybackUtil.secondsToHours(sessionEndTime - sessionStartTime) + " "
+		cmd = "-i " + videoPath + " -ss " + PlaybackUtil.secondsToHours(sessionStartTime - videoStartTime) + " -an -t " + PlaybackUtil.secondsToHours(sessionEndTime - sessionStartTime) + " "
 			+ videoPath.replace(".flv", newVideoPath + ".avi");
 		PlaybackUtil.invokeProcess(cmd);
 		vd = new VideoData();

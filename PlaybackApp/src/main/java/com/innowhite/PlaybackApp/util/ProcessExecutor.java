@@ -8,19 +8,25 @@ import java.io.InputStreamReader;
 
 public class ProcessExecutor {
 
-    public boolean executeProcess(String cmd) {
+    public boolean executeProcess(String cmd, String tempPath) {
 
 	try {
 	    // String cmd = executable + " -i " + input + " " + params + " " +
 	    // output;
 	    System.out.println(cmd);
-	    File f = new File("file_"+Math.random()*10000+".sh");
-	    FileWriter fw = new FileWriter(f);
-	    fw.write("#!/bin/bash \n");
-	    fw.write(cmd+"\n");
-	    fw.close();
-	    cmd = f.getAbsolutePath();
-	    MakeExectuable.getInstance().setExecutable(cmd);
+
+	    if (PlaybackUtil.isWindows() == false) {
+		File f = new File(tempPath+"/file_" + Math.random() * 10000 + ".sh");
+		FileWriter fw = new FileWriter(f);
+		fw.write("#!/bin/bash \n");
+		fw.write(cmd + "\n");
+		fw.close();
+		cmd = f.getAbsolutePath();
+
+		MakeExectuable.getInstance().setExecutable(cmd);
+	    }
+	    
+	    
 	    
 	    Runtime rt = Runtime.getRuntime();
 	    Process proc = rt.exec(cmd);
