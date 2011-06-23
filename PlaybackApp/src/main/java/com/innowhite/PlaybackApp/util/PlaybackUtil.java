@@ -2,13 +2,17 @@ package com.innowhite.PlaybackApp.util;
 
 import java.util.Calendar;
 import java.util.List;
-import java.util.concurrent.TimeUnit;
+
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 import com.innowhite.PlaybackApp.model.AudioData;
 import com.innowhite.PlaybackApp.model.VideoData;
 
 public class PlaybackUtil {
 
+    private static final Logger log = LoggerFactory.getLogger(PlaybackUtil.class);
+    
     public static void main(String args[]) {
 
 	String path = "/opt/InnowhiteData/videos/room83_0.flv";
@@ -30,6 +34,23 @@ public class PlaybackUtil {
 	return (os.indexOf("win") >= 0);
 
     }
+    
+    /*
+     * invokes process executor class and executes the ffmpeg cmd
+     */
+
+    public static void invokeProcess(String cmd) {
+	ProcessExecutor pe = new ProcessExecutor();
+	
+	//MakeExectuable obj = new MakeExectu
+	
+	
+	
+	boolean val = pe.executeProcess("/opt/local/bin/ffmpeg " + cmd);
+	
+	log.debug("return from the proess :: " + val );
+    }
+    
 
     public static String secondsToHours(long seconds) {
 	int ss = (int) ((seconds / 1000) % 60);

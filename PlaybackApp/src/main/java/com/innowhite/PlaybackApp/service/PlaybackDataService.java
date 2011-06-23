@@ -21,7 +21,6 @@ import com.innowhite.PlaybackApp.model.SessionBucket;
 import com.innowhite.PlaybackApp.model.SessionRecordings;
 import com.innowhite.PlaybackApp.model.VideoData;
 import com.innowhite.PlaybackApp.util.PlaybackUtil;
-import com.innowhite.PlaybackApp.util.ProcessExecutor;
 
 public class PlaybackDataService {
 
@@ -43,7 +42,10 @@ public class PlaybackDataService {
 	// of course, an ApplicationContext is just a BeanFactory
 	BeanFactory factory = (BeanFactory) appContext;
 
-	String roomId = "Rahul5";
+	String roomId = "Dhiraj4";
+	if (args != null && args.length == 1) {
+	    roomId = args[0];
+	}
 
 	SessionRecordingDao sessionRecordingsDao = (SessionRecordingDao) factory.getBean("sessionRecordingsDao");
 	List<SessionRecordings> sessionRecordingsList = sessionRecordingsDao.getSessionRecordingList(roomId);
@@ -156,9 +158,9 @@ public class PlaybackDataService {
 	    if (videoStartTime <= sessionStartTime && videoEndTime <= sessionEndTime && videoEndTime >= sessionStartTime) {
 		log.debug("videoStartTime<=sessionStartTime && videoEndTime<=sessionEndTime && videoEndTime>=sessionStartTime");
 		String newVideoPath = PlaybackUtil.getUnique();
-		cmd = "-i " + videoPath + " -ss " + PlaybackUtil.secondsToHours(sessionStartTime - videoStartTime) + " -t " + PlaybackUtil.secondsToHours(videoEndTime - sessionStartTime) + " "
+		cmd = "-i " + videoPath + " -ss " + PlaybackUtil.secondsToHours(sessionStartTime - videoStartTime) + "-an -t " + PlaybackUtil.secondsToHours(videoEndTime - sessionStartTime) + " "
 			+ videoPath.replace(".flv", newVideoPath + ".avi");
-		invokeProcess(cmd);
+		PlaybackUtil.invokeProcess(cmd);
 		vd = new VideoData();
 		vd.setFilePath(videoPath.replace(".flv", newVideoPath + ".avi"));
 		vd.setStartTime(new Date(sessionStartTime));
@@ -166,9 +168,9 @@ public class PlaybackDataService {
 	    } else if (videoStartTime <= sessionStartTime && videoEndTime >= sessionEndTime) {
 		log.debug("videoStartTime<=sessionStartTime && videoEndTime>=sessionEndTime");
 		String newVideoPath = PlaybackUtil.getUnique();
-		cmd = "-i " + videoPath + " -ss " + PlaybackUtil.secondsToHours(sessionStartTime - videoStartTime) + " -t " + PlaybackUtil.secondsToHours(sessionEndTime - sessionStartTime) + " "
+		cmd = "-i " + videoPath + " -ss " + PlaybackUtil.secondsToHours(sessionStartTime - videoStartTime) + "-an -t " + PlaybackUtil.secondsToHours(sessionEndTime - sessionStartTime) + " "
 			+ videoPath.replace(".flv", newVideoPath + ".avi");
-		invokeProcess(cmd);
+		PlaybackUtil.invokeProcess(cmd);
 		vd = new VideoData();
 		vd.setFilePath(videoPath.replace(".flv", newVideoPath + ".avi"));
 		vd.setStartTime(new Date(sessionStartTime));
@@ -176,8 +178,8 @@ public class PlaybackDataService {
 	    } else if (videoStartTime >= sessionStartTime && videoStartTime <= sessionEndTime && videoEndTime <= sessionEndTime && videoEndTime >= sessionStartTime) {
 		log.debug("videoStartTime>=sessionStartTime && videoStartTime<=sessionEndTime && videoEndTime<=sessionEndTime && videoEndTime>=sessionStartTime");
 		String newVideoPath = PlaybackUtil.getUnique();
-		cmd = "-i " + videoPath + " -ss 00:00:00 -t " + PlaybackUtil.secondsToHours(videoEndTime - videoStartTime) + " " + videoPath.replace(".flv", newVideoPath + ".avi");
-		invokeProcess(cmd);
+		cmd = "-i " + videoPath + " -ss 00:00:00 -an -t " + PlaybackUtil.secondsToHours(videoEndTime - videoStartTime) + " " + videoPath.replace(".flv", newVideoPath + ".avi");
+		PlaybackUtil.invokeProcess(cmd);
 		vd = new VideoData();
 		vd.setFilePath(videoPath.replace(".flv", newVideoPath + ".avi"));
 		vd.setStartTime(new Date(videoStartTime));
@@ -185,8 +187,8 @@ public class PlaybackDataService {
 	    } else if (videoStartTime >= sessionStartTime && videoStartTime <= sessionEndTime && videoEndTime >= sessionEndTime) {
 		log.debug("videoStartTime>=sessionStartTime && videoStartTime<=sessionEndTime && videoEndTime>=sessionEndTime");
 		String newVideoPath = PlaybackUtil.getUnique();
-		cmd = "-i " + videoPath + " -ss 00:00:00 -t " + PlaybackUtil.secondsToHours(sessionEndTime - videoStartTime) + " " + videoPath.replace(".flv", newVideoPath + ".avi");
-		invokeProcess(cmd);
+		cmd = "-i " + videoPath + " -ss 00:00:00 -an -t " + PlaybackUtil.secondsToHours(sessionEndTime - videoStartTime) + " " + videoPath.replace(".flv", newVideoPath + ".avi");
+		PlaybackUtil.invokeProcess(cmd);
 		vd = new VideoData();
 		vd.setFilePath(videoPath.replace(".flv", newVideoPath + ".avi"));
 		vd.setStartTime(new Date(videoStartTime));
@@ -207,8 +209,10 @@ public class PlaybackDataService {
 	long audioStartTime = audioData.getStartTime().getTime();
 	long audioEndTime = audioData.getEndTime().getTime();
 	String audioPath = audioData.getFilePath();
-	log.debug("audioStartStime::" + audioData.getStartTime());
-	log.debug("audioEndStime::" + audioData.getEndTime());
+	log.debug("audioStartStime::" + audioStartTime);
+	log.debug("audioEndStime::" + audioEndTime);
+	log.debug("sessionStartTime::" + sessionStartTime);
+	log.debug("sessionEndTime::" + sessionEndTime);
 	log.debug("audio Path::" + audioPath);
 	String cmd = null;
 	AudioData ad = null;
@@ -220,7 +224,7 @@ public class PlaybackDataService {
 	    // +audioPath.replace(".wav", newAudioPath+".mp3");
 	    cmd = "-i " + audioPath + " -ss " + PlaybackUtil.secondsToHours(sessionStartTime - audioStartTime) + " -t " + PlaybackUtil.secondsToHours(audioEndTime - sessionStartTime)
 		    + " -ar 44100 -ab 64k " + audioPath.replace(".wav", newAudioPath + ".avi");
-	    invokeProcess(cmd);
+	    PlaybackUtil.invokeProcess(cmd);
 	    ad = new AudioData();
 	    ad.setFilePath(audioPath.replace(".wav", newAudioPath + ".avi"));
 	    ad.setStartTime(new Date(sessionStartTime));
@@ -233,7 +237,7 @@ public class PlaybackDataService {
 	    // +audioPath.replace(".wav", newAudioPath+".mp3");
 	    cmd = "-i " + audioPath + " -ss " + PlaybackUtil.secondsToHours(sessionStartTime - audioStartTime) + " -t " + PlaybackUtil.secondsToHours(sessionEndTime - sessionStartTime)
 		    + " -ar 44100 -ab 64k " + audioPath.replace(".wav", newAudioPath + ".avi");
-	    invokeProcess(cmd);
+	    PlaybackUtil.invokeProcess(cmd);
 	    ad = new AudioData();
 	    ad.setFilePath(audioPath.replace(".wav", newAudioPath + ".avi"));
 	    ad.setStartTime(new Date(sessionStartTime));
@@ -247,7 +251,7 @@ public class PlaybackDataService {
 	    // "-i "+audioPath+" -ss 00:00:00 -t "+PlaybackUtil.secondsToHours(audioEndTime-audioStartTime)+"  -ab 32k -acodec libmp3lame -qscale 8 -ab 196608 "
 	    // +audioPath.replace(".wav", newAudioPath+".mp3");
 	    cmd = "-i " + audioPath + " -ss 00:00:00 -t " + PlaybackUtil.secondsToHours(audioEndTime - audioStartTime) + " -ar 44100 -ab 64k " + audioPath.replace(".wav", newAudioPath + ".avi");
-	    invokeProcess(cmd);
+	    PlaybackUtil.invokeProcess(cmd);
 	    ad = new AudioData();
 	    ad.setFilePath(audioPath.replace(".wav", newAudioPath + ".avi"));
 	    ad.setStartTime(new Date(audioStartTime));
@@ -261,7 +265,7 @@ public class PlaybackDataService {
 	    // "-i "+audioPath+" -ss 00:00:00 -t "+PlaybackUtil.secondsToHours(sessionEndTime-audioStartTime)+"  -ab 32k -acodec libmp3lame -qscale 8 -ab 196608 "
 	    // +audioPath.replace(".wav", newAudioPath+".mp3");
 	    cmd = "-i " + audioPath + " -ss 00:00:00 -t " + PlaybackUtil.secondsToHours(sessionEndTime - audioStartTime) + " -ar 44100 -ab 64k " + audioPath.replace(".wav", newAudioPath + ".avi");
-	    invokeProcess(cmd);
+	    PlaybackUtil.invokeProcess(cmd);
 	    ad = new AudioData();
 	    ad.setFilePath(audioPath.replace(".wav", newAudioPath + ".avi"));
 	    ad.setStartTime(new Date(audioStartTime));
@@ -272,15 +276,6 @@ public class PlaybackDataService {
 	// log.debug("audioData: End Time:: "+ad.getEndTime());
 	log.debug("audioData: File Path:: " + ad.getFilePath());
 	sb.getAudioDataList().add(ad);
-    }
-
-    /*
-     * invokes process executor class and executes the ffmpeg cmd
-     */
-
-    private static void invokeProcess(String cmd) {
-	ProcessExecutor pe = new ProcessExecutor();
-	log.debug("return from the proess :: " + pe.executeProcess("C:/ffmpeg/ffmpeg.exe " + cmd));
     }
 
     private static void mapAudioToVideoStartBetween(List<AudioData> audioList, int j, List<VideoData> videos, long sessionStartTime, long sessionEndTime) {
@@ -345,7 +340,7 @@ public class PlaybackDataService {
 		    newVideoPath = PlaybackUtil.getUnique();
 		    cmd = "-i " + videos.get(videoStartIndex).getFilePath() + " -ss 00:00:00 -t " + PlaybackUtil.secondsToHours(audioStartTime - videoStartTime) + " -ar 44100 -ab 64k "
 			    + videos.get(videoStartIndex).getFilePath().replace(".avi", "playlist" + newVideoPath + ".mp4");
-		    invokeProcess(cmd);
+		    PlaybackUtil.invokeProcess(cmd);
 		    finalVideoPlaylist.add(videos.get(videoStartIndex).getFilePath().replace(".avi", "playlist" + newVideoPath + ".mp4"));
 		    // audioList.get(j+1).getStartTime()!=null
 		    // if more than one audio then cut/merge the video till the
@@ -356,7 +351,7 @@ public class PlaybackDataService {
 			cmd = "-i " + videos.get(videoStartIndex).getFilePath() + " -ss " + PlaybackUtil.secondsToHours(audioStartTime - videoStartTime) + " -t "
 				+ PlaybackUtil.secondsToHours(nextAudioStartTime - audioStartTime) + " "
 				+ videos.get(videoStartIndex).getFilePath().replace(".avi", "int_play" + newVideoPath + ".avi");
-			invokeProcess(cmd);
+			PlaybackUtil.invokeProcess(cmd);
 		    }
 		    // cut/merge the video till current video ends
 		    else {
@@ -364,14 +359,14 @@ public class PlaybackDataService {
 			newVideoPath = PlaybackUtil.getUnique();
 			cmd = "-i " + videos.get(videoStartIndex).getFilePath() + " -ss " + PlaybackUtil.secondsToHours(audioStartTime - videoStartTime) + " "
 				+ videos.get(videoStartIndex).getFilePath().replace(".avi", "int_play" + newVideoPath + ".avi");
-			invokeProcess(cmd);
+			PlaybackUtil.invokeProcess(cmd);
 		    }
 		    // add merged video to playlist
 		    log.debug("merging..");
 		    String newVideoPath1 = PlaybackUtil.getUnique();
 		    cmd = "-i " + videos.get(videoStartIndex).getFilePath().replace(".avi", "int_play" + newVideoPath + ".avi") + " -i " + audioPath + " -ar 44100 -ab 64k "
 			    + videos.get(videoStartIndex).getFilePath().replace(".avi", "playlist" + newVideoPath1 + ".mp4");
-		    invokeProcess(cmd);
+		    PlaybackUtil.invokeProcess(cmd);
 		    finalVideoPlaylist.add(videos.get(videoStartIndex).getFilePath().replace(".avi", "playlist" + newVideoPath1 + ".mp4"));
 		    // finalVideoPlaylist.add(videos.get(videoStartIndex).getFilePath().replace(".flv",
 		    // "playlist"+newVideoPath+".flv"));
@@ -386,7 +381,7 @@ public class PlaybackDataService {
 			cmd = "-i " + videos.get(videoStartIndex).getFilePath() + " -ss " + PlaybackUtil.secondsToHours(audioStartTime - videoStartTime) + " -t "
 				+ PlaybackUtil.secondsToHours(nextAudioStartTime - audioStartTime) + " "
 				+ videos.get(videoStartIndex).getFilePath().replace(".avi", "int_play" + newVideoPath + ".avi");
-			invokeProcess(cmd);
+			PlaybackUtil.invokeProcess(cmd);
 		    }
 		    // cut video from current audio till the end of video
 		    else {
@@ -394,14 +389,14 @@ public class PlaybackDataService {
 			newVideoPath = PlaybackUtil.getUnique();
 			cmd = "-i " + videos.get(videoStartIndex).getFilePath() + " -ss " + PlaybackUtil.secondsToHours(audioStartTime - videoStartTime) + " -t "
 				+ PlaybackUtil.secondsToHours(videoEndTime - audioStartTime) + " " + videos.get(videoStartIndex).getFilePath().replace(".avi", "int_play" + newVideoPath + ".avi");
-			invokeProcess(cmd);
+			PlaybackUtil.invokeProcess(cmd);
 		    }
 		    // add merged video to playlist
 		    log.debug("merging...");
 		    String newVideoPath1 = PlaybackUtil.getUnique();
 		    cmd = "-i " + videos.get(videoStartIndex).getFilePath().replace(".avi", "int_play" + newVideoPath + ".avi") + " -i " + audioPath + " -ar 44100 -ab 64k "
 			    + videos.get(videoStartIndex).getFilePath().replace(".avi", "playlist" + newVideoPath1 + ".mp4");
-		    invokeProcess(cmd);
+		    PlaybackUtil.invokeProcess(cmd);
 		    finalVideoPlaylist.add(videos.get(videoStartIndex).getFilePath().replace(".avi", "playlist" + newVideoPath1 + ".mp4"));
 		    // finalVideoPlaylist.add(videos.get(videoStartIndex).getFilePath().replace(".flv",
 		    // "playlist"+newVideoPath+".flv"));
@@ -414,7 +409,7 @@ public class PlaybackDataService {
 		    newVideoPath = PlaybackUtil.getUnique();
 		    cmd = "-i " + videos.get(videoStartIndex).getFilePath() + " -ss " + PlaybackUtil.secondsToHours(audioStartTime - videoStartTime) + " -t "
 			    + PlaybackUtil.secondsToHours(nextAudioStartTime - audioStartTime) + " " + videos.get(videoStartIndex).getFilePath().replace(".avi", "int_play" + newVideoPath + ".avi");
-		    invokeProcess(cmd);
+		    PlaybackUtil.invokeProcess(cmd);
 		    log.debug(cmd);
 		}
 		// cut video from current audio till the end of video
@@ -423,7 +418,7 @@ public class PlaybackDataService {
 		    newVideoPath = PlaybackUtil.getUnique();
 		    cmd = "-i " + videos.get(videoStartIndex).getFilePath() + " -ss " + PlaybackUtil.secondsToHours(audioList.get(j).getStartTime().getTime() - videoStartTime) + " "
 			    + videos.get(videoStartIndex).getFilePath().replace(".avi", "int_play" + newVideoPath + ".avi");
-		    invokeProcess(cmd);
+		    PlaybackUtil.invokeProcess(cmd);
 		    log.debug(cmd);
 		}
 		log.debug("merging...");
@@ -433,7 +428,7 @@ public class PlaybackDataService {
 		newVideoPath = PlaybackUtil.getUnique();
 		cmd = "-i " + videos.get(videoStartIndex).getFilePath() + " -i " + audioPath + " -ar 44100 -ab 64k "
 			+ videos.get(videoStartIndex).getFilePath().replace(".avi", "playlist" + newVideoPath + ".mp4");
-		invokeProcess(cmd);
+		PlaybackUtil.invokeProcess(cmd);
 		log.debug(cmd);
 		finalVideoPlaylist.add(videos.get(videoStartIndex).getFilePath().replace(".avi", "playlist" + newVideoPath + ".mp4"));
 	    }
@@ -446,7 +441,7 @@ public class PlaybackDataService {
 		    if (audioStartTime == videoStartTime) {
 			newVideoPath = PlaybackUtil.getUnique();
 			cmd = "-i " + videos.get(l).getFilePath() + " -i " + audioPath + " -ar 44100 -ab 64k " + videos.get(l).getFilePath().replace(".avi", "playlist" + newVideoPath + ".mp4");
-			invokeProcess(cmd);
+			PlaybackUtil.invokeProcess(cmd);
 			log.debug(cmd);
 			finalVideoPlaylist.add(videos.get(l).getFilePath().replace(".avi", "playlist" + newVideoPath + ".mp4"));
 		    } else if (audioStartTime > videoStartTime) {
@@ -454,14 +449,14 @@ public class PlaybackDataService {
 			newVideoPath = PlaybackUtil.getUnique();
 			cmd = "-i " + videos.get(l).getFilePath() + " -ss 00:00:00 -t " + PlaybackUtil.secondsToHours(audioStartTime - videoStartTime) + " "
 				+ videos.get(l).getFilePath().replace(".avi", "playlist" + newVideoPath + ".mp4");
-			invokeProcess(cmd);
+			PlaybackUtil.invokeProcess(cmd);
 			log.debug(cmd);
 			finalVideoPlaylist.add(videos.get(l).getFilePath().replace(".avi", "playlist" + newVideoPath + ".mp4"));
 
 			newVideoPath = PlaybackUtil.getUnique();
 			cmd = "-i " + videos.get(l).getFilePath() + " -ss " + PlaybackUtil.secondsToHours(audioStartTime - videoStartTime) + " "
 				+ videos.get(l).getFilePath().replace(".avi", "init_play" + newVideoPath + ".avi");
-			invokeProcess(cmd);
+			PlaybackUtil.invokeProcess(cmd);
 			log.debug(cmd);
 			// finalVideoPlaylist.add(videos.get(videoStartIndex).getFilePath().replace(".avi",
 			// "playlist"+newVideoPath+".avi"));
@@ -469,7 +464,7 @@ public class PlaybackDataService {
 			String newVideoPath1 = PlaybackUtil.getUnique();
 			cmd = "-i " + videos.get(l).getFilePath().replace(".avi", "init_play" + newVideoPath + ".avi") + " -i " + audioPath + " -ar 44100 -ab 64k "
 				+ videos.get(l).getFilePath().replace(".avi", "playlist" + newVideoPath1 + ".mp4");
-			invokeProcess(cmd);
+			PlaybackUtil.invokeProcess(cmd);
 			log.debug(cmd);
 			finalVideoPlaylist.add(videos.get(l).getFilePath().replace(".avi", "playlist" + newVideoPath1 + ".mp4"));
 			//
@@ -477,25 +472,25 @@ public class PlaybackDataService {
 			// cmd =
 			// "-i "+audioPath+" -ss 00:00:00 -t "+PlaybackUtil.secondsToHours(videoEndTime-audioStartTime)+" "+audioPath.replace(".mp3",
 			// newAudioPath+".mp3");
-			// invokeProcess(cmd);
+			// PlaybackUtil.invokeProcess(cmd);
 			//
 			// String newVideoPath = PlaybackUtil.getUnique();
 			// cmd =
 			// "-i "+videos.get(l).getFilePath()+" -i "+audioPath.replace(".mp3",
 			// newAudioPath+".mp3")+" -ar 22050 "+videos.get(l).getFilePath().replace(".flv","playlist"+newVideoPath+".flv");
-			// invokeProcess(cmd);
+			// PlaybackUtil.invokeProcess(cmd);
 			// finalVideoPlaylist.add(videos.get(l).getFilePath().replace(".flv","playlist"+newVideoPath+".flv"));
 		    }
 		    // cut audio and merge with video
 		    String newAudioPath = PlaybackUtil.getUnique();
 		    cmd = "-i " + audioPath + " -ss 00:00:00 -t " + PlaybackUtil.secondsToHours(videoEndTime - audioStartTime) + " " + audioPath.replace(".avi", "init_play" + newAudioPath + ".avi");
-		    invokeProcess(cmd);
+		    PlaybackUtil.invokeProcess(cmd);
 		    log.debug(cmd);
 
 		    newVideoPath = PlaybackUtil.getUnique();
 		    cmd = "-i " + videos.get(l).getFilePath() + " -i " + audioPath.replace(".avi", "init_play" + newAudioPath + ".avi") + " -ar 44100 -ab 64k "
 			    + videos.get(l).getFilePath().replace(".avi", "playlist" + newVideoPath + ".mp4");
-		    invokeProcess(cmd);
+		    PlaybackUtil.invokeProcess(cmd);
 		    log.debug(cmd);
 		    finalVideoPlaylist.add(videos.get(l).getFilePath().replace(".avi", "playlist" + newVideoPath + ".mp4"));
 		} else if (audioStartTime < videoStartTime && audioEndTime > videoEndTime) {
@@ -503,13 +498,13 @@ public class PlaybackDataService {
 		    String newAudioPath = PlaybackUtil.getUnique();
 		    cmd = "-i " + audioPath + " -ss " + PlaybackUtil.secondsToHours(videoStartTime - audioStartTime) + " -t " + PlaybackUtil.secondsToHours(videoEndTime - videoStartTime) + " "
 			    + audioPath.replace(".avi", newAudioPath + ".avi");
-		    invokeProcess(cmd);
+		    PlaybackUtil.invokeProcess(cmd);
 		    log.debug(cmd);
 
 		    newVideoPath = PlaybackUtil.getUnique();
 		    cmd = "-i " + videos.get(l).getFilePath() + " -i " + audioPath.replace(".avi", newAudioPath + ".avi") + " -ar 44100 -ab 64k "
 			    + videos.get(l).getFilePath().replace(".avi", "playlist" + newVideoPath + ".mp4");
-		    invokeProcess(cmd);
+		    PlaybackUtil.invokeProcess(cmd);
 		    log.debug(cmd);
 		    finalVideoPlaylist.add(videos.get(l).getFilePath().replace(".avi", "playlist" + newVideoPath + ".mp4"));
 		} else if (audioStartTime < videoStartTime && audioEndTime >= videoStartTime && audioEndTime <= videoEndTime) {
@@ -517,12 +512,12 @@ public class PlaybackDataService {
 		    String newAudioPath = PlaybackUtil.getUnique();
 		    cmd = "-i " + audioPath + " -ss " + PlaybackUtil.secondsToHours(videoStartTime - audioStartTime) + " -t " + PlaybackUtil.secondsToHours(audioEndTime - videoStartTime) + " "
 			    + audioPath.replace(".avi", newAudioPath + ".avi");
-		    invokeProcess(cmd);
+		    PlaybackUtil.invokeProcess(cmd);
 		    log.debug(cmd);
 		    newVideoPath = PlaybackUtil.getUnique();
 		    cmd = "-i " + videos.get(l).getFilePath() + " -i " + audioPath.replace(".avi", newAudioPath + ".avi") + " -ar 44100 -ab 64k "
 			    + videos.get(l).getFilePath().replace(".avi", "playlist" + newVideoPath + ".mp4");
-		    invokeProcess(cmd);
+		    PlaybackUtil.invokeProcess(cmd);
 		    log.debug(cmd);
 		    finalVideoPlaylist.set(l, videos.get(l).getFilePath().replace(".avi", "playlist" + newVideoPath + ".mp4"));
 		}

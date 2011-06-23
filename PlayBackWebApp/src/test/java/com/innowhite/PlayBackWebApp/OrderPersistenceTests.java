@@ -49,6 +49,7 @@ public class OrderPersistenceTests {
 //	// Otherwise the query returns the existing order (and we didn't set the
 //	// parent in the item)...
 //	session.clear();
+	
 	assertEquals(1, 1);
 
     }
@@ -56,16 +57,16 @@ public class OrderPersistenceTests {
     @Test
     @Transactional
     public void testAudioSaveAndFind() throws Exception {
-//	Session session = sessionFactory.getCurrentSession();
-//	AudioData wb = new AudioData();
-//	wb.setRoomName("test123");
-//	wb.setFilePath("file1" + (int) (Math.random() * 10000));
-//	wb.setStartTime(new Date());
-//	session.save(wb);
-//	session.flush();
-//	// Otherwise the query returns the existing order (and we didn't set the
-//	// parent in the item)...
-//	session.clear();
+	Session session = sessionFactory.getCurrentSession();
+	AudioData wb = new AudioData();
+	wb.setRoomName("test123");
+	wb.setFilePath("file1" + (int) (Math.random() * 10000));
+	wb.setStartTime(new Date());
+	session.save(wb);
+	session.flush();
+	// Otherwise the query returns the existing order (and we didn't set the
+	// parent in the item)...
+	session.clear();
 	assertEquals(1, 1);
 
 //	int val = updateAudioData(wb);
