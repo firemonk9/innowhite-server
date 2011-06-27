@@ -30,8 +30,8 @@ public class PlaybackDataService {
 
     private static final Logger log = LoggerFactory.getLogger(PlaybackDataService.class);
 
-    static PlaybackVO  playbackVO=null;
-    
+    static PlaybackVO playbackVO = null;
+
     public static void loadInit() {
 	ClassPathXmlApplicationContext appContext = new ClassPathXmlApplicationContext(new String[] { "app-context.xml" });
 	// of course, an ApplicationContext is just a BeanFactory
@@ -49,8 +49,6 @@ public class PlaybackDataService {
 	if (args != null && args.length == 1) {
 	    roomId = args[0];
 	}
-	
-	
 
 	SessionRecordingDao sessionRecordingsDao = (SessionRecordingDao) factory.getBean("sessionRecordingsDao");
 	List<SessionRecordings> sessionRecordingsList = sessionRecordingsDao.getSessionRecordingList(roomId);
@@ -60,10 +58,14 @@ public class PlaybackDataService {
 
 	VideoDataDao videoDataDao = (VideoDataDao) factory.getBean("videoDataDao");
 	List<VideoData> videoDataList = videoDataDao.getVideoDataList(roomId);
-	
-	playbackVO= (PlaybackVO) factory.getBean("playBackVO");
+
+	PlayBackPlayListDao playBackPlayListDao = (PlayBackPlayListDao) factory.getBean("playBackPlayListDao");
+	// List<VideoData> videoDataList =
+	// sessionRecordingsDao.getVideoDataList(roomId);
+
+	playbackVO = (PlaybackVO) factory.getBean("playBackVO");
 	PlaybackUtil.setPlaybackVO(playbackVO);
-	
+
 	// replace unix file path to windows file path.
 
 	if (PlaybackUtil.isWindows()) {
@@ -143,7 +145,7 @@ public class PlaybackDataService {
 		playlist.setInsertedDate(new Date());
 		playlist.setRoomName(roomId);
 	    }
-	    // updateFinalVideoTable(listPlayback);
+	    updateFinalVideoTable(listPlayback,  playBackPlayListDao);
 	}
     }
 
@@ -533,12 +535,14 @@ public class PlaybackDataService {
 	}
     }
 
-    private static void updateFinalVideoTable(List<PlayBackPlayList> list) {
-	ClassPathXmlApplicationContext appContext = new ClassPathXmlApplicationContext(new String[] { "app-context.xml" });
+    private static void updateFinalVideoTable(List<PlayBackPlayList> list, PlayBackPlayListDao playBackPlayListDao) {
+	// ClassPathXmlApplicationContext appContext = new
+	// ClassPathXmlApplicationContext(new String[] { "app-context.xml" });
 	// of course, an ApplicationContext is just a BeanFactory
-	BeanFactory factory = (BeanFactory) appContext;
+	// BeanFactory factory = (BeanFactory) appContext;
 
-	PlayBackPlayListDao sessionRecordingsDao = (PlayBackPlayListDao) factory.getBean("playBackPlayListDao");
-	sessionRecordingsDao.savePlayBackPlayList(list);
+	// PlayBackPlayListDao sessionRecordingsDao = (PlayBackPlayListDao)
+	// factory.getBean("playBackPlayListDao");
+	playBackPlayListDao.savePlayBackPlayList(list);
     }
 }
