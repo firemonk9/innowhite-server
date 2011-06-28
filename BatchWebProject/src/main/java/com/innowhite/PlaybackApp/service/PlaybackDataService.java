@@ -194,6 +194,7 @@ public class PlaybackDataService {
 		playlist.setFilePath(finalVideoPlaylist.get(i));
 		playlist.setInsertedDate(new Date());
 		playlist.setRoomName(roomId);
+		listPlayback.add(playlist);
 	    }
 	    updateFinalVideoTable(listPlayback,  playBackPlayListDao);
 	}

@@ -13,7 +13,7 @@ import javax.servlet.http.HttpServletResponse;
 import org.springframework.context.ApplicationContext;
 import org.springframework.web.context.support.WebApplicationContextUtils;
 
-import com.innowhite.PlaybackApp.service.BasicThreadCreator;
+import com.innowhite.PlaybackApp.service.TaskExecutorExample;
 
 /**
  * Servlet implementation class CreatePlaybackSession
@@ -51,8 +51,8 @@ public class CreatePlaybackSession extends HttpServlet {
 	String roomId = request.getParameter("ROOM_ID");
 	if (roomId != null && context != null) {
 
-	    BasicThreadCreator basicThreadCreator = (BasicThreadCreator) context.getBean("basicThreadCreator");
-	    basicThreadCreator.startJob(roomId);
+	    TaskExecutorExample basicThreadCreator = (TaskExecutorExample) context.getBean("taskExecutorExample");
+	    basicThreadCreator.fire(roomId);
 	}
 
 	// TODO Auto-generated method stub

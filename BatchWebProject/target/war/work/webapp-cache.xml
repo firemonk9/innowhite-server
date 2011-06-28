@@ -10,6 +10,7 @@
           <string>WEB-INF/spring/root-context.xml</string>
           <string>WEB-INF/views/home.jsp</string>
           <string>WEB-INF/web.xml</string>
+          <string>whiteboardF.html</string>
           <string>WEB-INF/classes/builddef.lst</string>
           <string>WEB-INF/classes/com/innowhite/PlaybackApp/dao/AudioDataDao.class</string>
           <string>WEB-INF/classes/com/innowhite/PlaybackApp/dao/PlayBackPlayListDao.class</string>
@@ -25,6 +26,10 @@
           <string>WEB-INF/classes/com/innowhite/PlaybackApp/model/WhiteboardData.class</string>
           <string>WEB-INF/classes/com/innowhite/PlaybackApp/model/WhitebordDTO.class</string>
           <string>WEB-INF/classes/com/innowhite/PlaybackApp/service/PlaybackDataService.class</string>
+          <string>WEB-INF/classes/com/innowhite/PlaybackApp/service/TaskExecutorExample$1.class</string>
+          <string>WEB-INF/classes/com/innowhite/PlaybackApp/service/TaskExecutorExample.class</string>
+          <string>WEB-INF/classes/com/innowhite/PlaybackApp/servlet/CreatePlaybackSession.class</string>
+          <string>WEB-INF/classes/com/innowhite/PlaybackApp/servlet/ee.class</string>
           <string>WEB-INF/classes/com/innowhite/PlaybackApp/util/MakeExectuable.class</string>
           <string>WEB-INF/classes/com/innowhite/PlaybackApp/util/PlaybackUtil.class</string>
           <string>WEB-INF/classes/com/innowhite/PlaybackApp/util/PlaybackVO.class</string>
