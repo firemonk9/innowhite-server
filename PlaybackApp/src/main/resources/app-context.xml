@@ -43,7 +43,7 @@
 		<property name="locations">
 			<list>
 
-				<value>db.properties</value>
+				<value>innowhite.properties</value>
 			</list>
 		</property>
 	</bean>
@@ -78,7 +78,17 @@
 		</property>
 	</bean>
 
+	<bean id="playBackVO" name="playBackVO"
+		class="com.innowhite.PlaybackApp.util.PlaybackVO">
 
+		<property name="winFFmpegPath" value="${winFFmpegPath}" />
+		<property name="macFFmpegPath" value="${macFFmpegPath}" />
+		<property name="ubuntuFFmpegPath" value="${ubuntuFFmpegPath}" />
+		<property name="winTempLocation" value="${winTempLocation}" />
+		<property name="macTempLocation" value="${macTempLocation}" />
+		<property name="ubuntuTempLocation" value="${ubuntuTempLocation}" />
+		
+	</bean>
 
 
 	<bean id="playBackPlayListDao" name="playBackPlayListDao"
@@ -100,12 +110,12 @@
 		class="com.innowhite.PlaybackApp.dao.VideoDataDao">
 		<property name="sessionFactory" ref="sessionFactory" />
 	</bean>
-	
+
 	<bean id="sessionRecordingsDao" name="sessionRecordingsDao"
 		class="com.innowhite.PlaybackApp.dao.SessionRecordingDao">
 		<property name="sessionFactory" ref="sessionFactory" />
 	</bean>
-	
+
 
 
 </beans>

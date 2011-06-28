@@ -9,11 +9,12 @@ import com.innowhite.PlaybackApp.model.VideoData;
 
 public class PlaybackUtil {
 
+    private static final Logger log = LoggerFactory.getLogger(PlaybackUtil.class);
+
     public static void main(String args[]) {
 
-	String path = "/opt/InnowhiteData/videos/room83_0.flv";
-	String newPath = path.substring(path.lastIndexOf("/"));
-	System.err.println(newPath);
+	String os = System.getProperty("os.name").toLowerCase();
+	System.err.println(os);
     }
 
     public static String getUnique() {
@@ -29,6 +30,36 @@ public class PlaybackUtil {
 	// windows
 	return (os.indexOf("win") >= 0);
 
+    }
+    
+    public static boolean isMac() {
+
+	String os = System.getProperty("os.name").toLowerCase();
+	// windows
+	return (os.indexOf("mac") >= 0);
+
+    }
+    
+    public static boolean isUbuntu() {
+
+	String os = System.getProperty("os.name").toLowerCase();
+	// windows
+	return (os.indexOf("linux") >= 0);
+
+    }
+    
+    
+
+    /*
+     * invokes process executor class and executes the ffmpeg cmd
+     */
+
+    public static void invokeProcess(String cmd) {
+	ProcessExecutor pe = new ProcessExecutor();
+	// MakeExectuable obj = new MakeExectu
+
+	boolean val = pe.executeProcess( playbackVO.getFfmpegPath()+" " + cmd, playbackVO.getTempLocation() );
+	log.debug("return from the proess :: " + val);
     }
 
     public static String secondsToHours(long seconds) {
@@ -58,4 +89,25 @@ public class PlaybackUtil {
 
     }
 
+    static PlaybackVO playbackVO;
+
+    public static void setPlaybackVO(PlaybackVO p) {
+	playbackVO = p;
+	processEnv();
+    }
+
+    private static void processEnv() {
+	
+	if(isWindows())
+	{
+	    playbackVO.setFfmpegPath(playbackVO.getWinFFmpegPath());
+	    playbackVO.setTempLocation(playbackVO.getWinTempLocation());
+	}else if(isMac()){
+	    playbackVO.setFfmpegPath(playbackVO.getMacFFmpegPath());
+	    playbackVO.setTempLocation(playbackVO.getMacTempLocation());
+	}else if(isUbuntu()){
+	    playbackVO.setFfmpegPath(playbackVO.getUbuntuFFmpegPath());
+	    playbackVO.setTempLocation(playbackVO.getUbuntuTempLocation());
+	}
+    }
 }
