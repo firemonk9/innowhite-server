@@ -1,0 +1,3 @@
+#Thu Jun 23 17:37:21 CDT 2011
+//com.springsource.sts.config.flow.coordinates\:http\://www.springframework.org/schema/batch\:/PlaybackApp/src/main/resources/simpleJob.xml=<?xml version\="1.0" encoding\="UTF-8"?>\n<graph>\n<element clazz\="JobModelElement" type\="job">\n<structure end\="645" endstart\="639" start\="513" startend\="568"/>\n<bounds height\="118" width\="136" x\="15" y\="17"/>\n</element>\n</graph>
+eclipse.preferences.version=1

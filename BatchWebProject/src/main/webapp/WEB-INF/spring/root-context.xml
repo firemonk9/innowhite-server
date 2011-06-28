@@ -33,6 +33,9 @@
 	<!-- </bean> -->
 
 
+
+
+
 	<bean id="transactionManager"
 		class="org.springframework.orm.hibernate3.HibernateTransactionManager">
 		<property name="sessionFactory" ref="sessionFactory" />
@@ -43,7 +46,7 @@
 		<property name="locations">
 			<list>
 
-				<value>innowhite.properties</value>
+				<value>WEB-INF/spring/innowhite.properties</value>
 			</list>
 		</property>
 	</bean>
@@ -87,8 +90,10 @@
 		<property name="winTempLocation" value="${winTempLocation}" />
 		<property name="macTempLocation" value="${macTempLocation}" />
 		<property name="ubuntuTempLocation" value="${ubuntuTempLocation}" />
-		
+
 	</bean>
+
+
 
 
 	<bean id="playBackPlayListDao" name="playBackPlayListDao"
@@ -114,6 +119,43 @@
 	<bean id="sessionRecordingsDao" name="sessionRecordingsDao"
 		class="com.innowhite.PlaybackApp.dao.SessionRecordingDao">
 		<property name="sessionFactory" ref="sessionFactory" />
+	</bean>
+
+
+
+<!-- 	<bean id="playThreadExecutor" name="playThreadExecutor" -->
+<!-- 		class="com.innowhite.PlaybackApp.service.ThreadExecutor"> -->
+
+<!-- 		<property name="playbackDataservice" ref="playbackDataservice" /> -->
+
+<!-- 	</bean> -->
+
+<!-- 	<bean id="basicThreadCreator" name="basicThreadCreator" scope="prototype" -->
+<!-- 		class="com.innowhite.PlaybackApp.service.BasicThreadCreator"> -->
+<!-- 		<property name="playThreadExecutor" ref="playThreadExecutor" /> -->
+
+<!-- 	</bean> -->
+
+	<bean id="playbackDataservice" name="playbackDataservice"
+		class="com.innowhite.PlaybackApp.service.PlaybackDataService" >
+		<property name="audioDataDao" ref="audioDataDao" />
+		<property name="videoDataDao" ref="videoDataDao" />
+		<property name="sessionRecordingsDao" ref="sessionRecordingsDao" />
+		<property name="playbackVO" ref="playBackVO" />
+		<property name="playBackPlayListDao" ref="playBackPlayListDao" />
+
+	</bean>
+
+	<bean id="taskExecutor"
+		class="org.springframework.scheduling.concurrent.ThreadPoolTaskExecutor">
+		<property name="corePoolSize" value="5" />
+		<property name="maxPoolSize" value="10" />
+		<property name="queueCapacity" value="25" />
+	</bean>
+
+	<bean id="taskExecutorExample" class="com.innowhite.PlaybackApp.service.TaskExecutorExample">
+		<constructor-arg ref="taskExecutor" />
+		<constructor-arg ref="playbackDataservice" />
 	</bean>
 
 

@@ -32,6 +32,9 @@ public class InvokeRemoteHttpService {
 
 	log.debug(" Enterd roomCloseService roomID " + roomId);
 	try {
+	    if(roomId != null )
+		roomId = roomId.trim();
+	    
 	    HttpClient httpclient = new DefaultHttpClient();
 
 	    String checksumStr = Constants.ROOM_STR + roomId + Constants.SALT_KEY;

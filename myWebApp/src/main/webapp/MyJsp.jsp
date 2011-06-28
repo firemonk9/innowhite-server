@@ -148,7 +148,7 @@ body {
 // Major version of Flash required
 var requiredMajorVersion = 10;
 // Minor version of Flash required
-var requiredMinorVersion = 1;
+var requiredMinorVersion = 2;
 // Minor version of Flash required
 var requiredRevision = 0;
 // Minor version of Flash required
@@ -172,7 +172,8 @@ var innowhitePluginLoaded = false;
      {
 
     	// alert(" in close session .. take the user to another window.");
-    	 var url="/whiteboard/wbusers.jsp";
+    	allowConfirm=false;
+    	 var url="http://innowhite.com";
     	 if(moderator != null)
     	 {
     			if(moderator == true){
@@ -191,12 +192,12 @@ var screen_sharing=false;
 function start_screen_share (stream_id,recordStatus, serverUrl,roomId)
 {
 	var userAgent = typeof(window.navigator.userAgent) != 'udefined' ? window.navigator.userAgent : '';
-	/* if(userAgent.search(/Firefox/) == -1 && userAgent.search(/Chrome/) == -1 && userAgent.search(/MSIE/) == -1)
+	 if( userAgent.search(/MSIE/) >= 0)
 	{
 		$.openDOMWindow({windowSourceID:'#popUpTemplate'});
 		setTimeout("$('#DOMWindow .DOMWindowContent').html($('#notSapportedBrowser').html())",300);
 		return false;
-	} */
+	} 
 	if(!pluginIsLoad())
 	{
 		pluginRefresh();
@@ -215,7 +216,7 @@ function start_screen_share (stream_id,recordStatus, serverUrl,roomId)
 		}
 		else
 		{
-			showDownloadPlugin();
+			showDownloadPlugin();			
 			return "NOT_SUPPORTED_BROWSER"
 		}
 
@@ -270,8 +271,9 @@ function setRecordingStatus(myRecordStatus, myRoomName){
 
 function openHelpWindow()
 {
-	$.openDOMWindow({windowSourceID:'#popUpTemplate',overlayOpacity:50});
-	setTimeout("$('#DOMWindow .DOMWindowContent').html($('#helpWindow').html())",300);
+	alert("sdfsdf");
+	$('.popup-help').css('display', '');
+	$('.fade').css('display', '');
 
 }
 
@@ -307,8 +309,11 @@ function plugin()
 }
 
 
+  // boolean value
+  var allowConfirm=true;
+  
   var loadUrl = "servlet/SessionRecording"; 
-  window.onbeforeunload = exitCheck;
+  window.onbeforeunload = confirmExit;
   window.onunload = test;
   function test(){
 	  if(recording == true)
@@ -323,9 +328,15 @@ function plugin()
   	//alert('user is exiting');
   }
   
-  function exitCheck(evt){
-  	return "Do yuo want to close this session ?"
+ 
+  
+  function confirmExit(evt)
+  {
+    if(allowConfirm == true)
+        return "Are you sure you want to close this session ?";
+   
   }
+  
   
  /*  window.onbeforeunload = function() {
 
@@ -381,7 +392,23 @@ function plugin()
 		pluginRefresh();
 		setTimeout('fixForFF()',10);
 	}
+
 	$(document).ready(function(){
+		$('.help-tabs-head li').click(function(){
+				var value = $(this).text();
+				//alert(value)
+				$('.help-tabs').hide();
+				$('#'+value).show();
+ 
+				$('.help-tabs-head li').removeClass('active');
+				$(this).addClass('active');
+				});
+				$('.close').click(function(){
+						$('.popup-help').css('display', 'none');
+						$('.fade').css('display', 'none');
+						
+				});
+			openHelpWindow();
 			if(window.navigator.userAgent.search(/Firefox/) == -1)
 			{
 				return;
@@ -392,6 +419,22 @@ function plugin()
 			}
 
 			fixForFF();
+			
+			///add handlers, to help window
+			$('.help-tabs-head li').click(function(){
+				var value = $(this).text();
+				//alert(value)
+				$('.help-tabs').hide();
+				$('#'+value).show();
+ 
+				$('.help-tabs-head li').removeClass('active');
+				$(this).addClass('active');
+				});
+				$('.close').click(function(){
+						$('.popup-help').css('display', 'none');
+						$('.fade').css('display', 'none');
+						showDownloadPlugin();
+				});
 		})
 	function showDownloadPlugin()
 	{
@@ -409,9 +452,9 @@ function plugin()
 		{
 			downloadElement.href = 'http://demo.innowhite.com/InnowhitePlugin.pkg';
 		}
-		if(platform.indexOf('Mac') != -1 && window.navigator.userAgent.search(/Chrome/) != -1)
+		if(platform.indexOf('Mac') != -1 && (( window.navigator.userAgent.search(/Chrome/) != -1 ) ||  (window.navigator.userAgent.search(/Safari/) != -1 )))
 		{
-			setTimeout('showReloadPage()',25000);
+			setTimeout('showReloadPage()',10000);
 		} 
 		pluginDetection();
 	}
@@ -488,6 +531,30 @@ if ( hasProductInstall && !hasRequestedVersion ) {
 
 </script>
 
+<div class="fade" style="display: none;"></div>
+
+<div class="popup-help" style="display: none"><div class="close"><img src="images/pop-close-btn.png" alt="close" /></div><div class="pop-heading">Help</div><div class="pop-form login">
+
+<ul class="help-tabs-head"><li class="active ht1">Video</li> <li class="ht2">Voice</li> <li class="ht3">Chat</li> <li class="ht4">Other</li></ul>
+
+<div class="help-tabs" id="Video"><img src="images/help-video-img.png" alt="" align="left" style="margin-right:10px;"/> <p>Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry’s standard dummy text ever since the 1500s, when an unknown printer took a galley </p>
+<p>Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry’s standard dummy text ever since the 1500s, when an unknown printer took a galley </p></div>
+
+<div class="help-tabs" id="Voice" style="display:none;"><img src="images/help-video-img.png" alt="" align="left" style="margin-right:10px;"/> <p>02</p>
+<p>Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry’s standard dummy text ever since the 1500s, when an unknown printer took a galley </p></div>
+
+
+<div class="help-tabs" id="Chat" style="display:none;"><img src="images/help-video-img.png" alt="" align="left" style="margin-right:10px;"/> <p>03</p>
+<p>Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry’s standard dummy text ever since the 1500s, when an unknown printer took a galley </p></div>
+
+
+<div class="help-tabs" id="Other" style="display:none;"><img src="images/help-video-img.png" alt="" align="left" style="margin-right:10px;"/> <p>04</p>
+
+<p>Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry’s standard dummy text ever since the 1500s, when an unknown printer took a galley </p></div>
+
+
+</div></div>
+
 	<div id="pluginContainer">
 		<object id="plugin0" type="application/x-innowhite" width="300"
 			height="300">
@@ -511,15 +578,15 @@ if ( hasProductInstall && !hasRequestedVersion ) {
 	<div id="helpWindow" style="display: none;">Help Content Coming
 		soon....</div>
 
-	<div id="notSapportedBrowser" style="display: none;">Safari on
-		Mac is not supported to share the screen. Please use Firefox or Google
+	<div id="notSapportedBrowser" style="display: none;">Internet Explorer
+		 is not supported to share the screen. Please use Firefox or Google
 		Chrome for sharing Screen.</div>
 	<div id="pluginInstalled" style="display: none;">Now You can
 		start sharing your screen during Innowhite meting sessions. Enjoy!</div>
 	<div id="reloadPage" style="display: none;">
-		<h4>We could not load the plugin dynamically</h4>
+		<h4>Plugin cannot be loaded dynamically for Safari and Chrome in Mac</h4>
 
-		Please quit the browser and open again for plugin to get loaded.
+		Please <b>quit</b> your browser and open again for plugin to get loaded and enjoy screen share.
 	</div>
 
 
