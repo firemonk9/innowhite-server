@@ -216,7 +216,7 @@ function start_screen_share (stream_id,recordStatus, serverUrl,roomId)
 		}
 		else
 		{
-			showDownloadPlugin();
+			showDownloadPlugin();			
 			return "NOT_SUPPORTED_BROWSER"
 		}
 
@@ -271,8 +271,9 @@ function setRecordingStatus(myRecordStatus, myRoomName){
 
 function openHelpWindow()
 {
-	$.openDOMWindow({windowSourceID:'#popUpTemplate',overlayOpacity:50});
-	setTimeout("$('#DOMWindow .DOMWindowContent').html($('#helpWindow').html())",300);
+	alert("sdfsdf");
+	$('.popup-help').css('display', '');
+	$('.fade').css('display', '');
 
 }
 
@@ -391,7 +392,23 @@ function plugin()
 		pluginRefresh();
 		setTimeout('fixForFF()',10);
 	}
+
 	$(document).ready(function(){
+		$('.help-tabs-head li').click(function(){
+				var value = $(this).text();
+				//alert(value)
+				$('.help-tabs').hide();
+				$('#'+value).show();
+ 
+				$('.help-tabs-head li').removeClass('active');
+				$(this).addClass('active');
+				});
+				$('.close').click(function(){
+						$('.popup-help').css('display', 'none');
+						$('.fade').css('display', 'none');
+						
+				});
+			openHelpWindow();
 			if(window.navigator.userAgent.search(/Firefox/) == -1)
 			{
 				return;
@@ -402,6 +419,22 @@ function plugin()
 			}
 
 			fixForFF();
+			
+			///add handlers, to help window
+			$('.help-tabs-head li').click(function(){
+				var value = $(this).text();
+				//alert(value)
+				$('.help-tabs').hide();
+				$('#'+value).show();
+ 
+				$('.help-tabs-head li').removeClass('active');
+				$(this).addClass('active');
+				});
+				$('.close').click(function(){
+						$('.popup-help').css('display', 'none');
+						$('.fade').css('display', 'none');
+						showDownloadPlugin();
+				});
 		})
 	function showDownloadPlugin()
 	{
@@ -497,6 +530,30 @@ if ( hasProductInstall && !hasRequestedVersion ) {
 	}
 
 </script>
+
+<div class="fade" style="display: none;"></div>
+
+<div class="popup-help" style="display: none"><div class="close"><img src="images/pop-close-btn.png" alt="close" /></div><div class="pop-heading">Help</div><div class="pop-form login">
+
+<ul class="help-tabs-head"><li class="active ht1">Video</li> <li class="ht2">Voice</li> <li class="ht3">Chat</li> <li class="ht4">Other</li></ul>
+
+<div class="help-tabs" id="Video"><img src="images/help-video-img.png" alt="" align="left" style="margin-right:10px;"/> <p>Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry’s standard dummy text ever since the 1500s, when an unknown printer took a galley </p>
+<p>Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry’s standard dummy text ever since the 1500s, when an unknown printer took a galley </p></div>
+
+<div class="help-tabs" id="Voice" style="display:none;"><img src="images/help-video-img.png" alt="" align="left" style="margin-right:10px;"/> <p>02</p>
+<p>Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry’s standard dummy text ever since the 1500s, when an unknown printer took a galley </p></div>
+
+
+<div class="help-tabs" id="Chat" style="display:none;"><img src="images/help-video-img.png" alt="" align="left" style="margin-right:10px;"/> <p>03</p>
+<p>Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry’s standard dummy text ever since the 1500s, when an unknown printer took a galley </p></div>
+
+
+<div class="help-tabs" id="Other" style="display:none;"><img src="images/help-video-img.png" alt="" align="left" style="margin-right:10px;"/> <p>04</p>
+
+<p>Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry’s standard dummy text ever since the 1500s, when an unknown printer took a galley </p></div>
+
+
+</div></div>
 
 	<div id="pluginContainer">
 		<object id="plugin0" type="application/x-innowhite" width="300"
