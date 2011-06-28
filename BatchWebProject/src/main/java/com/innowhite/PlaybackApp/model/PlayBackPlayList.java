@@ -31,7 +31,18 @@ public class PlayBackPlayList implements Serializable {
     
     @Column(name = "room_id")
     String roomName;
+    
+    @Column(name = "duration")
+    String duration;
       
+    public String getDuration() {
+        return duration;
+    }
+
+    public void setDuration(String duration) {
+        this.duration = duration;
+    }
+
     public String getRoomName() {
 	return roomName;
     }
