@@ -52,16 +52,16 @@
           <string>WEB-INF/lib/ejb3-persistence-1.0.1.GA.jar</string>
           <string>WEB-INF/lib/persistence-api-1.0.jar</string>
           <string>WEB-INF/lib/mysql-connector-java-5.1.13.jar</string>
-          <string>WEB-INF/lib/spring-context-3.0.4.RELEASE.jar</string>
-          <string>WEB-INF/lib/spring-aop-3.0.4.RELEASE.jar</string>
+          <string>WEB-INF/lib/spring-context-3.0.5.RELEASE.jar</string>
+          <string>WEB-INF/lib/spring-aop-3.0.5.RELEASE.jar</string>
           <string>WEB-INF/lib/aopalliance-1.0.jar</string>
-          <string>WEB-INF/lib/spring-asm-3.0.4.RELEASE.jar</string>
-          <string>WEB-INF/lib/spring-beans-3.0.4.RELEASE.jar</string>
-          <string>WEB-INF/lib/spring-core-3.0.4.RELEASE.jar</string>
-          <string>WEB-INF/lib/spring-expression-3.0.4.RELEASE.jar</string>
-          <string>WEB-INF/lib/spring-webmvc-3.0.4.RELEASE.jar</string>
-          <string>WEB-INF/lib/spring-context-support-3.0.4.RELEASE.jar</string>
-          <string>WEB-INF/lib/spring-web-3.0.4.RELEASE.jar</string>
+          <string>WEB-INF/lib/spring-asm-3.0.5.RELEASE.jar</string>
+          <string>WEB-INF/lib/spring-beans-3.0.5.RELEASE.jar</string>
+          <string>WEB-INF/lib/spring-core-3.0.5.RELEASE.jar</string>
+          <string>WEB-INF/lib/spring-expression-3.0.5.RELEASE.jar</string>
+          <string>WEB-INF/lib/spring-webmvc-3.0.5.RELEASE.jar</string>
+          <string>WEB-INF/lib/spring-context-support-3.0.5.RELEASE.jar</string>
+          <string>WEB-INF/lib/spring-web-3.0.5.RELEASE.jar</string>
           <string>WEB-INF/lib/aspectjrt-1.6.9.jar</string>
           <string>WEB-INF/lib/slf4j-api-1.5.10.jar</string>
           <string>WEB-INF/lib/jcl-over-slf4j-1.5.10.jar</string>
@@ -145,7 +145,7 @@
       <dependency>
         <groupId>org.springframework</groupId>
         <artifactId>spring-context</artifactId>
-        <version>3.0.4.RELEASE</version>
+        <version>3.0.5.RELEASE</version>
         <type>jar</type>
         <scope>compile</scope>
         <exclusions>
@@ -156,19 +156,19 @@
         </exclusions>
         <optional>false</optional>
       </dependency>
-      <targetFileName>spring-context-3.0.4.RELEASE.jar</targetFileName>
+      <targetFileName>spring-context-3.0.5.RELEASE.jar</targetFileName>
     </org.apache.maven.plugin.war.util.DependencyInfo>
     <org.apache.maven.plugin.war.util.DependencyInfo>
       <dependency>
         <groupId>org.springframework</groupId>
         <artifactId>spring-webmvc</artifactId>
-        <version>3.0.4.RELEASE</version>
+        <version>3.0.5.RELEASE</version>
         <type>jar</type>
         <scope>compile</scope>
         <exclusions/>
         <optional>false</optional>
       </dependency>
-      <targetFileName>spring-webmvc-3.0.4.RELEASE.jar</targetFileName>
+      <targetFileName>spring-webmvc-3.0.5.RELEASE.jar</targetFileName>
     </org.apache.maven.plugin.war.util.DependencyInfo>
     <org.apache.maven.plugin.war.util.DependencyInfo>
       <dependency>
