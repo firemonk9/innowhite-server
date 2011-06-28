@@ -41,6 +41,7 @@ public class PlaybackDataService {
 	// of course, an ApplicationContext is just a BeanFactory
 	BeanFactory factory = (BeanFactory) appContext;
 
+	//String roomId = "55314665973";
 	String roomId = "Rahul5";
 
 	SessionRecordingDao sessionRecordingsDao = (SessionRecordingDao) factory.getBean("sessionRecordingsDao");
@@ -147,7 +148,7 @@ public class PlaybackDataService {
 		if(videoStartTime<=sessionStartTime && videoEndTime<=sessionEndTime && videoEndTime>=sessionStartTime){
 			System.out.println("videoStartTime<=sessionStartTime && videoEndTime<=sessionEndTime && videoEndTime>=sessionStartTime");
 			String newVideoPath = PlaybackUtil.getUnique();
-			cmd = "-i "+videoPath+" -ss "+secondsToHours(sessionStartTime-videoStartTime)+" -t "+secondsToHours(videoEndTime-sessionStartTime)+" " +
+			cmd = "-i "+videoPath+" -ss "+secondsToHours(sessionStartTime-videoStartTime)+" -t "+secondsToHours(videoEndTime-sessionStartTime)+" -an " +
 				videoPath.replace(".flv", newVideoPath+".avi");
 			invokeProcess(cmd);
 			vd = new VideoData();
@@ -158,7 +159,7 @@ public class PlaybackDataService {
 		else if(videoStartTime<=sessionStartTime && videoEndTime>=sessionEndTime){
 			System.out.println("videoStartTime<=sessionStartTime && videoEndTime>=sessionEndTime");
 			String newVideoPath = PlaybackUtil.getUnique();
-			cmd = "-i "+videoPath+" -ss "+secondsToHours(sessionStartTime-videoStartTime)+" -t "+secondsToHours(sessionEndTime-sessionStartTime)+" "+
+			cmd = "-i "+videoPath+" -ss "+secondsToHours(sessionStartTime-videoStartTime)+" -t "+secondsToHours(sessionEndTime-sessionStartTime)+" -an "+
 				videoPath.replace(".flv", newVideoPath+".avi");
 			invokeProcess(cmd);
 			vd = new VideoData();
@@ -169,7 +170,7 @@ public class PlaybackDataService {
 		else if(videoStartTime>=sessionStartTime && videoStartTime<=sessionEndTime && videoEndTime<=sessionEndTime && videoEndTime>=sessionStartTime){
 			System.out.println("videoStartTime>=sessionStartTime && videoStartTime<=sessionEndTime && videoEndTime<=sessionEndTime && videoEndTime>=sessionStartTime");
 			String newVideoPath = PlaybackUtil.getUnique();
-			cmd = "-i "+videoPath+" -ss 00:00:00 -t "+secondsToHours(videoEndTime-videoStartTime)+" "+videoPath.replace(".flv", newVideoPath+".avi");
+			cmd = "-i "+videoPath+" -ss 00:00:00 -t "+secondsToHours(videoEndTime-videoStartTime)+" -an "+videoPath.replace(".flv", newVideoPath+".avi");
 			invokeProcess(cmd);
 			vd = new VideoData();
 			vd.setFilePath(videoPath.replace(".flv", newVideoPath+".avi"));
@@ -179,7 +180,7 @@ public class PlaybackDataService {
 		else if(videoStartTime>=sessionStartTime && videoStartTime<=sessionEndTime && videoEndTime>=sessionEndTime){
 			System.out.println("videoStartTime>=sessionStartTime && videoStartTime<=sessionEndTime && videoEndTime>=sessionEndTime");
 			String newVideoPath = PlaybackUtil.getUnique();
-			cmd = "-i "+videoPath+" -ss 00:00:00 -t "+secondsToHours(sessionEndTime-videoStartTime)+" "+videoPath.replace(".flv", newVideoPath+".avi");
+			cmd = "-i "+videoPath+" -ss 00:00:00 -t "+secondsToHours(sessionEndTime-videoStartTime)+"  -an "+videoPath.replace(".flv", newVideoPath+".avi");
 			invokeProcess(cmd);
 			vd = new VideoData();
 			vd.setFilePath(videoPath.replace(".flv", newVideoPath+".avi"));
