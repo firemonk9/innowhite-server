@@ -90,6 +90,10 @@
 		<property name="winTempLocation" value="${winTempLocation}" />
 		<property name="macTempLocation" value="${macTempLocation}" />
 		<property name="ubuntuTempLocation" value="${ubuntuTempLocation}" />
+		
+		<property name="winVideoPath" value="${winVideoPath}" />
+		<property name="winAudioPath" value="${winAudioPath}" />
+
 
 	</bean>
 

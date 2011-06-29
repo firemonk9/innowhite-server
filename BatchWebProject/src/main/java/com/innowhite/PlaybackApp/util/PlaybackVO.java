@@ -69,6 +69,26 @@ public class PlaybackVO {
     }
 
 
+    public String getWinAudioPath() {
+        return winAudioPath;
+    }
+
+    public void setWinAudioPath(String winAudioPath) {
+        this.winAudioPath = winAudioPath;
+    }
+
+    public String getWinVideoPath() {
+        return winVideoPath;
+    }
+
+    public void setWinVideoPath(String winVideoPath) {
+        this.winVideoPath = winVideoPath;
+    }
+
+
+    private String winAudioPath;
+    private String winVideoPath;
+    
     private String ffmpegPath;
     private String tempLocation;
     

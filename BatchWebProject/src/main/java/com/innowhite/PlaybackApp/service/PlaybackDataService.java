@@ -118,7 +118,8 @@ public class PlaybackDataService {
 
 	if (PlaybackUtil.isWindows()) {
 	    log.debug(" windows machine so changing the page ..");
-	    PlaybackUtil.updatePathWindows("C:/Users/sony/Desktop/INNOWHITE/playback/video_playlist", audioDataList, videoDataList);
+	    PlaybackUtil.updateVideoPathWindows(playbackVO.getWinVideoPath(),  videoDataList);
+	    PlaybackUtil.updateAudioPathWindows(playbackVO.getWinAudioPath(),  audioDataList);
 	}
 	// WhiteboardDataDao whiteboardDataDao = (WhiteboardDataDao)
 	// factory.getBean("whiteboardDataDao");

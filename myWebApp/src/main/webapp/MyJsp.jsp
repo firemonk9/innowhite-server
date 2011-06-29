@@ -135,6 +135,8 @@ Learn more about Flex at http://flex.org
 
 <!--  BEGIN Browser History required section -->
 <script src="/whiteboard/js/jquery.DOMWindow.js" language="javascript"></script>
+
+
 <!--  END Browser History required section -->
 
 <style>
