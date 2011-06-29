@@ -17,6 +17,13 @@ public class PlaybackUtil {
 
 	String os = System.getProperty("os.name").toLowerCase();
 	System.err.println(os);
+	
+	String a = "asd#qwe";
+	String arr[] = new String[2];
+	arr = a.split("#");
+	System.err.println(arr[0]+"  "+arr[1]);
+	
+	
     }
 
     public static String getUnique() {
