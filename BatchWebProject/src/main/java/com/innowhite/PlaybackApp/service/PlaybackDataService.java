@@ -435,7 +435,7 @@ public class PlaybackDataService {
 		    log.debug("merging..");
 		    String newVideoPath1 = PlaybackUtil.getUnique();
 		    cmd = "-i " + videos.get(videoStartIndex).getFilePath().replace(".avi", "int_play" + newVideoPath + ".avi") + " -i " + audioPath + " -ar 44100 -ab 64k "
-			    + videos.get(videoStartIndex).getFilePath().replace(".avi", "playlist" + newVideoPath1 + ".mp4"+(nextAudioStartTime - audioStartTime));
+			    + videos.get(videoStartIndex).getFilePath().replace(".avi", "playlist" + newVideoPath1 + ".mp4");
 		    PlaybackUtil.invokeProcess(cmd);
 		    finalVideoPlaylist.add(videos.get(videoStartIndex).getFilePath().replace(".avi", "playlist" + newVideoPath1 + ".mp4$"+duration));
 		    // finalVideoPlaylist.add(videos.get(videoStartIndex).getFilePath().replace(".flv",
