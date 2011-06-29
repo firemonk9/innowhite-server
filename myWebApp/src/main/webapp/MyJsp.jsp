@@ -127,6 +127,7 @@ Learn more about Flex at http://flex.org
 
 <!--  BEGIN Browser History required section -->
 <link rel="stylesheet" type="text/css" href="history/history.css" />
+<link rel="stylesheet" type="text/css" media="screen" href="css/styles.css"  /> 
 <!--  END Browser History required section -->
 
 <title></title>

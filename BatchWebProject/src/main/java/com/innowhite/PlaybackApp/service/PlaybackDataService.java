@@ -8,8 +8,6 @@ import java.util.List;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
-import org.springframework.beans.factory.BeanFactory;
-import org.springframework.context.support.ClassPathXmlApplicationContext;
 
 import com.innowhite.PlaybackApp.dao.AudioDataDao;
 import com.innowhite.PlaybackApp.dao.PlayBackPlayListDao;
@@ -25,8 +23,8 @@ import com.innowhite.PlaybackApp.util.PlaybackVO;
 
 public class PlaybackDataService {
 
-    static BeanFactory factory = null;
-    static ArrayList<String> finalVideoPlaylist = new ArrayList<String>();
+    
+     
 
     private static final Logger log = LoggerFactory.getLogger(PlaybackDataService.class);
 
@@ -82,12 +80,12 @@ public class PlaybackDataService {
   
    
 
-    public static void loadInit() {
-	ClassPathXmlApplicationContext appContext = new ClassPathXmlApplicationContext(new String[] { "root-context.xml" });
-	// of course, an ApplicationContext is just a BeanFactory
-	factory = (BeanFactory) appContext;
-
-    }
+//    public static void loadInit() {
+//	ClassPathXmlApplicationContext appContext = new ClassPathXmlApplicationContext(new String[] { "root-context.xml" });
+//	// of course, an ApplicationContext is just a BeanFactory
+//	factory = (BeanFactory) appContext;
+//
+//    }
 
     public  void process(String roomId) {
 	// TODO Auto-generated method stub
@@ -99,7 +97,7 @@ public class PlaybackDataService {
 //	if (args != null ) {
 //	    roomId = args;
 //	}
-
+	
 	//SessionRecordingDao sessionRecordingsDao = (SessionRecordingDao) factory.getBean("sessionRecordingsDao");
 	List<SessionRecordings> sessionRecordingsList = sessionRecordingsDao.getSessionRecordingList(roomId);
 
@@ -178,8 +176,9 @@ public class PlaybackDataService {
 	    log.debug("key::" + sessions);
 	    log.debug("value::" + sessionBucket);
 
+	    ArrayList<String> finalVideoPlaylist = new ArrayList<String>();
 	    for (int j = 0; j < audios.size(); j++) {
-		mapAudioToVideoStartBetween(audios, j, videos, sessionStartTime, sessionEndTime);
+		finalVideoPlaylist.addAll(mapAudioToVideoStartBetween(audios, j, videos, sessionStartTime, sessionEndTime));
 	    }
 	    for (int j = 0; j < videos.size(); j++) {
 		// mapAudioToVideoStartBetween(audios, j, videos,
@@ -188,10 +187,10 @@ public class PlaybackDataService {
 	    }
 
 	    PlayBackPlayList playlist = null;
-	    //List<PlayBackPlayList> listPlayback = new ArrayList<PlayBackPlayList>();
+	    List<PlayBackPlayList> listPlayback = new ArrayList<PlayBackPlayList>();
 	    for (int i = 0; i < finalVideoPlaylist.size(); i++) {
 			playlist = new PlayBackPlayList();
-			Array a[] = new Array(); 
+			String a[] = new String[2]; 
 			a = finalVideoPlaylist.get(i).split("$");
 			playlist.setFilePath(a[0]);
 			playlist.setInsertedDate(new Date());
@@ -343,7 +342,7 @@ public class PlaybackDataService {
 	sb.getAudioDataList().add(ad);
     }
 
-    private static void mapAudioToVideoStartBetween(List<AudioData> audioList, int j, List<VideoData> videos, long sessionStartTime, long sessionEndTime) {
+    private static ArrayList<String> mapAudioToVideoStartBetween(List<AudioData> audioList, int j, List<VideoData> videos, long sessionStartTime, long sessionEndTime) {
 	log.debug("--------------------------------------------");
 	log.debug("mappingAudioToVideoStartBetween.....audio" + j);
 	log.debug("--------------------------------------------");
@@ -356,6 +355,8 @@ public class PlaybackDataService {
 	long videoStartTime = 0, videoEndTime = 0;
 	String cmd = null, videoPath = null;
 
+	ArrayList<String> finalVideoPlaylist = new ArrayList<String>();
+	
 	log.debug("audioStartStime::" + audioList.get(j).getStartTime());
 	log.debug("audioEndStime::" + audioList.get(j).getEndTime());
 	log.debug("audioFilePath::" + audioList.get(j).getFilePath());
@@ -608,6 +609,7 @@ public class PlaybackDataService {
 		}
 	    }
 	}
+	return finalVideoPlaylist;
     }
 
     private static void updateFinalVideoTable(List<PlayBackPlayList> list, PlayBackPlayListDao playBackPlayListDao) {
