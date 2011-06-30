@@ -55,8 +55,8 @@ public class WBLiveVideo extends HttpServlet {
 	    String roomId = request.getParameter("roomId");
 
 	    roomId = roomId.trim();
-	   // log.debug(" entered doPost with  roomId :"+roomId+"  ");
-	    
+	    // log.debug(" entered doPost with  roomId :"+roomId+"  ");
+
 	    // int available = request.getContentLength();
 	    // byte[] input = new byte[available];
 	    String myData = request.getParameter("data");
@@ -77,6 +77,13 @@ public class WBLiveVideo extends HttpServlet {
 	    if ((request.getParameter("stopRecord")) != null) {
 
 		if ((request.getParameter("stopRecord").equals("true"))) {
+
+		    if (myData != null && myData.length() > 0) {
+
+			byte[] input = decoder.decodeBuffer(myData);
+			WhiteboardToVideoService.writeToFile(input, roomId);
+
+		    }
 
 		    WhiteboardToVideoService.stopRecording(roomId);
 		    log.debug("stopping the record service.");
