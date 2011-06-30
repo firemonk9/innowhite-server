@@ -274,7 +274,7 @@ function setRecordingStatus(myRecordStatus, myRoomName){
 
 function openHelpWindow()
 {
-	alert("sdfsdf");
+	
 	$('.popup-help').css('display', '');
 	$('.fade').css('display', '');
 
