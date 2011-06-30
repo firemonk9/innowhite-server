@@ -9,7 +9,11 @@ import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
+
 import com.innowhite.whiteboard.persistence.dao.SessionRecordingDAO;
+import com.innowhite.whiteboard.test.InnowhiteServiceTest;
 
 /**
  * Servlet implementation class SessionRecording
@@ -17,6 +21,8 @@ import com.innowhite.whiteboard.persistence.dao.SessionRecordingDAO;
 public class SessionRecording extends HttpServlet {
     private static final long serialVersionUID = 1L;
 
+    private static final Logger log = LoggerFactory.getLogger(SessionRecording.class);
+    
     /**
      * @see HttpServlet#HttpServlet()
      */
@@ -38,6 +44,9 @@ public class SessionRecording extends HttpServlet {
 	    // instead of the InputStream directly?
 	    String roomId = request.getParameter("roomId");
 	    String recordStatus = request.getParameter("recordStatus");
+	    
+	    log.debug(" got req to start/stop recording for room "+roomId+" recordStatus  "+recordStatus);
+	    
 	    if (recordStatus != null && recordStatus.equals("recordStart")) {
 		SessionRecordingDAO.startSessionRecording(roomId);
 	    } else  if (recordStatus != null && recordStatus.equals("recordStop")) {

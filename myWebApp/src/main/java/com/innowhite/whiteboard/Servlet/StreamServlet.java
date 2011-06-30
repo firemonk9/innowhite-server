@@ -39,7 +39,7 @@ public class StreamServlet extends HttpServlet {
 	protected void doGet(HttpServletRequest request,
 			HttpServletResponse response) throws ServletException, IOException {
 
-		log.debug(" entereing doget: StreamServlet ");
+		
 		
 		
 
@@ -48,13 +48,9 @@ public class StreamServlet extends HttpServlet {
 		
 		
 		String serverApp= streamType;
-//		if(streamType != null && streamType.equals("DESKTOP")){
-//		    serverApp="DESKTOP";
-//		}else if(streamType != null && streamType.equals("VIDEO")){
-//		    serverApp="VIDEO";
-//		}else if(streamType != null && streamType.equals("AUDIO")){
-//		    serverApp="AUDIO";
-//		}
+
+		
+		log.debug(" entereing doget: StreamServlet streamType"+streamType+"  roomId "+roomId);	
 		
 		// send the stream is to server.
 		Long subRoomId=null;

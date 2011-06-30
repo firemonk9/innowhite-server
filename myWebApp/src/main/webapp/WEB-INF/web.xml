@@ -218,4 +218,12 @@
 		<servlet-name>SessionRecording</servlet-name>
 		<url-pattern>/servlet/SessionRecording</url-pattern>
 	</servlet-mapping>
+	<servlet>
+		<servlet-name>PlayBackServlet</servlet-name>
+		<servlet-class>com.innowhite.whiteboard.Servlet.PlayBackServlet</servlet-class>
+	</servlet>
+	<servlet-mapping>
+		<servlet-name>PlayBackServlet</servlet-name>
+		<url-pattern>/PlayBackServlet</url-pattern>
+	</servlet-mapping>
 </web-app>
