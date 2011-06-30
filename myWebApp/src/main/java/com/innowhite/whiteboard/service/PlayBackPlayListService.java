@@ -15,10 +15,12 @@ public class PlayBackPlayListService {
 
 	List<PlayBackPlayListVO> list = PlayBackPlayListDAO.getPlayList(roomId);
 	StringBuffer sb = new StringBuffer();
-	
+
 	for (PlayBackPlayListVO playBackPlayListVO : list) {
-	    	sb.append("<url>"+playBackPlayListVO.getFilePath()+"</url>");
-	    	sb.append("<duration>"+playBackPlayListVO.getDuration()+"</duration>");
+	    sb.append("<videoSrc>");
+	    sb.append("<url>" + playBackPlayListVO.getFilePath() + "</url>");
+	    sb.append("<duration>" + playBackPlayListVO.getDuration() + "</duration>");
+	    sb.append("</videoSrc>");
 	}
 
 	return sb.toString();
