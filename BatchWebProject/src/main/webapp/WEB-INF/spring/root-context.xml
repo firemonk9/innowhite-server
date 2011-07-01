@@ -1,8 +1,11 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <beans xmlns="http://www.springframework.org/schema/beans"
-	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:aop="http://www.springframework.org/schema/aop"
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" 
+	xmlns:aop="http://www.springframework.org/schema/aop"
 	xmlns:tx="http://www.springframework.org/schema/tx"
-	xsi:schemaLocation="
+       xsi:schemaLocation="
+       http://www.springframework.org/schema/jms 
+       http://www.springframework.org/schema/jms/spring-jms-3.0.xsd
        http://www.springframework.org/schema/beans 
        http://www.springframework.org/schema/beans/spring-beans-3.0.xsd
        http://www.springframework.org/schema/tx 
@@ -12,6 +15,8 @@
 	xmlns:context="http://www.springframework.org/schema/context"
 	xmlns:jee="http://www.springframework.org/schema/jee" xmlns:jms="http://www.springframework.org/schema/jms"
 	xmlns:lang="http://www.springframework.org/schema/lang" xmlns:p="http://www.springframework.org/schema/p">
+
+
 
 	<description>Example configuration to get you started.</description>
 
@@ -33,6 +38,31 @@
 	<!-- </bean> -->
 
 
+
+
+	<!-- A connection to ActiveMQ -->
+	<bean id="amqConnectionFactory" class="org.apache.activemq.ActiveMQConnectionFactory"
+		p:brokerURL="tcp://messaging.innowhite.com:61616" />
+
+
+	<!-- A cached connection to wrap the ActiveMQ connection -->
+	<bean id="cachedConnectionFactory"
+		class="org.springframework.jms.connection.CachingConnectionFactory"
+		p:targetConnectionFactory-ref="amqConnectionFactory"
+		p:sessionCacheSize="10" />
+
+	<!-- A POJO that implements the JMS message listener for Whiteboard Data -->
+	<bean id="playBackDataMsgListener" class="com.innowhite.PlaybackApp.messaging.PlayBackMsgListener">
+		<property name="taskExecutorExample" ref="taskExecutorExample" />
+	</bean>
+
+	<!-- The Spring message listener container configuration -->
+	<jms:listener-container container-type="default"
+		connection-factory="cachedConnectionFactory" acknowledge="auto">
+		<jms:listener destination="Innowhite.playBack" ref="playBackDataMsgListener"
+			method="onMessage" />
+	</jms:listener-container>
+	
 
 
 
@@ -90,7 +120,7 @@
 		<property name="winTempLocation" value="${winTempLocation}" />
 		<property name="macTempLocation" value="${macTempLocation}" />
 		<property name="ubuntuTempLocation" value="${ubuntuTempLocation}" />
-		
+
 		<property name="winVideoPath" value="${winVideoPath}" />
 		<property name="winAudioPath" value="${winAudioPath}" />
 
@@ -127,21 +157,21 @@
 
 
 
-<!-- 	<bean id="playThreadExecutor" name="playThreadExecutor" -->
-<!-- 		class="com.innowhite.PlaybackApp.service.ThreadExecutor"> -->
+	<!-- <bean id="playThreadExecutor" name="playThreadExecutor" -->
+	<!-- class="com.innowhite.PlaybackApp.service.ThreadExecutor"> -->
 
-<!-- 		<property name="playbackDataservice" ref="playbackDataservice" /> -->
+	<!-- <property name="playbackDataservice" ref="playbackDataservice" /> -->
 
-<!-- 	</bean> -->
+	<!-- </bean> -->
 
-<!-- 	<bean id="basicThreadCreator" name="basicThreadCreator" scope="prototype" -->
-<!-- 		class="com.innowhite.PlaybackApp.service.BasicThreadCreator"> -->
-<!-- 		<property name="playThreadExecutor" ref="playThreadExecutor" /> -->
+	<!-- <bean id="basicThreadCreator" name="basicThreadCreator" scope="prototype" -->
+	<!-- class="com.innowhite.PlaybackApp.service.BasicThreadCreator"> -->
+	<!-- <property name="playThreadExecutor" ref="playThreadExecutor" /> -->
 
-<!-- 	</bean> -->
+	<!-- </bean> -->
 
 	<bean id="playbackDataservice" name="playbackDataservice"
-		class="com.innowhite.PlaybackApp.service.PlaybackDataService" >
+		class="com.innowhite.PlaybackApp.service.PlaybackDataService">
 		<property name="audioDataDao" ref="audioDataDao" />
 		<property name="videoDataDao" ref="videoDataDao" />
 		<property name="sessionRecordingsDao" ref="sessionRecordingsDao" />

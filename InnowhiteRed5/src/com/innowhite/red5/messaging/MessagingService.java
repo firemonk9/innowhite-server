@@ -27,8 +27,18 @@ public class MessagingService {
 	 */
 	
 	WhiteboardDataMessageProducer whiteboardDataMessageService;
+    PlayBackMessageProducer playBackMessageProducer; 
 	
-	
+	public PlayBackMessageProducer getPlayBackMessageProducer() {
+	    return playBackMessageProducer;
+	}
+
+
+	public void setPlayBackMessageProducer(PlayBackMessageProducer playBackMessageProducer) {
+	    this.playBackMessageProducer = playBackMessageProducer;
+	}
+
+
 	public void setWhiteboardDataMessageService(
 			WhiteboardDataMessageProducer whiteboardDataMessageService) {
 		this.whiteboardDataMessageService = whiteboardDataMessageService;
@@ -55,6 +65,11 @@ public class MessagingService {
 	public void sendRoomMessage(String msg){
 		log.debug("entered sendRoomMessage msg:"+msg);
 		roomMessageService.sendMessage(msg);
+		if(msg != null && msg.indexOf("_STOPPED_")>0)
+		{
+		    playBackMessageProducer.sendMessage(msg);
+		}
+		//playBackMessageProducer
 	}
 	
 	

@@ -90,6 +90,13 @@
 		<property name="whiteboardDataMessageService">
 			<ref bean="whiteboardDataMessageService" />
 		</property>
+		
+		<property name="playBackMessageProducer">
+			<ref bean="playBackDataMessageService" />
+		</property>
+		
+		
+		
 
 	</bean>
 
