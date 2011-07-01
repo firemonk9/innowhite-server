@@ -23,185 +23,195 @@ import com.innowhite.PlaybackApp.util.PlaybackVO;
 
 public class PlaybackDataService {
 
-    
-     
-
     private static final Logger log = LoggerFactory.getLogger(PlaybackDataService.class);
 
-    
-   // private String roomId;
+    // private String roomId;
     public AudioDataDao getAudioDataDao() {
-        return audioDataDao;
+	return audioDataDao;
     }
 
     public void setAudioDataDao(AudioDataDao audioDataDao) {
-        this.audioDataDao = audioDataDao;
+	this.audioDataDao = audioDataDao;
     }
 
     public VideoDataDao getVideoDataDao() {
-        return videoDataDao;
+	return videoDataDao;
     }
 
     public void setVideoDataDao(VideoDataDao videoDataDao) {
-        this.videoDataDao = videoDataDao;
+	this.videoDataDao = videoDataDao;
     }
 
     public SessionRecordingDao getSessionRecordingsDao() {
-        return sessionRecordingsDao;
+	return sessionRecordingsDao;
     }
 
     public void setSessionRecordingsDao(SessionRecordingDao sessionRecordingsDao) {
-        this.sessionRecordingsDao = sessionRecordingsDao;
+	this.sessionRecordingsDao = sessionRecordingsDao;
     }
 
     private AudioDataDao audioDataDao;
-    private VideoDataDao videoDataDao ;
+    private VideoDataDao videoDataDao;
     private SessionRecordingDao sessionRecordingsDao;
     private PlaybackVO playbackVO = null;
-    private PlayBackPlayListDao playBackPlayListDao=null;
-    
-    
+    private PlayBackPlayListDao playBackPlayListDao = null;
+
     public PlayBackPlayListDao getPlayBackPlayListDao() {
-        return playBackPlayListDao;
+	return playBackPlayListDao;
     }
 
     public void setPlayBackPlayListDao(PlayBackPlayListDao playBackPlayListDao) {
-        this.playBackPlayListDao = playBackPlayListDao;
+	this.playBackPlayListDao = playBackPlayListDao;
     }
 
     public PlaybackVO getPlaybackVO() {
-        return playbackVO;
+	return playbackVO;
     }
 
     public void setPlaybackVO(PlaybackVO playbackVO) {
-        this.playbackVO = playbackVO;
+	this.playbackVO = playbackVO;
     }
 
-  
-   
+    // public static void loadInit() {
+    // ClassPathXmlApplicationContext appContext = new
+    // ClassPathXmlApplicationContext(new String[] { "root-context.xml" });
+    // // of course, an ApplicationContext is just a BeanFactory
+    // factory = (BeanFactory) appContext;
+    //
+    // }
 
-//    public static void loadInit() {
-//	ClassPathXmlApplicationContext appContext = new ClassPathXmlApplicationContext(new String[] { "root-context.xml" });
-//	// of course, an ApplicationContext is just a BeanFactory
-//	factory = (BeanFactory) appContext;
-//
-//    }
-
-    public  void process(String roomId) {
+    public void process(String roomId) {
 	// TODO Auto-generated method stub
-	//ClassPathXmlApplicationContext appContext = new ClassPathXmlApplicationContext(new String[] { "root-context.xml" });
+	// ClassPathXmlApplicationContext appContext = new
+	// ClassPathXmlApplicationContext(new String[] { "root-context.xml" });
 	// of course, an ApplicationContext is just a BeanFactory
-	//BeanFactory factory = (BeanFactory) appContext;
+	// BeanFactory factory = (BeanFactory) appContext;
 
-	//String roomId = "Dhiraj4";
-//	if (args != null ) {
-//	    roomId = args;
-//	}
-	
-	//SessionRecordingDao sessionRecordingsDao = (SessionRecordingDao) factory.getBean("sessionRecordingsDao");
-	List<SessionRecordings> sessionRecordingsList = sessionRecordingsDao.getSessionRecordingList(roomId);
+	// String roomId = "Dhiraj4";
+	// if (args != null ) {
+	// roomId = args;
+	// }
 
-	//AudioDataDao audioDataDao = (AudioDataDao) factory.getBean("audioDataDao");
-	List<AudioData> audioDataList = audioDataDao.getAudioDataList(roomId);
+	try {
 
-	//VideoDataDao videoDataDao = (VideoDataDao) factory.getBean("videoDataDao");
-	List<VideoData> videoDataList = videoDataDao.getVideoDataList(roomId);
+	    // SessionRecordingDao sessionRecordingsDao = (SessionRecordingDao)
+	    // factory.getBean("sessionRecordingsDao");
+	    List<SessionRecordings> sessionRecordingsList = sessionRecordingsDao.getSessionRecordingList(roomId);
 
-	//PlayBackPlayListDao playBackPlayListDao = (PlayBackPlayListDao) factory.getBean("playBackPlayListDao");
-	// List<VideoData> videoDataList =
-	// sessionRecordingsDao.getVideoDataList(roomId);
-
-	//playbackVO = (PlaybackVO) factory.getBean("playBackVO");
-	PlaybackUtil.setPlaybackVO(playbackVO);
-
-	// replace unix file path to windows file path.
-
-	if (PlaybackUtil.isWindows()) {
-	    log.debug(" windows machine so changing the page ..");
-	    PlaybackUtil.updateVideoPathWindows(playbackVO.getWinVideoPath(),  videoDataList);
-	    PlaybackUtil.updateAudioPathWindows(playbackVO.getWinAudioPath(),  audioDataList);
-	}
-	// WhiteboardDataDao whiteboardDataDao = (WhiteboardDataDao)
-	// factory.getBean("whiteboardDataDao");
-	// whiteboardDataDao.getWhiteboardDTOForRoom("room1");
-
-	// HashMap contains Key-Value pairs of SessionRecording-SessionBucket
-	HashMap<SessionRecordings, SessionBucket> hm = new HashMap<SessionRecordings, SessionBucket>();
-
-	for (int i = 0; i < sessionRecordingsList.size(); i++) {
-	    long sessionStartTime = sessionRecordingsList.get(i).getStartTime().getTime();
-	    long sessionEndTime = sessionRecordingsList.get(i).getEndTime().getTime();
-	    log.debug("session Start Time::" + sessionRecordingsList.get(i).getStartTime());
-	    log.debug("session End Time::" + sessionRecordingsList.get(i).getEndTime());
-
-	    /*
-	     * sessionBucket for each Session contains audios, videos in the
-	     * session audios & videos are trimmed and audio format is changed
-	     * to "same-name".mp3
-	     */
-	    SessionBucket sb = new SessionBucket();
-	    for (int j = 0; j < audioDataList.size(); j++) {
-		prepareAudioForSessionBucket(sb, j, audioDataList.get(j), sessionStartTime, sessionEndTime);
-	    }
-	    for (int j = 0; j < videoDataList.size(); j++) {
-		prepareVideoForSessionBucket(sb, j, videoDataList.get(j), sessionStartTime, sessionEndTime);
-	    }
-	    log.debug("SessionBucket.AudioData :: " + sb.audioDataList);
-	    log.debug("SessionBucket.VideoData :: " + sb.videoDataList);
-	    hm.put(sessionRecordingsList.get(i), sb);
-	    log.debug("done preparing session buckets...");
-	}
-	log.debug("preparing session buckets done!");
-	log.debug("--------------------------------------------------------------");
-	// iterate through the Session Buckets .. Set of keys(sessions)
-	Iterator itr = hm.keySet().iterator();
-	String cmd = null;
-	while (itr.hasNext()) {
-	    log.debug("for each session...");
-	    SessionRecordings sessions = (SessionRecordings) itr.next();
-	    long sessionStartTime = sessions.getStartTime().getTime();
-	    long sessionEndTime = sessions.getEndTime().getTime();
-	    ;
-	    log.debug("Session Start Time::" + sessions.getStartTime());
-	    log.debug("Session End Time::" + sessions.getEndTime());
-
-	    SessionBucket sessionBucket = hm.get(sessions);
-	    List<AudioData> audios = sessionBucket.getAudioDataList();
-	    List<VideoData> videos = sessionBucket.getVideoDataList();
-
-	    // for(int i=0; i < videos.size(); i++){
-	    // finalVideoPlaylist.add(videos.get(i).getFilePath());
-	    // log.debug("finalPlayList"+i+"::"+finalVideoPlaylist.get(i));
-	    // }
-
-	    log.debug("key::" + sessions);
-	    log.debug("value::" + sessionBucket);
-
-	    ArrayList<String> finalVideoPlaylist = new ArrayList<String>();
-	    for (int j = 0; j < audios.size(); j++) {
-		finalVideoPlaylist.addAll(mapAudioToVideoStartBetween(audios, j, videos, sessionStartTime, sessionEndTime));
-	    }
-	    for (int j = 0; j < videos.size(); j++) {
-		// mapAudioToVideoStartBetween(audios, j, videos,
-		// sessionStartTime, sessionEndTime);
-		log.debug(videos.get(j).getFilePath());
+	    if (sessionRecordingsList != null && sessionRecordingsList.size() == 0) {
+		log.info("There are no recorded sessions for room " + roomId);
+		return;
 	    }
 
-	    PlayBackPlayList playlist = null;
-	    List<PlayBackPlayList> listPlayback = new ArrayList<PlayBackPlayList>();
-	    for (int i = 0; i < finalVideoPlaylist.size(); i++) {
-			playlist = new PlayBackPlayList();
-			String a[] = new String[2]; 
-			a = finalVideoPlaylist.get(i).split("##");
-			playlist.setFilePath(a[0]);
-			playlist.setInsertedDate(new Date());
-			playlist.setRoomName(roomId);
-			
-			//duration = finalVideoPlayli
-			playlist.setDuration(a[1]);
-			listPlayback.add(playlist);
+	    // AudioDataDao audioDataDao = (AudioDataDao)
+	    // factory.getBean("audioDataDao");
+	    List<AudioData> audioDataList = audioDataDao.getAudioDataList(roomId);
+
+	    // VideoDataDao videoDataDao = (VideoDataDao)
+	    // factory.getBean("videoDataDao");
+	    List<VideoData> videoDataList = videoDataDao.getVideoDataList(roomId);
+
+	    // PlayBackPlayListDao playBackPlayListDao = (PlayBackPlayListDao)
+	    // factory.getBean("playBackPlayListDao");
+	    // List<VideoData> videoDataList =
+	    // sessionRecordingsDao.getVideoDataList(roomId);
+
+	    // playbackVO = (PlaybackVO) factory.getBean("playBackVO");
+	    PlaybackUtil.setPlaybackVO(playbackVO);
+
+	    // replace unix file path to windows file path.
+
+	    if (PlaybackUtil.isWindows()) {
+		log.debug(" windows machine so changing the address ..");
+		PlaybackUtil.updateVideoPathWindows(playbackVO.getWinVideoPath(), videoDataList);
+		PlaybackUtil.updateAudioPathWindows(playbackVO.getWinAudioPath(), audioDataList);
 	    }
-	    updateFinalVideoTable(listPlayback,  playBackPlayListDao);
+	    // WhiteboardDataDao whiteboardDataDao = (WhiteboardDataDao)
+	    // factory.getBean("whiteboardDataDao");
+	    // whiteboardDataDao.getWhiteboardDTOForRoom("room1");
+
+	    // HashMap contains Key-Value pairs of
+	    // SessionRecording-SessionBucket
+	    HashMap<SessionRecordings, SessionBucket> hm = new HashMap<SessionRecordings, SessionBucket>();
+
+	    for (int i = 0; i < sessionRecordingsList.size(); i++) {
+		long sessionStartTime = sessionRecordingsList.get(i).getStartTime().getTime();
+		long sessionEndTime = sessionRecordingsList.get(i).getEndTime().getTime();
+		log.debug("session Start Time::" + sessionRecordingsList.get(i).getStartTime());
+		log.debug("session End Time::" + sessionRecordingsList.get(i).getEndTime());
+
+		/*
+		 * sessionBucket for each Session contains audios, videos in the
+		 * session audios & videos are trimmed and audio format is
+		 * changed to "same-name".mp3
+		 */
+		SessionBucket sb = new SessionBucket();
+		for (int j = 0; j < audioDataList.size(); j++) {
+		    prepareAudioForSessionBucket(sb, j, audioDataList.get(j), sessionStartTime, sessionEndTime);
+		}
+		for (int j = 0; j < videoDataList.size(); j++) {
+		    prepareVideoForSessionBucket(sb, j, videoDataList.get(j), sessionStartTime, sessionEndTime);
+		}
+		log.debug("SessionBucket.AudioData :: " + sb.audioDataList);
+		log.debug("SessionBucket.VideoData :: " + sb.videoDataList);
+		hm.put(sessionRecordingsList.get(i), sb);
+		log.debug("done preparing session buckets...");
+	    }
+	    log.debug("preparing session buckets done!");
+	    log.debug("--------------------------------------------------------------");
+	    // iterate through the Session Buckets .. Set of keys(sessions)
+	    Iterator itr = hm.keySet().iterator();
+	    String cmd = null;
+	    while (itr.hasNext()) {
+		log.debug("for each session...");
+		SessionRecordings sessions = (SessionRecordings) itr.next();
+		long sessionStartTime = sessions.getStartTime().getTime();
+		long sessionEndTime = sessions.getEndTime().getTime();
+		;
+		log.debug("Session Start Time::" + sessions.getStartTime());
+		log.debug("Session End Time::" + sessions.getEndTime());
+
+		SessionBucket sessionBucket = hm.get(sessions);
+		List<AudioData> audios = sessionBucket.getAudioDataList();
+		List<VideoData> videos = sessionBucket.getVideoDataList();
+
+		// for(int i=0; i < videos.size(); i++){
+		// finalVideoPlaylist.add(videos.get(i).getFilePath());
+		// log.debug("finalPlayList"+i+"::"+finalVideoPlaylist.get(i));
+		// }
+
+		log.debug("key::" + sessions);
+		log.debug("value::" + sessionBucket);
+
+		ArrayList<String> finalVideoPlaylist = new ArrayList<String>();
+		for (int j = 0; j < audios.size(); j++) {
+		    finalVideoPlaylist.addAll(mapAudioToVideoStartBetween(audios, j, videos, sessionStartTime, sessionEndTime));
+		}
+		for (int j = 0; j < videos.size(); j++) {
+		    // mapAudioToVideoStartBetween(audios, j, videos,
+		    // sessionStartTime, sessionEndTime);
+		    log.debug(videos.get(j).getFilePath());
+		}
+
+		PlayBackPlayList playlist = null;
+		List<PlayBackPlayList> listPlayback = new ArrayList<PlayBackPlayList>();
+		for (int i = 0; i < finalVideoPlaylist.size(); i++) {
+		    playlist = new PlayBackPlayList();
+		    String a[] = new String[2];
+		    a = finalVideoPlaylist.get(i).split("##");
+		    playlist.setFilePath(a[0]);
+		    playlist.setInsertedDate(new Date());
+		    playlist.setRoomName(roomId);
+
+		    // duration = finalVideoPlayli
+		    playlist.setDuration(a[1]);
+		    listPlayback.add(playlist);
+		}
+		updateFinalVideoTable(listPlayback, playBackPlayListDao);
+	    }
+
+	} catch (Exception e) {
+	    log.error(e.getMessage(), e);
 	}
     }
 
@@ -358,7 +368,7 @@ public class PlaybackDataService {
 	String cmd = null, videoPath = null;
 
 	ArrayList<String> finalVideoPlaylist = new ArrayList<String>();
-	
+
 	log.debug("audioStartStime::" + audioList.get(j).getStartTime());
 	log.debug("audioEndStime::" + audioList.get(j).getEndTime());
 	log.debug("audioFilePath::" + audioList.get(j).getFilePath());
@@ -409,28 +419,28 @@ public class PlaybackDataService {
 		    cmd = "-i " + videos.get(videoStartIndex).getFilePath() + " -ss 00:00:00 -t " + PlaybackUtil.secondsToHours(audioStartTime - videoStartTime) + " -ar 44100 -ab 64k "
 			    + videos.get(videoStartIndex).getFilePath().replace(".avi", "playlist" + newVideoPath + ".mp4");
 		    PlaybackUtil.invokeProcess(cmd);
-		    finalVideoPlaylist.add(videos.get(videoStartIndex).getFilePath().replace(".avi", "playlist" + newVideoPath + ".mp4##"+(audioStartTime - videoStartTime)));
+		    finalVideoPlaylist.add(videos.get(videoStartIndex).getFilePath().replace(".avi", "playlist" + newVideoPath + ".mp4##" + (audioStartTime - videoStartTime)));
 		    // audioList.get(j+1).getStartTime()!=null
 		    // if more than one audio then cut/merge the video till the
 		    // next audio start time
 		    long duration = 0;
 		    if (nextAudioStartTime != 0) {
-				log.debug("if(nextAudioStartTime!=0)");
-				newVideoPath = PlaybackUtil.getUnique();
-				duration = nextAudioStartTime - audioStartTime;
-				cmd = "-i " + videos.get(videoStartIndex).getFilePath() + " -ss " + PlaybackUtil.secondsToHours(audioStartTime - videoStartTime) + " -t "
-					+ PlaybackUtil.secondsToHours(nextAudioStartTime - audioStartTime) + " "
-					+ videos.get(videoStartIndex).getFilePath().replace(".avi", "int_play" + newVideoPath + ".avi");
-				PlaybackUtil.invokeProcess(cmd);
+			log.debug("if(nextAudioStartTime!=0)");
+			newVideoPath = PlaybackUtil.getUnique();
+			duration = nextAudioStartTime - audioStartTime;
+			cmd = "-i " + videos.get(videoStartIndex).getFilePath() + " -ss " + PlaybackUtil.secondsToHours(audioStartTime - videoStartTime) + " -t "
+				+ PlaybackUtil.secondsToHours(nextAudioStartTime - audioStartTime) + " "
+				+ videos.get(videoStartIndex).getFilePath().replace(".avi", "int_play" + newVideoPath + ".avi");
+			PlaybackUtil.invokeProcess(cmd);
 		    }
 		    // cut/merge the video till current video ends
 		    else {
-				log.debug("if(nextAudioStartTime==0)");
-				newVideoPath = PlaybackUtil.getUnique();
-				duration = videos.get(videoStartIndex).getEndTime().getTime() - videos.get(videoStartIndex).getStartTime().getTime();
-				cmd = "-i " + videos.get(videoStartIndex).getFilePath() + " -ss " + PlaybackUtil.secondsToHours(audioStartTime - videoStartTime) + " "
-					+ videos.get(videoStartIndex).getFilePath().replace(".avi", "int_play" + newVideoPath + ".avi");
-				PlaybackUtil.invokeProcess(cmd);
+			log.debug("if(nextAudioStartTime==0)");
+			newVideoPath = PlaybackUtil.getUnique();
+			duration = videos.get(videoStartIndex).getEndTime().getTime() - videos.get(videoStartIndex).getStartTime().getTime();
+			cmd = "-i " + videos.get(videoStartIndex).getFilePath() + " -ss " + PlaybackUtil.secondsToHours(audioStartTime - videoStartTime) + " "
+				+ videos.get(videoStartIndex).getFilePath().replace(".avi", "int_play" + newVideoPath + ".avi");
+			PlaybackUtil.invokeProcess(cmd);
 		    }
 		    // add merged video to playlist
 		    log.debug("merging..");
@@ -438,7 +448,7 @@ public class PlaybackDataService {
 		    cmd = "-i " + videos.get(videoStartIndex).getFilePath().replace(".avi", "int_play" + newVideoPath + ".avi") + " -i " + audioPath + " -ar 44100 -ab 64k "
 			    + videos.get(videoStartIndex).getFilePath().replace(".avi", "playlist" + newVideoPath1 + ".mp4");
 		    PlaybackUtil.invokeProcess(cmd);
-		    finalVideoPlaylist.add(videos.get(videoStartIndex).getFilePath().replace(".avi", "playlist" + newVideoPath1 + ".mp4##"+duration));
+		    finalVideoPlaylist.add(videos.get(videoStartIndex).getFilePath().replace(".avi", "playlist" + newVideoPath1 + ".mp4##" + duration));
 		    // finalVideoPlaylist.add(videos.get(videoStartIndex).getFilePath().replace(".flv",
 		    // "playlist"+newVideoPath+".flv"));
 		}
@@ -448,23 +458,22 @@ public class PlaybackDataService {
 		    long duration = 0;
 		    // cut video from current audio till next audio starts
 		    if (nextAudioStartTime != 0) {
-				log.debug("if(nextAudioStartTime!=0)");
-				newVideoPath = PlaybackUtil.getUnique();
-				duration = nextAudioStartTime - audioStartTime;
-				cmd = "-i " + videos.get(videoStartIndex).getFilePath() + " -ss " + PlaybackUtil.secondsToHours(audioStartTime - videoStartTime) + " -t "
-					+ PlaybackUtil.secondsToHours(nextAudioStartTime - audioStartTime) + " "
-					+ videos.get(videoStartIndex).getFilePath().replace(".avi", "int_play" + newVideoPath + ".avi");
-				PlaybackUtil.invokeProcess(cmd);
+			log.debug("if(nextAudioStartTime!=0)");
+			newVideoPath = PlaybackUtil.getUnique();
+			duration = nextAudioStartTime - audioStartTime;
+			cmd = "-i " + videos.get(videoStartIndex).getFilePath() + " -ss " + PlaybackUtil.secondsToHours(audioStartTime - videoStartTime) + " -t "
+				+ PlaybackUtil.secondsToHours(nextAudioStartTime - audioStartTime) + " "
+				+ videos.get(videoStartIndex).getFilePath().replace(".avi", "int_play" + newVideoPath + ".avi");
+			PlaybackUtil.invokeProcess(cmd);
 		    }
 		    // cut video from current audio till the end of video
 		    else {
-				log.debug("if(nextAudioStartTime==0)");
-				newVideoPath = PlaybackUtil.getUnique();
-				duration = videoEndTime - audioStartTime;
-				cmd = "-i " + videos.get(videoStartIndex).getFilePath() + " -ss " + PlaybackUtil.secondsToHours(audioStartTime - videoStartTime) + 
-					" -t "+ PlaybackUtil.secondsToHours(videoEndTime - audioStartTime) + " " 
-					+ videos.get(videoStartIndex).getFilePath().replace(".avi", "int_play" + newVideoPath + ".avi");
-				PlaybackUtil.invokeProcess(cmd);
+			log.debug("if(nextAudioStartTime==0)");
+			newVideoPath = PlaybackUtil.getUnique();
+			duration = videoEndTime - audioStartTime;
+			cmd = "-i " + videos.get(videoStartIndex).getFilePath() + " -ss " + PlaybackUtil.secondsToHours(audioStartTime - videoStartTime) + " -t "
+				+ PlaybackUtil.secondsToHours(videoEndTime - audioStartTime) + " " + videos.get(videoStartIndex).getFilePath().replace(".avi", "int_play" + newVideoPath + ".avi");
+			PlaybackUtil.invokeProcess(cmd);
 		    }
 		    // add merged video to playlist
 		    log.debug("merging...");
@@ -472,12 +481,12 @@ public class PlaybackDataService {
 		    cmd = "-i " + videos.get(videoStartIndex).getFilePath().replace(".avi", "int_play" + newVideoPath + ".avi") + " -i " + audioPath + " -ar 44100 -ab 64k "
 			    + videos.get(videoStartIndex).getFilePath().replace(".avi", "playlist" + newVideoPath1 + ".mp4");
 		    PlaybackUtil.invokeProcess(cmd);
-		    finalVideoPlaylist.add(videos.get(videoStartIndex).getFilePath().replace(".avi", "playlist" + newVideoPath1 + ".mp4##"+duration));
+		    finalVideoPlaylist.add(videos.get(videoStartIndex).getFilePath().replace(".avi", "playlist" + newVideoPath1 + ".mp4##" + duration));
 		    // finalVideoPlaylist.add(videos.get(videoStartIndex).getFilePath().replace(".flv",
 		    // "playlist"+newVideoPath+".flv"));
 		}
 	    } else if (audioStartTime == videoStartTime) {
-	    	long duration = 0;
+		long duration = 0;
 		log.debug("else if(audioStartTime==videoStartTime)");
 		// cut video from current audio till next audio starts
 		if (nextAudioStartTime != 0) {
@@ -508,7 +517,7 @@ public class PlaybackDataService {
 			+ videos.get(videoStartIndex).getFilePath().replace(".avi", "playlist" + newVideoPath + ".mp4");
 		PlaybackUtil.invokeProcess(cmd);
 		log.debug(cmd);
-		finalVideoPlaylist.add(videos.get(videoStartIndex).getFilePath().replace(".avi", "playlist" + newVideoPath + ".mp4##"+duration));
+		finalVideoPlaylist.add(videos.get(videoStartIndex).getFilePath().replace(".avi", "playlist" + newVideoPath + ".mp4##" + duration));
 	    }
 	} else {
 	    for (int l = videoStartIndex; l <= videoStopIndex; l++) {
@@ -518,68 +527,65 @@ public class PlaybackDataService {
 		long duration = 0;
 		if (audioStartTime >= videoStartTime && audioStartTime <= videoEndTime && audioEndTime > videoEndTime) {
 		    if (audioStartTime == videoStartTime) {
-				newVideoPath = PlaybackUtil.getUnique();
-				duration = videos.get(l).getEndTime().getTime() - videos.get(l).getStartTime().getTime();
-				cmd = "-i " + videos.get(l).getFilePath() + " -i " + audioPath + " -ar 44100 -ab 64k " 
+			newVideoPath = PlaybackUtil.getUnique();
+			duration = videos.get(l).getEndTime().getTime() - videos.get(l).getStartTime().getTime();
+			cmd = "-i " + videos.get(l).getFilePath() + " -i " + audioPath + " -ar 44100 -ab 64k " + videos.get(l).getFilePath().replace(".avi", "playlist" + newVideoPath + ".mp4");
+			PlaybackUtil.invokeProcess(cmd);
+			log.debug(cmd);
+			finalVideoPlaylist.add(videos.get(l).getFilePath().replace(".avi", "playlist" + newVideoPath + ".mp4##" + duration));
+		    } else if (audioStartTime > videoStartTime) {
+			// cut video and and audio and merge with video
+			newVideoPath = PlaybackUtil.getUnique();
+			duration = audioStartTime - videoStartTime;
+			cmd = "-i " + videos.get(l).getFilePath() + " -ss 00:00:00 -t " + PlaybackUtil.secondsToHours(audioStartTime - videoStartTime) + " "
 				+ videos.get(l).getFilePath().replace(".avi", "playlist" + newVideoPath + ".mp4");
-				PlaybackUtil.invokeProcess(cmd);
-				log.debug(cmd);
-				finalVideoPlaylist.add(videos.get(l).getFilePath().replace(".avi", "playlist" + newVideoPath + ".mp4##"+duration));
-		    } 
-		    else if (audioStartTime > videoStartTime) {
-				// cut video and and audio and merge with video
-				newVideoPath = PlaybackUtil.getUnique();
-				duration = audioStartTime - videoStartTime;
-				cmd = "-i " + videos.get(l).getFilePath() + " -ss 00:00:00 -t " + PlaybackUtil.secondsToHours(audioStartTime - videoStartTime) + " "
-					+ videos.get(l).getFilePath().replace(".avi", "playlist" + newVideoPath + ".mp4");
-				PlaybackUtil.invokeProcess(cmd);
-				log.debug(cmd);
-				finalVideoPlaylist.add(videos.get(l).getFilePath().replace(".avi", "playlist" + newVideoPath + ".mp4##"+duration));
-	
-				newVideoPath = PlaybackUtil.getUnique();
-				duration = videos.get(l).getEndTime().getTime() - videos.get(l).getStartTime().getTime();
-				cmd = "-i " + videos.get(l).getFilePath() + " -ss " + PlaybackUtil.secondsToHours(audioStartTime - videoStartTime) + " "
-					+ videos.get(l).getFilePath().replace(".avi", "init_play" + newVideoPath + ".avi");
-				PlaybackUtil.invokeProcess(cmd);
-				log.debug(cmd);
-				// finalVideoPlaylist.add(videos.get(videoStartIndex).getFilePath().replace(".avi",
-				// "playlist"+newVideoPath+".avi"));
-	
-				String newVideoPath1 = PlaybackUtil.getUnique();
-				cmd = "-i " + videos.get(l).getFilePath().replace(".avi", "init_play" + newVideoPath + ".avi") + " -i " + audioPath + " -ar 44100 -ab 64k "
-					+ videos.get(l).getFilePath().replace(".avi", "playlist" + newVideoPath1 + ".mp4");
-				PlaybackUtil.invokeProcess(cmd);
-				log.debug(cmd);
-				finalVideoPlaylist.add(videos.get(l).getFilePath().replace(".avi", "playlist" + newVideoPath1 + ".mp4##"+duration));
-				//
-				// String newAudioPath = PlaybackUtil.getUnique();
-				// cmd =
-				// "-i "+audioPath+" -ss 00:00:00 -t "+PlaybackUtil.secondsToHours(videoEndTime-audioStartTime)+" "+audioPath.replace(".mp3",
-				// newAudioPath+".mp3");
-				// PlaybackUtil.invokeProcess(cmd);
-				//
-				// String newVideoPath = PlaybackUtil.getUnique();
-				// cmd =
-				// "-i "+videos.get(l).getFilePath()+" -i "+audioPath.replace(".mp3",
-				// newAudioPath+".mp3")+" -ar 22050 "+videos.get(l).getFilePath().replace(".flv","playlist"+newVideoPath+".flv");
-				// PlaybackUtil.invokeProcess(cmd);
-				// finalVideoPlaylist.add(videos.get(l).getFilePath().replace(".flv","playlist"+newVideoPath+".flv"));
-			    }
-			    // cut audio and merge with video
-			    String newAudioPath = PlaybackUtil.getUnique();
-			    duration = videoEndTime - audioStartTime;
-			    cmd = "-i " + audioPath + " -ss 00:00:00 -t " + PlaybackUtil.secondsToHours(videoEndTime - audioStartTime) + " " + audioPath.replace(".avi", "init_play" + newAudioPath + ".avi");
-			    PlaybackUtil.invokeProcess(cmd);
-			    log.debug(cmd);
-	
-			    newVideoPath = PlaybackUtil.getUnique();
-			    cmd = "-i " + videos.get(l).getFilePath() + " -i " + audioPath.replace(".avi", "init_play" + newAudioPath + ".avi") + " -ar 44100 -ab 64k "
-				    + videos.get(l).getFilePath().replace(".avi", "playlist" + newVideoPath + ".mp4");
-			    PlaybackUtil.invokeProcess(cmd);
-			    log.debug(cmd);
-			    finalVideoPlaylist.add(videos.get(l).getFilePath().replace(".avi", "playlist" + newVideoPath + ".mp4##"+duration));
-			} 
-		else if (audioStartTime < videoStartTime && audioEndTime > videoEndTime) {
+			PlaybackUtil.invokeProcess(cmd);
+			log.debug(cmd);
+			finalVideoPlaylist.add(videos.get(l).getFilePath().replace(".avi", "playlist" + newVideoPath + ".mp4##" + duration));
+
+			newVideoPath = PlaybackUtil.getUnique();
+			duration = videos.get(l).getEndTime().getTime() - videos.get(l).getStartTime().getTime();
+			cmd = "-i " + videos.get(l).getFilePath() + " -ss " + PlaybackUtil.secondsToHours(audioStartTime - videoStartTime) + " "
+				+ videos.get(l).getFilePath().replace(".avi", "init_play" + newVideoPath + ".avi");
+			PlaybackUtil.invokeProcess(cmd);
+			log.debug(cmd);
+			// finalVideoPlaylist.add(videos.get(videoStartIndex).getFilePath().replace(".avi",
+			// "playlist"+newVideoPath+".avi"));
+
+			String newVideoPath1 = PlaybackUtil.getUnique();
+			cmd = "-i " + videos.get(l).getFilePath().replace(".avi", "init_play" + newVideoPath + ".avi") + " -i " + audioPath + " -ar 44100 -ab 64k "
+				+ videos.get(l).getFilePath().replace(".avi", "playlist" + newVideoPath1 + ".mp4");
+			PlaybackUtil.invokeProcess(cmd);
+			log.debug(cmd);
+			finalVideoPlaylist.add(videos.get(l).getFilePath().replace(".avi", "playlist" + newVideoPath1 + ".mp4##" + duration));
+			//
+			// String newAudioPath = PlaybackUtil.getUnique();
+			// cmd =
+			// "-i "+audioPath+" -ss 00:00:00 -t "+PlaybackUtil.secondsToHours(videoEndTime-audioStartTime)+" "+audioPath.replace(".mp3",
+			// newAudioPath+".mp3");
+			// PlaybackUtil.invokeProcess(cmd);
+			//
+			// String newVideoPath = PlaybackUtil.getUnique();
+			// cmd =
+			// "-i "+videos.get(l).getFilePath()+" -i "+audioPath.replace(".mp3",
+			// newAudioPath+".mp3")+" -ar 22050 "+videos.get(l).getFilePath().replace(".flv","playlist"+newVideoPath+".flv");
+			// PlaybackUtil.invokeProcess(cmd);
+			// finalVideoPlaylist.add(videos.get(l).getFilePath().replace(".flv","playlist"+newVideoPath+".flv"));
+		    }
+		    // cut audio and merge with video
+		    String newAudioPath = PlaybackUtil.getUnique();
+		    duration = videoEndTime - audioStartTime;
+		    cmd = "-i " + audioPath + " -ss 00:00:00 -t " + PlaybackUtil.secondsToHours(videoEndTime - audioStartTime) + " " + audioPath.replace(".avi", "init_play" + newAudioPath + ".avi");
+		    PlaybackUtil.invokeProcess(cmd);
+		    log.debug(cmd);
+
+		    newVideoPath = PlaybackUtil.getUnique();
+		    cmd = "-i " + videos.get(l).getFilePath() + " -i " + audioPath.replace(".avi", "init_play" + newAudioPath + ".avi") + " -ar 44100 -ab 64k "
+			    + videos.get(l).getFilePath().replace(".avi", "playlist" + newVideoPath + ".mp4");
+		    PlaybackUtil.invokeProcess(cmd);
+		    log.debug(cmd);
+		    finalVideoPlaylist.add(videos.get(l).getFilePath().replace(".avi", "playlist" + newVideoPath + ".mp4##" + duration));
+		} else if (audioStartTime < videoStartTime && audioEndTime > videoEndTime) {
 		    // cut audio and merge with video
 		    String newAudioPath = PlaybackUtil.getUnique();
 		    duration = videoEndTime - videoStartTime;
@@ -593,7 +599,7 @@ public class PlaybackDataService {
 			    + videos.get(l).getFilePath().replace(".avi", "playlist" + newVideoPath + ".mp4");
 		    PlaybackUtil.invokeProcess(cmd);
 		    log.debug(cmd);
-		    finalVideoPlaylist.add(videos.get(l).getFilePath().replace(".avi", "playlist" + newVideoPath + ".mp4##"+duration));
+		    finalVideoPlaylist.add(videos.get(l).getFilePath().replace(".avi", "playlist" + newVideoPath + ".mp4##" + duration));
 		} else if (audioStartTime < videoStartTime && audioEndTime >= videoStartTime && audioEndTime <= videoEndTime) {
 		    // cut audio and merge with video
 		    String newAudioPath = PlaybackUtil.getUnique();
@@ -607,7 +613,7 @@ public class PlaybackDataService {
 			    + videos.get(l).getFilePath().replace(".avi", "playlist" + newVideoPath + ".mp4");
 		    PlaybackUtil.invokeProcess(cmd);
 		    log.debug(cmd);
-		    finalVideoPlaylist.set(l, videos.get(l).getFilePath().replace(".avi", "playlist" + newVideoPath + ".mp4##"+duration));
+		    finalVideoPlaylist.set(l, videos.get(l).getFilePath().replace(".avi", "playlist" + newVideoPath + ".mp4##" + duration));
 		}
 	    }
 	}

@@ -84,6 +84,9 @@ public class PlaybackUtil {
     /* Send the object Audio and video and the windows folder */
     public static void updateAudioPathWindows(String winPath, List<AudioData> mediaList) {
 //
+	if(mediaList == null)
+	    return;
+	
 	for (AudioData aud : mediaList) {
 
 	    String path = aud.getFilePath();
@@ -91,25 +94,14 @@ public class PlaybackUtil {
 	    aud.setFilePath(winPath + newPath);
 	}
 
-//	for (VideoData vid : mediaList) {
-//
-//	    String path = vid.getFilePath();
-//	    String newPath = path.substring(path.lastIndexOf("/"));
-//	    vid.setFilePath(winPath + newPath);
-//	}
-
     }
     
     /* Send the object Audio and video and the windows folder */
     public static void updateVideoPathWindows(String winPath, List<VideoData> mediaList) {
-//
-//	for (AudioData aud : audios) {
-//
-//	    String path = aud.getFilePath();
-//	    String newPath = path.substring(path.lastIndexOf("/"));
-//	    aud.setFilePath(winPath + newPath);
-//	}
 
+	if(mediaList == null)
+	    return;
+	
 	for (VideoData vid : mediaList) {
 
 	    String path = vid.getFilePath();
