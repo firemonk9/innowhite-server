@@ -22,8 +22,11 @@ public class PlayBackPlayListDao {
 
     @Transactional
     public void savePlayBackPlayList(List<PlayBackPlayList> playBackPlayList) {
-	
+
 	for (PlayBackPlayList obj : playBackPlayList) {
+	    
+	    // hard coding the server 2 addr for now. will need to change it.
+	    obj.setServer("ser2.innowhite.com");
 	    save(obj);
 	}
 

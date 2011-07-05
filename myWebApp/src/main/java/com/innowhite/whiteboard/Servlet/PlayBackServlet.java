@@ -41,7 +41,7 @@ public class PlayBackServlet extends HttpServlet {
 	response.setContentType("text/xml");
 	PrintWriter out = response.getWriter();
 	out.println("<?xml version='1.0' encoding='UTF-8'?>");
-	out.println("<data>");
+	out.println("<data port=\"1935\">");
 	out.println(s);
 	out.println("</data>");
 

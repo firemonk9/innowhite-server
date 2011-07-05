@@ -34,7 +34,19 @@ public class PlayBackPlayList implements Serializable {
     
     @Column(name = "duration")
     String duration;
+    
+    @Column(name = "server")
+    String server;
+    
       
+    public String getServer() {
+        return server;
+    }
+
+    public void setServer(String server) {
+        this.server = server;
+    }
+
     public String getDuration() {
         return duration;
     }
