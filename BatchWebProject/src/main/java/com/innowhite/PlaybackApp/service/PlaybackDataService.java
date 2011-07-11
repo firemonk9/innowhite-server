@@ -199,7 +199,7 @@ public class PlaybackDataService {
 		    playlist = new PlayBackPlayList();
 		    String a[] = new String[2];
 		    a = finalVideoPlaylist.get(i).split("##");
-		    //convert all playlist videos to .mp4
+		    // convert all playlist videos to .mp4
 		    String mp4_filepath = convertAVItoMP4264(a[0]);
 		    playlist.setFilePath(mp4_filepath);
 		    playlist.setInsertedDate(new Date());
@@ -218,16 +218,18 @@ public class PlaybackDataService {
     }
 
     private String convertAVItoMP4264(String avi_filepath) {
-    	String cmd = "-i "+avi_filepath+" -vcodec libx264 -g 250 -bf 3 -b_strategy 1 -coder 1 -qmin 10 "+
-    	"-qmax 51 -sc_threshold 40 -flags +loop -cmp +chroma -me_range 16 -me_method hex -subq 5 -i_qfactor 0.71 "+
-    	"-qcomp 0.6 -qdiff 4 -directpred 1 -flags2 +fastpskip -dts_delta_threshold 1 -ab 64k -ar 44100 "+
-    	"-s 800x600 "+avi_filepath.replace("avi", "mp4");
-    	PlaybackUtil.invokeProcess(cmd);
-    	String mp4_filepath = avi_filepath.replace("avi", "mp4");
-    	return mp4_filepath;
-	}
+	
+	log.debug(" converting the avi to mp4 ");
+	
+	String cmd = "-i " + avi_filepath + " -vcodec libx264 -g 250 -bf 3 -b_strategy 1 -coder 1 -qmin 10 "
+		+ "-qmax 51 -sc_threshold 40 -flags +loop -cmp +chroma -me_range 16 -me_method hex -subq 5 -i_qfactor 0.71 "
+		+ "-qcomp 0.6 -qdiff 4 -directpred 1 -flags2 +fastpskip -dts_delta_threshold 1 -ab 64k -ar 44100 " + "-s 800x600 " + avi_filepath.replace(".avi", ".mp4");
+	PlaybackUtil.invokeProcess(cmd);
+	String mp4_filepath = avi_filepath.replace(".avi", ".mp4");
+	return mp4_filepath;
+    }
 
-	private static void prepareVideoForSessionBucket(SessionBucket sb, int j, VideoData videoData, long sessionStartTime, long sessionEndTime) {
+    private static void prepareVideoForSessionBucket(SessionBucket sb, int j, VideoData videoData, long sessionStartTime, long sessionEndTime) {
 	log.debug("------------------------------------");
 	log.debug("preparing VideoForSessionBucket.....");
 	log.debug("------------------------------------");
