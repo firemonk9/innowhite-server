@@ -218,7 +218,7 @@ public class PlaybackDataService {
 		    playlist.setRoomName(roomId);
 
 		    // duration = finalVideoPlayli
-		    
+		    log.debug(":::::::DURATION::::::::::::::::"+a[1]);
 		    playlist.setDuration(a[1]);
 		    listPlayback.add(playlist);
 		}
@@ -445,116 +445,129 @@ public class PlaybackDataService {
 	    String newVideoPath = null;
 	    // if audio starts after video starts
 	    if (audioStartTime > videoStartTime) {
-		log.debug("audioStartTime>videoStartTime");
-		// check if its the first audio.
-		if (j == 0) {
-		    // cut video till audio starts and add to playlist
-		    log.debug("if(j==0)");
-		    newVideoPath = PlaybackUtil.getUnique();
-		    cmd = "-i " + videos.get(videoStartIndex).getFilePath() + " -ss 00:00:00 -t " + PlaybackUtil.secondsToHours(audioStartTime - videoStartTime) + " -ar 44100 -ab 64k "
-			    + videos.get(videoStartIndex).getFilePath().replace(".avi", "playlist" + newVideoPath + ".avi");
-		    PlaybackUtil.invokeProcess(cmd);
-		    finalVideoPlaylist.add(videos.get(videoStartIndex).getFilePath().replace(".avi", "playlist" + newVideoPath + ".avi##" + (audioStartTime - videoStartTime)));
-		    // audioList.get(j+1).getStartTime()!=null
-		    // if more than one audio then cut/merge the video till the
-		    // next audio start time
-		    long duration = 0;
-		    if (nextAudioStartTime != 0) {
-			log.debug("if(nextAudioStartTime!=0)");
-			newVideoPath = PlaybackUtil.getUnique();
-			duration = nextAudioStartTime - audioStartTime;
-			cmd = "-i " + videos.get(videoStartIndex).getFilePath() + " -ss " + PlaybackUtil.secondsToHours(audioStartTime - videoStartTime) + " -t "
-				+ PlaybackUtil.secondsToHours(nextAudioStartTime - audioStartTime) + " "
-				+ videos.get(videoStartIndex).getFilePath().replace(".avi", "int_play" + newVideoPath + ".avi");
-			PlaybackUtil.invokeProcess(cmd);
-		    }
-		    // cut/merge the video till current video ends
-		    else {
-			log.debug("if(nextAudioStartTime==0)");
-			newVideoPath = PlaybackUtil.getUnique();
-			duration = videos.get(videoStartIndex).getEndTime().getTime() - videos.get(videoStartIndex).getStartTime().getTime();
-			cmd = "-i " + videos.get(videoStartIndex).getFilePath() + " -ss " + PlaybackUtil.secondsToHours(audioStartTime - videoStartTime) + " "
-				+ videos.get(videoStartIndex).getFilePath().replace(".avi", "int_play" + newVideoPath + ".avi");
-			PlaybackUtil.invokeProcess(cmd);
-		    }
-		    // add merged video to playlist
-		    log.debug("merging..");
-		    String newVideoPath1 = PlaybackUtil.getUnique();
-		    cmd = "-i " + videos.get(videoStartIndex).getFilePath().replace(".avi", "int_play" + newVideoPath + ".avi") + " -i " + audioPath + " -ar 44100 -ab 64k "
-			    + videos.get(videoStartIndex).getFilePath().replace(".avi", "playlist" + newVideoPath1 + ".avi");
-		    PlaybackUtil.invokeProcess(cmd);
-		    finalVideoPlaylist.add(videos.get(videoStartIndex).getFilePath().replace(".avi", "playlist" + newVideoPath1 + ".avi##" + duration));
-		    // finalVideoPlaylist.add(videos.get(videoStartIndex).getFilePath().replace(".flv",
-		    // "playlist"+newVideoPath+".flv"));
-		}
-		// if not the first audio..
-		else if (j > 0) {
-		    log.debug("else if(j>0)");
-		    long duration = 0;
-		    // cut video from current audio till next audio starts
-		    if (nextAudioStartTime != 0) {
-			log.debug("if(nextAudioStartTime!=0)");
-			newVideoPath = PlaybackUtil.getUnique();
-			duration = nextAudioStartTime - audioStartTime;
-			cmd = "-i " + videos.get(videoStartIndex).getFilePath() + " -ss " + PlaybackUtil.secondsToHours(audioStartTime - videoStartTime) + " -t "
-				+ PlaybackUtil.secondsToHours(nextAudioStartTime - audioStartTime) + " "
-				+ videos.get(videoStartIndex).getFilePath().replace(".avi", "int_play" + newVideoPath + ".avi");
-			PlaybackUtil.invokeProcess(cmd);
-		    }
-		    // cut video from current audio till the end of video
-		    else {
-			log.debug("if(nextAudioStartTime==0)");
-			newVideoPath = PlaybackUtil.getUnique();
-			duration = videoEndTime - audioStartTime;
-			cmd = "-i " + videos.get(videoStartIndex).getFilePath() + " -ss " + PlaybackUtil.secondsToHours(audioStartTime - videoStartTime) + " -t "
-				+ PlaybackUtil.secondsToHours(videoEndTime - audioStartTime) + " " + videos.get(videoStartIndex).getFilePath().replace(".avi", "int_play" + newVideoPath + ".avi");
-			PlaybackUtil.invokeProcess(cmd);
-		    }
-		    // add merged video to playlist
-		    log.debug("merging...");
-		    String newVideoPath1 = PlaybackUtil.getUnique();
-		    cmd = "-i " + videos.get(videoStartIndex).getFilePath().replace(".avi", "int_play" + newVideoPath + ".avi") + " -i " + audioPath + " -ar 44100 -ab 64k "
-			    + videos.get(videoStartIndex).getFilePath().replace(".avi", "playlist" + newVideoPath1 + ".avi");
-		    PlaybackUtil.invokeProcess(cmd);
-		    finalVideoPlaylist.add(videos.get(videoStartIndex).getFilePath().replace(".avi", "playlist" + newVideoPath1 + ".avi##" + duration));
-		    // finalVideoPlaylist.add(videos.get(videoStartIndex).getFilePath().replace(".flv",
-		    // "playlist"+newVideoPath+".flv"));
-		}
-	    } else if (audioStartTime == videoStartTime) {
-		long duration = 0;
-		log.debug("else if(audioStartTime==videoStartTime)");
-		// cut video from current audio till next audio starts
-		if (nextAudioStartTime != 0) {
-		    log.debug("if(nextAudioStartTime!=0)");
-		    newVideoPath = PlaybackUtil.getUnique();
-		    duration = nextAudioStartTime - audioStartTime;
-		    cmd = "-i " + videos.get(videoStartIndex).getFilePath() + " -ss " + PlaybackUtil.secondsToHours(audioStartTime - videoStartTime) + " -t "
-			    + PlaybackUtil.secondsToHours(nextAudioStartTime - audioStartTime) + " " + videos.get(videoStartIndex).getFilePath().replace(".avi", "int_play" + newVideoPath + ".avi");
-		    PlaybackUtil.invokeProcess(cmd);
-		    log.debug(cmd);
-		}
-		// cut video from current audio till the end of video
-		else {
-		    log.debug("if(nextAudioStartTime==0)");
-		    newVideoPath = PlaybackUtil.getUnique();
-		    duration = videos.get(videoStartIndex).getStartTime().getTime() - videos.get(videoStartIndex).getEndTime().getTime();
-		    cmd = "-i " + videos.get(videoStartIndex).getFilePath() + " -ss " + PlaybackUtil.secondsToHours(audioList.get(j).getStartTime().getTime() - videoStartTime) + " "
-			    + videos.get(videoStartIndex).getFilePath().replace(".avi", "int_play" + newVideoPath + ".avi");
-		    PlaybackUtil.invokeProcess(cmd);
-		    log.debug(cmd);
-		}
-		log.debug("merging...");
-		// finalVideoPlaylist.set(videoStartIndex,
-		// videos.get(videoStartIndex).getFilePath().replace(".avi",
-		// "playlist"+newVideoPath+".avi"));
-		newVideoPath = PlaybackUtil.getUnique();
-		cmd = "-i " + videos.get(videoStartIndex).getFilePath() + " -i " + audioPath + " -ar 44100 -ab 64k "
-			+ videos.get(videoStartIndex).getFilePath().replace(".avi", "playlist" + newVideoPath + ".avi");
-		PlaybackUtil.invokeProcess(cmd);
-		log.debug(cmd);
-		finalVideoPlaylist.add(videos.get(videoStartIndex).getFilePath().replace(".avi", "playlist" + newVideoPath + ".avi##" + duration));
+			log.debug("audioStartTime>videoStartTime");
+			// check if its the first audio.
+			if (j == 0) {
+			    // cut video till audio starts and add to playlist
+			    log.debug("if(j==0)");
+			    newVideoPath = PlaybackUtil.getUnique();
+			    cmd = "-i " + videos.get(videoStartIndex).getFilePath() + " -ss 00:00:00 -t " + PlaybackUtil.secondsToHours(audioStartTime - videoStartTime) + " -ar 44100 -ab 64k "
+				    + videos.get(videoStartIndex).getFilePath().replace(".avi", "playlist" + newVideoPath + ".avi");
+			    PlaybackUtil.invokeProcess(cmd);
+			    finalVideoPlaylist.add(videos.get(videoStartIndex).getFilePath().replace(".avi", "playlist" + newVideoPath + ".avi##" + (audioStartTime - videoStartTime)));
+			    // audioList.get(j+1).getStartTime()!=null
+			    // if more than one audio then cut/merge the video till the
+			    // next audio start time
+			    long duration = 0;
+			    if (nextAudioStartTime != 0) {
+				log.debug("if(nextAudioStartTime!=0)");
+				newVideoPath = PlaybackUtil.getUnique();
+				duration = nextAudioStartTime - audioStartTime;
+				log.debug(":::::DURATION:::::"+duration);
+				cmd = "-i " + videos.get(videoStartIndex).getFilePath() + " -ss " + PlaybackUtil.secondsToHours(audioStartTime - videoStartTime) + " -t "
+					+ PlaybackUtil.secondsToHours(nextAudioStartTime - audioStartTime) + " "
+					+ videos.get(videoStartIndex).getFilePath().replace(".avi", "int_play" + newVideoPath + ".avi");
+				PlaybackUtil.invokeProcess(cmd);
+			    }
+			    // cut/merge the video till current video ends
+			    else {
+				log.debug("if(nextAudioStartTime==0)");
+				newVideoPath = PlaybackUtil.getUnique();
+				duration = videos.get(videoStartIndex).getEndTime().getTime() - videos.get(videoStartIndex).getStartTime().getTime();
+				log.debug(":::::DURATION:::::"+duration);
+				cmd = "-i " + videos.get(videoStartIndex).getFilePath() + " -ss " + PlaybackUtil.secondsToHours(audioStartTime - videoStartTime) + " "
+					+ videos.get(videoStartIndex).getFilePath().replace(".avi", "int_play" + newVideoPath + ".avi");
+				PlaybackUtil.invokeProcess(cmd);
+			    }
+			    // add merged video to playlist
+			    log.debug("merging..");
+			    String newVideoPath1 = PlaybackUtil.getUnique();
+			    cmd = "-i " + videos.get(videoStartIndex).getFilePath().replace(".avi", "int_play" + newVideoPath + ".avi") + " -i " + audioPath + " -ar 44100 -ab 64k "
+				    + videos.get(videoStartIndex).getFilePath().replace(".avi", "playlist" + newVideoPath1 + ".avi");
+			    PlaybackUtil.invokeProcess(cmd);
+			    finalVideoPlaylist.add(videos.get(videoStartIndex).getFilePath().replace(".avi", "playlist" + newVideoPath1 + ".avi##" + duration));
+			    // finalVideoPlaylist.add(videos.get(videoStartIndex).getFilePath().replace(".flv",
+			    // "playlist"+newVideoPath+".flv"));
+			}
+			// if not the first audio..
+			else if (j > 0) {
+			    log.debug("else if(j>0)");
+			    long duration = 0;
+			    // cut video from current audio till next audio starts
+			    if (nextAudioStartTime != 0) {
+					log.debug("if(nextAudioStartTime!=0)");
+					newVideoPath = PlaybackUtil.getUnique();
+					duration = nextAudioStartTime - audioStartTime;
+					log.debug(":::::DURATION:::::"+duration);
+					cmd = "-i " + videos.get(videoStartIndex).getFilePath() + " -ss " + PlaybackUtil.secondsToHours(audioStartTime - videoStartTime) + " -t "
+						+ PlaybackUtil.secondsToHours(nextAudioStartTime - audioStartTime) + " "
+						+ videos.get(videoStartIndex).getFilePath().replace(".avi", "int_play" + newVideoPath + ".avi");
+					PlaybackUtil.invokeProcess(cmd);
+			    }
+			    // cut video from current audio till the end of video
+			    else {
+					log.debug("if(nextAudioStartTime==0)");
+					newVideoPath = PlaybackUtil.getUnique();
+					duration = videoEndTime - audioStartTime;
+					log.debug(":::::DURATION:::::"+duration);
+					cmd = "-i " + videos.get(videoStartIndex).getFilePath() + " -ss " + PlaybackUtil.secondsToHours(audioStartTime - videoStartTime) + " -t "
+						+ PlaybackUtil.secondsToHours(videoEndTime - audioStartTime) + " " + videos.get(videoStartIndex).getFilePath().replace(".avi", "int_play" + newVideoPath + ".avi");
+					PlaybackUtil.invokeProcess(cmd);
+			    }
+			    // add merged video to playlist
+			    log.debug("merging...");
+			    String newVideoPath1 = PlaybackUtil.getUnique();
+			    cmd = "-i " + videos.get(videoStartIndex).getFilePath().replace(".avi", "int_play" + newVideoPath + ".avi") + " -i " + audioPath + " -ar 44100 -ab 64k "
+				    + videos.get(videoStartIndex).getFilePath().replace(".avi", "playlist" + newVideoPath1 + ".avi");
+			    PlaybackUtil.invokeProcess(cmd);
+			    finalVideoPlaylist.add(videos.get(videoStartIndex).getFilePath().replace(".avi", "playlist" + newVideoPath1 + ".avi##" + duration));
+			    // finalVideoPlaylist.add(videos.get(videoStartIndex).getFilePath().replace(".flv",
+			    // "playlist"+newVideoPath+".flv"));
+			}
+	    } 
+	    // audio and video start at the same time
+	    else if (audioStartTime == videoStartTime) {
+			long duration = 0;
+			log.debug("else if(audioStartTime==videoStartTime)");
+			// cut video from current audio till next audio starts
+			if (nextAudioStartTime != 0) {
+			    log.debug("if(nextAudioStartTime!=0)");
+			    String intVideoPath = PlaybackUtil.getUnique();
+			    duration = nextAudioStartTime - audioStartTime;
+			    log.debug(":::::DURATION:::::"+duration);
+			    cmd = "-i " + videos.get(videoStartIndex).getFilePath() + " -ss " + PlaybackUtil.secondsToHours(audioStartTime - videoStartTime) + " -t "
+				    + PlaybackUtil.secondsToHours(nextAudioStartTime - audioStartTime) + " " + videos.get(videoStartIndex).getFilePath().replace(".avi", "int_play" + intVideoPath + ".avi");
+			    PlaybackUtil.invokeProcess(cmd);
+			    log.debug(cmd);
+			    
+			    log.debug("merging...");
+				// finalVideoPlaylist.set(videoStartIndex,
+				// videos.get(videoStartIndex).getFilePath().replace(".avi",
+				// "playlist"+newVideoPath+".avi"));
+				newVideoPath = PlaybackUtil.getUnique();
+				cmd = "-i " + videos.get(videoStartIndex).getFilePath().replace(".avi", "int_play" + intVideoPath + ".avi")+" -i "+audioPath+" -ar 44100 -ab 64k "
+					+ videos.get(videoStartIndex).getFilePath().replace(".avi", "playlist" + newVideoPath + ".avi");
+				PlaybackUtil.invokeProcess(cmd);
+				log.debug(cmd);
+				finalVideoPlaylist.add(videos.get(videoStartIndex).getFilePath().replace(".avi", "playlist"+newVideoPath+".avi##" + duration));
+			}
+			// cut video from current audio till the end of video
+			else {
+			    log.debug("if(nextAudioStartTime==0)");
+			    newVideoPath = PlaybackUtil.getUnique();
+			    duration = videoEndTime - videoStartTime;
+			    log.debug(":::::DURATION:::::"+duration);
+			    //cmd = "-i " + videos.get(videoStartIndex).getFilePath() + " -ss " + PlaybackUtil.secondsToHours(audioList.get(j).getStartTime().getTime() - videoStartTime) + " "
+				//    + videos.get(videoStartIndex).getFilePath().replace(".avi", "int_play" + newVideoPath + ".avi");
+			    cmd = "-i " + videos.get(videoStartIndex).getFilePath()+" -i "+audioPath+" -ar 44100 -ab 64k "
+					+videos.get(videoStartIndex).getFilePath().replace(".avi", "playlist"+newVideoPath+".avi");
+			    PlaybackUtil.invokeProcess(cmd);
+			    log.debug(cmd);
+			    finalVideoPlaylist.add(videos.get(videoStartIndex).getFilePath().replace(".avi", "playlist"+newVideoPath+".avi##" + duration));
+			}
 	    }
-	} else {
+	} 
+	else {
 	    for (int l = videoStartIndex; l <= videoStopIndex; l++) {
 		videoStartTime = videos.get(l).getStartTime().getTime();
 		videoEndTime = videos.get(l).getEndTime().getTime();
@@ -564,6 +577,7 @@ public class PlaybackDataService {
 		    if (audioStartTime == videoStartTime) {
 			newVideoPath = PlaybackUtil.getUnique();
 			duration = videos.get(l).getEndTime().getTime() - videos.get(l).getStartTime().getTime();
+			log.debug(":::::DURATION:::::"+duration);
 			cmd = "-i " + videos.get(l).getFilePath() + " -i " + audioPath + " -ar 44100 -ab 64k " + videos.get(l).getFilePath().replace(".avi", "playlist" + newVideoPath + ".avi");
 			PlaybackUtil.invokeProcess(cmd);
 			log.debug(cmd);
@@ -572,6 +586,7 @@ public class PlaybackDataService {
 			// cut video and and audio and merge with video
 			newVideoPath = PlaybackUtil.getUnique();
 			duration = audioStartTime - videoStartTime;
+			log.debug(":::::DURATION:::::"+duration);
 			cmd = "-i " + videos.get(l).getFilePath() + " -ss 00:00:00 -t " + PlaybackUtil.secondsToHours(audioStartTime - videoStartTime) + " "
 				+ videos.get(l).getFilePath().replace(".avi", "playlist" + newVideoPath + ".avi");
 			PlaybackUtil.invokeProcess(cmd);
@@ -580,6 +595,7 @@ public class PlaybackDataService {
 
 			newVideoPath = PlaybackUtil.getUnique();
 			duration = videos.get(l).getEndTime().getTime() - videos.get(l).getStartTime().getTime();
+			log.debug(":::::DURATION:::::"+duration);
 			cmd = "-i " + videos.get(l).getFilePath() + " -ss " + PlaybackUtil.secondsToHours(audioStartTime - videoStartTime) + " "
 				+ videos.get(l).getFilePath().replace(".avi", "init_play" + newVideoPath + ".avi");
 			PlaybackUtil.invokeProcess(cmd);
@@ -610,6 +626,7 @@ public class PlaybackDataService {
 		    // cut audio and merge with video
 		    String newAudioPath = PlaybackUtil.getUnique();
 		    duration = videoEndTime - audioStartTime;
+		    log.debug(":::::DURATION:::::"+duration);
 		    cmd = "-i " + audioPath + " -ss 00:00:00 -t " + PlaybackUtil.secondsToHours(videoEndTime - audioStartTime) + " " + audioPath.replace(".avi", "init_play" + newAudioPath + ".avi");
 		    PlaybackUtil.invokeProcess(cmd);
 		    log.debug(cmd);
@@ -624,6 +641,7 @@ public class PlaybackDataService {
 		    // cut audio and merge with video
 		    String newAudioPath = PlaybackUtil.getUnique();
 		    duration = videoEndTime - videoStartTime;
+		    log.debug(":::::DURATION:::::"+duration);
 		    cmd = "-i " + audioPath + " -ss " + PlaybackUtil.secondsToHours(videoStartTime - audioStartTime) + " -t " + PlaybackUtil.secondsToHours(videoEndTime - videoStartTime) + " "
 			    + audioPath.replace(".avi", newAudioPath + ".avi");
 		    PlaybackUtil.invokeProcess(cmd);
@@ -639,6 +657,7 @@ public class PlaybackDataService {
 		    // cut audio and merge with video
 		    String newAudioPath = PlaybackUtil.getUnique();
 		    duration = audioEndTime - videoStartTime;
+		    log.debug(":::::DURATION:::::"+duration);
 		    cmd = "-i " + audioPath + " -ss " + PlaybackUtil.secondsToHours(videoStartTime - audioStartTime) + " -t " + PlaybackUtil.secondsToHours(audioEndTime - videoStartTime) + " "
 			    + audioPath.replace(".avi", newAudioPath + ".avi");
 		    PlaybackUtil.invokeProcess(cmd);
