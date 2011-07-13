@@ -125,16 +125,18 @@ Learn more about Flex at http://flex.org
 <script src="http://jquery.com/src/jquery-latest.pack.js">
 	</script>
 
+<script type="text/javascript" src="js/common.js"></script>
+
 <!--  BEGIN Browser History required section -->
 <link rel="stylesheet" type="text/css" href="history/history.css" />
-<link rel="stylesheet" type="text/css" media="screen" href="css/styles.css"  /> 
+<link rel="stylesheet" type="text/css" media="screen" href="resources/styles/styles.css"  /> 
 <!--  END Browser History required section -->
 
 <title></title>
 <script src="AC_OETags.js" language="javascript"></script>
 
 <!--  BEGIN Browser History required section -->
-<script src="/whiteboard/js/jquery.DOMWindow.js" language="javascript"></script>
+<script src="js/jquery.DOMWindow.js" language="javascript"></script>
 
 
 <!--  END Browser History required section -->
@@ -292,10 +294,10 @@ function plugin()
 
 	var url = null;
 	if (navigator.appVersion.indexOf("Win")!=-1)
-		url="/whiteboard/loadWinPlugin.html";
+		url="loadWinPlugin.html";
 
 	if (navigator.appVersion.indexOf("Mac")!=-1)
-		url="/whiteboard/loadMacPlugin.html";
+		url="loadMacPlugin.html";
 
 	if(url == null)
 		Alert("We do not support this OS yet.");
@@ -411,7 +413,7 @@ function plugin()
 						$('.fade').css('display', 'none');
 						
 				});
-			openHelpWindow();
+			//openHelpWindow();
 			if(window.navigator.userAgent.search(/Firefox/) == -1)
 			{
 				return;
@@ -536,22 +538,22 @@ if ( hasProductInstall && !hasRequestedVersion ) {
 
 <div class="fade" style="display: none;"></div>
 
-<div class="popup-help" style="display: none"><div class="close"><img src="images/pop-close-btn.png" alt="close" /></div><div class="pop-heading">Help</div><div class="pop-form login">
+<div class="popup-help" style="display: none"><div class="close"><img src="resources/images/pop-close-btn.png" alt="close" /></div><div class="pop-heading">Help</div><div class="pop-form login">
 
 <ul class="help-tabs-head"><li class="active ht1">Video</li> <li class="ht2">Voice</li> <li class="ht3">Chat</li> <li class="ht4">Other</li></ul>
 
-<div class="help-tabs" id="Video"><img src="images/help-video-img.png" alt="" align="left" style="margin-right:10px;"/> <p>Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry’s standard dummy text ever since the 1500s, when an unknown printer took a galley </p>
+<div class="help-tabs" id="Video"><img src="resources/images/help-video-img.png" alt="" align="left" style="margin-right:10px;"/> <p>Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry’s standard dummy text ever since the 1500s, when an unknown printer took a galley </p>
 <p>Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry’s standard dummy text ever since the 1500s, when an unknown printer took a galley </p></div>
 
-<div class="help-tabs" id="Voice" style="display:none;"><img src="images/help-video-img.png" alt="" align="left" style="margin-right:10px;"/> <p>02</p>
-<p>Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry’s standard dummy text ever since the 1500s, when an unknown printer took a galley </p></div>
-
-
-<div class="help-tabs" id="Chat" style="display:none;"><img src="images/help-video-img.png" alt="" align="left" style="margin-right:10px;"/> <p>03</p>
+<div class="help-tabs" id="Voice" style="display:none;"><img src="resources/images/help-video-img.png" alt="" align="left" style="margin-right:10px;"/> <p>02</p>
 <p>Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry’s standard dummy text ever since the 1500s, when an unknown printer took a galley </p></div>
 
 
-<div class="help-tabs" id="Other" style="display:none;"><img src="images/help-video-img.png" alt="" align="left" style="margin-right:10px;"/> <p>04</p>
+<div class="help-tabs" id="Chat" style="display:none;"><img src="resources/images/help-video-img.png" alt="" align="left" style="margin-right:10px;"/> <p>03</p>
+<p>Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry’s standard dummy text ever since the 1500s, when an unknown printer took a galley </p></div>
+
+
+<div class="help-tabs" id="Other" style="display:none;"><img src="resources/images/help-video-img.png" alt="" align="left" style="margin-right:10px;"/> <p>04</p>
 
 <p>Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry’s standard dummy text ever since the 1500s, when an unknown printer took a galley </p></div>
 
@@ -573,13 +575,13 @@ if ( hasProductInstall && !hasRequestedVersion ) {
 			click on the "download now" button to start download of Innowhite
 			ScreenShare plugin.</h3>
 		<a target="_blank" href="" onmousedown="detectPluginSystem(this);">
-			<img src="/whiteboard/history/download.png" width="30%"
+			<img src="history/download.png" width="30%"
 			style="border: none; position: absolute; bottom: 10px; left: 50%; margin-left: -60px;" />
 		</a>
 	</div>
 
-	<div id="helpWindow" style="display: none;">Help Content Coming
-		soon....</div>
+<!-- 	<div id="helpWindow" style="display: none;">Help Content Coming -->
+<!-- 		soon....</div> -->
 
 	<div id="notSapportedBrowser" style="display: none;">Internet Explorer
 		 is not supported to share the screen. Please use Firefox or Google
@@ -596,7 +598,7 @@ if ( hasProductInstall && !hasRequestedVersion ) {
 	<div id="popUpTemplate" style="display: none">
 		<a href="" onclick="$.closeDOMWindow();return false;"
 			style="display: block; float: right; margin-right: 10px;">close</a><br />
-		<img src="/whiteboard/history/InnowhiteLogo.png"
+		<img src="history/InnowhiteLogo.png"
 			style="position: absolute; top: 10px;" />
 		<div style="margin-bottom: 30px;">&nbsp;</div>
 		<hr width=100%>

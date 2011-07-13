@@ -35,7 +35,7 @@ public class PlayBackPlayListService {
 	
 	if(absPath != null){
 	    absPath =  absPath.substring(absPath.lastIndexOf("/")+1);
-	    return "mp4:"+absPath;
+	    return absPath;
 	}
 	return null;
     }
