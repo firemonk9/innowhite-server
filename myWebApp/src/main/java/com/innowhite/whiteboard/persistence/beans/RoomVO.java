@@ -23,6 +23,7 @@ public class RoomVO {
 	
 	
 	
+	
 
 	public String getRoomLiveConnectStatus() {
 		return roomLiveConnectStatus;

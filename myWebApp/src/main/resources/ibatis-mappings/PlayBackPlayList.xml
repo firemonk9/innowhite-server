@@ -11,13 +11,14 @@
 		<result property="duration" column="duration" />
 		<result property="filePath" column="file_path" />
 		<result property="server" column="server" />
+		<result property="size" column="size" />
 	
 	</resultMap>
 
 
 	<select id="getPlayListQuery" resultMap="playListMapId" parameterClass="java.lang.String">
 		select
-		duration, file_path, server from playback_playlist where room_id=#room_id# order by id asc;
+		duration, file_path, server , size from playback_playlist where room_id=#room_id# order by id asc;
 	</select>
 
 

@@ -24,15 +24,17 @@
 
 	<insert id="createRoom" parameterMap="roomObject">
 		INSERT INTO room
-		(room_id,room_name, org_name, users_count, view_count, group_leader, start_date,
+		(room_id,room_name, org_name, users_count, view_count,
+		group_leader, start_date,
 		end_date, inserted_date, record, course,
 		lesson_plan_id,room_live_connect_status)
 		VALUES
-		(?,?,?,?,?,?, ?, ?, ?, ?, ?, ?,?)
+		(?,?,?,?,?,?, ?, ?, ?,
+		?, ?, ?,?)
 
 		<selectKey keyProperty="id" resultClass="java.lang.Integer">
 			SELECT @@identity
-			</selectKey>
+		</selectKey>
 	</insert>
 
 
@@ -44,43 +46,61 @@
 
 		<selectKey keyProperty="id" resultClass="java.lang.Long">
 			SELECT @@identity
-			</selectKey>
+		</selectKey>
 	</insert>
 
 
 
 	<update id="updateStartDate" parameterClass="java.lang.String">
-		update room set start_date = now() , room_active = 'ACTIVE' where room_id =
+		update room set
+		start_date = now() , room_active = 'ACTIVE' where room_id =
 		#id#
-	 </update>
+	</update>
 
 	<update id="updateEndDate" parameterClass="java.lang.String">
-		update room set end_date = now() , room_active = 'INACTIVE' where room_id =
+		update room set
+		end_date = now() , room_active = 'INACTIVE' where room_id =
 		#id#
-	   </update>
+	</update>
 
 	<update id="updatePlaybackActive" parameterClass="java.lang.String">
-		update room set playback_active = "ACTIVE" where room_id = #id#
+		update room set
+		playback_active = "ACTIVE" where room_id = #id#
 	   </update>
 
 
 	<update id="updatePlaybackInActive" parameterClass="java.lang.String">
-		update room set playback_active = "INACTIVE" where room_id = #id#
+		update room
+		set playback_active = "INACTIVE" where room_id = #id#
 	   </update>
 
 	<select id="getRoomStatus" resultClass="java.lang.String"
 		parameterClass="java.lang.String">
-		select room_active from room where room_id= #id#;      
-     </select>
+		select room_active from room where room_id= #id#;
+	</select>
+
 
 	<resultMap id="roomStatusResult"
 		class="com.innowhite.whiteboard.persistence.beans.RoomVO">
-		<result property="roomId" column="room_id" />
-		<result property="roomName" column="room_name" />
-		<result property="lessonPlanId" column="lesson_plan_id" />
-		<result property="course" column="course" />
+		<result property="startTime" column="start_time" />
+		<result property="endTime" column="end_time" />
 
 	</resultMap>
+
+
+
+
+	<select id="roomInfo" parameterClass="java.lang.String"
+		resultMap="roomStatusResult">
+		select 
+		start_date,
+		end_date
+		where room_id = #room_id#
+	</select>
+
+
+
+
 	<select id="roomActiveList" parameterClass="java.util.HashMap"
 		resultMap="roomStatusResult">
 		select room_id, room_name, lesson_plan_id,course from room where
@@ -91,7 +111,7 @@
 		<dynamic prepend=" and ">
 			<isNotEmpty property="clientName">
 				client_name = #clientName#
-	      </isNotEmpty>
+			</isNotEmpty>
 		</dynamic>
 
 		order by inserted_date desc
@@ -106,7 +126,7 @@
 		<dynamic prepend=" and ">
 			<isNotEmpty property="clientName">
 				client_name = #clientName#
-	      </isNotEmpty>
+			</isNotEmpty>
 		</dynamic>
 
 		order by inserted_date desc
@@ -118,7 +138,7 @@
 		<dynamic prepend=" and ">
 			<isNotEmpty property="clientName">
 				client_name = #clientName#
-	      </isNotEmpty>
+			</isNotEmpty>
 		</dynamic>
 
 		<dynamic prepend=" and ">
@@ -130,7 +150,7 @@
 		<dynamic prepend=" and ">
 			<isNotEmpty property="lesson_plan_id">
 				lesson_plan_id = #lesson_plan_id#
-	      </isNotEmpty>
+			</isNotEmpty>
 		</dynamic>
 
 	</delete>

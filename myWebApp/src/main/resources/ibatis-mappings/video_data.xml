@@ -26,6 +26,23 @@
 		</selectKey>
 	</insert>
 
+	<resultMap id="videosForRoomResult"
+		class="com.innowhite.whiteboard.persistence.beans.VideoDataVO">
+
+		<result property="userId" column="user_id" />
+		<result property="videoType" column="video_type" />
+		<result property="startTime" column="start_time" />
+		<result property="endTime" column="end_time" />
+
+	</resultMap>
+
+
+	<select id="getVideosForRoom" parameterClass="java.lang.String"
+		resultMap="videosForRoomResult">
+
+		select user_id, video_type, start_time, end_time from video_data where
+		room_id= #roomId#
+	</select>
 
 
 
@@ -41,8 +58,8 @@
 	<select id="getLatestWhitebordId" parameterClass="java.lang.String"
 		resultClass="java.lang.Integer">
 		select max(id) from video_data
-		where room_id = #room_name# 
-		
+		where room_id = #room_name#
+
 	</select>
 
 
