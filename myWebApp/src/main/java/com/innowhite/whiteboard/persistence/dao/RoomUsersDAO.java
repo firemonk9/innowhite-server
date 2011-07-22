@@ -143,7 +143,7 @@ public class RoomUsersDAO {
 	RoomVO value = null;
 	try {
 
-	    value = (RoomVO) sqlMapClient.queryForList("roomInfo", roomId);
+	    value = (RoomVO) sqlMapClient.queryForObject("roomInfo", roomId);
 
 	} catch (SQLException e) {
 	    e.printStackTrace();

@@ -82,8 +82,8 @@
 
 	<resultMap id="roomStatusResult"
 		class="com.innowhite.whiteboard.persistence.beans.RoomVO">
-		<result property="startTime" column="start_time" />
-		<result property="endTime" column="end_time" />
+		<result property="startDate" column="start_date" />
+		<result property="endDate" column="end_date" />
 
 	</resultMap>
 
@@ -94,7 +94,8 @@
 		resultMap="roomStatusResult">
 		select 
 		start_date,
-		end_date
+		end_date 
+		from room
 		where room_id = #room_id#
 	</select>
 

@@ -20,7 +20,7 @@
 		resultMap="audiosForRoomResult">
 
 		select start_time, end_time from audio_data where
-		room_id= #roomId#
+		room_name= #roomId#
 	</select>
 
 
