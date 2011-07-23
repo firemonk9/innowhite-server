@@ -1,10 +1,15 @@
 package com.innowhite.whiteboard.Servlet;
 
 import java.io.IOException;
+import java.io.PrintWriter;
+
 import javax.servlet.ServletException;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+
+import com.innowhite.whiteboard.service.SessionDetailService;
+import com.innowhite.whiteboard.util.Constants;
 
 /**
  * Servlet implementation class SessionDetailService
@@ -25,6 +30,17 @@ public class SessionDetail extends HttpServlet {
      *      response)
      */
     protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
+	
+	String roomId = request.getParameter(Constants.ROOM_ID);
+	String xml=null;
+	if(roomId != null)
+	    xml=SessionDetailService.getSessionDetail(roomId);
+	
+	response.setContentType("text/xml");
+	PrintWriter out = response.getWriter();
+	out.write(xml);
+	
+	//return xml;
 	
     }
 

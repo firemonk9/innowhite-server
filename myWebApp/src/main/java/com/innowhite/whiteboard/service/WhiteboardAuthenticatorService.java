@@ -10,6 +10,7 @@ import org.slf4j.LoggerFactory;
 
 import com.innowhite.whiteboard.persistence.beans.OrganizationVO;
 import com.innowhite.whiteboard.persistence.beans.RoomVO;
+import com.innowhite.whiteboard.persistence.dao.RoomUsersDAO;
 import com.innowhite.whiteboard.persistence.dao.WhiteboardAuthenticationDAOImpl;
 import com.innowhite.whiteboard.util.WhiteBoardSHA1;
 import com.innowhite.whiteboard.util.WhiteBoardUtil;
@@ -19,13 +20,23 @@ public class WhiteboardAuthenticatorService {
 	
 	private static final Logger log = LoggerFactory.getLogger(WhiteboardAuthenticatorService.class);
 	
-	public static String  validateRequest(String queryStringWithoutCheckSum, String parentOrg, String checksum){
+	public static String  validateRequest(String queryStringWithoutCheckSum, String parentOrg, String checksum, String roomId){
 		
 		
 		log.debug(" entering  validateRequest queryStringWithoutCheckSum"+queryStringWithoutCheckSum+"   parentOrg  "+parentOrg+"    checksum  "+checksum);
 		OrganizationVO orgVO = null;
 		String verifierString = "";
 		String checksumFromDB="";
+		
+		if(roomId != null )
+		{
+		   RoomVO room = RoomUsersDAO.getRoomInfo(roomId);
+		   if(room != null)
+		   {
+		       parentOrg = room.getOrgName();
+		   }    
+		}
+		
 		//Get the details for the organization name.
 		WhiteboardAuthenticationDAOImpl wai = new WhiteboardAuthenticationDAOImpl();
 		orgVO = wai.getOrganizationDetails(parentOrg);

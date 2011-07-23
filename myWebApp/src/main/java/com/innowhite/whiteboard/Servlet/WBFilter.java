@@ -53,6 +53,7 @@ public class WBFilter implements Filter {
 	String orgName = "";
 	String parentOrg = "";
 	String queryStringWithoutcheckSum = "";
+	String roomId="";
 	String validServiceStatus = InnowhiteConstants.AUTH_FAILED;
 
 	if (checkSum != null) {
@@ -67,6 +68,7 @@ public class WBFilter implements Filter {
 	    orgName = request.getParameter(InnowhiteConstants.ORG_NAME);
 	    checkSum = request.getParameter(InnowhiteConstants.CHECKSUM);
 	    parentOrg = request.getParameter(InnowhiteConstants.PARENT_ORG);
+	    roomId = request.getParameter(InnowhiteConstants.ROOM_ID);
 
 	    if (parentOrg == null)
 		parentOrg = orgName;
@@ -85,7 +87,7 @@ public class WBFilter implements Filter {
 	    log.debug("oflaDemo orgName: " + orgName);
 	    log.debug("oflaDemo checkSum: " + checkSum);
 
-	    validServiceStatus = WhiteboardAuthenticatorService.validateRequest(queryStringWithoutcheckSum, parentOrg, checkSum);
+	    validServiceStatus = WhiteboardAuthenticatorService.validateRequest(queryStringWithoutcheckSum, parentOrg, checkSum,roomId);
 	    log.debug("validServiceStatus= " + validServiceStatus);
 	    if (validServiceStatus.equals(InnowhiteConstants.SUCCESS)) {
 		bValidRequest = true;
