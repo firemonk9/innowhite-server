@@ -6,104 +6,106 @@
 
 
 <%
-	String userName = request.getParameter("userName");
-if(userName==null || userName.equals("null")){
-	userName = "whiteboardF";
-}
-	String path = request.getContextPath();
-	String basePath = request.getScheme() + "://"
-			+ request.getServerName() + ":" + request.getServerPort()
-			+ path + "/";
-	HttpSession mysession = request.getSession(true);
-	System.err.println(" session id is   :" + mysession.getId()
-			+ " PS " + request.getParameter("previousSession") + "   "
-			+ request.getRequestURI() + "    "
-			+ request.getRequestURL());
-	System.err.println(" the url is ########:   "
-			+ request.getRequestURL() + "   "
-			+ request.getQueryString());
-
-	String previousSession = (String) request
-			.getParameter("previousSession");
-	String joinroom = (String) request.getParameter("joinroom");
-	String clientname = (String) request.getParameter("user");
-	String groupLeader = (String) request.getParameter("groupLeader");
-	String classRoom = (String) request.getParameter("classRoom");
-	String orgName = (String) request.getParameter("orgName");
-	String view = (String) request.getParameter("view");
-	
-
-	// Whiteboard server and port
-	String wbSer = (String) request.getAttribute(InnowhiteConstants.WHITEBOARD_SERVER);
-	String wbSerPort = (String) request.getAttribute(InnowhiteConstants.WHITEBOARD_SERVER_PORT);
-
-	String phoneNum = (String) request.getAttribute(InnowhiteConstants.PHONE_NUM);
-	String meetingNum = (String) request.getAttribute(InnowhiteConstants.MEETING_NUM);
-
-
-	String hostURL = null;
-	if (orgName.indexOf(Constants.WEB_DELIMITER) > 0) {
-		StringTokenizer st = new StringTokenizer(orgName,
-				Constants.WEB_DELIMITER);
-
-		orgName = st.nextToken();
-		hostURL = st.nextToken();
-	}
-
-	if (groupLeader == null)
-		groupLeader = (String) request.getParameter("roomLeader");
-
-	if (joinroom == null)
-		joinroom = (String) request.getParameter("roomId");
-
-	if (view != null) {
-		if (view.equals("INET_PUBLIC")) {
-			view = "STUDENT_VIEW";
-			orgName = "INET";
-		} else if (view.equals("INET_PRIVATE")) {
-			view = "TEACHER_VIEW";
-			orgName = "INET";
-		}
-
-	} else {
-		view = "DEFAULT_VIEW";
-		orgName = "DEFAULT_WB";
-	}
-
-	if (view != null && view.equals("PLAYBACK_VIEW"))
-		previousSession = "true";
-
-	if (previousSession != null && previousSession.equals("true"))
-		groupLeader = "false";
-
-	System.err.println(" ###### " + joinroom + " clientname ## "
-			+ clientname + "   " + request.getParameter("roomId")
-			+ "   ");
-
-	System.err.println(" previousSession" + previousSession
-			+ " joinroom " + joinroom + "  view  " + view
-			+ " orgName  " + orgName + "  clientname:" + clientname
-			+ "  groupLeader:" + groupLeader);
-
-	Enumeration Names = request.getParameterNames();
-	while (Names.hasMoreElements()) {
-		String str = (String) Names.nextElement();
-		System.out.println("<tr><td>" + str + "</td><td>");
-		String[] Values = request.getParameterValues(str);
-		if (Values.length == 1) {
-			String paramValue = Values[0];
-			if (paramValue.length() == 0)
-				System.out.println("<I>No Value</I>");
-			else
-				System.out.println(paramValue);
-		} else {
-			System.out.println("<UL>");
-			for (int i = 0; i < Values.length; i++) {
-				System.out.println("<LI>" + Values[i]);
+    String userName = request.getParameter("userName");
+			if (userName == null || userName.equals("null")) {
+				userName = "whiteboardF";
 			}
-			System.out.println("</UL>");
-		}
-	}
+			String path = request.getContextPath();
+			String basePath = request.getScheme() + "://"
+					+ request.getServerName() + ":" + request.getServerPort()
+					+ path + "/";
+			HttpSession mysession = request.getSession(true);
+			System.err.println(" session id is   :" + mysession.getId()
+					+ " PS " + request.getParameter("previousSession") + "   "
+					+ request.getRequestURI() + "    "
+					+ request.getRequestURL());
+			System.err.println(" the url is ########:   "
+					+ request.getRequestURL() + "   "
+					+ request.getQueryString());
+
+			String previousSession = (String) request
+					.getParameter("previousSession");
+			String joinroom = (String) request.getParameter("joinroom");
+			String clientname = (String) request.getParameter("user");
+			String groupLeader = (String) request.getParameter("groupLeader");
+			String classRoom = (String) request.getParameter("classRoom");
+			String orgName = (String) request.getParameter("orgName");
+			String view = (String) request.getParameter("view");
+
+			// Whiteboard server and port
+			String wbSer = (String) request
+					.getAttribute(InnowhiteConstants.WHITEBOARD_SERVER);
+			String wbSerPort = (String) request
+					.getAttribute(InnowhiteConstants.WHITEBOARD_SERVER_PORT);
+
+			String phoneNum = (String) request
+					.getAttribute(InnowhiteConstants.PHONE_NUM);
+			String meetingNum = (String) request
+					.getAttribute(InnowhiteConstants.MEETING_NUM);
+
+			String hostURL = null;
+			if (orgName.indexOf(Constants.WEB_DELIMITER) > 0) {
+				StringTokenizer st = new StringTokenizer(orgName,
+						Constants.WEB_DELIMITER);
+
+				orgName = st.nextToken();
+				hostURL = st.nextToken();
+			}
+
+			if (groupLeader == null)
+				groupLeader = (String) request.getParameter("roomLeader");
+
+			if (joinroom == null)
+				joinroom = (String) request.getParameter("roomId");
+
+			if (view != null) {
+				if (view.equals("INET_PUBLIC")) {
+					view = "STUDENT_VIEW";
+					orgName = "INET";
+				} else if (view.equals("INET_PRIVATE")) {
+					view = "TEACHER_VIEW";
+					orgName = "INET";
+				}
+
+			} else {
+				view = "DEFAULT_VIEW";
+				orgName = "DEFAULT_WB";
+			}
+
+			if (view != null && view.equals("PLAYBACK_VIEW"))
+				previousSession = "true";
+
+			if (previousSession != null && previousSession.equals("true"))
+				groupLeader = "false";
+
+			System.err.println(" ###### " + joinroom + " clientname ## "
+					+ clientname + "   " + request.getParameter("roomId")
+					+ "   ");
+
+			System.err.println(" previousSession" + previousSession
+					+ " joinroom " + joinroom + "  view  " + view
+					+ " orgName  " + orgName + "  clientname:" + clientname
+					+ "  groupLeader:" + groupLeader);
+
+			Enumeration Names = request.getParameterNames();
+			while (Names.hasMoreElements()) {
+				String str = (String) Names.nextElement();
+				System.out.println("<tr><td>" + str + "</td><td>");
+				String[] Values = request.getParameterValues(str);
+				if (Values.length == 1) {
+					String paramValue = Values[0];
+					if (paramValue.length() == 0)
+						System.out.println("<I>No Value</I>");
+					else
+						System.out.println(paramValue);
+				} else {
+					System.out.println("<UL>");
+					for (int i = 0; i < Values.length; i++) {
+						System.out.println("<LI>" + Values[i]);
+					}
+					System.out.println("</UL>");
+				}
+			}
 %>
 
 <html lang="en">
@@ -129,7 +131,8 @@ Learn more about Flex at http://flex.org
 
 <!--  BEGIN Browser History required section -->
 <link rel="stylesheet" type="text/css" href="history/history.css" />
-<link rel="stylesheet" type="text/css" media="screen" href="resources/styles/styles.css"  /> 
+<link rel="stylesheet" type="text/css" media="screen"
+	href="resources/styles/styles.css" />
 <!--  END Browser History required section -->
 
 <title></title>
@@ -536,29 +539,76 @@ if ( hasProductInstall && !hasRequestedVersion ) {
 
 </script>
 
-<div class="fade" style="display: none;"></div>
+	<div class="fade" style="display: none;"></div>
 
-<div class="popup-help" style="display: none"><div class="close"><img src="resources/images/pop-close-btn.png" alt="close" /></div><div class="pop-heading">Help</div><div class="pop-form login">
+	<div class="popup-help" style="display: none">
+		<div class="close">
+			<img src="resources/images/pop-close-btn.png" alt="close" />
+		</div>
+		<div class="pop-heading">Help</div>
+		<div class="pop-form login">
 
-<ul class="help-tabs-head"><li class="active ht1">Video</li> <li class="ht2">Voice</li> <li class="ht3">Chat</li> <li class="ht4">Other</li></ul>
+			<ul class="help-tabs-head">
+				<li class="active ht1">Video</li>
+				<li class="ht2">Voice</li>
+				<li class="ht3">Chat</li>
+				<li class="ht4">Other</li>
+			</ul>
 
-<div class="help-tabs" id="Video"><img src="resources/images/help-video-img.png" alt="" align="left" style="margin-right:10px;"/> <p>Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry’s standard dummy text ever since the 1500s, when an unknown printer took a galley </p>
-<p>Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry’s standard dummy text ever since the 1500s, when an unknown printer took a galley </p></div>
+			<div class="help-tabs" id="Video">
+				<img src="resources/images/help-video-img.png" alt="" align="left"
+					style="margin-right: 10px;" />
+				<p>Lorem Ipsum is simply dummy text of the printing and
+					typesetting industry. Lorem Ipsum has been the industry’s
+					standard dummy text ever since the 1500s, when an unknown printer
+					took a galley</p>
+				<p>Lorem Ipsum is simply dummy text of the printing and
+					typesetting industry. Lorem Ipsum has been the industry’s
+					standard dummy text ever since the 1500s, when an unknown printer
+					took a galley</p>
+			</div>
 
-<div class="help-tabs" id="Voice" style="display:none;"><img src="resources/images/help-video-img.png" alt="" align="left" style="margin-right:10px;"/> <p>02</p>
-<p>Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry’s standard dummy text ever since the 1500s, when an unknown printer took a galley </p></div>
+			<div class="help-tabs" id="Voice" style="display: none;">
+				<img src="resources/images/help-video-img.png" alt="" align="left"
+					style="margin-right: 10px;" />
+				<p>02</p>
+				<p>Lorem Ipsum is simply dummy text of the printing and
+					typesetting industry. Lorem Ipsum has been the industry’s
+					standard dummy text ever since the 1500s, when an unknown printer
+					took a galley</p>
+			</div>
 
 
-<div class="help-tabs" id="Chat" style="display:none;"><img src="resources/images/help-video-img.png" alt="" align="left" style="margin-right:10px;"/> <p>03</p>
-<p>Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry’s standard dummy text ever since the 1500s, when an unknown printer took a galley </p></div>
+			<div class="help-tabs" id="Chat" style="display: none;">
+				<img src="resources/images/help-video-img.png" alt="" align="left"
+					style="margin-right: 10px;" />
+				<p>03</p>
+				<p>Lorem Ipsum is simply dummy text of the printing and
+					typesetting industry. Lorem Ipsum has been the industry’s
+					standard dummy text ever since the 1500s, when an unknown printer
+					took a galley</p>
+			</div>
 
 
-<div class="help-tabs" id="Other" style="display:none;"><img src="resources/images/help-video-img.png" alt="" align="left" style="margin-right:10px;"/> <p>04</p>
+			<div class="help-tabs" id="Other" style="display: none;">
+				<img src="resources/images/help-video-img.png" alt="" align="left"
+					style="margin-right: 10px;" />
+				<p>04</p>
 
-<p>Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry’s standard dummy text ever since the 1500s, when an unknown printer took a galley </p></div>
+				<p>Lorem Ipsum is simply dummy text of the printing and
+					typesetting industry. Lorem Ipsum has been the industry’s
+					standard dummy text ever since the 1500s, when an unknown printer
+					took a galley</p>
+			</div>
 
 
-</div></div>
+		</div>
+	</div>
+
+
+
+
+
 
 	<div id="pluginContainer">
 		<object id="plugin0" type="application/x-innowhite" width="300"
@@ -580,18 +630,20 @@ if ( hasProductInstall && !hasRequestedVersion ) {
 		</a>
 	</div>
 
-<!-- 	<div id="helpWindow" style="display: none;">Help Content Coming -->
-<!-- 		soon....</div> -->
+	<!-- 	<div id="helpWindow" style="display: none;">Help Content Coming -->
+	<!-- 		soon....</div> -->
 
-	<div id="notSapportedBrowser" style="display: none;">Internet Explorer
-		 is not supported to share the screen. Please use Firefox or Google
-		Chrome for sharing Screen.</div>
+	<div id="notSapportedBrowser" style="display: none;">Internet
+		Explorer is not supported to share the screen. Please use Firefox or
+		Google Chrome for sharing Screen.</div>
 	<div id="pluginInstalled" style="display: none;">Now You can
 		start sharing your screen during Innowhite meting sessions. Enjoy!</div>
 	<div id="reloadPage" style="display: none;">
-		<h4>Plugin cannot be loaded dynamically for Safari and Chrome in Mac</h4>
+		<h4>Plugin cannot be loaded dynamically for Safari and Chrome in
+			Mac</h4>
 
-		Please <b>quit</b> your browser and open again for plugin to get loaded and enjoy screen share.
+		Please <b>quit</b> your browser and open again for plugin to get
+		loaded and enjoy screen share.
 	</div>
 
 
@@ -602,8 +654,7 @@ if ( hasProductInstall && !hasRequestedVersion ) {
 			style="position: absolute; top: 10px;" />
 		<div style="margin-bottom: 30px;">&nbsp;</div>
 		<hr width=100%>
-		<br>
-		<br>
+		<br> <br>
 		<div class="DOMWindowContent" stylw="width:100%;height: 100%;"></div>
 	</div>
 	<!--

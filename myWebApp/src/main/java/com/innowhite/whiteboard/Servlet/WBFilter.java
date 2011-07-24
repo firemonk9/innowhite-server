@@ -76,7 +76,7 @@ public class WBFilter implements Filter {
 	    // log.debug("oflaDemo orgName: " + orgName);
 
 	    String hostURL = null;
-	    if (orgName.indexOf(Constants.WEB_DELIMITER) > 0 && orgName.contains("INET")) {
+	    if (orgName != null &&  orgName.indexOf(Constants.WEB_DELIMITER) > 0 && orgName.contains("INET")) {
 		StringTokenizer st = new StringTokenizer(orgName, Constants.WEB_DELIMITER);
 
 		parentOrg = st.nextToken();

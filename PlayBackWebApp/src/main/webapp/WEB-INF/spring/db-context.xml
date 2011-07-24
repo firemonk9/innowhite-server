@@ -1,9 +1,8 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <beans xmlns="http://www.springframework.org/schema/beans"
-	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" 
-	xmlns:aop="http://www.springframework.org/schema/aop"
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:aop="http://www.springframework.org/schema/aop"
 	xmlns:tx="http://www.springframework.org/schema/tx"
-       xsi:schemaLocation="
+	xsi:schemaLocation="
        http://www.springframework.org/schema/beans 
        http://www.springframework.org/schema/beans/spring-beans-3.0.xsd
        http://www.springframework.org/schema/tx 
@@ -16,9 +15,9 @@
 
 	<description>Example configuration to get you started.</description>
 
-	
- <tx:annotation-driven/>
- 
+
+	<tx:annotation-driven />
+
 
 	<!-- <bean id="sessionFactory" -->
 	<!-- class="org.springframework.orm.hibernate3.annotation.AnnotationSessionFactoryBean"> -->
@@ -34,7 +33,8 @@
 	<!-- </bean> -->
 
 
-	<bean id="transactionManager" class="org.springframework.orm.hibernate3.HibernateTransactionManager">
+	<bean id="transactionManager"
+		class="org.springframework.orm.hibernate3.HibernateTransactionManager">
 		<property name="sessionFactory" ref="sessionFactory" />
 	</bean>
 
@@ -42,7 +42,7 @@
 		class="org.springframework.beans.factory.config.PropertyPlaceholderConfigurer">
 		<property name="locations">
 			<list>
-				
+
 				<value>classpath:innowhite.properties</value>
 			</list>
 		</property>
@@ -69,7 +69,7 @@
 				<prop key="hibernate.format_sql">true</prop>
 				<prop key="hibernate.dialect">org.hibernate.dialect.MySQLDialect</prop>
 				<!-- <prop key="hibernate.hbm2ddl.auto">create</prop> -->
-<!-- 				<prop key="hibernate.hbm2ddl.auto">create</prop> -->
+				<!-- <prop key="hibernate.hbm2ddl.auto">create</prop> -->
 				<prop key="hibernate.show_sql">true</prop>
 				<prop key="use_sql_comments">true</prop>
 
@@ -80,24 +80,33 @@
 
 	<bean id="whiteboardDataDao" name="whiteboardDataDao"
 		class="com.innowhite.PlayBackWebApp.dao.WhiteboardDataDao">
-		
+
 		<property name="sessionFactory" ref="sessionFactory" />
-		
+
 	</bean>
-	
-		<bean id="audioDataDao" name="audioDataDao"
+
+	<bean id="audioDataDao" name="audioDataDao"
 		class="com.innowhite.PlayBackWebApp.dao.AudioDataDao">
-		
+
 		<property name="sessionFactory" ref="sessionFactory" />
-		
+
 	</bean>
-	
-		<bean id="videoDataDao" name="videoDataDao"
+
+	<bean id="videoDataDao" name="videoDataDao"
 		class="com.innowhite.PlayBackWebApp.dao.VideoDataDao">
-		
+
 		<property name="sessionFactory" ref="sessionFactory" />
-		
+
 	</bean>
-	
-	
+
+
+	<bean id="roomDataDao" name="roomDataDao"
+		class="com.innowhite.PlayBackWebApp.dao.RoomDataDao">
+
+		<property name="sessionFactory" ref="sessionFactory" />
+
+	</bean>
+
+
+
 </beans>

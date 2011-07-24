@@ -10,6 +10,7 @@ import javax.servlet.http.HttpServletResponse;
 
 import com.innowhite.whiteboard.service.SessionDetailService;
 import com.innowhite.whiteboard.util.Constants;
+import com.innowhite.whiteboard.util.InnowhiteConstants;
 
 /**
  * Servlet implementation class SessionDetailService
@@ -31,14 +32,14 @@ public class SessionDetail extends HttpServlet {
      */
     protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 	
-	String roomId = request.getParameter(Constants.ROOM_ID);
+	String roomId = request.getParameter(InnowhiteConstants.ROOM_ID);
 	String xml=null;
 	if(roomId != null)
 	    xml=SessionDetailService.getSessionDetail(roomId);
 	
 	response.setContentType("text/xml");
 	PrintWriter out = response.getWriter();
-	out.write(xml);
+	out.println(xml);
 	
 	//return xml;
 	
