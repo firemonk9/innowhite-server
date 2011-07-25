@@ -23,6 +23,10 @@
       </select>
       
       
+         <select id="findTestSQL" resultClass="java.lang.String" >
+      		select max(id) from room;      		
+      </select>
+      
       <select id="findByID" resultMap="userImagesResultMap" parameterClass="java.lang.Integer">
       		select * from user_media where id=#id#;      		
       </select>

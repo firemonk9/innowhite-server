@@ -24,11 +24,7 @@ public class PDFThread extends Thread {
     private DocConversionBean docBean = null;
     private FileTransformatioBean fileTransBean = null;
 
-    private int MAX_SLEEP_TIME = 180000;
-    private int sleepCounter = 0;
-
-    private int sleepInterval = 2000;
-
+  
     static String separator = System.getProperty("file.separator");
 
     public PDFThread() {

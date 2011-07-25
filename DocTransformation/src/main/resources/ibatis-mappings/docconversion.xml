@@ -39,6 +39,9 @@
 		 update live_doc_conversion set swf_created_time = now() , swf_created=#swfCreated# where id = #conversionID#
 	   </update>
       
+      
+     
+      
   <!-- 
       <delete id="deleteImageByID" parameterClass="int" >
       	delete from user_media where id=#id#      

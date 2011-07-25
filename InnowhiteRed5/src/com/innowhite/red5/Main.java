@@ -562,6 +562,7 @@ public class Main extends MultiThreadedApplicationAdapter {
 	// log.info("RoomJoined Called for client: " + client.getId() +
 	// "of scope " + scope.getName());
 	Constants.bsessionFlag = true;
+	 
 	log.debug(" roomJoin  ###### " + client.toString() + "   " + scope.getName());
 	log.debug("calling db update ::" + scope.getName());
 	// WhiteboardAuthenticatorService.startRoom(scope.getName());

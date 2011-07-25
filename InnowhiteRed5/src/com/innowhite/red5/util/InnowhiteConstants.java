@@ -9,7 +9,10 @@ package com.innowhite.red5.util;
  */
 public class InnowhiteConstants {
 	
-	public static final String SECRETKEY = "secret_key";
+    
+    	public static final String LOCK = "lock";
+	
+    	public static final String SECRETKEY = "secret_key";
 	public static final String WB_SESSION_ID = "session_id";
 	
 	public static final String APP_NAME = "InnowhiteRed5";
