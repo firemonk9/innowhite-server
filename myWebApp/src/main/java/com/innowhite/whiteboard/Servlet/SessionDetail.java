@@ -8,8 +8,10 @@ import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
+
 import com.innowhite.whiteboard.service.SessionDetailService;
-import com.innowhite.whiteboard.util.Constants;
 import com.innowhite.whiteboard.util.InnowhiteConstants;
 
 /**
@@ -17,6 +19,8 @@ import com.innowhite.whiteboard.util.InnowhiteConstants;
  */
 public class SessionDetail extends HttpServlet {
     private static final long serialVersionUID = 1L;
+
+    private static final Logger log = LoggerFactory.getLogger(SessionDetail.class);
 
     /**
      * @see HttpServlet#HttpServlet()
@@ -31,18 +35,25 @@ public class SessionDetail extends HttpServlet {
      *      response)
      */
     protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-	
-	String roomId = request.getParameter(InnowhiteConstants.ROOM_ID);
-	String xml=null;
-	if(roomId != null)
-	    xml=SessionDetailService.getSessionDetail(roomId);
-	
-	response.setContentType("text/xml");
+
+	log.debug("entered doGet of SessionDetail");
+	String xml = null;
+	try {
+	    String roomId = request.getParameter(InnowhiteConstants.ROOM_ID);
+	    log.debug("roomId : "+roomId);
+	    if (roomId != null)
+		xml = SessionDetailService.getSessionDetail(roomId);
+
+	    response.setContentType("text/xml");
+	} catch (Exception e) {
+	    log.error(e.getMessage());
+	    e.printStackTrace();
+	}
 	PrintWriter out = response.getWriter();
 	out.println(xml);
-	
-	//return xml;
-	
+	out.close();
+	// return xml;
+
     }
 
 }

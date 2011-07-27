@@ -2,6 +2,9 @@ package com.innowhite.whiteboard.service;
 
 import java.util.List;
 
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
+
 import com.innowhite.whiteboard.persistence.beans.AudioDataVO;
 import com.innowhite.whiteboard.persistence.beans.PlayBackPlayListVO;
 import com.innowhite.whiteboard.persistence.beans.RoomUsersVO;
@@ -14,9 +17,11 @@ import com.innowhite.whiteboard.persistence.dao.VideoDataDAO;
 
 public class SessionDetailService {
 
+    private static final Logger log = LoggerFactory.getLogger(SessionDetailService.class);
+
     public static void main(String args[]) {
 
-	System.err.println(getSessionDetail("84461721822"));
+	log.debug(getSessionDetail("84461721822"));
     }
 
     /*
@@ -24,31 +29,32 @@ public class SessionDetailService {
      */
     public static String getSessionDetail(String roomId) {
 
+	log.debug("entered getSessionDetail ");
 	// get room start and end time.
 	RoomVO room = RoomUsersDAO.getRoomInfo(roomId);
-	System.err.println("  users size ::  " + room);
-	String returnXML=null;
+	log.debug("  users size ::  " + room);
+	String returnXML = null;
 	if (room != null) {
 	    // get list of videos, Screen share, for this session.
 	    List<VideoDataVO> l = VideoDataDAO.getVideosRoomId(roomId);
-	    System.err.println(" videos size ::  " + l.size());
+	    log.debug(" videos size ::  " + l.size());
 
 	    // get list of users who have connected to this room, also if they
 	    // joined by phone, voip or not joined
 	    List<RoomUsersVO> users = RoomUsersDAO.getUsersForRoom(roomId);
-	    System.err.println("  users size ::  " + users.size());
+	    log.debug("  users size ::  " + users.size());
 
 	    // get list of audio start and end time...
 	    List<AudioDataVO> audios = AudioDataDAO.getAudiosRoomId(roomId);
-	    System.err.println("  users size ::  " + audios.size());
+	    log.debug("  users size ::  " + audios.size());
 	    // getAudiosRoomId
 
 	    // get list of playback play list
 	    List<PlayBackPlayListVO> playList = PlayBackPlayListDAO.getPlayList(roomId);
-	    System.err.println("  users size ::  " + playList.size());
-	    
+	    log.debug("  users size ::  " + playList.size());
+
 	    returnXML = convertToXML(roomId, l, users, audios, room, playList);
-	    
+
 	} else {
 	    StringBuffer xml = new StringBuffer();
 	    xml.append("<?xml version=\"1.0\" encoding=\"ISO-8859-1\"?>");
@@ -74,6 +80,21 @@ public class SessionDetailService {
 	else
 	    xml.append("<sessionRecording>" + false + "</sessionRecording>");
 
+	
+	// list all videos
+	xml.append("<sessionUsers>");
+	for (RoomUsersVO user : users) {
+	   
+
+		xml.append("<user>");
+		xml.append("<videoUser>" + user.getUserId() + "</videoUser>");
+		xml.append("<videoStartTime>" + user.getStartTime() + "</videoStartTime>");
+		xml.append("<videoEndTime>" + user.getStartTime() + "</videoEndTime>");
+		xml.append("</user>");
+	   
+	}
+	xml.append("</sessionUsers>");
+	
 	// list all videos
 	xml.append("<sessionVideos>");
 	for (VideoDataVO video : videos) {

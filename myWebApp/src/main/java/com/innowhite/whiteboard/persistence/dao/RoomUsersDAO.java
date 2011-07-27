@@ -24,9 +24,10 @@ public class RoomUsersDAO {
     public static void main(String[] args) {
 
 	String user = "test3";
-	save(user, "123123123", "12345");
-	log.debug(getConfNumber(user, "123123123"));
-	updateUserInRoom(user, "123123123");
+//	save(user, "123123123", "12345");
+//	log.debug(getConfNumber(user, "123123123"));
+//	updateUserInRoom(user, "123123123");
+	getUsersForRoom("77985972582");
 
     }
 
@@ -107,7 +108,7 @@ public class RoomUsersDAO {
 	List<RoomUsersVO> value = null;
 	try {
 
-	    value = (List) sqlMapClient.queryForList("roomInfo", roomName);
+	    value = (List) sqlMapClient.queryForList("getUsersForRoom", roomName);
 
 	} catch (SQLException e) {
 	    e.printStackTrace();
@@ -138,7 +139,7 @@ public class RoomUsersDAO {
 
     public static RoomVO getRoomInfo(String roomId){
 	
-	log.debug("Entered getUsersForRoom");
+	log.debug("Entered getRoomInfo");
 	log.debug("roomName  " + roomId);
 	RoomVO value = null;
 	try {
