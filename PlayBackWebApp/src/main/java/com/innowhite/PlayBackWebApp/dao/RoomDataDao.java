@@ -49,7 +49,7 @@ public class RoomDataDao {
 	String query = "update RoomData o set o.endTime=:endTime  where o.roomName=:roomName";
 	int val = session.createQuery(query).setTimestamp("endTime", roomData.getEndTime()).setString("roomName", roomData.getRoomName())
 		.executeUpdate();
-	log.debug("retuned updateAudioData val " + val);
+	log.debug("retuned updateRoomStartData val " + val);
 	// /log.debug("");
 
     }
@@ -61,9 +61,9 @@ public class RoomDataDao {
 	Session session = sessionFactory.getCurrentSession();
 
 	String query = "update RoomData o set o.startTime=:startTime  where o.roomName=:roomName";
-	int val = session.createQuery(query).setTimestamp("startTime", roomData.getEndTime()).setString("roomName", roomData.getRoomName())
+	int val = session.createQuery(query).setTimestamp("startTime", roomData.getStartTime()).setString("roomName", roomData.getRoomName())
 		.executeUpdate();
-	log.debug("retuned updateAudioData val " + val);
+	log.debug("retuned updateRoomStartData val " + val);
 	// /log.debug("");
 
     }

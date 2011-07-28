@@ -32,7 +32,7 @@ public class RoomData implements Serializable {
     Date endTime;
     
      
-    @Column(name = "room_name")
+    @Column(name = "room_id")
     String roomName;
       
     public String getRoomName() {

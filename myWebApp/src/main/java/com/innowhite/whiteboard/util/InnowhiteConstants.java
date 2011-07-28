@@ -81,6 +81,7 @@ public class InnowhiteConstants {
 	public static final String MEETING_NUM = "MEETING_NUM";
 	public static final String TEMP_LOCATION = "TEMP_LOCATION";
 	public static final String REFRESH_CACHE = "REFRESH_CACHE";
+	public static final String LOCK_ROOM = "lockRoom";
 	
 	public static String CONTEXT_PATH = null;
 	 

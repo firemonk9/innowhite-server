@@ -51,6 +51,19 @@
 
 
 
+	<select id="getLockStatus" resultClass="java.lang.String"
+		parameterClass="java.lang.String">
+		select room_lock from room where room_id= #id#;
+	</select>
+
+	<update id="updateLockStatus" parameterClass="java.util.HashMap">
+
+		update room set room_lock = #status# where room_id = #roomId#
+		
+	</update>
+
+
+
 	<update id="updateStartDate" parameterClass="java.lang.String">
 		update room set
 		start_date = now() , room_active = 'ACTIVE' where room_id =
@@ -79,6 +92,12 @@
 		select room_active from room where room_id= #id#;
 	</select>
 
+	
+	<select id="isRoomClosed" resultClass="java.lang.String"
+		parameterClass="java.util.date">
+		select end_date from room where room_id= #id#;
+	</select>
+
 
 	<resultMap id="roomStatusResult"
 		class="com.innowhite.whiteboard.persistence.beans.RoomVO">
@@ -94,10 +113,10 @@
 
 	<select id="roomInfo" parameterClass="java.lang.String"
 		resultMap="roomStatusResult">
-		select 
+		select
 		start_date,
 		end_date ,
-		org_name 
+		org_name
 		from room
 		where room_id = #room_id#
 	</select>

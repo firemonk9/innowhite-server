@@ -1,6 +1,7 @@
 package com.innowhite.whiteboard.persistence.dao;
 
 import java.sql.SQLException;
+import java.util.Date;
 import java.util.HashMap;
 import java.util.List;
 
@@ -24,10 +25,47 @@ public class RoomUsersDAO {
     public static void main(String[] args) {
 
 	String user = "test3";
-//	save(user, "123123123", "12345");
-//	log.debug(getConfNumber(user, "123123123"));
-//	updateUserInRoom(user, "123123123");
+	// save(user, "123123123", "12345");
+	// log.debug(getConfNumber(user, "123123123"));
+	// updateUserInRoom(user, "123123123");
 	getUsersForRoom("77985972582");
+
+    }
+
+    public static void lockRoom(String roomId, String status) {
+
+	log.debug("entered lockRoom  roomId  " + roomId + "  status  " + status);
+	try {
+
+	    HashMap<String, String> m = new HashMap<String, String>();
+	    m.put("roomId", roomId);
+	    m.put("status", status);
+
+	    int returnUpdate = sqlMapClient.update("updateLockStatus", m);
+
+	    log.debug("  update return status :: " + returnUpdate);
+	} catch (SQLException re) {
+	    log.error(" exception  ", re);
+	    // re.printStackTrace();
+	}
+	// return id;
+
+    }
+
+    public static String getLockStatus(String roomId) {
+
+	log.debug("entered getLockStatus  roomId  " + roomId);
+	String returnUpdate = null;
+	try {
+
+	    returnUpdate = (String) sqlMapClient.queryForObject("getLockStatus", roomId);
+
+	    log.debug("  update return status :: " + returnUpdate);
+	} catch (SQLException re) {
+	    log.error(" exception  ", re);
+	    // re.printStackTrace();
+	}
+	return returnUpdate;
 
     }
 
@@ -137,8 +175,8 @@ public class RoomUsersDAO {
 	}
     }
 
-    public static RoomVO getRoomInfo(String roomId){
-	
+    public static RoomVO getRoomInfo(String roomId) {
+
 	log.debug("Entered getRoomInfo");
 	log.debug("roomName  " + roomId);
 	RoomVO value = null;
@@ -151,8 +189,24 @@ public class RoomUsersDAO {
 	    return null;
 	}
 	return value;
-	
+
     }
-    
-    
+
+    public static boolean isRoomClosed(String roomId) {
+	log.debug("Entered getRoomInfo");
+	log.debug("roomName  " + roomId);
+	Date value = null;
+	try {
+
+	    value = (Date) sqlMapClient.queryForObject("isRoomClosed", roomId);
+
+	} catch (SQLException e) {
+	    e.printStackTrace();
+	}
+	if (value == null)
+	    return false;
+	else
+	    return true;
+    }
+
 }
