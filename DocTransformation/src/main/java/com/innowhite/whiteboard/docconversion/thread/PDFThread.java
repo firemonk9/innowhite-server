@@ -74,6 +74,9 @@ public class PDFThread extends Thread {
 
 	String originalFilePath = docBean != null ? docBean.getFilePath() : "";
 	File origFile = new File(originalFilePath);
+	
+	fileTransBean.setOriginalFileName(origFile.getName());
+	
 	String parentDir = null;
 	String inputFile = null;
 
@@ -84,9 +87,6 @@ public class PDFThread extends Thread {
 	    pdfFileAbsPath = originalFilePath;
 	    origFileName = origFile.getName();
 	    parentDir = origFile.getParent();
-	    
-	    
-	    
 	    
 	    
 	} else {
@@ -234,7 +234,7 @@ public class PDFThread extends Thread {
     private boolean saveImagesToDB(boolean bInvoked) {
 	log.info("ENTER save swfs To DB........");
 	boolean bSavedToDB = false;
-	log.debug("bInvoked " + bInvoked);
+	log.debug("bInvoked " + bInvoked+"  imageName "+fileTransBean.getOriginalFileName());
 	bInvoked=true;
 	MessagePersistenceDAO mdao = new MessagePersistenceDAO();
 	if (bInvoked) {

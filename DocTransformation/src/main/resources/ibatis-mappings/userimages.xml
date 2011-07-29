@@ -53,7 +53,10 @@
 				 mediaFolderSeq,
 				 mediaGroup,
 				 mediaName,
-				 mediaType,  thumbnailURL, conversionID, insertedDate)
+				 mediaType,  
+				 thumbnailURL, 
+				 conversionID, 
+				 insertedDate)
 				VALUES
 				( ?,?,?,?,?,?,?,?, ?, ?, now())     
 			<selectKey keyProperty="id" resultClass="java.lang.Integer" >

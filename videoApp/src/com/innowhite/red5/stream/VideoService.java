@@ -11,6 +11,9 @@ public class VideoService extends ApplicationAdapter {
 
     private static Logger log = Red5LoggerFactory.getLogger(VideoService.class, InnowhiteConstants.APP_NAME);
 
+    
+    
+    /*This function will be called from flex client*/
     public void stopScreenShare(String roomId) {
 	//String conference = getConfId(roomId);
 	
