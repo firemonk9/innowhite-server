@@ -37,6 +37,87 @@
 	</bean>
 
 
+
+	<bean id="documentConversionService" class="com.innowhite.docconversion.DocumentConversionServiceImp">
+		<property name="messagingService" ref="messagingService"/>
+		<property name="officeToPdfConversionService" ref="officeToPdfConversionService"/>
+		<property name="pdfToSwfSlidesGenerationService" ref="pdfToSwfSlidesGenerationService"/>
+		<property name="imageToSwfSlidesGenerationService" ref="imageToSwfSlidesGenerationService"/>
+	</bean>
+	
+	<bean id="officeToPdfConversionService" class="com.innowhite.docconversion.impl.OfficeToPdfConversionService"/>
+	
+	<bean id="pageExtractor" class="com.innowhite.docconversion.impl.GhostscriptPageExtractor">
+		<property name="ghostscriptExec" value="${ghostScriptExec}"/>
+		<property name="noPdfMarkWorkaround" value="${noPdfMarkWorkaround}"/>
+	</bean>
+	
+	<bean id="imageMagickPageConverter" class="com.innowhite.docconversion.impl.ImageMagickPageConverter">
+		<property name="imageMagickDir" value="${imageMagickDir}"/>
+	</bean>
+		
+	<bean id="png2SwfConverter" class="com.innowhite.docconversion.impl.Png2SwfPageConverter">
+		<property name="swfToolsDir" value="${swfToolsDir}"/>
+	</bean>
+	
+	<bean id="jpg2SwfConverter" class="com.innowhite.docconversion.impl.Jpeg2SwfPageConverter">
+		<property name="swfToolsDir" value="${swfToolsDir}"/>
+	</bean>
+		
+	<bean id="pageCounter" class="com.innowhite.docconversion.impl.Pdf2SwfPageCounter">
+		<property name="swfToolsDir" value="${swfToolsDir}"/>
+	</bean>
+		
+	<bean id="pageCounterService" class="com.innowhite.docconversion.impl.PageCounterService">
+		<property name="pageCounter" ref="pageCounter"/>
+		<property name="maxNumPages" value="${maxNumPages}"/>
+	</bean>
+	
+	<bean id="pdf2SwfPageConverter" class="com.innowhite.docconversion.impl.Pdf2SwfPageConverter">
+		<property name="swfToolsDir" value="${swfToolsDir}"/>
+		<property name="fontsDir" value="${fontsDir}"/>
+	</bean>
+	
+	<bean id="imageConvSvc" class="com.innowhite.docconversion.impl.PdfPageToImageConversionService">
+		<property name="pageExtractor" ref="pageExtractor"/>
+		<property name="pdfToImageConverter" ref="imageMagickPageConverter"/>
+		<property name="imageToSwfConverter" ref="png2SwfConverter"/>
+	</bean>
+	
+	<bean id="thumbCreator" class="com.innowhite.docconversion.impl.ThumbnailCreatorImp">
+		<property name="imageMagickDir" value="${imageMagickDir}"/>
+		<property name="blankThumbnail" value="${BLANK_THUMBNAIL}"/>
+	</bean>
+	
+	<bean id="generatedSlidesInfoHelper" class="com.innowhite.docconversion.GeneratedSlidesInfoHelperImp"/>
+	
+	<bean id="pdfToSwfSlidesGenerationService" class="com.innowhite.docconversion.impl.PdfToSwfSlidesGenerationService">
+		<property name="counterService" ref="pageCounterService"/>
+		<property name="pageConverter" ref="pdf2SwfPageConverter"/>
+		<property name="pdfPageToImageConversionService" ref="imageConvSvc"/>
+		<property name="thumbnailCreator" ref="thumbCreator"/>
+		<property name="blankSlide" value="${BLANK_SLIDE}"/>
+		<property name="maxConversionTime" value="${maxConversionTime}"/>
+		<property name="swfSlidesGenerationProgressNotifier" ref="swfSlidesGenerationProgressNotifier"/>
+	</bean>	
+	
+	<bean id="imageToSwfSlidesGenerationService" class="com.innowhite.docconversion.impl.ImageToSwfSlidesGenerationService">
+		<property name="pngPageConverter" ref="png2SwfConverter"/>
+		<property name="jpgPageConverter" ref="jpg2SwfConverter"/>
+		<property name="thumbnailCreator" ref="thumbCreator"/>
+		<property name="blankSlide" value="${BLANK_SLIDE}"/>
+		<property name="maxConversionTime" value="${maxConversionTime}"/>
+		<property name="swfSlidesGenerationProgressNotifier" ref="swfSlidesGenerationProgressNotifier"/>
+	</bean>
+	
+	
+	<bean id ="messagingService" class="com.innowhite.whiteboard.docconversion.messages.MessagingService" />
+	
+	<bean id="swfSlidesGenerationProgressNotifier" class="com.innowhite.docconversion.impl.SwfSlidesGenerationProgressNotifier">
+		<property name="messagingService" ref="messagingService"/> 
+		<property name="generatedSlidesInfoHelper" ref="generatedSlidesInfoHelper"/>
+	</bean>	
+
 	<!-- The Spring message listener container configuration -->
 	<jms:listener-container container-type="default"
 		connection-factory="connectionFactory" acknowledge="auto">
