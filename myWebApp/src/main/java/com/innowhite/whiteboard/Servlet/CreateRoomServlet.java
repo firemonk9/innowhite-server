@@ -48,7 +48,7 @@ public class CreateRoomServlet extends HttpServlet {
 		
 		String checkSum = "";
 		// String queryStringWithoutcheckSum = null;
-		String orgName = "";
+		String parentOrg = "";
 		String validServiceStatus = InnowhiteConstants.AUTH_FAILED;
 		String roomId = "";
 		String roomName = "";
@@ -59,24 +59,24 @@ public class CreateRoomServlet extends HttpServlet {
 
 		log.debug(queryStringArray[0]);
 
-		orgName = request.getParameter(InnowhiteConstants.ORG_NAME);
+		parentOrg = request.getParameter(InnowhiteConstants.PARENT_ORG);
 		
 		
 		String hostURL =null;
-		if (orgName.indexOf(Constants.WEB_DELIMITER) > 0) {
-			StringTokenizer st = new StringTokenizer(orgName,
-					Constants.WEB_DELIMITER);
-
-			orgName = st.nextToken();
-			hostURL= st.nextToken();
-			
-			if(orgName != null )
-				orgName = orgName.trim();
-			
-			if(hostURL != null )
-				hostURL = hostURL.trim();
-			
-		}
+//		if (parentOrg.indexOf(Constants.WEB_DELIMITER) > 0) {
+//			StringTokenizer st = new StringTokenizer(parentOrg,
+//					Constants.WEB_DELIMITER);
+//
+//			parentOrg = st.nextToken();
+//			hostURL= st.nextToken();
+//			
+//			if(parentOrg != null )
+//				parentOrg = parentOrg.trim();
+//			
+//			if(hostURL != null )
+//				hostURL = hostURL.trim();
+//			
+//		}
 
 		checkSum = request.getParameter(InnowhiteConstants.CHECKSUM);
 		roomName = request.getParameter("roomName");
@@ -86,7 +86,7 @@ public class CreateRoomServlet extends HttpServlet {
 		String view = request.getParameter("view");
 	//	String hostName = request.getServerName();
 
-		log.debug("orgName: " + orgName);
+		log.debug("orgName: " + parentOrg);
 		log.debug("clientURL: " + hostURL);
 		
 		log.debug("checkSum: " + checkSum);
@@ -103,7 +103,7 @@ public class CreateRoomServlet extends HttpServlet {
 
 		// if(validServiceStatus.equals(InnowhiteConstants.SUCCESS))
 		// {
-		roomId = WhiteboardAuthenticatorService.createRoom(orgName, roomName,
+		roomId = WhiteboardAuthenticatorService.createRoom(parentOrg, roomName,
 				record, courseId, inetLessonID, view);
 		// }
 		if (roomId != null && roomId.length() > 0) {

@@ -23,6 +23,10 @@
       </select>
       
       
+         <select id="findTestSQL" resultClass="java.lang.String" >
+      		select max(id) from room;      		
+      </select>
+      
       <select id="findByID" resultMap="userImagesResultMap" parameterClass="java.lang.Integer">
       		select * from user_media where id=#id#;      		
       </select>
@@ -49,7 +53,10 @@
 				 mediaFolderSeq,
 				 mediaGroup,
 				 mediaName,
-				 mediaType,  thumbnailURL, conversionID, insertedDate)
+				 mediaType,  
+				 thumbnailURL, 
+				 conversionID, 
+				 insertedDate)
 				VALUES
 				( ?,?,?,?,?,?,?,?, ?, ?, now())     
 			<selectKey keyProperty="id" resultClass="java.lang.Integer" >

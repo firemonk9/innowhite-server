@@ -2,6 +2,11 @@ package com.innowhite.whiteboard.persistence.beans;
 
 public class PlayBackPlayListVO {
 
+    private String duration;
+    private String filePath;
+    private String server;
+    private String size;
+
     public String getFilePath() {
 	return filePath;
     }
@@ -25,9 +30,13 @@ public class PlayBackPlayListVO {
 	return duration;
     }
 
-    private String duration;
-    private String filePath;
-    private String server;
+    public String getSize() {
+	return size;
+    }
+
+    public void setSize(String size) {
+	this.size = size;
+    }
 
     public String getServer() {
 	return server;

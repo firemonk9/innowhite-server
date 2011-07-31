@@ -1,0 +1,55 @@
+package com.innowhite.whiteboard.persistence.dao;
+
+import java.sql.SQLException;
+import java.util.List;
+
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
+
+import com.ibatis.sqlmap.client.SqlMapClient;
+import com.innowhite.whiteboard.persistence.IbatisManager;
+import com.innowhite.whiteboard.persistence.beans.AudioDataVO;
+import com.innowhite.whiteboard.persistence.beans.VideoDataVO;
+
+public class AudioDataDAO {
+
+    private static SqlMapClient sqlMapClient = IbatisManager.getSqlMap();
+
+    static boolean val = false;
+
+    private static final Logger log = LoggerFactory.getLogger(AudioDataDAO.class);
+
+    public static void main(String[] args) {
+	//
+
+	VideoDataVO videoDataVO = new VideoDataVO();
+	videoDataVO.setFlvFilePath("/qwe/qweee/");
+	videoDataVO.setRoomName("asdasdasd");
+//	int val = saveVideoData(videoDataVO);
+//	System.err.println(getLatestWhiteboardRoomId("asdasdasd"));
+//	updateVideoData(val);
+    }
+
+    
+
+    
+    /*returns list of VideoDataVO. 
+     * */
+    public static List<AudioDataVO> getAudiosRoomId(String roomName) {
+
+	log.debug("Entered getVideosRoomId");
+	log.debug("roomName  " + roomName);
+	List<AudioDataVO> value = null;
+	try {
+
+	    value = (List) sqlMapClient.queryForList("getAudiosForRoom", roomName);
+
+	} catch (SQLException e) {
+	    e.printStackTrace();
+	    return null;
+	}
+	return value;
+
+    }
+
+}

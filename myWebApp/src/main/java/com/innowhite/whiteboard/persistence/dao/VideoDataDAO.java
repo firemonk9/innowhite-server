@@ -1,6 +1,7 @@
 package com.innowhite.whiteboard.persistence.dao;
 
 import java.sql.SQLException;
+import java.util.List;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -70,11 +71,31 @@ public class VideoDataDAO {
 	log.debug("roomName  " + roomName);
 	Integer value = null;
 	try {
-	
+
 	    value = (Integer) sqlMapClient.queryForObject("getLatestWhitebordId", roomName);
-	    if(value==null)
-		value=0;
-	    
+	    if (value == null)
+		value = 0;
+
+	} catch (SQLException e) {
+	    e.printStackTrace();
+	    return null;
+	}
+	return value;
+
+    }
+
+    
+    /*returns list of VideoDataVO. 
+     * */
+    public static List<VideoDataVO> getVideosRoomId(String roomName) {
+
+	log.debug("Entered getVideosRoomId");
+	log.debug("roomName  " + roomName);
+	List<VideoDataVO> value = null;
+	try {
+
+	    value = (List) sqlMapClient.queryForList("getVideosForRoom", roomName);
+
 	} catch (SQLException e) {
 	    e.printStackTrace();
 	    return null;

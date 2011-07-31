@@ -71,6 +71,7 @@ public class Constants {
 		public static final String MEDIA_ACTUAL = "ACTUAL";
 		public static final CharSequence ACTUAL_PATH = "/fullimages/";
 		public static final CharSequence THUMBS_PATH = "/Thumbnail/";
+		public static final String ROOM_ID = "room_id";
 	
 			
 		public static boolean bsessionFlag = true;

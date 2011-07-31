@@ -116,6 +116,12 @@
 		<servlet-name>MediaContent</servlet-name>
 		<servlet-class>com.innowhite.whiteboard.Servlet.MediaContent</servlet-class>
 	</servlet>
+
+	<servlet>
+		<servlet-name>LockRoomServlet</servlet-name>
+		<servlet-class>com.innowhite.whiteboard.Servlet.LockRoomServlet</servlet-class>
+	</servlet>
+
 	<servlet-mapping>
 		<servlet-name>uploadFile</servlet-name>
 		<url-pattern>/servlet/uploadFile</url-pattern>
@@ -225,5 +231,18 @@
 	<servlet-mapping>
 		<servlet-name>PlayBackServlet</servlet-name>
 		<url-pattern>/PlayBackServlet</url-pattern>
+	</servlet-mapping>
+	<servlet>
+		<servlet-name>SessionDetail</servlet-name>
+		<servlet-class>com.innowhite.whiteboard.Servlet.SessionDetail</servlet-class>
+	</servlet>
+	<servlet-mapping>
+		<servlet-name>SessionDetail</servlet-name>
+		<url-pattern>/SessionDetail</url-pattern>
+	</servlet-mapping>
+
+	<servlet-mapping>
+		<servlet-name>LockRoomServlet</servlet-name>
+		<url-pattern>/servlet/LockRoomServlet</url-pattern>
 	</servlet-mapping>
 </web-app>

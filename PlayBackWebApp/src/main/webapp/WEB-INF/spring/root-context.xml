@@ -103,6 +103,11 @@
 	<bean id="roomStatusService" name="roomStatusService"
 		class="com.innowhite.PlayBackWebApp.service.RoomStatusService">
 		
+		<property name="roomDataDao" ref="roomDataDao" />
+		
+		
 	</bean>
+	
+	
 	
 </beans>

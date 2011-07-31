@@ -6,9 +6,11 @@ PUBLIC "-//ibatis.apache.org//DTD SQL Map Config 2.0//EN"
 <sqlMapConfig>
 	
 	
+	
+	
 		<settings cacheModelsEnabled="true" enhancementEnabled="true"
 		lazyLoadingEnabled="true" maxRequests="32" maxSessions="10"
-		maxTransactions="5" useStatementNamespaces="false" />
+		maxTransactions="5" useStatementNamespaces="false"/>
 	<transactionManager type="JDBC">
 		<dataSource type="SIMPLE">
 			<property name="JDBC.Driver" value="com.mysql.jdbc.Driver" />
@@ -19,10 +21,12 @@ PUBLIC "-//ibatis.apache.org//DTD SQL Map Config 2.0//EN"
             <property name="Pool.MaximumIdleConnections" value="10"/>
             <property name="Pool.MaximumCheckoutTime" value="30"/>
             <property name="Pool.TimeToWait" value="30"/>		
+          
 		</dataSource>
 	</transactionManager>
 	
 		<sqlMap resource="ibatis-mappings/userimages.xml" />
 		<sqlMap resource="ibatis-mappings/docconversion.xml" />
+
 	
 </sqlMapConfig>

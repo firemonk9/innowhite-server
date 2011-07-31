@@ -123,6 +123,7 @@ public class Application extends MultiThreadedApplicationAdapter implements IApp
 	    ClientBroadcastStream obj = (ClientBroadcastStream) stream;
 	    log.debug(" stream id ::: "+((ClientBroadcastStream)stream).getStreamId()+" is recording "+obj.isRecording());
 	    String publishedName =stream.getPublishedName();
+	    
 	    // invokeStopScreenShare();
 	    if (obj.isRecording() == true) {
 		messagingService.sendStreamMessage("RECORDSTART#" + stream.getPublishedName() + "#" + recordPath + stream.getPublishedName() + ".flv");

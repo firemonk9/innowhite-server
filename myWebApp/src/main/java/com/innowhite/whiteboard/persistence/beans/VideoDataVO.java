@@ -2,7 +2,9 @@ package com.innowhite.whiteboard.persistence.beans;
 
 import java.util.Date;
 
+import javax.xml.bind.annotation.XmlRootElement;
 
+@XmlRootElement
 public class VideoDataVO {
 
 	private int id;
@@ -42,6 +44,23 @@ public class VideoDataVO {
 	public void setEndTime(Date endTime) {
 		this.endTime = endTime;
 	}
+	
+	
+	/**
+	 * @param userId the userId to set
+	 */
+	public void setUserId(String userId) {
+	    this.userId = userId;
+	}
+	/**
+	 * @return the userId
+	 */
+	public String getUserId() {
+	    return userId;
+	}
+
+
+	private String userId;
 	private String flvFilePath;
 	private String roomName;
 	private String videoType;
