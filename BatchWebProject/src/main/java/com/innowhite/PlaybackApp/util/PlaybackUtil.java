@@ -64,12 +64,28 @@ public class PlaybackUtil {
      */
 
     public static void invokeProcess(String cmd) {
-	ProcessExecutor pe = new ProcessExecutor();
-	// MakeExectuable obj = new MakeExectu
-
-	boolean val = pe.executeProcess( playbackVO.getFfmpegPath()+" " + cmd, playbackVO.getTempLocation() );
-	log.debug("return from the proess :: " + val);
+		ProcessExecutor pe = new ProcessExecutor();
+		// MakeExectuable obj = new MakeExectu
+	
+		boolean val = pe.executeProcess( playbackVO.getFfmpegPath()+" "+cmd, playbackVO.getTempLocation() );
+		log.debug("return from the ffmpeg process executor :: " + val);
     }
+    
+    public static void invokeMp3Process(String cmd) {
+    	ProcessExecutor pe = new ProcessExecutor();
+    	// MakeExectuable obj = new MakeExectu
+
+    	boolean val = pe.executeProcess( playbackVO.getMp3WrapPath()+" "+cmd, playbackVO.getTempLocation() );
+    	log.debug("return from the Mp3Wrap process executor :: " + val);
+    }
+    
+    public static void invokeMencoderProcess(String cmd) {
+    	ProcessExecutor pe = new ProcessExecutor();
+    	// MakeExectuable obj = new MakeExectu
+
+    	boolean val = pe.executeProcess( playbackVO.getMencoderPath()+" "+cmd, playbackVO.getTempLocation() );
+    	log.debug("return from the Mencoder process executor :: " + val);
+	}
 
     public static String secondsToHours(long seconds) {
 	int ss = (int) ((seconds / 1000) % 60);
@@ -78,8 +94,6 @@ public class PlaybackUtil {
 	// slog.debug("seconds to hours::" + hh + ":" + mm + ":" + ss);
 	return (hh + ":" + mm + ":" + ss + ".000");
     }
-
-    
     
     /* Send the object Audio and video and the windows folder */
     public static void updateAudioPathWindows(String winPath, List<AudioData> mediaList) {
@@ -124,6 +138,8 @@ public class PlaybackUtil {
 	{
 	    playbackVO.setFfmpegPath(playbackVO.getWinFFmpegPath());
 	    playbackVO.setTempLocation(playbackVO.getWinTempLocation());
+	    playbackVO.setMencoderPath(playbackVO.getWinMencoderPath());
+	    playbackVO.setMp3WrapPath(playbackVO.getWinMp3WrapPath());
 	}else if(isMac()){
 	    playbackVO.setFfmpegPath(playbackVO.getMacFFmpegPath());
 	    playbackVO.setTempLocation(playbackVO.getMacTempLocation());

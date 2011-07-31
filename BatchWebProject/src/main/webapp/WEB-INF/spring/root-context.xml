@@ -117,17 +117,22 @@
 		<property name="winFFmpegPath" value="${winFFmpegPath}" />
 		<property name="macFFmpegPath" value="${macFFmpegPath}" />
 		<property name="ubuntuFFmpegPath" value="${ubuntuFFmpegPath}" />
+		
 		<property name="winTempLocation" value="${winTempLocation}" />
 		<property name="macTempLocation" value="${macTempLocation}" />
 		<property name="ubuntuTempLocation" value="${ubuntuTempLocation}" />
 
 		<property name="winVideoPath" value="${winVideoPath}" />
 		<property name="winAudioPath" value="${winAudioPath}" />
-
-
+		
+		<property name="winMp3WrapPath" value="${winMp3WrapPath}" />
+		<property name="macMp3WrapPath" value="${macMp3WrapPath}" />
+		<property name="ubuntuMp3WrapPath" value="${ubuntuMp3WrapPath}" />
+		
+		<property name="winMencoderPath" value="${winMencoderPath}" />
+		<property name="macMencoderPath" value="${macMencoderPath}" />
+		<property name="ubuntuMencoderPath" value="${ubuntuMencoderPath}" />
 	</bean>
-
-
 
 
 	<bean id="playBackPlayListDao" name="playBackPlayListDao"
