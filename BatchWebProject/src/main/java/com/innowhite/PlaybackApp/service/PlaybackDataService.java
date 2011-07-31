@@ -275,8 +275,8 @@ public class PlaybackDataService {
 					    	log.debug("Video "+i+" file-path:: "+uniformSessionVideoDataList .get(i).getFilePath());
 					    }
 					    log.debug("_______________________________________________________________");
-						//concatenate all Session Bucket Videos
-						sessionVideo = concatenateVideos(uniformSessionVideoDataList);
+						//concatenate videos if more than one
+					    sessionVideo = concatenateVideos(uniformSessionVideoDataList);
 					}
 					//if room has atleast one video
 					else{
@@ -367,9 +367,8 @@ public class PlaybackDataService {
     private AudioData concatenateAudios(List<AudioData> paddedSessionAudioDataList) {
     	log.debug(":::concatenating paddedSessionAudioDataList audios:::");
     	AudioData ad = new AudioData();
-    	String newAudioPath = PlaybackUtil.getUnique();
     	if(paddedSessionAudioDataList.size()>1){
-        	String cmd = paddedSessionAudioDataList.get(0).getFilePath().replace(".mp3",newAudioPath+"finalSessionAudio.mp3");
+        	String cmd = paddedSessionAudioDataList.get(0).getFilePath().replace(".mp3","finalSessionAudio.mp3");
         	for(int i=0; i<paddedSessionAudioDataList.size(); i++){
         	    cmd = cmd+" "+paddedSessionAudioDataList.get(i).getFilePath();
         	}
@@ -377,19 +376,17 @@ public class PlaybackDataService {
         	PlaybackUtil.invokeMp3Process(cmd);
         	ad.setStartTime(paddedSessionAudioDataList.get(0).getStartTime());
     		ad.setEndTime(paddedSessionAudioDataList.get(paddedSessionAudioDataList.size()-1).getEndTime());
-    		ad.setFilePath(paddedSessionAudioDataList.get(0).getFilePath().replace(".mp3",newAudioPath+"finalSessionAudio.mp3"));
+    		ad.setFilePath(paddedSessionAudioDataList.get(0).getFilePath().replace(".mp3","finalSessionAudio.mp3"));
 //    		ad.setId(id);
 //    		ad.setRoomName(roomName);
     	}
     	else{
-    		String cmd = " -i "+paddedSessionAudioDataList.get(0).getFilePath()+" "+paddedSessionAudioDataList.get(0).getFilePath().replace(".mp3",newAudioPath+"finalSessionAudio.mp3");
+    		String cmd = " -i "+paddedSessionAudioDataList.get(0).getFilePath()+" "+paddedSessionAudioDataList.get(0).getFilePath().replace(".mp3","finalSessionAudio.mp3");
     		log.debug("Ffmpeg Command for concatenating audios::: (renaming file)" + cmd);
         	PlaybackUtil.invokeProcess(cmd);
         	ad.setStartTime(paddedSessionAudioDataList.get(0).getStartTime());
     		ad.setEndTime(paddedSessionAudioDataList.get(0).getEndTime());
-    		ad.setFilePath(paddedSessionAudioDataList.get(0).getFilePath().replace(".mp3",newAudioPath+"finalSessionAudio.mp3"));
-//    		ad.setId(id);
-//    		ad.setRoomName(roomName);
+    		ad.setFilePath(paddedSessionAudioDataList.get(0).getFilePath().replace(".mp3","finalSessionAudio.mp3"));
     	}
     	return ad;
 	}
@@ -421,20 +418,26 @@ public class PlaybackDataService {
 		log.debug("::::concatenating uniformSessionVideoDataList Videos::::");
 		//mencoder.exe -oac copy -ovc lavc wb_audio3.avi screen_share_audio3.avi -o complete33.avi
 		VideoData vd = new VideoData();
-		String newVideoPath = PlaybackUtil.getUnique();
-    	String cmd = " -oac copy -ovc lavc ";
-    	for(int i=0; i<uniformSessionVideoDataList.size(); i++){
-    	    cmd = cmd+" "+uniformSessionVideoDataList.get(i).getFilePath();
-    	}
-    	cmd = cmd+" -o "+uniformSessionVideoDataList.get(0).getFilePath().replace(".mp3",newVideoPath+"finalSessionVideo.avi");
-		log.debug("MenCoder Command for concatenating videos:::" + cmd);
-    	PlaybackUtil.invokeMencoderProcess(cmd);
-    	vd.setStartTime(uniformSessionVideoDataList.get(0).getStartTime());
-		vd.setEndTime(uniformSessionVideoDataList.get(uniformSessionVideoDataList.size()-1).getEndTime());
-		vd.setFilePath(uniformSessionVideoDataList.get(0).getFilePath().replace(".mp3",newVideoPath+"finalSessionVideo.avi"));
-//		vd.setId(id);
-//		vd.setRoomName(roomName);
-//		vd.setVideoType(videoType;)
+		if(uniformSessionVideoDataList.size()>1){
+			String cmd = " -oac copy -ovc lavc ";
+	    	for(int i=0; i<uniformSessionVideoDataList.size(); i++){
+	    	    cmd = cmd+" "+uniformSessionVideoDataList.get(i).getFilePath();
+	    	}
+	    	cmd = cmd+" -o "+uniformSessionVideoDataList.get(0).getFilePath().replace(".avi","finalSessionVideo.avi");
+			log.debug("MenCoder Command for concatenating videos:::" + cmd);
+	    	PlaybackUtil.invokeMencoderProcess(cmd);
+	    	vd.setStartTime(uniformSessionVideoDataList.get(0).getStartTime());
+			vd.setEndTime(uniformSessionVideoDataList.get(uniformSessionVideoDataList.size()-1).getEndTime());
+			vd.setFilePath(uniformSessionVideoDataList.get(0).getFilePath().replace(".avi","finalSessionVideo.avi"));
+		}
+		else{
+			String cmd = " -i "+uniformSessionVideoDataList.get(0).getFilePath()+" "+uniformSessionVideoDataList.get(0).getFilePath().replace(".avi","finalSessionAudio.avi");
+    		log.debug("Ffmpeg Command for concatenating audios::: (renaming file)" + cmd);
+        	PlaybackUtil.invokeProcess(cmd);
+        	vd.setStartTime(uniformSessionVideoDataList.get(0).getStartTime());
+        	vd.setEndTime(uniformSessionVideoDataList.get(0).getEndTime());
+        	vd.setFilePath(uniformSessionVideoDataList.get(0).getFilePath().replace(".mp3","finalSessionAudio.mp3"));
+		}
 		return vd;
 	}
 	
