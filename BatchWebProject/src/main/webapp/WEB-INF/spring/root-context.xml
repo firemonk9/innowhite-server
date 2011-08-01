@@ -132,6 +132,8 @@
 		<property name="winMencoderPath" value="${winMencoderPath}" />
 		<property name="macMencoderPath" value="${macMencoderPath}" />
 		<property name="ubuntuMencoderPath" value="${ubuntuMencoderPath}" />
+		
+		<property name="winSilentAudioPath" value="${winSilentAudioPath}" /> 
 	</bean>
 
 

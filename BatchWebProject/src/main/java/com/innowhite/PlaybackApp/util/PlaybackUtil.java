@@ -140,6 +140,8 @@ public class PlaybackUtil {
 	    playbackVO.setTempLocation(playbackVO.getWinTempLocation());
 	    playbackVO.setMencoderPath(playbackVO.getWinMencoderPath());
 	    playbackVO.setMp3WrapPath(playbackVO.getWinMp3WrapPath());
+	    playbackVO.setSilentAudioPath(playbackVO.getWinSilentAudioPath());
+	    
 	}else if(isMac()){
 	    playbackVO.setFfmpegPath(playbackVO.getMacFFmpegPath());
 	    playbackVO.setTempLocation(playbackVO.getMacTempLocation());
