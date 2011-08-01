@@ -1,6 +1,7 @@
 whiteboard/WEB-INF/classes/
 whiteboardInet/WEB-INF/classes/
 oflaDemo/WebContent/WEB-INF/classes/
+videoApp/WebContent/WEB-INF/classes/
 loadBalancer/target/
 DocTransformation/target/
 myWebApp/target/

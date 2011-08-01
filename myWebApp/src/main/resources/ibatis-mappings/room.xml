@@ -93,8 +93,8 @@
 	</select>
 
 	
-	<select id="isRoomClosed" resultClass="java.lang.String"
-		parameterClass="java.util.date">
+	<select id="isRoomClosed" parameterClass="java.lang.String"
+		resultClass="java.lang.String">
 		select end_date from room where room_id= #id#;
 	</select>
 

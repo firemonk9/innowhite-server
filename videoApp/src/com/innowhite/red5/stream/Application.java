@@ -117,26 +117,23 @@ public class Application extends MultiThreadedApplicationAdapter implements IApp
     public void streamBroadcastStart(IBroadcastStream stream) {
 
 	if (stream instanceof ClientBroadcastStream) {
-	
+
 	    StreamService ss = new StreamService();
-	    
+
 	    ClientBroadcastStream obj = (ClientBroadcastStream) stream;
-	    log.debug(" stream id ::: "+((ClientBroadcastStream)stream).getStreamId()+" is recording "+obj.isRecording());
-	    String publishedName =stream.getPublishedName();
-	    
+	    log.debug(" stream id ::: " + ((ClientBroadcastStream) stream).getStreamId() + " is recording " + obj.isRecording());
+	    String publishedName = stream.getPublishedName();
+
 	    // invokeStopScreenShare();
-	    if (obj.isRecording() == true) {
-		messagingService.sendStreamMessage("RECORDSTART#" + stream.getPublishedName() + "#" + recordPath + stream.getPublishedName() + ".flv");
-		screenShareStremIdMap.put(publishedName,obj);	
-		log.debug(" the hashmap :: "+screenShareSharedObjectMap+" stream name "+publishedName);
-	    }
+	    // if (obj.isRecording() == true) {
+	    messagingService.sendStreamMessage("RECORDSTART#" + stream.getPublishedName() + "#" + recordPath + stream.getPublishedName() + ".flv");
+	    screenShareStremIdMap.put(publishedName, obj);
+	    log.debug(" the hashmap :: " + screenShareSharedObjectMap + " stream name " + publishedName);
+	    // }
 	}
-	
-	
-	
+
 	log.debug("streamPublishStart:: " + stream.getPublishedName() + " time " + new Date().getTime() + "  get parent  " + stream.getScope().getParent() + " scope  " + stream.getScope());
-	
-	
+
 	// log.debug("streamPublishStart:: "+stream.getPublishedName());
     }
 
@@ -152,16 +149,17 @@ public class Application extends MultiThreadedApplicationAdapter implements IApp
 	    // INNOWHITE_STREAM_STATUS_SO);
 
 	    ISharedObject screenShareSo = screenShareSharedObjectMap.get(stream.getScope().getName());
-	    screenShareSo.sendMessage("screenShareStopped", new ArrayList<Object>());
+	    if (screenShareSo != null)
+		screenShareSo.sendMessage("screenShareStopped", new ArrayList<Object>());
 
-	    if (obj.isRecording() == true) {
+	    // if (obj.isRecording() == true) {
 
-		// stream.getScope().getS
-		messagingService.sendStreamMessage("RECORDSTOP#" + stream.getPublishedName() + "#FILENAME");
-		VideoStreamNameListener.videoStreamIds.remove(stream.getPublishedName());
-		screenShareStremIdMap.remove(stream.getPublishedName());
-		// messagingService.sendStreamMessage("RECORDSTART#"+stream.getPublishedName()+"#"+recordPath+stream.getPublishedName()+".flv");
-	    }
+	    // stream.getScope().getS
+	    messagingService.sendStreamMessage("RECORDSTOP#" + stream.getPublishedName() + "#FILENAME");
+	    VideoStreamNameListener.videoStreamIds.remove(stream.getPublishedName());
+	    screenShareStremIdMap.remove(stream.getPublishedName());
+	    // messagingService.sendStreamMessage("RECORDSTART#"+stream.getPublishedName()+"#"+recordPath+stream.getPublishedName()+".flv");
+	    // }
 	}
     }
 
@@ -177,19 +175,16 @@ public class Application extends MultiThreadedApplicationAdapter implements IApp
     //
     // }
 
-
-    
-    
-//    public void stopStream(String roomId) {
-//	
-//	
-//	log.debug(" stop the stream is invoked from client for stream id:: "+roomId);
-//	//StreamServiceHelper.closeStream(Red5.getConnectionLocal(),Integer.parseInt(roomId));
-//	//StremSe(Red5.getConnectionLocal(),roomId);
-//	//String conference = getConfId(roomId);
-//	//log.debug("Mute all users in room[$conference]");
-//	// freeSwitchGateway.mute(conference, mute);
-//    }
+    // public void stopStream(String roomId) {
+    //
+    //
+    // log.debug(" stop the stream is invoked from client for stream id:: "+roomId);
+    // //StreamServiceHelper.closeStream(Red5.getConnectionLocal(),Integer.parseInt(roomId));
+    // //StremSe(Red5.getConnectionLocal(),roomId);
+    // //String conference = getConfId(roomId);
+    // //log.debug("Mute all users in room[$conference]");
+    // // freeSwitchGateway.mute(conference, mute);
+    // }
 
     /** {@inheritDoc} */
     @Override
