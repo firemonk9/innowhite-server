@@ -170,6 +170,15 @@ public class PlaybackVO {
 	this.silentAudioPath = silentAudioPath;
     }
 
+    public String getUbuntuSilentAudioPath() {
+        return ubuntuSilentAudioPath;
+    }
+
+    public void setUbuntuSilentAudioPath(String ubuntuSilentAudioPath) {
+        this.ubuntuSilentAudioPath = ubuntuSilentAudioPath;
+    }
+
+    
     private String winAudioPath;
     private String winVideoPath;
 
@@ -177,6 +186,7 @@ public class PlaybackVO {
     private String ffmpegPath;
     private String mp3wrapPath;
     private String mencoderPath;
+    private String silentAudioPath;
 
     private String winMencoderPath;
     private String macMencoderPath;
@@ -194,7 +204,8 @@ public class PlaybackVO {
     private String macTempLocation;
     private String ubuntuTempLocation;
 
+    private String ubuntuSilentAudioPath;
     private String winSilentAudioPath;
-    private String silentAudioPath;
+    
 
 }
