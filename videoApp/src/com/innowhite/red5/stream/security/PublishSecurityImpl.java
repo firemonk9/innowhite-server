@@ -29,7 +29,7 @@ public class PublishSecurityImpl implements IStreamPublishSecurity{
 		if(enableSecurity == false)
 			return true;
 		
-		if(scope.getName() != null && VideoStreamNameListener.videoStreamIds.contains(scope.getName()))
+		if(scope.getName() != null && VideoStreamNameListener.videoStreamIds.containsKey(scope.getName()))
 		{
 			//System.err.println("remove this isPublishAllowed ... "+scope.getName()+"  ip ");
 			return true;

@@ -124,6 +124,9 @@
 
 		<property name="winVideoPath" value="${winVideoPath}" />
 		<property name="winAudioPath" value="${winAudioPath}" />
+		<property name="ubuntuAudioPath" value="${ubuntuAudioPath}" />
+		
+		
 		
 		<property name="winMp3WrapPath" value="${winMp3WrapPath}" />
 		<property name="macMp3WrapPath" value="${macMp3WrapPath}" />

@@ -122,10 +122,17 @@ public class PlaybackDataService {
 	    // replace unix file path to windows file path.
 
 	    if (PlaybackUtil.isWindows()) {
-		log.debug(" windows machine so changing the address ..");
+		log.debug(" windows machine so changing the source path for audio and video ..");
 		PlaybackUtil.updateVideoPathWindows(playbackVO.getWinVideoPath(), videoDataList);
 		PlaybackUtil.updateAudioPathWindows(playbackVO.getWinAudioPath(), audioDataList);
 	    }
+	    if (PlaybackUtil.isUbuntu()) {
+		log.debug(" ubuntu machine so changing the Audio path ..");
+		// PlaybackUtil.updateVideoPathWindows(playbackVO.getWinVideoPath(),
+		// videoDataList);
+		PlaybackUtil.updateAudioPathWindows(playbackVO.getUbuntuAudioPath(), audioDataList);
+	    }
+
 	    // WhiteboardDataDao whiteboardDataDao = (WhiteboardDataDao)
 	    // factory.getBean("whiteboardDataDao");
 	    // whiteboardDataDao.getWhiteboardDTOForRoom("room1");
@@ -320,22 +327,23 @@ public class PlaybackDataService {
 		    playlist = new PlayBackPlayList();
 		    String a[] = new String[2];
 		    a = finalVideoPlaylist.get(i).split("##");
-		    
+
 		    // convert all playlist videos to .mp4
-		    String mp4_filepath = convertAVItoMP4264(a[0]);
+//		    String mp4_filepath = convertAVItoMP4264(a[0]);
 //		    log.debug("_______________________________________________________________");
 //		    log.debug("sessionVideoPlaylist::mp4_filepath :: " + mp4_filepath);
 //		    log.debug("_______________________________________________________________");
 //		    playlist.setFilePath(mp4_filepath);
-		    
-		    //convert all playlist videos to .flv
-		    String flv_filepath = convertAVItoFLV(a[0]);
-		    playlist.setFilePath(flv_filepath);
-		    log.debug("_______________________________________________________________");
-		    log.debug("sessionVideoPlaylist::flv_filepath :: " + flv_filepath);
-		    log.debug("_______________________________________________________________");
-		    playlist.setFilePath(flv_filepath);
-		    
+
+		    // convert all playlist videos to .flv
+		     String flv_filepath = convertAVItoFLV(a[0]);
+		     playlist.setFilePath(flv_filepath);
+		     log.debug("_______________________________________________________________");
+		     log.debug("sessionVideoPlaylist::flv_filepath :: " +
+		     flv_filepath);
+		     log.debug("_______________________________________________________________");
+		     playlist.setFilePath(flv_filepath);
+
 		    playlist.setInsertedDate(new Date());
 		    playlist.setRoomName(roomId);
 		    log.debug(":::::::DURATION::::::::::::::::" + a[1]);
@@ -510,7 +518,7 @@ public class PlaybackDataService {
     private AudioData createSilentAudio(long duration) {
 	log.debug("creating silent audio of " + duration + " seconds");
 	AudioData ad = new AudioData();
-	String silentAudioPath = playbackVO.getSilentAudioPath();//"C:/Users/sony/Desktop/Innowhite/playback/silence.avi";
+	String silentAudioPath = playbackVO.getSilentAudioPath();// "C:/Users/sony/Desktop/Innowhite/playback/silence.avi";
 	String newAudioPath = PlaybackUtil.getUnique();
 	String cmd = null;
 	if (duration <= 3600) {
@@ -538,10 +546,10 @@ public class PlaybackDataService {
     }
 
     private String convertAVItoFLV(String avi_filepath) {
-		String cmd = " -i " + avi_filepath + " " + avi_filepath.replace(".avi", ".flv");
-		PlaybackUtil.invokeProcess(cmd);
-		String flv_filepath = avi_filepath.replace(".avi", ".flv");
-		return flv_filepath;
+	String cmd = " -i " + avi_filepath + " " + avi_filepath.replace(".avi", ".flv");
+	PlaybackUtil.invokeProcess(cmd);
+	String flv_filepath = avi_filepath.replace(".avi", ".flv");
+	return flv_filepath;
     }
 
     private static void prepareVideoForSessionBucket(SessionBucket sb, int j, VideoData videoData, long sessionStartTime, long sessionEndTime) {

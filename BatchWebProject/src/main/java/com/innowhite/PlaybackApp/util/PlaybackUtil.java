@@ -52,7 +52,7 @@ public class PlaybackUtil {
     public static boolean isUbuntu() {
 
 	String os = System.getProperty("os.name").toLowerCase();
-	// windows
+	log.debug(" the os is :: "+os);
 	return (os.indexOf("linux") >= 0);
 
     }
@@ -98,6 +98,8 @@ public class PlaybackUtil {
     /* Send the object Audio and video and the windows folder */
     public static void updateAudioPathWindows(String winPath, List<AudioData> mediaList) {
 //
+	
+	log.debug("changing the source path for Audio");
 	if(mediaList == null)
 	    return;
 	

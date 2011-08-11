@@ -61,17 +61,32 @@ public class Application extends MultiThreadedApplicationAdapter implements IApp
 
     // ISharedObject screenShareSo = null;
 
-    /* when ever a new room is created, this is called. */
+    /*
+     * when ever a new room is created, this is called. This function creates a
+     * new shared object for the Room ID If not there already.
+     */
     @Override
     public boolean roomConnect(IConnection connection, Object[] params) {
 	log.debug("${APP}:roomConnect " + connection.getScope().getName() + " scope  " + connection.getScope());
 
+	connection.getScope().getAttributes();
 	// ISharedObject so = getSharedObject(connection.getScope(),
 	// INNOWHITE_STREAM_STATUS_SO);
 
+	// String streamType =
+	// VideoStreamNameListener.videoStreamIds.get(scope.getName());
+	// log.debug(" the stream Type creating is : "+streamType);
+	// if (streamType != null && streamType.equals("DESKTOP")) {
+
+	log.debug(" screen share stream created so create the shared object. ");
 	createSharedObject(connection.getScope(), INNOWHITE_STREAM_STATUS_SO, false);
+
 	ISharedObject screenShareSo = getSharedObject(connection.getScope(), INNOWHITE_STREAM_STATUS_SO);
+
 	screenShareSharedObjectMap.put(connection.getScope().getName(), screenShareSo);
+
+	// }
+
 	// String voiceBridge = getBbbSession().getVoiceBridge();
 
 	// UserCacheService.addRoomIdUserSharedObj(connection.getScope().getName(),
@@ -130,6 +145,16 @@ public class Application extends MultiThreadedApplicationAdapter implements IApp
 	    screenShareStremIdMap.put(publishedName, obj);
 	    log.debug(" the hashmap :: " + screenShareSharedObjectMap + " stream name " + publishedName);
 	    // }
+
+	    // only screen share should be recorded at this point. will/ may
+	    // change in future.
+	    // send a call to client informing that the recording has started.
+	    if (obj.isRecording() == true) {
+		ISharedObject screenShareSo = screenShareSharedObjectMap.get(stream.getScope().getName());
+		if (screenShareSo != null)
+		    screenShareSo.sendMessage("screenShareStarted", new ArrayList<Object>());
+	    }
+
 	}
 
 	log.debug("streamPublishStart:: " + stream.getPublishedName() + " time " + new Date().getTime() + "  get parent  " + stream.getScope().getParent() + " scope  " + stream.getScope());

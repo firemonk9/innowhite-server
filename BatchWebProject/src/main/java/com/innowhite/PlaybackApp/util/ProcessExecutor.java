@@ -6,17 +6,24 @@ import java.io.FileWriter;
 import java.io.InputStream;
 import java.io.InputStreamReader;
 
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
+
+import com.innowhite.PlaybackApp.service.PlaybackDataService;
+
 public class ProcessExecutor {
+
+    public static final Logger log = LoggerFactory.getLogger(ProcessExecutor.class);
 
     public boolean executeProcess(String cmd, String tempPath) {
 
 	try {
 	    // String cmd = executable + " -i " + input + " " + params + " " +
 	    // output;
-	    System.out.println(cmd);
+	    log.debug(cmd);
 
 	    if (PlaybackUtil.isWindows() == false) {
-		File f = new File(tempPath+"/file_" + Math.random() * 10000 + ".sh");
+		File f = new File(tempPath + "/file_" + Math.random() * 10000 + ".sh");
 		FileWriter fw = new FileWriter(f);
 		fw.write("#!/bin/bash \n");
 		fw.write(cmd + "\n");
@@ -25,9 +32,7 @@ public class ProcessExecutor {
 
 		MakeExectuable.getInstance().setExecutable(cmd);
 	    }
-	    
-	    
-	    
+
 	    Runtime rt = Runtime.getRuntime();
 	    Process proc = rt.exec(cmd);
 
@@ -44,7 +49,7 @@ public class ProcessExecutor {
 	    // any error???
 	    // Appears to be blocking operation
 	    int exitVal = proc.waitFor();
-	    // System.out.println("ExitValue: " + exitVal);
+	    // log.debug("ExitValue: " + exitVal);
 
 	    if (exitVal == 0) {
 		return true;
@@ -52,6 +57,7 @@ public class ProcessExecutor {
 
 	} catch (Exception t) {
 	    t.printStackTrace();
+	    log.error(t.getMessage(),t);
 	}
 
 	return false;
@@ -60,6 +66,7 @@ public class ProcessExecutor {
 
 // Consume process output
 class StreamGobbler extends Thread {
+    Logger log = LoggerFactory.getLogger(StreamGobbler.class);
     InputStream is;
     String type;
 
@@ -75,7 +82,7 @@ class StreamGobbler extends Thread {
 	    String line = null;
 	    while ((line = br.readLine()) != null)
 		// Show output in development
-		System.out.println(type + ">" + line);
+		log.debug(type + ">" + line);
 	} catch (Exception ioe) {
 	    ioe.printStackTrace();
 	}

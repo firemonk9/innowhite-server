@@ -178,8 +178,20 @@ public class PlaybackVO {
         this.ubuntuSilentAudioPath = ubuntuSilentAudioPath;
     }
 
+    public String getUbuntuAudioPath() {
+        return ubuntuAudioPath;
+    }
+
+    public void setUbuntuAudioPath(String ubuntuAudioPath) {
+        this.ubuntuAudioPath = ubuntuAudioPath;
+    }
+
     
     private String winAudioPath;
+    private String ubuntuAudioPath;
+    
+    
+
     private String winVideoPath;
 
     private String tempLocation;

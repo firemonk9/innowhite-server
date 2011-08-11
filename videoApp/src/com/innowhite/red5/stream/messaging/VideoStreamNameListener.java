@@ -1,7 +1,6 @@
 package com.innowhite.red5.stream.messaging;
 
-import java.util.ArrayList;
-import java.util.List;
+import java.util.HashMap;
 import java.util.StringTokenizer;
 
 import javax.jms.JMSException;
@@ -15,7 +14,7 @@ import org.slf4j.LoggerFactory;
 public class VideoStreamNameListener implements MessageListener {
 
 	
-	public static  List<String> videoStreamIds = new ArrayList<String>();
+	public static  HashMap<String,String> videoStreamIds = new HashMap<String,String>();
 
 	private static final Logger log = LoggerFactory
 			.getLogger(VideoStreamNameListener.class);
@@ -66,8 +65,8 @@ public class VideoStreamNameListener implements MessageListener {
 						+ "  streamType: " + streamType);
 				
 				
-				if(!videoStreamIds.contains(streamId)){
-					videoStreamIds.add(streamId);
+				if(!videoStreamIds.containsKey(streamId)){
+					videoStreamIds.put(streamId,streamType);
 				}
 				
 //
