@@ -58,7 +58,8 @@
 
 	<update id="updateLockStatus" parameterClass="java.util.HashMap">
 
-		update room set room_lock = #status# where room_id = #roomId#
+		update room set
+		room_lock = #status# where room_id = #roomId#
 		
 	</update>
 
@@ -92,7 +93,7 @@
 		select room_active from room where room_id= #id#;
 	</select>
 
-	
+
 	<select id="isRoomClosed" parameterClass="java.lang.String"
 		resultClass="java.lang.String">
 		select end_date from room where room_id= #id#;
@@ -118,7 +119,8 @@
 		end_date ,
 		org_name
 		from room
-		where room_id = #room_id#
+		where room_id =
+		#room_id#
 	</select>
 
 
