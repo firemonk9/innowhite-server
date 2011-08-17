@@ -89,6 +89,9 @@ public class MainAudioService {
 
 			
 			so.sendMessage("userJoin", list);
+			
+			UserCacheService.addUserConfMap(room,userID);
+			
 		}
 	}
 
@@ -121,6 +124,7 @@ public class MainAudioService {
 						+ confRoom + "  confRoom:: " + participant + "  participant:: " 
 						+ " userID  " + userID+"  room:: "+room);
 				 so.sendMessage("userLeft", list);
+				 UserCacheService.removeUserConfMap(room,userID);
 			
 		}else{
 			log.warn(" remote shared object is null :"+so+" confRoom "+confRoom+" participant "+participant);

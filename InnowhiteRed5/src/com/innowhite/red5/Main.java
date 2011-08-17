@@ -179,6 +179,15 @@ public class Main extends MultiThreadedApplicationAdapter {
 
 		    uservo.setUserJoinedTime((new Date().getTime()));
 		    log.debug(" user joined time is " + uservo.getUserJoinedTime() + " username " + uservo.getUsername());
+
+		    // check if the user called in by phone and got his WB
+		    // disconnected. Need to set
+		    // join conf to true.
+		    if (UserCacheService.userExistsInConf(Red5.getConnectionLocal().getScope().getName(), uservo.getUsername()) == true)
+		    {	
+			log.debug(" the user already exists in the audio conf : "+uservo.getUsername());
+			uservo.setVoiceConfJoined(1);
+		    }
 		}
 
 		RoomVO roomVO = shapeSeqMap.get(Red5.getConnectionLocal().getScope().getName());
@@ -562,7 +571,7 @@ public class Main extends MultiThreadedApplicationAdapter {
 	// log.info("RoomJoined Called for client: " + client.getId() +
 	// "of scope " + scope.getName());
 	Constants.bsessionFlag = true;
-	 
+
 	log.debug(" roomJoin  ###### " + client.toString() + "   " + scope.getName());
 	log.debug("calling db update ::" + scope.getName());
 	// WhiteboardAuthenticatorService.startRoom(scope.getName());
@@ -667,7 +676,8 @@ public class Main extends MultiThreadedApplicationAdapter {
 	    String msg = scope.getName() + "_STOPPED_" + Calendar.getInstance().getTimeInMillis();
 
 	    messagingService.sendRoomMessage(msg);
-
+	    UserCacheService.removeRoomConfMap(scope.getName());
+	    
 	    // WhiteboardAuthenticatorService.stopRoom(scope.getName());
 
 	} catch (Exception e) {
