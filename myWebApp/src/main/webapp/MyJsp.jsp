@@ -131,10 +131,10 @@ Learn more about Flex at http://flex.org
 
 <!--  BEGIN Browser History required section -->
 <link rel="stylesheet" type="text/css" href="history/history.css" />
-<link rel="stylesheet" type="text/css" media="screen"
-	href="resources/styles/styles.css" />
 <!--  END Browser History required section -->
 
+<link rel="stylesheet" type="text/css" media="screen"
+	href="resources/styles/styles.css" />
 <title></title>
 <script src="AC_OETags.js" language="javascript"></script>
 
@@ -280,9 +280,10 @@ function setRecordingStatus(myRecordStatus, myRoomName){
 function openHelpWindow()
 {
 	
-	$('.popup-help').css('display', '');
+	enjoy();
+	/* $('.popup-help').css('display', '');
 	$('.fade').css('display', '');
-
+ */
 }
 
 
@@ -416,7 +417,7 @@ function plugin()
 						$('.fade').css('display', 'none');
 						
 				});
-			//openHelpWindow();
+			
 			if(window.navigator.userAgent.search(/Firefox/) == -1)
 			{
 				return;
@@ -443,6 +444,17 @@ function plugin()
 						$('.fade').css('display', 'none');
 						showDownloadPlugin();
 				});
+				
+				$('.help-tabs-head li').click(function(){
+					var value = $(this).attr('class').split(' ')[0];
+					//alert(value)
+					$('.help-tabs').hide();
+					$('#'+value).show();
+
+					$('.help-tabs-head li').removeClass('active');
+					$(this).addClass('active');
+					})
+				
 		})
 	function showDownloadPlugin()
 	{
@@ -473,13 +485,9 @@ function plugin()
 		setTimeout("$('#DOMWindow .DOMWindowContent').html($('#reloadPage').html())",300);
 //		setTimeout("$('#DOMWindowContent').html($('#reloadPage').html())",300);		
 	} 
-//-->
-//-->
-
-
 </script>
 <noscript></noscript>
-<body>
+<body >
 
 
 	<script>
@@ -619,7 +627,7 @@ if ( hasProductInstall && !hasRequestedVersion ) {
 		<br />
 
 	</div>
-	<div id="downloadPlugin" style="display: none;">
+	<div id="downloadPlugin1" style="display: none;">
 
 		<h3>To share your screen, a plugin download is required. Please
 			click on the "download now" button to start download of Innowhite
@@ -655,8 +663,16 @@ if ( hasProductInstall && !hasRequestedVersion ) {
 		<div style="margin-bottom: 30px;">&nbsp;</div>
 		<hr width=100%>
 		<br> <br>
-		<div class="DOMWindowContent" stylw="width:100%;height: 100%;"></div>
+		<div class="DOMWindowContent" style="width: 100%; height: 100%;"></div>
 	</div>
+
+
+
+
+
+
+
+
 	<!--
 <object id="plugin0" type="application/x-innowhite" width="300" height="300">
     <param name="onload" value="pluginLoaded" />
