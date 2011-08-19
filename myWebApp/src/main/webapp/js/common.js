@@ -93,6 +93,26 @@ function popupaudio() {
 
 }
 
+
+function onlyAudioPopUp() {
+	$('body').append('<div class="fade"></div>');
+	$('body')
+			.append(
+					'<div class="popup-audio">	<div class="close">		<img src="images/pop-close-btn.png" alt="close" />	</div>	<div class="pop-heading1">Audio Conference</div>	<div class="pop-form1 login1">				<div class="help-tabs ahelp-tabs" id="ht1">			<div>				<img src="images/audio-icons.png" alt="audio" width="588"					height="69" />			</div>			<div class="space-head">				<div class="phone">					<div class="pd-head">						<img src="images/user-phone.png" width="140" height="23" />					</div>					<div class="call">						1. Call in to the meeting:<br />					</div>					<div class="call-num">						1-650-429-330<br />						<b>(Call-in-toll number (US/Canada))</b>					</div>					<div class="call">						2. Enter the access code:<br />						<div class="call-num">							<b>1-650-429-330</b>						</div>					</div>					<div class="call">						3. Enter your attendee ID:<br />						<div class="call-num">							<b>109#</b>						</div>					</div>				</div>				<div class="seprator-2">					<img src="images/shadow-image.png" />				</div>				<div class="icon-space">					<p>						<img src="images/use-computer.png" />					</p>					<p>						<img src="images/call-using-comp.png" width="229" height="53" /><br />						<br />						<span class="link-blue">Test speaker/microphone</span>					</p>				</div>			</div>		</div>			</div></div>');
+	$('.popup-audio').css({
+		'left' : wWidth,
+		'top' : wHeight
+	});
+
+	// CLOSE
+	$('.popup-audio.close').click(function() {
+		$('.fade').remove();
+		$('.popup-audio').remove();
+	})
+
+}
+
+
 function popupaudio1() {
 
 	$('body').append('<div class="fade"></div>');

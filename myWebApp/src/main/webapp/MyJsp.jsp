@@ -280,10 +280,11 @@ function setRecordingStatus(myRecordStatus, myRoomName){
 function openHelpWindow()
 {
 	
-	enjoy();
-	/* $('.popup-help').css('display', '');
-	$('.fade').css('display', '');
- */
+	//enjoy();
+	popupaudio8();
+//	 $('.popup-audio8').css('display', '');
+//	$('.fade').css('display', '');
+ 
 }
 
 
@@ -487,7 +488,7 @@ function plugin()
 	} 
 </script>
 <noscript></noscript>
-<body >
+<body>
 
 
 	<script>

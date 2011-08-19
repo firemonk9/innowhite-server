@@ -15,7 +15,7 @@
 	</listener>
 
 	<listener>
-   		<listener-class>com.innowhite.whiteboard.docconversion.util.MyServletContextListener</listener-class>
+   		<listener-class>com.innowhite.whiteboard.docconversion.util.DBPollingServletContextListener</listener-class>
 	</listener>
 
 	<!-- Processes application requests -->
