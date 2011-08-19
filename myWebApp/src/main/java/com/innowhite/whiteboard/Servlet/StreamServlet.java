@@ -45,6 +45,7 @@ public class StreamServlet extends HttpServlet {
 
 		String streamType = request.getParameter(InnowhiteConstants.STREAM_TYPE);
 		String roomId = request.getParameter(InnowhiteConstants.ROOML_ID);
+		String user = request.getParameter(InnowhiteConstants.USER);
 		
 		
 		String serverApp= streamType;
@@ -68,7 +69,7 @@ public class StreamServlet extends HttpServlet {
 		    return;
 		
 		if(serverApp != null && ( serverApp.equals("VIDEO") || serverApp.equals("DESKTOP") ))
-		    subRoomId = WhiteboardAuthenticationDAOImpl.createSubRoomID(roomId,streamType);
+		    subRoomId = WhiteboardAuthenticationDAOImpl.createSubRoomID(roomId,streamType,user);
 		
 		response.setContentType("text/xml");
 		PrintWriter out = response.getWriter();

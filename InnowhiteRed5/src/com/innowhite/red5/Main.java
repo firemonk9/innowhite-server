@@ -183,9 +183,8 @@ public class Main extends MultiThreadedApplicationAdapter {
 		    // check if the user called in by phone and got his WB
 		    // disconnected. Need to set
 		    // join conf to true.
-		    if (UserCacheService.userExistsInConf(Red5.getConnectionLocal().getScope().getName(), uservo.getUsername()) == true)
-		    {	
-			log.debug(" the user already exists in the audio conf : "+uservo.getUsername());
+		    if (UserCacheService.userExistsInConf(Red5.getConnectionLocal().getScope().getName(), uservo.getUsername()) == true) {
+			log.debug(" the user already exists in the audio conf : " + uservo.getUsername());
 			uservo.setVoiceConfJoined(1);
 		    }
 		}
@@ -577,6 +576,10 @@ public class Main extends MultiThreadedApplicationAdapter {
 	// WhiteboardAuthenticatorService.startRoom(scope.getName());
 
 	log.debug(" roomJoin  ###### " + client.getAttributeNames());
+	
+	//String msg = uName + "_" + scope.getName() + "_JOINED_" + Calendar.getInstance().getTimeInMillis();
+	//messagingService.sendUserRoomMessage(msg);
+
 
 	return true;
     }
@@ -648,6 +651,9 @@ public class Main extends MultiThreadedApplicationAdapter {
 		// UserCacheService.addRoomIdUserSharedObj(room.getName(),this.getSharedObject(room,
 		// room.getName()));
 
+		String msg = uName + "_" + room.getName() + "_LEFT_" + Calendar.getInstance().getTimeInMillis();
+		messagingService.sendUserRoomMessage(msg);
+
 	    }
 	} catch (Exception e) {
 	    e.printStackTrace();
@@ -677,7 +683,7 @@ public class Main extends MultiThreadedApplicationAdapter {
 
 	    messagingService.sendRoomMessage(msg);
 	    UserCacheService.removeRoomConfMap(scope.getName());
-	    
+
 	    // WhiteboardAuthenticatorService.stopRoom(scope.getName());
 
 	} catch (Exception e) {

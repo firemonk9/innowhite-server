@@ -1,12 +1,20 @@
 package com.innowhite.PlayBackWebApp.service;
 
 import com.innowhite.PlayBackWebApp.dao.RoomDataDao;
+import com.innowhite.PlayBackWebApp.dao.RoomUserDataDao;
 
 public class RoomStatusService {
 
     
     private RoomDataDao roomDataDao;
     
+    private  RoomUserDataDao roomUserDataDao;
+    
+    
+    public void setRoomUserDataDao(RoomUserDataDao roomUserDataDao) {
+        this.roomUserDataDao = roomUserDataDao;
+    }
+
     public void saveRoomStatus(String m) {
 	try {
 	    // whiteboardDataDao.saveWhitebordObj(m);
@@ -33,6 +41,30 @@ public class RoomStatusService {
 
     }
 
+    public void updateUserRoomLeftStatus(String m) {
+	try {
+	    // whiteboardDataDao.saveWhitebordObj(m);
+	    System.err.println(" user joined and left service called with the values  " + m);
+
+	    // update start and stop time for the room.
+	    String arr[] = m.split("_");
+	    String userId = arr[0];
+	    String roomId = arr[1];
+	    String status = arr[2];
+	    String time = arr[3];
+
+	    
+	    roomUserDataDao.updateUserRoomStatus(userId,status , roomId, time);
+
+	    
+	} catch (Exception e) {
+	    e.printStackTrace();
+	}
+
+    }
+
+    
+    
     /**
      * @param roomDataDao the roomDataDao to set
      */

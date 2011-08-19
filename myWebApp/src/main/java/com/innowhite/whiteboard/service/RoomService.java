@@ -50,6 +50,12 @@ public class RoomService {
      */
     public static boolean isRoomClosed(String roomId) {
 
+	// do not lock test rooms:
+	if(roomId != null && roomId.startsWith("room"))
+	{
+	    return false;
+	}
+	
 	boolean status = RoomUsersDAO.isRoomClosed(roomId);
 	
 	return status;

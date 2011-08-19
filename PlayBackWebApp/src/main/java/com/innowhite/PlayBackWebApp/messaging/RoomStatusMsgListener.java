@@ -10,35 +10,33 @@ import org.slf4j.LoggerFactory;
 
 import com.innowhite.PlayBackWebApp.service.RoomStatusService;
 
-public class RoomStatusMsgListener implements MessageListener{
+public class RoomStatusMsgListener implements MessageListener {
 
     RoomStatusService roomStatusService;
 
-    
-
     public void setRoomStatusService(RoomStatusService roomStatusService) {
-        this.roomStatusService = roomStatusService;
+	this.roomStatusService = roomStatusService;
     }
 
     private static final Logger log = LoggerFactory.getLogger(RoomStatusMsgListener.class);
 
     public void onMessage(Message message) {
 	// MapMessage mapMessage = (MapMessage) message;
-	
-	log.debug(" enter onMessage for RoomStatusMsgListener Data "+message);
-	
+
+	log.debug(" enter onMessage for RoomStatusMsgListener Data " + message);
+
 	if (message instanceof TextMessage) {
 	    try {
 
-		String msg =message.getStringProperty("text");
+		String msg = message.getStringProperty("text");
 		String msgType = message.getStringProperty("MSG_TYPE");
 		String curTime = message.getStringProperty("CURRENT_TIME");
-		
-		
-		
-		 roomStatusService.saveRoomStatus(msg);
-		 
-		
+
+		if (msgType != null && msgType.equals("ROOM"))
+		    roomStatusService.saveRoomStatus(msg);
+		else if (msgType != null && msgType.equals("USER"))
+		    roomStatusService.updateUserRoomLeftStatus(msg);
+
 	    } catch (JMSException ex) {
 		log.error(ex.getMessage(), ex);
 	    }
@@ -49,9 +47,6 @@ public class RoomStatusMsgListener implements MessageListener{
 	    log.warn("the message is :: " + message);
 
 	}
-	
-	
-	
 
 	// try {
 	//

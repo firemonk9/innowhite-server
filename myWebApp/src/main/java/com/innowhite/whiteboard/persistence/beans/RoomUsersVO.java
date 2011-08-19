@@ -55,11 +55,30 @@ public class RoomUsersVO {
         this.joinedConference = joinedConference;
     }
 
+    public boolean isJoinedPhoneConference() {
+        return joinedPhoneConference;
+    }
+
+    public void setJoinedPhoneConference(boolean joinedPhoneConference) {
+        this.joinedPhoneConference = joinedPhoneConference;
+    }
+
+    public boolean isJoinedVoipConference() {
+        return joinedVoipConference;
+    }
+
+    public void setJoinedVoipConference(boolean joinedVoipConference) {
+        this.joinedVoipConference = joinedVoipConference;
+    }
+
+
     
     private String joinedConference;
     private String roomName;
     private String userId;
     private Date startTime;
     private Date endTime;
-
+    
+    private Boolean joinedPhoneConference;
+    private Boolean joinedVoipConference;
 }

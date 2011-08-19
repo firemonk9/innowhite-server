@@ -28,8 +28,10 @@ public class RoomUsersDAO {
 	// save(user, "123123123", "12345");
 	// log.debug(getConfNumber(user, "123123123"));
 	// updateUserInRoom(user, "123123123");
-	getUsersForRoom("77985972582");
-
+	//System.err.println(getUsersForRoom("room192"));
+	System.err.println(getRoomInfo("room192"));
+	
+	
     }
 
     public static void lockRoom(String roomId, String status) {
@@ -44,8 +46,8 @@ public class RoomUsersDAO {
 	    int returnUpdate = sqlMapClient.update("updateLockStatus", m);
 
 	    log.debug("  update return status :: " + returnUpdate);
-	} catch (SQLException re) {
-	    log.error(" exception  ", re);
+	} catch (SQLException e) {
+	    log.error(e.getMessage(), e);
 	    // re.printStackTrace();
 	}
 	// return id;
@@ -61,8 +63,8 @@ public class RoomUsersDAO {
 	    returnUpdate = (String) sqlMapClient.queryForObject("getLockStatus", roomId);
 
 	    log.debug("  update return status :: " + returnUpdate);
-	} catch (SQLException re) {
-	    log.error(" exception  ", re);
+	} catch (SQLException e) {
+	    log.error(e.getMessage(), e);
 	    // re.printStackTrace();
 	}
 	return returnUpdate;
@@ -81,8 +83,8 @@ public class RoomUsersDAO {
 
 	    id = (Integer) sqlMapClient.insert("insertUserInRoom", m);
 	    log.debug("save id : " + id);
-	} catch (SQLException re) {
-	    log.error(" exception  ", re);
+	} catch (SQLException e) {
+	    log.error(e.getMessage(), e);
 	    // re.printStackTrace();
 	}
 	return id;
@@ -105,7 +107,7 @@ public class RoomUsersDAO {
 	    }
 
 	} catch (SQLException e) {
-	    log.error(" exception  ", e);
+	    log.error(e.getMessage(), e);
 	    // e.printStackTrace();
 	    return null;
 	}
@@ -129,7 +131,7 @@ public class RoomUsersDAO {
 	    }
 
 	} catch (SQLException e) {
-	    log.error(" exception  ", e);
+	    log.error(e.getMessage(), e);
 	    // e.printStackTrace();
 	    return null;
 	}
@@ -149,6 +151,7 @@ public class RoomUsersDAO {
 	    value = (List) sqlMapClient.queryForList("getUsersForRoom", roomName);
 
 	} catch (SQLException e) {
+	    log.error(e.getMessage(), e);
 	    e.printStackTrace();
 	    return null;
 	}
@@ -170,7 +173,7 @@ public class RoomUsersDAO {
 	    log.debug(" the update status   " + val);
 
 	} catch (SQLException e) {
-	    log.error(" exception  ", e);
+	    log.error(e.getMessage(), e);
 	    // e.printStackTrace();
 	}
     }
@@ -185,6 +188,7 @@ public class RoomUsersDAO {
 	    value = (RoomVO) sqlMapClient.queryForObject("roomInfo", roomId);
 
 	} catch (SQLException e) {
+	    log.error(e.getMessage(),e);
 	    e.printStackTrace();
 	    return null;
 	}
@@ -195,18 +199,20 @@ public class RoomUsersDAO {
     public static boolean isRoomClosed(String roomId) {
 	log.debug("Entered getRoomInfo");
 	log.debug("roomName  " + roomId);
-	Date value = null;
+	String value = null;
 	try {
 
-	    value = (Date) sqlMapClient.queryForObject("isRoomClosed", roomId);
-
+	    Object obj =  sqlMapClient.queryForObject("isRoomClosed", roomId);
+	    if(obj == null)
+		return false;
+	    else
+		return true;
+	    
 	} catch (SQLException e) {
+	    log.error(e.getMessage(),e);
 	    e.printStackTrace();
 	}
-	if (value == null)
-	    return false;
-	else
-	    return true;
+	return false;
     }
 
 }

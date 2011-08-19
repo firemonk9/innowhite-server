@@ -58,7 +58,7 @@ public class WhiteboardAuthenticationDAOImpl implements IWhiteboardAuthenticatio
      * Create a new stream Id and stores in DB. Sends a msg to topic for red5
      * apps to cache the streamId for security.
      */
-    public static Long createSubRoomID(String roomId, String roomType) {
+    public static Long createSubRoomID(String roomId, String roomType, String user) {
 	Long x = 0l;
 	try {
 
@@ -66,6 +66,7 @@ public class WhiteboardAuthenticationDAOImpl implements IWhiteboardAuthenticatio
 	    Map<String, String> hmMap = new HashMap<String, String>();
 	    hmMap.put("roomId", roomId);
 	    hmMap.put("roomType", roomType);
+	    hmMap.put("user", user);
 	    x = (Long) sqlMapClient.insert("createSubRoomID", hmMap);
 	    log.debug(" createSubRoomID returned " + x);
 
@@ -228,7 +229,7 @@ public class WhiteboardAuthenticationDAOImpl implements IWhiteboardAuthenticatio
 
     public static void main(String[] args) {
 	WhiteboardAuthenticationDAOImpl wai = new WhiteboardAuthenticationDAOImpl();
-	Long x = wai.createSubRoomID("343432423", "VIDEOID");
+	Long x = wai.createSubRoomID("343432423", "VIDEOID","temp");
 	log.debug("x " + x);
 	if (val == false) {
 	    // WhiteboardAuthenticationDAOImpl wai = new

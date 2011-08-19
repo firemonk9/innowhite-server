@@ -40,9 +40,9 @@
 
 	<insert id="createSubRoomID" parameterClass="java.util.HashMap">
 		INSERT INTO video_data
-		(room_id, video_type, inserted_date)
+		(room_id, video_type, user_id,inserted_date)
 		VALUES
-		(#roomId#, #roomType#, NOW() )
+		(#roomId#, #roomType#,#user# ,NOW() )
 
 		<selectKey keyProperty="id" resultClass="java.lang.Long">
 			SELECT @@identity

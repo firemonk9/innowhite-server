@@ -106,10 +106,14 @@
 
 	<bean id="roomDataDao" name="roomDataDao"
 		class="com.innowhite.PlayBackWebApp.dao.RoomDataDao">
-
 		<property name="sessionFactory" ref="sessionFactory" />
-
 	</bean>
+
+	<bean id="roomUserDataDao" name="roomUserDataDao"
+		class="com.innowhite.PlayBackWebApp.dao.RoomUserDataDao">
+		<property name="sessionFactory" ref="sessionFactory" />
+	</bean>
+
 
 
 

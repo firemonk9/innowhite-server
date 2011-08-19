@@ -37,7 +37,7 @@ public class SimpleMessageProducer {
 
     // String txt=null;
 
-    public synchronized void sendMessage(final String msg) {
+    public synchronized void sendMessage(final String msg, final String msgType) {
 	// txt = msg;
 	// log.debug("sending room status msg");
 	// MessageCreator creator = new MessageCreator() {
@@ -59,7 +59,7 @@ public class SimpleMessageProducer {
 		TextMessage message = null;
 		try {
 		    message = session.createTextMessage();
-		    message.setStringProperty("MSG_TYPE", "ROOM");
+		    message.setStringProperty("MSG_TYPE", msgType);
 		    message.setStringProperty("CURRENT_TIME", String.valueOf(new Date().getTime()));
 		    message.setStringProperty("text", msg);
 		} catch (JMSException e) {

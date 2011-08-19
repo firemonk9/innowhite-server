@@ -56,7 +56,7 @@ public class MessagingService {
 		ApplicationContext context = new ClassPathXmlApplicationContext("messagingContext.xml");
 		SimpleMessageProducer smp = (SimpleMessageProducer)context.getBean("roomMessageService");
 		 
-		smp.sendMessage("TEXT");
+		smp.sendMessage("TEXT","ROOM");
 		
 
 	}
@@ -64,7 +64,18 @@ public class MessagingService {
 	/* To send any message about room(room start, room end) Queue.*/
 	public void sendRoomMessage(String msg){
 		log.debug("entered sendRoomMessage msg:"+msg);
-		roomMessageService.sendMessage(msg);
+		roomMessageService.sendMessage(msg,"ROOM");
+		if(msg != null && msg.indexOf("_STOPPED_")>0)
+		{
+		    playBackMessageProducer.sendMessage(msg);
+		}
+		//playBackMessageProducer
+	}
+	
+	/* To send any message about users of a room(user join room , user left room ) Queue.*/
+	public void sendUserRoomMessage(String msg){
+		log.debug("entered sendRoomMessage msg:"+msg);
+		roomMessageService.sendMessage(msg,"USER");
 		if(msg != null && msg.indexOf("_STOPPED_")>0)
 		{
 		    playBackMessageProducer.sendMessage(msg);

@@ -36,8 +36,8 @@ public class SessionDetailService {
 	String returnXML = null;
 	if (room != null) {
 	    // get list of videos, Screen share, for this session.
-	    List<VideoDataVO> l = VideoDataDAO.getVideosRoomId(roomId);
-	    log.debug(" videos size ::  " + l.size());
+	    List<VideoDataVO> videos = VideoDataDAO.getVideosRoomId(roomId);
+	    log.debug(" videos size ::  " + videos.size());
 
 	    // get list of users who have connected to this room, also if they
 	    // joined by phone, voip or not joined
@@ -53,7 +53,7 @@ public class SessionDetailService {
 	    List<PlayBackPlayListVO> playList = PlayBackPlayListDAO.getPlayList(roomId);
 	    log.debug("  users size ::  " + playList.size());
 
-	    returnXML = convertToXML(roomId, l, users, audios, room, playList);
+	    returnXML = convertToXML(roomId, videos, users, audios, room, playList);
 
 	} else {
 	    StringBuffer xml = new StringBuffer();
@@ -87,9 +87,11 @@ public class SessionDetailService {
 	   
 
 		xml.append("<user>");
-		xml.append("<videoUser>" + user.getUserId() + "</videoUser>");
-		xml.append("<videoStartTime>" + user.getStartTime() + "</videoStartTime>");
-		xml.append("<videoEndTime>" + user.getStartTime() + "</videoEndTime>");
+		xml.append("<userId>" + user.getUserId() + "</userId>");
+		xml.append("<userStartTime>" + user.getStartTime() + "</userStartTime>");
+		xml.append("<userEndTime>" + user.getStartTime() + "</userEndTime>");
+		xml.append("<userJoinedVOIPConf>" + user.isJoinedVoipConference() + "</userJoinedVOIPConf>");
+		xml.append("<userJoinedPhoneConf>" + user.isJoinedPhoneConference() + "</userJoinedPhoneConf>");
 		xml.append("</user>");
 	   
 	}
