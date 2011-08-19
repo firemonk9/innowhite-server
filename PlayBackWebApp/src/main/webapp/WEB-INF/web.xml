@@ -15,10 +15,6 @@
 	</listener>
 
 
-	<listener>
-   		<listener-class>com.innowhite.PlayBackWebApp.servlet.DBPollingServletContextListener</listener-class>
-	</listener>
-
 	<!-- Processes application requests -->
 	<servlet>
 		<servlet-name>appServlet</servlet-name>
