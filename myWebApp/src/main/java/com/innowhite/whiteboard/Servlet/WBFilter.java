@@ -115,10 +115,10 @@ public class WBFilter implements Filter {
 	// log.debug("filter init::::##############");
 	if (InnowhiteConstants.CONTEXT_PATH == null) {
 	    // Get the IP address of client machine.
-	    WhiteboardAuthenticationDAOImpl.main(null);
+	  
 	    String cont = config.getServletContext().getContextPath();
 
-	    log.debug("  cont ::::+++" + cont);
+	    log.debug("  context Path ::::+++" + cont);
 	    InnowhiteConstants.CONTEXT_PATH = cont.substring(1);
 	    Constants.MAC_FOLDER_PATH = Constants.MAC_FOLDER_PATH.replaceAll(Constants.APP_NAME, InnowhiteConstants.CONTEXT_PATH);
 	    Constants.UBUNTU_FOLDER_PATH = Constants.UBUNTU_FOLDER_PATH.replaceAll(Constants.APP_NAME, InnowhiteConstants.CONTEXT_PATH);

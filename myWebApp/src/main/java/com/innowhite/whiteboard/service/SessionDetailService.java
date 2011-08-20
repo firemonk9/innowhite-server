@@ -106,6 +106,7 @@ public class SessionDetailService {
 		xml.append("<videoUser>" + video.getUserId() + "</videoUser>");
 		xml.append("<videoStartTime>" + video.getStartTime() + "</videoStartTime>");
 		xml.append("<videoEndTime>" + video.getStartTime() + "</videoEndTime>");
+		xml.append("<videoServer>" + video.getId() + "</videoServer>");
 		xml.append("</video>");
 	    }
 	}
@@ -119,6 +120,7 @@ public class SessionDetailService {
 		xml.append("<screenShareUser>" + video.getUserId() + "</screenShareUser>");
 		xml.append("<screenShareStartTime>" + video.getStartTime() + "</screenShareStartTime>");
 		xml.append("<screenShareEndTime>" + video.getStartTime() + "</screenShareEndTime>");
+		xml.append("<screenShareServer>" + video.getId() + "</screenShareServer>");
 		xml.append("</screenShare>");
 	    }
 	}
@@ -128,8 +130,8 @@ public class SessionDetailService {
 	xml.append("<sessionAudios>");
 	for (AudioDataVO audio : audios) {
 	    xml.append("<audio>");
-	    xml.append("<screenShareStartTime>" + audio.getStartTime() + "</screenShareStartTime>");
-	    xml.append("<screenShareEndTime>" + audio.getStartTime() + "</screenShareEndTime>");
+	    xml.append("<audioStartTime>" + audio.getStartTime() + "</audioStartTime>");
+	    xml.append("<audioEndTime>" + audio.getStartTime() + "</audioEndTime>");
 	    xml.append("</audio>");
 	}
 	xml.append("</sessionAudios>");

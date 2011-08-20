@@ -19,6 +19,23 @@ public class WhiteboardAuthenticatorService {
 
     private static final Logger log = LoggerFactory.getLogger(WhiteboardAuthenticatorService.class);
 
+    public static void main(String args[]) {
+
+	long today = Calendar.getInstance().getTimeInMillis();
+
+	log.debug("ENTERED createRoom ");
+	int random = (int) (Math.random() * 8847);
+	String tod = today + "";
+	tod = tod.substring(6);
+	String roomId = tod + random +"12";
+
+	if (roomId.length() > 9) {
+	    roomId = roomId.substring(0,9);
+	}
+	
+	System.err.println("   "+roomId);
+    }
+
     public static String validateRequest(String queryStringWithoutCheckSum, String parentOrg, String checksum, String roomId) {
 
 	log.debug(" entering  validateRequest queryStringWithoutCheckSum" + queryStringWithoutCheckSum + "   parentOrg  " + parentOrg + "    checksum  " + checksum);
@@ -60,17 +77,26 @@ public class WhiteboardAuthenticatorService {
     }
 
     public static String createRoom(String orgName, String roomName, String record, String course, String inetLessonID, String view) {
+
 	long today = Calendar.getInstance().getTimeInMillis();
-	
+
 	log.debug("ENTERED createRoom ");
 	int random = (int) (Math.random() * 8847);
 	String tod = today + "";
 	tod = tod.substring(6);
 	String roomId = tod + random;
-	log.debug("room ID " + roomId);
-	if(roomId.startsWith("0")){
+
+	if (roomId.length() > 9) {
+	    roomId = roomId.substring(0,9);
+	}
+
+	
+	if (roomId.startsWith("0")) {
 	    roomId.replaceFirst("0", "1");
 	}
+	
+	log.debug("room ID " + roomId);
+	
 	RoomVO roomVO = new RoomVO();
 	roomVO.setOrgName(orgName);
 	roomVO.setRoomActive('Y');
