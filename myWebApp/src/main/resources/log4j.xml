@@ -10,12 +10,21 @@
 		</layout>
 	</appender>
 
-	<appender name="FA" class="org.apache.log4j.FileAppender">
+	<appender name="FA" class="org.apache.log4j.rolling.RollingFileAppender">
 		<param name="File" value="/opt/InnowhiteData/logs/myWebApp.log" />
+		<param name="append" value="true" />
+		<param name="encoding" value="UTF-8" />
 
 		<layout class="org.apache.log4j.PatternLayout">
-			<param name="ConversionPattern" value="%-4r [%t] %-5p %c %x - %m%n" />
+			<param name="ConversionPattern" value="%5p %d{ISO8601} [%t][%x] %c - %m%n" />
 		</layout>
+
+		<rollingPolicy class="org.apache.log4j.rolling.TimeBasedRollingPolicy">
+			<!-- The file to roll to, this is a fairly intelligent parameter, if the 
+				file ends in .gz, it gzips it, based on the date stamp it rolls at that time, 
+				default is yyyy-MM-dd, (rolls at midnight) See: http://logging.apache.org/log4j/companions/extras/apidocs/org/apache/log4j/rolling/TimeBasedRollingPolicy.html -->
+			<param name="FileNamePattern" value="/opt/InnowhiteData/logs/myWebApp.%d.log" />
+		</rollingPolicy>
 
 	</appender>
 
@@ -40,7 +49,7 @@
 	<logger name="org.springframework.web">
 		<level value="info" />
 	</logger>
-	
+
 	<logger name="org.apache.activemq.transport.InactivityMonitor">
 		<level value="info" />
 	</logger>
@@ -54,5 +63,7 @@
 		<appender-ref ref="FA" />
 		<appender-ref ref="console" />
 	</root>
+	
+	
 
 </log4j:configuration>
