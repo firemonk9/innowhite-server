@@ -15,7 +15,7 @@ import org.slf4j.LoggerFactory;
 public class S3Upload {
 
     private static final Logger log = LoggerFactory.getLogger(S3Upload.class);
-    
+
     public void uploadFile(String absFilePath, AWSCredentials awsCredentials) {
 	try {
 
@@ -29,18 +29,15 @@ public class S3Upload {
 	    S3Object fileObject = new S3Object(fileData);
 
 	    s3Service.putObject("inno_input", fileObject);
-	    
-	    log.debug(" file downloaded and length is "+fileObject.getContentLength()+" file name "+fileObject.getName());
+
+	    log.debug(" file downloaded and length is " + fileObject.getContentLength() + " file name " + fileObject.getName());
 
 	} catch (S3ServiceException e) {
-	    // TODO Auto-generated catch block
-	    e.printStackTrace();
+	    log.error(e.getMessage(), e);
 	} catch (NoSuchAlgorithmException e) {
-	    // TODO Auto-generated catch block
-	    e.printStackTrace();
+	    log.error(e.getMessage(), e);
 	} catch (IOException e) {
-	    // TODO Auto-generated catch block
-	    e.printStackTrace();
+	    log.error(e.getMessage(), e);
 	}
 
     }

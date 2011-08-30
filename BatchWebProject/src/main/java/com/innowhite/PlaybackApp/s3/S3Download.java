@@ -55,14 +55,14 @@ public class S3Download {
 	    // }
 
 	} catch (S3ServiceException e) {
-	    // TODO Auto-generated catch block
-	    e.printStackTrace();
+	    log.error(e.getMessage(),e);
+	    
 	} catch (ServiceException e) {
-	    // TODO Auto-generated catch block
-	    e.printStackTrace();
+	    log.error(e.getMessage(),e);
+	    
 	} catch (IOException e) {
-	    // TODO Auto-generated catch block
-	    e.printStackTrace();
+	    log.error(e.getMessage(),e);
+	    
 	}
 
     }
