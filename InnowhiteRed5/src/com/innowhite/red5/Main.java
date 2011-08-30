@@ -53,6 +53,7 @@ public class Main extends MultiThreadedApplicationAdapter {
 
     private HashMap<String, Integer> videoSeqMap = new HashMap<String, Integer>();
     private HashMap<String, Map> clientNamesMap = new HashMap<String, Map>();
+    
 
     private HashMap<String, List<VideoDisplayVO>> disconnectUser = new HashMap<String, List<VideoDisplayVO>>();
 
@@ -402,6 +403,10 @@ public class Main extends MultiThreadedApplicationAdapter {
 		// log.error("Unable to start " + room.getName() +
 		// " for the application");
 		return false;
+	    }
+	    else{
+		room.setPath("/opt/InnowhiteData/tmp/");
+		room.setPersistent(true);
 	    }
 	    // log.debug(" New room connected : roomStart ");
 	    IScopeStatistics sc = room.getStatistics();

@@ -82,10 +82,10 @@ public class JoinRoomServlet extends HttpServlet {
 	
 	// if the room is already closed 
 	// redirect the user to room closed page
-	if (RoomService.isRoomClosed(roomId) == true) {
-	    response.sendRedirect("http://innowhite.com/session_expired");
-	    return;	
-	}
+//	if (RoomService.isRoomClosed(roomId) == true) {
+//	    response.sendRedirect("http://innowhite.com/session_expired");
+//	    return;	
+//	}
 
 	ServerVO serverObj = LoadBalancerService.getServerURL(appName, null);
 

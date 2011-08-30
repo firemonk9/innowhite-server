@@ -18,6 +18,7 @@ import com.innowhite.PlaybackApp.model.PlayBackPlayList;
 import com.innowhite.PlaybackApp.model.SessionBucket;
 import com.innowhite.PlaybackApp.model.SessionRecordings;
 import com.innowhite.PlaybackApp.model.VideoData;
+import com.innowhite.PlaybackApp.s3.S3Service;
 import com.innowhite.PlaybackApp.util.PlaybackUtil;
 import com.innowhite.PlaybackApp.util.PlaybackVO;
 
@@ -55,6 +56,11 @@ public class PlaybackDataService {
     private SessionRecordingDao sessionRecordingsDao;
     private PlaybackVO playbackVO = null;
     private PlayBackPlayListDao playBackPlayListDao = null;
+    private S3Service s3Service;
+
+    public void setS3Service(S3Service s3Service) {
+	this.s3Service = s3Service;
+    }
 
     public PlayBackPlayListDao getPlayBackPlayListDao() {
 	return playBackPlayListDao;
@@ -329,20 +335,20 @@ public class PlaybackDataService {
 		    a = finalVideoPlaylist.get(i).split("##");
 
 		    // convert all playlist videos to .mp4
-//		    String mp4_filepath = convertAVItoMP4264(a[0]);
-//		    log.debug("_______________________________________________________________");
-//		    log.debug("sessionVideoPlaylist::mp4_filepath :: " + mp4_filepath);
-//		    log.debug("_______________________________________________________________");
-//		    playlist.setFilePath(mp4_filepath);
+		    // String mp4_filepath = convertAVItoMP4264(a[0]);
+		    // log.debug("_______________________________________________________________");
+		    // log.debug("sessionVideoPlaylist::mp4_filepath :: " +
+		    // mp4_filepath);
+		    // log.debug("_______________________________________________________________");
+		    // playlist.setFilePath(mp4_filepath);
 
 		    // convert all playlist videos to .flv
-		     String flv_filepath = convertAVItoFLV(a[0]);
-		     playlist.setFilePath(flv_filepath);
-		     log.debug("_______________________________________________________________");
-		     log.debug("sessionVideoPlaylist::flv_filepath :: " +
-		     flv_filepath);
-		     log.debug("_______________________________________________________________");
-		     playlist.setFilePath(flv_filepath);
+		    String flv_filepath = convertAVItoFLV(a[0]);
+		    playlist.setFilePath(flv_filepath);
+		    log.debug("_______________________________________________________________");
+		    log.debug("sessionVideoPlaylist::flv_filepath :: " + flv_filepath);
+		    log.debug("_______________________________________________________________");
+		    playlist.setFilePath(flv_filepath);
 
 		    playlist.setInsertedDate(new Date());
 		    playlist.setRoomName(roomId);

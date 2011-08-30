@@ -67,7 +67,7 @@ public class StreamVideoServlet extends HttpServlet {
 	String orgName = null;
 	boolean thumbs = false;
 	if (fileID != null) {
-	    fileSource = "/opt/InnowhiteData/videos/"+fileID+".flv";
+	    fileSource = "/opt/InnowhiteData/videos/" + fileID + ".flv";
 	}
 
 	log.debug(" The file id : " + fileID + "  fileSource " + fileSource);
@@ -124,7 +124,7 @@ public class StreamVideoServlet extends HttpServlet {
 	}
 
 	resp.setContentLength((int) file.length());
-	 resp.setHeader( "Content-Disposition", "attachment; filename=\"" + fileName + "\"" );
+	resp.setHeader("Content-Disposition", "attachment; filename=\"" + fileName + "\"");
 
 	// Open the file and output streams
 	FileInputStream in = new FileInputStream(file);

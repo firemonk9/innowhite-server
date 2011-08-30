@@ -171,26 +171,39 @@ public class PlaybackVO {
     }
 
     public String getUbuntuSilentAudioPath() {
-        return ubuntuSilentAudioPath;
+	return ubuntuSilentAudioPath;
     }
 
     public void setUbuntuSilentAudioPath(String ubuntuSilentAudioPath) {
-        this.ubuntuSilentAudioPath = ubuntuSilentAudioPath;
+	this.ubuntuSilentAudioPath = ubuntuSilentAudioPath;
     }
 
     public String getUbuntuAudioPath() {
-        return ubuntuAudioPath;
+	return ubuntuAudioPath;
     }
 
     public void setUbuntuAudioPath(String ubuntuAudioPath) {
-        this.ubuntuAudioPath = ubuntuAudioPath;
+	this.ubuntuAudioPath = ubuntuAudioPath;
     }
 
-    
+    public String getAwsAccessKey() {
+	return awsAccessKey;
+    }
+
+    public void setAwsAccessKey(String awsAccessKey) {
+	this.awsAccessKey = awsAccessKey;
+    }
+
+    public String getAwsSecretKey() {
+	return awsSecretKey;
+    }
+
+    public void setAwsSecretKey(String awsSecretKey) {
+	this.awsSecretKey = awsSecretKey;
+    }
+
     private String winAudioPath;
     private String ubuntuAudioPath;
-    
-    
 
     private String winVideoPath;
 
@@ -218,6 +231,8 @@ public class PlaybackVO {
 
     private String ubuntuSilentAudioPath;
     private String winSilentAudioPath;
-    
+
+    private String awsAccessKey;
+    private String awsSecretKey;
 
 }
