@@ -42,6 +42,7 @@ public class WBFilter implements Filter {
 
 	// log.debug(" WBFilter bSessionFlag value Entry:   "
 	// + Constants.bsessionFlag);
+	//log.debug(req.getQueryStri);
 	boolean bValidRequest = true;
 	HttpServletRequest request = (HttpServletRequest) req;
 	HttpServletResponse response = (HttpServletResponse) res;
