@@ -13,9 +13,22 @@
 		<org.springframework.roo-version>1.0.2.RELEASE</org.springframework.roo-version>
 		<org.aspectj-version>1.6.9</org.aspectj-version>
 		<org.slf4j-version>1.5.10</org.slf4j-version>
+		<gwt-youtube-api.version>1.41.5</gwt-youtube-api.version>
+
 	</properties>
 	<dependencies>
 
+		<dependency>
+			 <groupId>com.google.gdata</groupId>
+  			<artifactId>gdata-core-1.0</artifactId>
+			<version>${gwt-youtube-api.version}</version>
+		</dependency>
+		<dependency>
+			<groupId>com.google.gdata</groupId>
+			<artifactId>gdata-youtube-2.0</artifactId>
+			<version>${gwt-youtube-api.version}</version>
+			
+		</dependency>
 
 		<dependency>
 			<groupId>org.hibernate</groupId>
@@ -207,20 +220,11 @@
 			<version>4.0.1</version>
 			<scope>compile</scope>
 		</dependency>
-		<dependency>
-			<groupId>net.java.dev.jets3t</groupId>
-			<artifactId>jets3t</artifactId>
-			<version>0.8.1</version>
-		</dependency>
+
 	</dependencies>
 	<repositories>
 
-		<!-- amazon 3s client -->
-		<repository>
-			<name>jets3t</name>
-			<id>jets3t</id>
-			<url>http://www.jets3t.org/maven2</url>
-		</repository>
+
 		<!-- For testing against latest Spring snapshots -->
 		<repository>
 			<id>org.springframework.maven.snapshot</id>
@@ -241,6 +245,10 @@
 			<snapshots>
 				<enabled>false</enabled>
 			</snapshots>
+		</repository>
+		<repository>
+			<id>mandubian-mvn</id>
+			<url>http://mandubian-mvn.googlecode.com/svn/trunk/mandubian-mvn/repository</url>
 		</repository>
 	</repositories>
 	<build>

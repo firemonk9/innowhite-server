@@ -18,7 +18,6 @@ import com.innowhite.PlaybackApp.model.PlayBackPlayList;
 import com.innowhite.PlaybackApp.model.SessionBucket;
 import com.innowhite.PlaybackApp.model.SessionRecordings;
 import com.innowhite.PlaybackApp.model.VideoData;
-import com.innowhite.PlaybackApp.s3.S3Service;
 import com.innowhite.PlaybackApp.util.PlaybackUtil;
 import com.innowhite.PlaybackApp.util.PlaybackVO;
 
@@ -56,11 +55,8 @@ public class PlaybackDataService {
     private SessionRecordingDao sessionRecordingsDao;
     private PlaybackVO playbackVO = null;
     private PlayBackPlayListDao playBackPlayListDao = null;
-    private S3Service s3Service;
-
-    public void setS3Service(S3Service s3Service) {
-	this.s3Service = s3Service;
-    }
+ 
+ 
 
     public PlayBackPlayListDao getPlayBackPlayListDao() {
 	return playBackPlayListDao;

@@ -196,14 +196,11 @@
 		<property name="sessionRecordingsDao" ref="sessionRecordingsDao" />
 		<property name="playbackVO" ref="playBackVO" />
 		<property name="playBackPlayListDao" ref="playBackPlayListDao" />
-		<property name="s3Service" ref="s3Service" />
+		
 
 	</bean>
 
-	<bean id="s3Service" name="s3Service" class="com.innowhite.PlaybackApp.s3.S3Service">
-		<property name="playbackVO" ref="playBackVO" />
-
-	</bean>
+	
 
 	<bean id="taskExecutor"
 		class="org.springframework.scheduling.concurrent.ThreadPoolTaskExecutor">
