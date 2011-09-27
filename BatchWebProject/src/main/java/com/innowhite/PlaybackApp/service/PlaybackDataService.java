@@ -20,6 +20,7 @@ import com.innowhite.PlaybackApp.model.SessionRecordings;
 import com.innowhite.PlaybackApp.model.VideoData;
 import com.innowhite.PlaybackApp.util.PlaybackUtil;
 import com.innowhite.PlaybackApp.util.PlaybackVO;
+//
 
 public class PlaybackDataService {
 
@@ -112,6 +113,9 @@ public class PlaybackDataService {
 	    // VideoDataDao videoDataDao = (VideoDataDao)
 	    // factory.getBean("videoDataDao");
 	    List<VideoData> videoDataList = videoDataDao.getVideoDataList(roomId);
+	    
+	    // Process each of the video files to transcode for seek.
+	    PreProcessFLV.processFLV(videoDataList);
 
 	    // PlayBackPlayListDao playBackPlayListDao = (PlayBackPlayListDao)
 	    // factory.getBean("playBackPlayListDao");
