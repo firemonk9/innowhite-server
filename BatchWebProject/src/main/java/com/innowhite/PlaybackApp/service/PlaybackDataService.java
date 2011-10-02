@@ -20,6 +20,7 @@ import com.innowhite.PlaybackApp.model.SessionRecordings;
 import com.innowhite.PlaybackApp.model.VideoData;
 import com.innowhite.PlaybackApp.util.PlaybackUtil;
 import com.innowhite.PlaybackApp.util.PlaybackVO;
+
 //
 
 public class PlaybackDataService {
@@ -56,8 +57,6 @@ public class PlaybackDataService {
     private SessionRecordingDao sessionRecordingsDao;
     private PlaybackVO playbackVO = null;
     private PlayBackPlayListDao playBackPlayListDao = null;
- 
- 
 
     public PlayBackPlayListDao getPlayBackPlayListDao() {
 	return playBackPlayListDao;
@@ -113,7 +112,7 @@ public class PlaybackDataService {
 	    // VideoDataDao videoDataDao = (VideoDataDao)
 	    // factory.getBean("videoDataDao");
 	    List<VideoData> videoDataList = videoDataDao.getVideoDataList(roomId);
-	    
+
 	    // Process each of the video files to transcode for seek.
 	    PreProcessFLV.processFLV(videoDataList);
 
@@ -617,8 +616,15 @@ public class PlaybackDataService {
 	// log.debug("videoData"+j+"::"+vd);
 	// log.debug("videoData: Start Time:: "+vd.getStartTime());
 	// log.debug("videoData: End Time:: "+vd.getEndTime());
-	log.debug("videoData: File Path:: " + vd.getFilePath());
-	sb.getVideoDataList().add(vd);
+	if (vd != null) {
+	    log.debug("videoData: File Path:: " + vd.getFilePath());
+	    sb.getVideoDataList().add(vd);
+	}else{
+	    
+	    log.warn(" printing all vals because there seems to be some thing wrong ");
+	    PlaybackUtil.printVals(videoStartTime,sessionStartTime,videoEndTime,sessionEndTime);
+	    
+	}
 	log.debug("DONE! Preparing videos for session bucket!");
 	// }
     }

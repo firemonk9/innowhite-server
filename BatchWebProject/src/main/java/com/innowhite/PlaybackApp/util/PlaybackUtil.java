@@ -155,4 +155,14 @@ public class PlaybackUtil {
 	    playbackVO.setSilentAudioPath(playbackVO.getWinSilentAudioPath());
 	}
     }
+
+    public static void printVals(long videoStartTime, long sessionStartTime, long videoEndTime, long sessionEndTime) {
+	
+	log.warn("videoStartTime ::"+videoStartTime);
+	log.warn("sessionStartTime ::"+sessionStartTime);
+	log.warn("videoEndTime ::"+videoEndTime);
+	log.warn("sessionEndTime ::"+sessionEndTime);
+	
+	
+    }
 }

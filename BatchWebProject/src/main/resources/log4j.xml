@@ -9,15 +9,37 @@
 			<param name="ConversionPattern" value="%-5p: %c - %m%n" />
 		</layout>
 	</appender>
-	<appender name="FA" class="org.apache.log4j.FileAppender">
-<!-- 		<param name="File" value="c:/logs/BatchWebProject.log" /> -->
-	<param name="File" value="/opt/InnowhiteData/logs/BatchWebProject.log" />
+
+	<!-- <appender name="FA" class="org.apache.log4j.FileAppender"> -->
+	<!-- <param name="File" value="/opt/InnowhiteData/logs/BatchWebProject.log" 
+		/> -->
+
+	<!-- <layout class="org.apache.log4j.PatternLayout"> -->
+	<!-- <param name="ConversionPattern" value="%-4r [%t] %-5p %c %x - %m%n" 
+		/> -->
+	<!-- </layout> -->
+
+	<!-- </appender> -->
+
+	<appender name="FA" class="org.apache.log4j.rolling.RollingFileAppender">
+		<param name="File" value="/opt/InnowhiteData/logs/BatchWebProject.log" />
+		<param name="append" value="true" />
+		<param name="encoding" value="UTF-8" />
 
 		<layout class="org.apache.log4j.PatternLayout">
-			<param name="ConversionPattern" value="%-4r [%t] %-5p %c %x - %m%n" />
+			<param name="ConversionPattern" value="%5p %d{ISO8601} [%t][%x] %c - %m%n" />
 		</layout>
 
+		<rollingPolicy class="org.apache.log4j.rolling.TimeBasedRollingPolicy">
+			<!-- The file to roll to, this is a fairly intelligent parameter, if the 
+				file ends in .gz, it gzips it, based on the date stamp it rolls at that time, 
+				default is yyyy-MM-dd, (rolls at midnight) See: http://logging.apache.org/log4j/companions/extras/apidocs/org/apache/log4j/rolling/TimeBasedRollingPolicy.html -->
+			<param name="FileNamePattern" value="/opt/InnowhiteData/logs/BatchWebProject.%d.log" />
+		</rollingPolicy>
+
 	</appender>
+
+
 
 
 

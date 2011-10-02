@@ -19,15 +19,15 @@
 	<dependencies>
 
 		<dependency>
-			 <groupId>com.google.gdata</groupId>
-  			<artifactId>gdata-core-1.0</artifactId>
+			<groupId>com.google.gdata</groupId>
+			<artifactId>gdata-core-1.0</artifactId>
 			<version>${gwt-youtube-api.version}</version>
 		</dependency>
 		<dependency>
 			<groupId>com.google.gdata</groupId>
 			<artifactId>gdata-youtube-2.0</artifactId>
 			<version>${gwt-youtube-api.version}</version>
-			
+
 		</dependency>
 
 		<dependency>
@@ -129,6 +129,12 @@
 				</exclusion>
 			</exclusions>
 			<scope>runtime</scope>
+		</dependency>
+
+		<dependency>
+			<groupId>log4j</groupId>
+			<artifactId>apache-log4j-extras</artifactId>
+			<version>1.0</version>
 		</dependency>
 
 		<!-- @Inject -->
