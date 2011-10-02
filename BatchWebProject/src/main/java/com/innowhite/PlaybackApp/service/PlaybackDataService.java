@@ -98,6 +98,9 @@ public class PlaybackDataService {
 
 	    // SessionRecordingDao sessionRecordingsDao = (SessionRecordingDao)
 	    // factory.getBean("sessionRecordingsDao");
+	   
+	    PlaybackUtil.setPlaybackVO(playbackVO);
+	    
 	    List<SessionRecordings> sessionRecordingsList = sessionRecordingsDao.getSessionRecordingList(roomId);
 
 	    if (sessionRecordingsList != null && sessionRecordingsList.size() == 0) {
@@ -114,7 +117,7 @@ public class PlaybackDataService {
 	    List<VideoData> videoDataList = videoDataDao.getVideoDataList(roomId);
 
 	    // Process each of the video files to transcode for seek.
-	    PreProcessFLV.processFLV(videoDataList);
+	    PreProcessFLV.processFLV(videoDataList,playbackVO);
 
 	    // PlayBackPlayListDao playBackPlayListDao = (PlayBackPlayListDao)
 	    // factory.getBean("playBackPlayListDao");
@@ -122,7 +125,7 @@ public class PlaybackDataService {
 	    // sessionRecordingsDao.getVideoDataList(roomId);
 
 	    // playbackVO = (PlaybackVO) factory.getBean("playBackVO");
-	    PlaybackUtil.setPlaybackVO(playbackVO);
+	   
 
 	    // replace unix file path to windows file path.
 
