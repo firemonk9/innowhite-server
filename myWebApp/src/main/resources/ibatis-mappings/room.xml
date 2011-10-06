@@ -94,6 +94,15 @@
 	</select>
 
 
+
+	
+
+
+	<select id="getRoomStartTime" parameterClass="java.lang.String"
+		resultClass="java.sql.Timestamp">
+		select start_date from room where room_id= #id#;
+	</select>
+
 	<select id="isRoomClosed" parameterClass="java.lang.String"
 		resultClass="java.lang.String">
 		select end_date from room where room_id= #id#;

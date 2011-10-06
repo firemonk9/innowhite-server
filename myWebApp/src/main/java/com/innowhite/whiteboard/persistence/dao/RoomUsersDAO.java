@@ -12,7 +12,6 @@ import com.ibatis.sqlmap.client.SqlMapClient;
 import com.innowhite.whiteboard.persistence.IbatisManager;
 import com.innowhite.whiteboard.persistence.beans.RoomUsersVO;
 import com.innowhite.whiteboard.persistence.beans.RoomVO;
-import com.innowhite.whiteboard.persistence.beans.VideoDataVO;
 
 public class RoomUsersDAO {
 
@@ -29,7 +28,9 @@ public class RoomUsersDAO {
 	// log.debug(getConfNumber(user, "123123123"));
 	// updateUserInRoom(user, "123123123");
 	//System.err.println(getUsersForRoom("room192"));
-	System.err.println(getRoomInfo("room192"));
+	
+	System.err.println(getRoomStartTime("7774590964"));
+	//System.err.println(getRoomInfo("room192"));
 	
 	
     }
@@ -114,6 +115,32 @@ public class RoomUsersDAO {
 	return null;
     }
 
+    
+    public static Date getRoomStartTime(String roomId){
+	
+	log.debug("Entered getRoomStartTime  roomId  " + roomId);
+	// Map<String, String> roomStatusResultsMap = new HashMap<String,
+	// String>();
+
+	try {
+	    Date value = (Date) sqlMapClient.queryForObject("getRoomStartTime", roomId);
+//	    if (value != null && value.length() > 0) {
+//		log.debug(" returning the conf number : " + value);
+//		return value;
+//	    }
+
+	    log.debug(" returning :: "+value);
+	    return value;
+	    
+	} catch (SQLException e) {
+	    log.error(e.getMessage(), e);
+	    // e.printStackTrace();
+	    return null;
+	}
+	
+	
+    }
+    
     /*
      * Returns the current conference number
      */
