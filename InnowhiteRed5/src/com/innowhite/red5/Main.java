@@ -262,7 +262,10 @@ public class Main extends MultiThreadedApplicationAdapter {
 	RoomVO roomVO = shapeSeqMap.get(roomName);
 
 	log.debug(" videovo  ::" + videovo.isAudio() + "  " + videovo.isVideo() + "   " + videovo.getUsername() + "  date   " + roomVO.getMediaDate() + "  and seq " + videovo.getSeq() + " flvpath  "
-		+ videovo.getFlvpath());
+		+ videovo.getFlvpath()+" the width "+videovo.getVideoWidth()+"  the height "+videovo.getVideoHeight());
+	
+	System.err.println(" videovo  ::" + videovo.isAudio() + "  " + videovo.isVideo() + "   " + videovo.getUsername() + "  date   " + roomVO.getMediaDate() + "  and seq " + videovo.getSeq() + " flvpath  "
+		+ videovo.getFlvpath()+" the width "+videovo.getVideoWidth()+"  the height "+videovo.getVideoHeight());
 
 	videoSO.setAttribute("" + videovo.getSeq(), videovo);
 

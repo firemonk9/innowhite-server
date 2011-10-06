@@ -26,5 +26,88 @@
 		inserted_date, updated_date from organization where
 		parent_org=#parentOrg#;      
       </select>
+      
+      
+      <parameterMap id="insertOrgParamsMap"
+		class="com.innowhite.whiteboard.persistence.beans.OrganizationVO">
+		
+		<parameter property="parentOrg" jdbcType="VARCHAR" />
+		<parameter property="orgName" jdbcType="VARCHAR" />
+		<parameter property="startDate" jdbcType="Date" />
+		<parameter property="expiryDate" jdbcType="Date" />
+		<parameter property="saltKey" jdbcType="VARCHAR" />
+		<parameter property="orgType" jdbcType="VARCHAR" />
+		<parameter property="roomCallback" jdbcType="VARCHAR" />
+		
+		
+
+	</parameterMap>
+      
+      
+      <insert id="saveOrganization" parameterMap="insertOrgParamsMap">
+		INSERT INTO organization (
+		
+		parent_org,
+		org_Name,
+		start_Date,
+		exp_Date,
+		salt_Key,
+		org_type,
+		room_callback,
+		inserted_date)
+		VALUES
+		( ?,?,?,?,?,?,? ,now())
+		
+			<selectKey keyProperty="id" resultClass="java.lang.Integer">
+			SELECT @@identity
+		</selectKey>
+		
+	</insert>
+	
+	<update id="updateOrganization" parameterClass="java.util.HashMap">
+		update organization set updated_date=now() 
+		
+		<dynamic prepend=" , ">
+			<isNotEmpty property="orgType">
+				org_type = #orgType#
+			</isNotEmpty>
+		</dynamic>
+
+		<dynamic prepend=" , ">
+			<isNotEmpty property="expiryDate">
+				exp_date = #expiryDate#
+	      </isNotEmpty>
+		</dynamic>
+
+		<dynamic prepend=" , ">
+			<isNotEmpty property="saltKey">
+				salt_key = #saltKey#
+			</isNotEmpty>
+		</dynamic>
+		
+		<dynamic prepend=" , ">
+			<isNotEmpty property="roomCallback">
+				room_callback = #roomCallback#
+			</isNotEmpty>
+		</dynamic>
+
+		<dynamic prepend=" , ">
+			<isNotEmpty property="orgName">
+				org_name = #orgName#
+			</isNotEmpty>
+		</dynamic>
+
+		where
+		org_name=#orgName# and parent_org = #parentOrg# 
+
+	</update>
+	
+	<delete id="deleteOrganization" parameterClass="java.util.HashMap">
+		
+		delete from organization where org_name = #orgName# and parent_org = #parentOrg#
+
+	</delete>
+	
+      
 </sqlMap>
  

@@ -33,7 +33,7 @@
 		inserted_Date)
 		VALUES
 		( ?,?,?,?,? ,now())
-		<selectKey keyProperty="id" resultClass="java.lang.Integer">
+		<selectKey keyProperty="id" resultClass="java.lang.Long">
 			SELECT @@identity
 		</selectKey>
 	</insert>

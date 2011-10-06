@@ -239,12 +239,20 @@
     <url-pattern>/servlet/LockRoomServlet</url-pattern>
   </servlet-mapping>
   <servlet>
-
     <servlet-name>StreamVideoServlet</servlet-name>
     <servlet-class>com.innowhite.whiteboard.Servlet.StreamVideoServlet</servlet-class>
   </servlet>
   <servlet-mapping>
     <servlet-name>StreamVideoServlet</servlet-name>
     <url-pattern>/StreamVideoServlet</url-pattern>
+  </servlet-mapping>
+  <servlet>
+  
+    <servlet-name>OrgManageServlet</servlet-name>
+    <servlet-class>com.innowhite.whiteboard.Servlet.OrgManageServlet</servlet-class>
+  </servlet>
+  <servlet-mapping>
+    <servlet-name>OrgManageServlet</servlet-name>
+    <url-pattern>/Organization</url-pattern>
   </servlet-mapping>
 </web-app>

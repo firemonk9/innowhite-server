@@ -115,8 +115,8 @@ public class Application extends MultiThreadedApplicationAdapter implements IApp
     @Override
     public boolean appStart(IScope app) {
 	super.appStart(app);
-	log.info("oflaDemo appStart");
-	// System.out.println("oflaDemo appStart");
+	log.info("VideoApp appStart");
+	// System.out.println("VideoApp appStart");
 
 	// registerStreamPublishSecurity(new SecurityImpl());
 	registerStreamPublishSecurity(new PublishSecurityImpl(enableSecurity));
@@ -214,15 +214,21 @@ public class Application extends MultiThreadedApplicationAdapter implements IApp
     /** {@inheritDoc} */
     @Override
     public boolean appConnect(IConnection conn, Object[] params) {
-	log.info("oflaDemo appConnect");
-
+	log.info("VideoApp appConnect"+params);
+	for (Object val : params){
+	    log.info(val.toString());
+	}
+	
+	log.info("VideoApp connection "+conn);
+	
+	
 	return super.appConnect(conn, params);
     }
 
     /** {@inheritDoc} */
     @Override
     public void appDisconnect(IConnection conn) {
-	log.info("oflaDemo appDisconnect");
+	log.info("VideoApp appDisconnect");
 	if (appScope == conn.getScope() && serverStream != null) {
 	    serverStream.close();
 	}
