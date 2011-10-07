@@ -17,7 +17,7 @@ public class PlayBackPlayList implements Serializable {
     /**
 	 * 
 	 */
-   // private static final long serialVersionUID = 1L;
+    // private static final long serialVersionUID = 1L;
 
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
@@ -25,34 +25,66 @@ public class PlayBackPlayList implements Serializable {
 
     @Column(name = "inserted_date")
     Date insertedDate;
- 
+
     @Column(name = "file_path")
     String filePath;
-    
+
     @Column(name = "room_id")
     String roomName;
-    
+
     @Column(name = "duration")
     String duration;
-    
+
     @Column(name = "server")
     String server;
-    
-      
+
+    @Column(name = "size")
+    long size;
+
+    @Column(name = "width")
+    int width;
+
+    @Column(name = "height")
+    int height;
+
+    public long getSize() {
+	return size;
+    }
+
+    public void setSize(long size) {
+	this.size = size;
+    }
+
+    public int getWidth() {
+	return width;
+    }
+
+    public void setWidth(int width) {
+	this.width = width;
+    }
+
+    public int getHeight() {
+	return height;
+    }
+
+    public void setHeight(int height) {
+	this.height = height;
+    }
+
     public String getServer() {
-        return server;
+	return server;
     }
 
     public void setServer(String server) {
-        this.server = server;
+	this.server = server;
     }
 
     public String getDuration() {
-        return duration;
+	return duration;
     }
 
     public void setDuration(String duration) {
-        this.duration = duration;
+	this.duration = duration;
     }
 
     public String getRoomName() {
@@ -64,13 +96,13 @@ public class PlayBackPlayList implements Serializable {
     }
 
     public Date getInsertedDate() {
-        return insertedDate;
+	return insertedDate;
     }
 
     public void setInsertedDate(Date insertedDate) {
-        this.insertedDate = insertedDate;
+	this.insertedDate = insertedDate;
     }
-  
+
     public String getFilePath() {
 	return filePath;
     }
@@ -79,8 +111,6 @@ public class PlayBackPlayList implements Serializable {
 	this.filePath = filePath;
     }
 
-   
-
     public void setId(String id) {
 	this.id = id;
     }
@@ -88,9 +118,9 @@ public class PlayBackPlayList implements Serializable {
     public String getId() {
 	return id;
     }
-//
-//    public static void main(String[] args) {
-//	//whiteboard
-//    }
+    //
+    // public static void main(String[] args) {
+    // //whiteboard
+    // }
 
 }
