@@ -22,6 +22,9 @@ public class PlayBackPlayListService {
 	    sb.append("<url>" + getServerURL(playBackPlayListVO.getFilePath()) + "</url>");
 	    sb.append("<duration>" + playBackPlayListVO.getDuration() + "</duration>");
 	    sb.append("<server>" + playBackPlayListVO.getServer() + "</server>");
+	    sb.append("<size>" + playBackPlayListVO.getSize() + "</size>");
+	    sb.append("<width>" + playBackPlayListVO.getWidth() + "</width>");
+	    sb.append("<height>" + playBackPlayListVO.getHeight() + "</height>");
 
 	    sb.append("</videoSrc>");
 	}
