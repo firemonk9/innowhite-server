@@ -137,6 +137,9 @@ Learn more about Flex at http://flex.org
 <script src="js/jquery.DOMWindow.js" language="javascript"></script>
 <!--  END Browser History required section -->
 
+
+<script type="text/javascript" src="http://download.skype.com/share/skypebuttons/js/skypeCheck.js"></script>
+
 <style>
 body {
 	margin: 0px;
@@ -188,6 +191,9 @@ var innowhitePluginLoaded = false;
      }
 
 
+     
+  
+     
 var screen_sharing=false;
 
 function start_screen_share (stream_id,recordStatus, serverUrl,roomId)
