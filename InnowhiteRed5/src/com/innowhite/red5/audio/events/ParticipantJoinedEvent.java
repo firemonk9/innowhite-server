@@ -29,15 +29,21 @@ public class ParticipantJoinedEvent extends ConferenceEvent {
 	private final Boolean muted;
 	private final Boolean speaking;
 	private final Boolean locked = false;
+	private final String callSource;
 	
+	public String getCallSource() {
+	    return callSource;
+	}
+
 	public ParticipantJoinedEvent(String participantId, String room, 
 								String callerIdNum, String callerIdName,
-								Boolean muted, Boolean speaking) {
+								Boolean muted, Boolean speaking,String callSource) {
 		super(participantId, room);
 		this.callerIdName = callerIdName;
 		this.callerIdNum = callerIdNum;
 		this.muted = muted;
 		this.speaking = speaking;
+		this.callSource = callSource;
 	}
 
 	public String getCallerIdNum() {

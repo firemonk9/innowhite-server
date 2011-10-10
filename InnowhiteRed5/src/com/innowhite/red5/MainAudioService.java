@@ -6,7 +6,6 @@ import java.util.List;
 import org.red5.logging.Red5LoggerFactory;
 import org.red5.server.api.so.ISharedObject;
 import org.slf4j.Logger;
-import org.springframework.jms.core.JmsTemplate;
 
 import com.innowhite.red5.audio.events.AudioFileStartStopEvent;
 import com.innowhite.red5.audio.events.ConferenceEvent;
@@ -57,7 +56,7 @@ public class MainAudioService {
 	}
 
 	private void joined(String confRoom, String participant, String name,
-			Boolean muted, Boolean talking, Boolean locked) {
+			Boolean muted, Boolean talking, Boolean locked, String callSource) {
 		log.info("name  " + name + "  Participant " + participant
 				+ "joining room " + confRoom);
 
@@ -228,12 +227,12 @@ public class MainAudioService {
 	private void fileRecordStartStop(String confRoom, String participant, String startRecordfile, String stopRecordFile) {
 		
 		log.debug("enter fileRecordStartStop room ::  " + confRoom + "  Participant " + participant+"  startRecordfile: "+startRecordfile+"  stopRecordFile: "+stopRecordFile);
-		System.err.println("enter fileRecordStartStop room ::  " + confRoom + "  Participant " + participant+"  startRecordfile: "+startRecordfile+"  stopRecordFile: "+stopRecordFile);
+		//System.err.println("enter fileRecordStartStop room ::  " + confRoom + "  Participant " + participant+"  startRecordfile: "+startRecordfile+"  stopRecordFile: "+stopRecordFile);
 		// RoomInfo soi = voiceRooms.get(room);
 
 		String room = UserCacheService.getActualRoom(confRoom);
 		
-		System.err.println(" in  fileRecordStartStop .. the room is "+room);
+		//System.err.println(" in  fileRecordStartStop .. the room is "+room);
 		
 		if (room == null) {
 			log.warn(" the room is null for getting the file name --  Participant "
@@ -263,7 +262,7 @@ public class MainAudioService {
 
 				joined(pje.getRoom(), pje.getParticipantId(),
 						pje.getCallerIdName(), pje.getMuted(),
-						pje.getSpeaking(), pje.isLocked());
+						pje.getSpeaking(), pje.isLocked(), pje.getCallSource());
 			} else if (event instanceof ParticipantLeftEvent) {
 				left(event.getRoom(), event.getParticipantId());
 			} else if (event instanceof ParticipantMutedEvent) {

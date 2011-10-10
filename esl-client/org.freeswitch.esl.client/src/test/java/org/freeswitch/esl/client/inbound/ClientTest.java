@@ -32,9 +32,9 @@ public class ClientTest
 {
     private final Logger log = LoggerFactory.getLogger( this.getClass() );
 
-    private String host = "innos2.innowhite.com";
+    private String host = "demo.innowhite.com";
     private int port = 8021;
-    private String password = "ClueCon"; 
+    private String password = "InnO123WhitE"; 
         
     @Test
     public void do_connect() throws InterruptedException
@@ -51,51 +51,43 @@ public class ClientTest
             {
                 log.info( "Background job result received [{}]", event );
             }
-	    @Override
 	    public void conferenceEventJoin(String confName, int confSize, EslEvent event) {
 		// TODO Auto-generated method stub
 		
 	    }
-	    @Override
 	    public void conferenceEventLeave(String confName, int confSize, EslEvent event) {
 		// TODO Auto-generated method stub
 		
 	    }
-	    @Override
 	    public void conferenceEventMute(String confName, int confSize, EslEvent event) {
 		// TODO Auto-generated method stub
 		
 	    }
-	    @Override
 	    public void conferenceEventUnMute(String confName, int confSize, EslEvent event) {
 		// TODO Auto-generated method stub
 		
 	    }
-	    @Override
 	    public void conferenceEventAction(String confName, int confSize, String action, EslEvent event) {
 		// TODO Auto-generated method stub
 		
 	    }
-	    @Override
 	    public void conferenceEventTransfer(String confName, int confSize, EslEvent event) {
 		// TODO Auto-generated method stub
 		
 	    }
-	    @Override
 	    public void conferenceEventThreadRun(String confName, int confSize, EslEvent event) {
 		// TODO Auto-generated method stub
 		
 	    }
-	    @Override
 	    public void conferenceEventPlayFile(String confName, int confSize, EslEvent event) {
 		// TODO Auto-generated method stub
 		
 	    }
-	    @Override
 	    public void exceptionCaught(ExceptionEvent e) {
 		// TODO Auto-generated method stub
 		
 	    }
+	   
             
         } );
         
@@ -103,6 +95,7 @@ public class ClientTest
         try
         {
             client.connect( host, port, password, 2 );
+            
         }
         catch ( InboundConnectionFailure e )
         {
@@ -134,7 +127,7 @@ public class ClientTest
         log.info( "sofia status = [{}]", response.getBodyLines().get( 3 ) );
         
         // wait to see the heartbeat events arrive
-        Thread.sleep( 25000 );
+       Thread.sleep( 25000 );
         client.close();
     }
 

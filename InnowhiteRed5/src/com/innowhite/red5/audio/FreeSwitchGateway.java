@@ -10,6 +10,7 @@ package com.innowhite.red5.audio;
 //import org.bigbluebutton.webconference.voice.events.ConferenceEventListener;
 //import org.bigbluebutton.webconference.voice.freeswitch.FreeswitchHeartbeatMonitor;
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
 import java.util.Observable;
 import java.util.logging.Level;
@@ -61,11 +62,8 @@ public class FreeSwitchGateway extends Observable implements IEslEventListener {
 	c.addEventFilter("Event-Name", "heartbeat");
 	c.addEventFilter("Event-Name", "custom");
 	c.addEventFilter("Event-Name", "background_job");
-	c.addEventFilter( "Event-Name", "channel_create" );
-	
-	
-	
-	
+	c.addEventFilter("Event-Name", "channel_create");
+
 	try {
 	    Thread.sleep(5000);
 	} catch (InterruptedException ex) {
@@ -98,7 +96,7 @@ public class FreeSwitchGateway extends Observable implements IEslEventListener {
 		    // act on this
 	}
 	// Ignored, Noop This is all the NON-Conference Events except Heartbeat
-	//log.debug("eventReceived [{}]", event);
+	// log.debug("eventReceived [{}]", event);
 
     }
 
@@ -138,7 +136,7 @@ public class FreeSwitchGateway extends Observable implements IEslEventListener {
     }
 
     // added innoUserUnique parameter
-    public void conferenceEventJoin( String confName, int confSize, EslEvent event) {
+    public void conferenceEventJoin(String confName, int confSize, EslEvent event) {
 
 	Integer memberId = this.getMemeberIdFromEvent(event);
 	StringBuilder sb = new StringBuilder("");
@@ -146,7 +144,7 @@ public class FreeSwitchGateway extends Observable implements IEslEventListener {
 	String innoUserUnique = getInnoUniqueIdFromEvent(event);
 	String callerUsername = getInnoUniqueIdFromEvent(event);
 	String uniqueId = getFSUniqueIdFromEvent(event);
-	
+
 	Object[] args = new Object[5];
 	args[0] = confName;
 	args[1] = confSize;
@@ -155,19 +153,30 @@ public class FreeSwitchGateway extends Observable implements IEslEventListener {
 	args[4] = callerUsername;
 
 	// IConnection con = Red5.getConnectionLocal();
+	// printAllItemsinEvent(event);
+	String callSource = getFSCalledSource(event);
 
 	// Red5.getConnectionLocal().get
-	ParticipantJoinedEvent pj = new ParticipantJoinedEvent("" + memberId, confName, callerUsername, innoUserUnique, true, true);
+	ParticipantJoinedEvent pj = new ParticipantJoinedEvent("" + memberId, confName, callerUsername, innoUserUnique, true, true, callSource);
 	audioEventListener.handleConferenceEvent(pj);
 
 	log.info("Conference join: uniqueId " + uniqueId + "  confName " + confName + " confSize " + confSize + "  innoUserUnique " + innoUserUnique + "  callerUsername  " + callerUsername
-		+ "   event  " + event);
+		+"callSource: "+callSource+"   event  " + event);
 
 	// log.info ("Conference [{}]({}) JOIN [{}] InnoUser [{}] source [{}]",
 	// args);
     }
 
-    public void conferenceEventLeave( String confName, int confSize, EslEvent event) {
+    private void printAllItemsinEvent(EslEvent event) {
+
+	Map<String, String> m = event.getEventHeaders();
+	for (String str : m.keySet()) {
+	    log.debug(str + " key ::  value  " + m.get(str));
+	}
+
+    }
+
+    public void conferenceEventLeave(String confName, int confSize, EslEvent event) {
 
 	Integer memberId = this.getMemeberIdFromEvent(event);
 	String uniqueId = getFSUniqueIdFromEvent(event);
@@ -183,11 +192,10 @@ public class FreeSwitchGateway extends Observable implements IEslEventListener {
 	// log.info ("Conference [{}]({}) LEAVE [{}]", args);
     }
 
-    public void conferenceEventMute( String confName, int confSize, EslEvent event) {
+    public void conferenceEventMute(String confName, int confSize, EslEvent event) {
 
 	String uniqueId = getFSUniqueIdFromEvent(event);
 	Integer memberId = this.getMemeberIdFromEvent(event);
-	
 
 	ParticipantMutedEvent pj = new ParticipantMutedEvent("" + memberId, confName, true);
 	audioEventListener.handleConferenceEvent(pj);
@@ -195,11 +203,10 @@ public class FreeSwitchGateway extends Observable implements IEslEventListener {
 	log.debug("Conference [{}] MUTE [{}]", confName, uniqueId);
     }
 
-    public void conferenceEventUnMute( String confName, int confSize, EslEvent event) {
+    public void conferenceEventUnMute(String confName, int confSize, EslEvent event) {
 
 	String uniqueId = getFSUniqueIdFromEvent(event);
 	Integer memberId = this.getMemeberIdFromEvent(event);
-	
 
 	ParticipantMutedEvent pj = new ParticipantMutedEvent("" + memberId, confName, true);
 	audioEventListener.handleConferenceEvent(pj);
@@ -207,10 +214,10 @@ public class FreeSwitchGateway extends Observable implements IEslEventListener {
 	log.debug("Conference [{}] UNMUTE [{}]", confName, uniqueId);
     }
 
-    
-    /* Call to Freeswitch 
-     * */
-    public void conferenceEventAction( String confName, int confSize, String action, EslEvent event) {
+    /*
+     * Call to Freeswitch
+     */
+    public void conferenceEventAction(String confName, int confSize, String action, EslEvent event) {
 
 	String uniqueId = getFSUniqueIdFromEvent(event);
 	Integer memberId = this.getMemeberIdFromEvent(event);
@@ -232,15 +239,15 @@ public class FreeSwitchGateway extends Observable implements IEslEventListener {
 	// log.info ("Conference [{}] Action [{}]", confName, sb.toString());
     }
 
-    public void conferenceEventTransfer(String uniqueId, String confName, int confSize, EslEvent event) {
+    public void conferenceEventTransfer(String confName, int confSize, EslEvent event) {
 	// Noop
     }
 
-    public void conferenceEventThreadRun(String uniqueId, String confName, int confSize, EslEvent event) {
+    public void conferenceEventThreadRun(String confName, int confSize, EslEvent event) {
 	// --Conference-Recorded-File-End
 	// --Conference-Recorded-File-Begin
 
-	log.debug("Entered conferenceEventThreadRun uniqueId::" + uniqueId + " confName::" + confName + " memberID " + getMemeberIdFromEvent(event));
+	log.debug("Entered conferenceEventThreadRun uniqueId::" + " confName::" + confName + " memberID " + getMemeberIdFromEvent(event));
 	Integer memberId = this.getMemeberIdFromEvent(event);
 	String startFile = getStartFileFromEvent(event);
 	String endFile = getEndFileFromEvent(event);
@@ -251,7 +258,7 @@ public class FreeSwitchGateway extends Observable implements IEslEventListener {
 
     }
 
-    public void conferenceEventPlayFile(String uniqueId, String confName, int confSize, EslEvent event) {
+    public void conferenceEventPlayFile(String confName, int confSize, EslEvent event) {
 	// Noop
     }
 
@@ -271,18 +278,31 @@ public class FreeSwitchGateway extends Observable implements IEslEventListener {
 	return (e.getEventHeaders().get("Inno-Unique-ID"));
     }
 
-
     private String getFSUniqueIdFromEvent(EslEvent e) {
+
 	return (e.getEventHeaders().get("Caller-Unique-ID"));
     }
 
     // This needs to be tested.
     private String getFSCalledSource(EslEvent e) {
+	// skypopen
+	// sipinnouser
+	// sofia/internal/+18066860745@66.62.60.228:5060
+	String str = e.getEventHeaders().get("Caller-Channel-Name");
+	// if()
+	if (str != null) {
+	    if (str.indexOf("skypopen") >= 0) {
+		return "SKYPE";
+	    } else if (str.indexOf("sipinnouser") >= 0) {
+		return "VOIP";
+	    } else if (str.indexOf("sofia/internal") >= 0) {
+		return "PHONE";
+	    }
+
+	}
 	return (e.getEventHeaders().get("Caller-Channel-Name"));
     }
-    
-    
-    
+
     private Integer getMemeberIdFromEvent(EslEvent e) {
 	try {
 	    if (e != null)
@@ -297,24 +317,6 @@ public class FreeSwitchGateway extends Observable implements IEslEventListener {
     public void shutdown() {
 	// TODO Auto-generated method stub
 
-    }
-
-    @Override
-    public void conferenceEventPlayFile(String arg0, int arg1, EslEvent arg2) {
-	// TODO Auto-generated method stub
-	
-    }
-
-    @Override
-    public void conferenceEventThreadRun(String arg0, int arg1, EslEvent arg2) {
-	// TODO Auto-generated method stub
-	
-    }
-
-    @Override
-    public void conferenceEventTransfer(String arg0, int arg1, EslEvent arg2) {
-	// TODO Auto-generated method stub
-	
     }
 
 }
