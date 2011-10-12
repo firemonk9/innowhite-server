@@ -7,6 +7,7 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
 import com.innowhite.PlaybackApp.model.AudioData;
+import com.innowhite.PlaybackApp.model.PlayBackPlayList;
 import com.innowhite.PlaybackApp.model.VideoData;
 
 public class PlaybackUtil {
@@ -63,11 +64,19 @@ public class PlaybackUtil {
      * invokes process executor class and executes the ffmpeg cmd
      */
 
-    public static void invokeProcess(String cmd) {
+    public static void invokeVideoAttribProcess(String cmd, PlayBackPlayList playlist) {
 		ProcessExecutor pe = new ProcessExecutor();
 		// MakeExectuable obj = new MakeExectu
 	
-		boolean val = pe.executeProcess( playbackVO.getFfmpegPath()+" "+cmd, playbackVO.getTempLocation() );
+		boolean val = pe.executeProcess( playbackVO.getFfmpegPath()+" "+cmd, playbackVO.getTempLocation(), playlist);
+		log.debug("return from the ffmpeg process executor :: " + val);
+    }
+    
+    public static void invokeFfmpegProcess(String cmd) {
+		ProcessExecutor pe = new ProcessExecutor();
+		// MakeExectuable obj = new MakeExectu
+	
+		boolean val = pe.executeProcess( playbackVO.getFfmpegPath()+" "+cmd, playbackVO.getTempLocation(), null);
 		log.debug("return from the ffmpeg process executor :: " + val);
     }
     
@@ -75,7 +84,7 @@ public class PlaybackUtil {
     	ProcessExecutor pe = new ProcessExecutor();
     	// MakeExectuable obj = new MakeExectu
 
-    	boolean val = pe.executeProcess( playbackVO.getMp3WrapPath()+" "+cmd, playbackVO.getTempLocation() );
+    	boolean val = pe.executeProcess( playbackVO.getMp3WrapPath()+" "+cmd, playbackVO.getTempLocation(), null );
     	log.debug("return from the Mp3Wrap process executor :: " + val);
     }
     
@@ -83,7 +92,7 @@ public class PlaybackUtil {
     	ProcessExecutor pe = new ProcessExecutor();
     	// MakeExectuable obj = new MakeExectu
 
-    	boolean val = pe.executeProcess( playbackVO.getMencoderPath()+" "+cmd, playbackVO.getTempLocation() );
+    	boolean val = pe.executeProcess( playbackVO.getMencoderPath()+" "+cmd, playbackVO.getTempLocation(), null );
     	log.debug("return from the Mencoder process executor :: " + val);
 	}
 

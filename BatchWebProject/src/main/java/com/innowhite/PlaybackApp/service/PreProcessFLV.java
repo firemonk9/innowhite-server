@@ -36,13 +36,13 @@ public class PreProcessFLV {
 	    ProcessExecutor pe = new ProcessExecutor();
 	    // MakeExectuable obj = new MakeExectu
 
-	    boolean val = pe.executeProcess(command, playbackVO.getTempLocation());
+	    boolean val = pe.executeProcess(command, playbackVO.getTempLocation(), null);
 
 	    log.debug(" the script that is  exeucted  ::" + command + " and the return val is " + val);
 
 	    command = "flvtool2 -U " + flvPath;
 
-	    val = pe.executeProcess(command, "/opt/InnowhiteData/scripts/Transcoder/");
+	    val = pe.executeProcess(command, "/opt/InnowhiteData/scripts/Transcoder/", null);
 	    
 	    log.debug(" the script that is  exeucted  ::" + command + " and the return val is " + val);
 
