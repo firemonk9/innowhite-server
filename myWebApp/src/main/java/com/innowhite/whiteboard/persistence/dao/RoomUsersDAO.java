@@ -29,7 +29,7 @@ public class RoomUsersDAO {
 	// updateUserInRoom(user, "123123123");
 	//System.err.println(getUsersForRoom("room192"));
 	
-	System.err.println(getRoomStartTime("7774590964"));
+	updateRoomDetailXML("7774590964","7774590964");
 	//System.err.println(getRoomInfo("room192"));
 	
 	
@@ -205,6 +205,29 @@ public class RoomUsersDAO {
 	}
     }
 
+    public static void updateRoomDetailXML(String roomDetailXML, String roomId) {
+
+	log.debug("Entered updateRoomDetailXML  roomDetailXML : " + roomDetailXML + "  roomId  " + roomId);
+	// Map<String, String> roomStatusResultsMap = new HashMap<String,
+	// String>();
+	HashMap<String, String> map = new HashMap<String, String>();
+	map.put("roomDetailXML", roomDetailXML);
+	map.put("roomId", roomId);
+	try {
+	    // x = (Integer) sqlMapClient.update("updateDocXML", clientMediaVO);
+	    int val = sqlMapClient.update("updateRoomDetailXML", map);
+	    log.debug(" the update status   " + val);
+
+	} catch (SQLException e) {
+	    log.error(e.getMessage(), e);
+	    // e.printStackTrace();
+	}
+    }
+    
+    //updateRoomDetailXML --roomDetailXML
+    
+    
+    
     public static RoomVO getRoomInfo(String roomId) {
 
 	log.debug("Entered getRoomInfo");

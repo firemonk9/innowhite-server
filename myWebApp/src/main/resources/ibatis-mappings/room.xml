@@ -63,6 +63,15 @@
 		
 	</update>
 
+	<update id="updateRoomDetailXML" parameterClass="java.util.HashMap">
+
+		update room set
+		room_detail_xml = #roomDetailXML# where room_id = #roomId#
+		
+	</update>
+
+
+
 
 
 	<update id="updateStartDate" parameterClass="java.lang.String">

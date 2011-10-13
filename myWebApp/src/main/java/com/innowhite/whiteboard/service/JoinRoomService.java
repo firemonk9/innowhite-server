@@ -79,6 +79,8 @@ public class JoinRoomService {
 			}
 	//	}
 
+			
+			
 		// UserCacheService.addInnoUniqueIDUser(confNumber,userId);
 		// roomSecurityMessageProducer.sendm
 		// get the last 4 digits from the conf number
@@ -176,6 +178,8 @@ public class JoinRoomService {
 
 	}
 
+	
+	
 	static BeanFactory factory = null;
 
 	private static RoomNameMessageProducer getMesgBean() {

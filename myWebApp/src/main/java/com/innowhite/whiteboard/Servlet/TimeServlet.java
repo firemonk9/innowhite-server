@@ -11,7 +11,7 @@ import javax.servlet.http.HttpServletResponse;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
-import com.innowhite.whiteboard.service.TimeService;
+import com.innowhite.whiteboard.service.RoomService;
 
 public class TimeServlet extends HttpServlet {
     private final Logger log = LoggerFactory.getLogger(this.getClass());
@@ -50,7 +50,7 @@ public class TimeServlet extends HttpServlet {
 	response.setContentType("text/xml");
 	PrintWriter out = response.getWriter();
 	String room = request.getParameter("roomId");
-	String xml = TimeService.getElapsedTime(room);
+	String xml = RoomService.getRoomDetail(room);
 
 	out.write(xml);
 

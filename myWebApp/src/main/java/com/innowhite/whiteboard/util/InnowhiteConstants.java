@@ -68,6 +68,9 @@ public class InnowhiteConstants {
 	
 	//lesson plan(videos etc)
 	public static final String VIDEOS_PATH = "VIDEOS_PATH";
+	public static final String SESSION_DETAIL_URL = "SESSION_DETAIL_URL";
+	
+	//
 	
 	//
 	public static final String MEDIA_PATH = "MEDIA_PATH";
