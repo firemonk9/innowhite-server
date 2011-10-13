@@ -64,10 +64,14 @@ public class StreamVideoServlet extends HttpServlet {
 
 	String fileID = req.getParameter(Constants.FILE_ID);
 	String fileSource = null;
-	String orgName = null;
-	boolean thumbs = false;
+	//String orgName = null;
+	//boolean thumbs = false;
 	if (fileID != null) {
-	    fileSource = "/opt/InnowhiteData/videos/" + fileID + ".flv";
+	    if (fileID.endsWith(".wav")) {
+		fileSource = "/opt/InnowhiteData/audios/" + fileID ;
+	    } else {
+		fileSource = "/opt/InnowhiteData/videos/" + fileID ;
+	    }
 	}
 
 	log.debug(" The file id : " + fileID + "  fileSource " + fileSource);
@@ -89,9 +93,11 @@ public class StreamVideoServlet extends HttpServlet {
 	if (mimeType == null) {
 	    if (fileName != null) {
 
-		if (fileName.contains("flv"))
+		if (fileName.contains(".flv"))
 		    mimeType = "video/x-flv";
-
+		if (fileName.contains(".wav"))
+		    mimeType = "audio/x-wav";
+		
 	    }
 
 	}

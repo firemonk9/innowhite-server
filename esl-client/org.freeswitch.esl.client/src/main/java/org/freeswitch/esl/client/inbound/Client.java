@@ -443,7 +443,7 @@ public class Client {
 				    String confName = eventHeaders.get("Conference-Name");
 				    int confSize = Integer.parseInt(eventHeaders.get("Conference-Size"));
 				    
-				    
+				//    log.debug("eventFunc  :: "+eventFunc);
 				    
 				    // FIXME: all by Action eventHeader
 				    // really.... maybe?
@@ -451,7 +451,7 @@ public class Client {
 				    // Action events
 				    if (eventFunc == null) {
 					// Noop...
-				    } else if (eventFunc.equals("conference_thread_run")) {
+				    } else if (eventFunc.equals("conference_record_thread_run")) {
 					listener.conferenceEventThreadRun(confName, confSize, event);
 					return;
 				    } else if (eventFunc.equals("member_add_file_data")) {

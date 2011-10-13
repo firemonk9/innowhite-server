@@ -249,14 +249,25 @@ public class FreeSwitchGateway extends Observable implements IEslEventListener {
 
 	log.debug("Entered conferenceEventThreadRun uniqueId::" + " confName::" + confName + " memberID " + getMemeberIdFromEvent(event));
 	Integer memberId = this.getMemeberIdFromEvent(event);
+	
 	String startFile = getStartFileFromEvent(event);
 	String endFile = getEndFileFromEvent(event);
+	//String action = event.get
 	if (startFile != null || endFile != null) {
 	    AudioFileStartStopEvent ae = new AudioFileStartStopEvent("" + memberId, confName, startFile, endFile);
 	    audioEventListener.handleConferenceEvent(ae);
 	}
 
     }
+
+    private String getPath(EslEvent event) {
+	return (event.getEventHeaders().get("Path"));
+    }
+    private String getAction(EslEvent event) {
+	return (event.getEventHeaders().get("Action"));
+    }    
+    //
+    
 
     public void conferenceEventPlayFile(String confName, int confSize, EslEvent event) {
 	// Noop
@@ -267,11 +278,19 @@ public class FreeSwitchGateway extends Observable implements IEslEventListener {
     }
 
     private String getStartFileFromEvent(EslEvent e) {
-	return (e.getEventHeaders().get("Conference-Recorded-File-Begin"));
+	if( (getAction(e) != null && getAction(e).equals(("start-recording"))))
+	{
+	   return  getPath(e);
+	}
+	return null;
     }
 
     private String getEndFileFromEvent(EslEvent e) {
-	return (e.getEventHeaders().get("Conference-Recorded-File-End"));
+	if( (getAction(e) != null &&  getAction(e).equals(("stop-recording"))))
+	{
+	    return getPath(e);
+	}
+	return null;
     }
 
     private String getInnoUniqueIdFromEvent(EslEvent e) {
