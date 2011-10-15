@@ -26,7 +26,7 @@ public class PlayBackPlayListDao {
 	for (PlayBackPlayList obj : playBackPlayList) {
 	    
 	    // hard coding the server 2 addr for now. will need to change it.
-	    obj.setServer("rtmpt2.innowhite.com");
+	    obj.setServer("innos2.innowhite.com");
 	    save(obj);
 	}
 
