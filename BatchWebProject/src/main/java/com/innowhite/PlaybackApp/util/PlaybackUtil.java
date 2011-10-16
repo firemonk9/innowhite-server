@@ -1,6 +1,7 @@
 package com.innowhite.PlaybackApp.util;
 
 import java.util.Calendar;
+import java.util.HashMap;
 import java.util.List;
 
 import org.slf4j.Logger;
@@ -9,6 +10,7 @@ import org.slf4j.LoggerFactory;
 import com.innowhite.PlaybackApp.model.AudioData;
 import com.innowhite.PlaybackApp.model.PlayBackPlayList;
 import com.innowhite.PlaybackApp.model.VideoData;
+import com.innowhite.PlaybackApp.model.VideoPlayBackPlayListBucket;
 
 public class PlaybackUtil {
 
@@ -60,14 +62,13 @@ public class PlaybackUtil {
     /*
      * invokes process executor class and executes the ffmpeg cmd
      */
-
-    public static void invokeVideoAttribProcess(String cmd, PlayBackPlayList playlist) {
+    //public static void invokeVideoAttribProcess(String cmd, PlayBackPlayList playlist) {
+    public static void invokeVideoAttribProcess(String cmd, HashMap<String, String> videohm) {
 	ProcessExecutor pe = new ProcessExecutor();
 	// MakeExectuable obj = new MakeExectu
 
-	boolean val = pe.executeProcess(playbackVO.getFfmpegPath() + " " + cmd, playbackVO.getTempLocation(), playlist);
-	log.debug(" populating the width , height, size and duration :: duration : " + playlist.getDuration() + " size " + playlist.getSize() + "  width " + playlist.getWidth() + "  height "
-		+ playlist.getHeight());
+	boolean val = pe.executeProcess(playbackVO.getFfmpegPath() + " " + cmd, playbackVO.getTempLocation(), videohm);
+	//log.debug(" populating the width , height, size and duration :: duration : " + playlist.getDuration() + " size " + playlist.getSize() + "  width " + playlist.getWidth() + "  height + playlist.getHeight());
 	log.debug("return from the ffmpeg process executor :: " + val);
     }
 
