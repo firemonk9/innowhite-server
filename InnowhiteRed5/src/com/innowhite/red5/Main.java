@@ -53,7 +53,6 @@ public class Main extends MultiThreadedApplicationAdapter {
 
     private HashMap<String, Integer> videoSeqMap = new HashMap<String, Integer>();
     private HashMap<String, Map> clientNamesMap = new HashMap<String, Map>();
-    
 
     private HashMap<String, List<VideoDisplayVO>> disconnectUser = new HashMap<String, List<VideoDisplayVO>>();
 
@@ -262,10 +261,10 @@ public class Main extends MultiThreadedApplicationAdapter {
 	RoomVO roomVO = shapeSeqMap.get(roomName);
 
 	log.debug(" videovo  ::" + videovo.isAudio() + "  " + videovo.isVideo() + "   " + videovo.getUsername() + "  date   " + roomVO.getMediaDate() + "  and seq " + videovo.getSeq() + " flvpath  "
-		+ videovo.getFlvpath()+" the width "+videovo.getVideoWidth()+"  the height "+videovo.getVideoHeight());
-	
-	System.err.println(" videovo  ::" + videovo.isAudio() + "  " + videovo.isVideo() + "   " + videovo.getUsername() + "  date   " + roomVO.getMediaDate() + "  and seq " + videovo.getSeq() + " flvpath  "
-		+ videovo.getFlvpath()+" the width "+videovo.getVideoWidth()+"  the height "+videovo.getVideoHeight());
+		+ videovo.getFlvpath() + " the width " + videovo.getVideoWidth() + "  the height " + videovo.getVideoHeight());
+
+	System.err.println(" videovo  ::" + videovo.isAudio() + "  " + videovo.isVideo() + "   " + videovo.getUsername() + "  date   " + roomVO.getMediaDate() + "  and seq " + videovo.getSeq()
+		+ " flvpath  " + videovo.getFlvpath() + " the width " + videovo.getVideoWidth() + "  the height " + videovo.getVideoHeight());
 
 	videoSO.setAttribute("" + videovo.getSeq(), videovo);
 
@@ -406,8 +405,7 @@ public class Main extends MultiThreadedApplicationAdapter {
 		// log.error("Unable to start " + room.getName() +
 		// " for the application");
 		return false;
-	    }
-	    else{
+	    } else {
 		room.setPath("/opt/InnowhiteData/tmp/");
 		room.setPersistent(true);
 	    }
@@ -484,7 +482,7 @@ public class Main extends MultiThreadedApplicationAdapter {
 	try {
 	    // String[] arry = (String[])params;
 	    // log.debug(" roomconnect :: " + params.length);
-
+	    
 	    if (enableSecurity != null && enableSecurity.equals("true")) {
 		if (UserCacheService.roomExists(conn.getScope().getName()) == false)
 		    return false;
@@ -498,33 +496,6 @@ public class Main extends MultiThreadedApplicationAdapter {
 
 		    log.debug(" :::  " + params[i]);
 
-		    // if (params[i] != null
-		    // && params[i].equals("PRIV_SESSION_TEST")) {
-		    // roomVO.setPreviousSession(true);
-		    // // System.err
-		    // //
-		    // .println("#############  -- Reading from  file ------------");
-		    //
-		    // ISharedObject objectDrawingSO = this.getSharedObject(
-		    // conn.getScope(), "ObjectDrawingSO");
-		    //
-		    // ISharedObject chatDrawingSO = this.getSharedObject(
-		    // conn.getScope(), "ChatSO");
-		    //
-		    // SavingData.readObj(conn.getScope().getName(),
-		    // objectDrawingSO, chatDrawingSO);
-		    // bool = true;
-		    // log.debug("send network for video begin");
-		    // VideoDisplayVO vd = new VideoDisplayVO();
-		    // vd.setAudio(true);
-		    // vd.setVideo(true);
-		    // vd.setUsername("username");
-		    // vd.setFlvpath(conn.getScope().getName());
-		    //
-		    // ISharedObject objectVideoSO = this.getSharedObject(
-		    // conn.getScope(), "VideoDisplaySO");
-		    // objectVideoSO.setAttribute(vd.getUsername(), vd);
-		    // } else {
 		    IClient client = conn.getClient();
 		    if (params[0] != null) {
 			log.debug("  Name :  " + (String) params[0] + "  client id:  " + client.getId());
@@ -577,6 +548,8 @@ public class Main extends MultiThreadedApplicationAdapter {
     public boolean roomJoin(IClient client, IScope scope) {
 	// log.info("RoomJoined Called for client: " + client.getId() +
 	// "of scope " + scope.getName());
+
+	super.roomJoin(client, scope);
 	Constants.bsessionFlag = true;
 
 	log.debug(" roomJoin  ###### " + client.toString() + "   " + scope.getName());
@@ -584,10 +557,10 @@ public class Main extends MultiThreadedApplicationAdapter {
 	// WhiteboardAuthenticatorService.startRoom(scope.getName());
 
 	log.debug(" roomJoin  ###### " + client.getAttributeNames());
-	
-	//String msg = uName + "_" + scope.getName() + "_JOINED_" + Calendar.getInstance().getTimeInMillis();
-	//messagingService.sendUserRoomMessage(msg);
 
+	// String msg = uName + "_" + scope.getName() + "_JOINED_" +
+	// Calendar.getInstance().getTimeInMillis();
+	// messagingService.sendUserRoomMessage(msg);
 
 	return true;
     }
@@ -607,6 +580,8 @@ public class Main extends MultiThreadedApplicationAdapter {
     public void roomLeave(IClient client, IScope room) {
 
 	try {
+
+	    super.roomLeave(client, room);
 	    log.debug(" room Leave  ###### " + client.toString() + "   " + room.getName());
 	    clientNamesMap.remove(client.getId());
 
@@ -678,20 +653,22 @@ public class Main extends MultiThreadedApplicationAdapter {
      */
     public void roomStop(IScope scope) {
 	try {
+	    super.roomStop(scope);
+
+	    // sending msg to close the room.
+	    String msg = scope.getName() + "_STOPPED_" + Calendar.getInstance().getTimeInMillis();
+	    messagingService.sendRoomMessage(msg);
+	    UserCacheService.removeRoomConfMap(scope.getName());
+
+	    // removing all cache.
 	    SavingData.closeFile(scope.getName());
 	    shapeSeqMap.remove(scope.getName());
 	    chatSeqMap.remove(scope.getName());
 
 	    videoSeqMap.remove(scope.getName());
 	    // TimeMaintainerService.removeRoom(scope.getName());
-	    super.roomStop(scope);
 	    log.debug(" roomStop  ###### ");
-
-	    String msg = scope.getName() + "_STOPPED_" + Calendar.getInstance().getTimeInMillis();
-
-	    messagingService.sendRoomMessage(msg);
-	    UserCacheService.removeRoomConfMap(scope.getName());
-
+	    SavingData.closeFile(scope.getName());	
 	    // WhiteboardAuthenticatorService.stopRoom(scope.getName());
 
 	} catch (Exception e) {

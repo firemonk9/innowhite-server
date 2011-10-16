@@ -11,12 +11,10 @@ import org.slf4j.LoggerFactory;
 import org.springframework.jms.core.JmsTemplate;
 import org.springframework.jms.core.MessageCreator;
 
-import com.innowhite.business.ProcessConversion;
-
 public class VideoNameMessageProducer {
 
 	private static final Logger log = LoggerFactory
-			.getLogger(ProcessConversion.class);
+			.getLogger(VideoNameMessageProducer.class);
 
 	
 	protected ActiveMQTopic destination; 

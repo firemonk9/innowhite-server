@@ -7,20 +7,23 @@ import javax.jms.MapMessage;
 import javax.jms.Message;
 import javax.jms.Session;
 
+import org.red5.logging.Red5LoggerFactory;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.jms.JmsException;
 import org.springframework.jms.core.JmsTemplate;
 import org.springframework.jms.core.MessageCreator;
 
+import com.innowhite.red5.util.InnowhiteConstants;
 import com.innowhite.red5.vo.DocConversionBean;
 import com.innowhite.red5.vo.PointVO;
 import com.innowhite.red5.vo.ShapeEventsVO;
 
 public class WhiteboardDataMessageProducer {
 
-	private static final Logger log = LoggerFactory
-			.getLogger(WhiteboardDataMessageProducer.class);
+    private static Logger log = Red5LoggerFactory.getLogger(
+	    WhiteboardDataMessageProducer.class, InnowhiteConstants.APP_NAME);
+
 
 	protected JmsTemplate jmsTemplate;
 

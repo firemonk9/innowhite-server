@@ -7,10 +7,12 @@ import javax.jms.Message;
 import javax.jms.MessageListener;
 import javax.jms.TextMessage;
 
+import org.red5.logging.Red5LoggerFactory;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
 import com.innowhite.red5.UserCacheService;
+import com.innowhite.red5.util.InnowhiteConstants;
 
 
 public class RoomConfNameMapMessageListener implements MessageListener {
@@ -25,9 +27,11 @@ public class RoomConfNameMapMessageListener implements MessageListener {
 	// this.whiteboardDataService = whiteboardDataService;
 	// }
 
-	private static final Logger log = LoggerFactory
-			.getLogger(RoomConfNameMapMessageListener.class);
 
+    private static Logger log = Red5LoggerFactory.getLogger(
+	    RoomConfNameMapMessageListener.class, InnowhiteConstants.APP_NAME);
+
+    
 	@Override
 	public void onMessage(Message message) {
 

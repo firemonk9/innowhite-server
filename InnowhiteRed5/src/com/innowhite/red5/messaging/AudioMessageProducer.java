@@ -8,16 +8,22 @@ import javax.jms.Queue;
 import javax.jms.Session;
 import javax.jms.TextMessage;
 
+import org.red5.logging.Red5LoggerFactory;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.jms.core.JmsTemplate;
 import org.springframework.jms.core.MessageCreator;
 
+import com.innowhite.red5.MainAudioService;
+import com.innowhite.red5.util.InnowhiteConstants;
+
 public class AudioMessageProducer {
 
-	private static final Logger log = LoggerFactory
-			.getLogger(AudioMessageProducer.class);
+	
 
+	private static Logger log = Red5LoggerFactory.getLogger(
+		AudioMessageProducer.class, InnowhiteConstants.APP_NAME);
+	
 	protected JmsTemplate jmsTemplate;
 	
 	protected Queue audioDataDestination;
