@@ -5,17 +5,22 @@ import java.io.File;
 import java.io.FileWriter;
 import java.io.InputStream;
 import java.io.InputStreamReader;
+import java.util.HashMap;
+import java.util.Iterator;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
 import com.innowhite.PlaybackApp.model.PlayBackPlayList;
+import com.innowhite.PlaybackApp.model.SessionBucket;
+import com.innowhite.PlaybackApp.model.SessionRecordings;
+import com.innowhite.PlaybackApp.model.VideoPlayBackPlayListBucket;
 
 public class ProcessExecutor {
 
     public static final Logger log = LoggerFactory.getLogger(ProcessExecutor.class);
 
-    public boolean executeProcess(String cmd, String tempPath, PlayBackPlayList playlist) {
+    public boolean executeProcess(String cmd, String tempPath, HashMap<String, String> videohm) {
 
 	try {
 	    // String cmd = executable + " -i " + input + " " + params + " " +
@@ -37,10 +42,10 @@ public class ProcessExecutor {
 	    Process proc = rt.exec(cmd);
 
 	    // any error message?
-	    StreamGobbler errorGobbler = new StreamGobbler(proc.getErrorStream(), "ERR", playlist);
+	    StreamGobbler errorGobbler = new StreamGobbler(proc.getErrorStream(), "ERR", videohm);
 
 	    // any output?
-	    StreamGobbler outputGobbler = new StreamGobbler(proc.getInputStream(), "OUT", playlist);
+	    StreamGobbler outputGobbler = new StreamGobbler(proc.getInputStream(), "OUT", videohm);
 
 	    // Start the threads
 	    errorGobbler.start();
@@ -69,12 +74,13 @@ class StreamGobbler extends Thread {
     Logger log = LoggerFactory.getLogger(StreamGobbler.class);
     InputStream is;
     String type;
-    PlayBackPlayList pbp;
-
-    StreamGobbler(InputStream is, String type, PlayBackPlayList pl) {
+    //PlayBackPlayList pbp;
+    HashMap<String, String> videohm;
+    
+    StreamGobbler(InputStream is, String type, HashMap<String, String> videohmin) {
 	this.is = is;
 	this.type = type;
-	this.pbp = pl;
+	this.videohm = videohmin;
     }
 
     public void run() {
@@ -82,28 +88,26 @@ class StreamGobbler extends Thread {
 	    InputStreamReader isr = new InputStreamReader(is);
 	    BufferedReader br = new BufferedReader(isr);
 	    String line = null;
-	    while ((line = br.readLine()) != null){
-	    	
-	    	if(this.pbp!=null){
-		    	if(line.contains("duration")){
-		    		this.pbp.setDuration(line.substring(line.indexOf(":")+2));
-		    	}
-		    	else if(line.contains("width")){
-		    		String width = line.substring(line.indexOf(":")+2);
-		    		this.pbp.setWidth(Integer.parseInt(width));
-		    	}
-		    	else if(line.contains("height")){
-		    		String height = line.substring(line.indexOf(":")+2);
-		    		this.pbp.setHeight(Integer.parseInt(height));
-		    	}
-		    	else if(line.contains("filesize")){
-		    		String size = line.substring(line.indexOf(":")+2);
-		    		this.pbp.setSize(Long.parseLong(size));
-		    	}
+    	while ((line = br.readLine()) != null){
+	    	if(line.contains("duration")){
+	    		String duration = line.substring(line.indexOf(":")+2);
+	    		this.videohm.put("duration",duration);
 	    	}
-	    	// Show output in development
-			log.debug(type + ">" + line);
+	    	else if(line.contains("width")){
+	    		String width = line.substring(line.indexOf(":")+2);
+	    		this.videohm.put("width",width);
+	    	}
+	    	else if(line.contains("height")){
+	    		String height = line.substring(line.indexOf(":")+2);
+	    		this.videohm.put("height",height);
+	    	}
+	    	else if(line.contains("filesize")){
+	    		String size = line.substring(line.indexOf(":")+2);
+	    		this.videohm.put("size",size);
+	    	}
 	    }
+		// Show output in development
+		log.debug(type + ">" + line);
 	} catch (Exception ioe) {
 	    log.error(""+ioe.getMessage(),ioe);
 	    ioe.printStackTrace();
