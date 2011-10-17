@@ -1,5 +1,7 @@
 package com.innowhite.PlaybackApp.service;
 
+import java.io.File;
+import java.io.IOException;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.HashMap;
@@ -294,7 +296,7 @@ public class PlaybackDataService {
 		    		paddedSessionVideoPlaylist = padSessionVideoPlaylist(sessionVideoDataList, screenShareDimensions, videohm);
 		    	}
 				// Set resolution of all Session Bucket Videos
-				uniformSessionVideoDataList = setVideoResolution(paddedSessionVideoPlaylist);
+				uniformSessionVideoDataList = setVideoResolution(paddedSessionVideoPlaylist, screenShareDimensions);
 				log.debug("_______________________________________________________________");
 				log.debug("Number of videos after setting resolution :: " + uniformSessionVideoDataList.size());
 				for (int i = 0; i < uniformSessionVideoDataList.size(); i++) {
@@ -398,21 +400,31 @@ public class PlaybackDataService {
     	    	log.debug("screen share video found. Padding with 3sec vid");
     	    	long dbDuration = sessionVideoDataList.get(i).getEndTime().getTime()-sessionVideoDataList.get(i).getStartTime().getTime();
     	    	long actualDuration = Long.parseLong(videohm.get("duration"));
+    	    	long padDuration = (int)(dbDuration - actualDuration);
     	    	long start_time = sessionVideoDataList.get(i).getStartTime().getTime();
     	    	vd.setStartTime(new Date(start_time));
-    	    	vd.setEndTime(new Date(start_time+(actualDuration-dbDuration)));
+    	    	vd.setEndTime(new Date(start_time+(padDuration)));
 
     	    	//actualDuration-dbDuration
-    	    	String cmd = " -r 1 -b 200 -s "+screenShareDimensions+" -i %03d.jpg "+newVideoPath+" padScreenShareVideo.avi";
-    	    	PlaybackUtil.invokeFfmpegProcess(cmd);
-    	    	vd.setFilePath(newVideoPath+"padScreenShareVideo.avi");
+    	    	//String cmd = " -r 1 -b 200 -s "+screenShareDimensions+" -i %03d.jpg "+newVideoPath+" padScreenShareVideo.avi";
+    	    	//PlaybackUtil.invokeFfmpegProcess(curDir);
+    	    	File f = new File(".");
+    	    	String curDir = null;
+				try {
+					curDir = f.getCanonicalPath().replace(".", "");
+				} catch (IOException e) {
+					// TODO Auto-generated catch block
+					e.printStackTrace();
+				}
+    	    	
+    	    	vd.setFilePath(curDir+"padScreenShareVideo"+padDuration+".avi");
 //    	    	vd.setId(sessionVideoDataList.get(i).getId());
 //    	    	vd.setRoomName(sessionVideoDataList.get(i).getRoomName());
 //    	    	vd.setVideoType("VIDEO");
     	    	tempSessionVideoPlaylist.add(vd);
     	    	
     	    	vd = new VideoData();
-    	    	vd.setStartTime(new Date(start_time+(actualDuration-dbDuration)));
+    	    	vd.setStartTime(new Date(start_time+padDuration));
     	    	vd.setEndTime(sessionVideoDataList.get(i).getEndTime());
     	    	vd.setFilePath(sessionVideoDataList.get(i).getFilePath());
     	    	vd.setId(sessionVideoDataList.get(i).getId());
@@ -492,10 +504,11 @@ public class PlaybackDataService {
 	return ad;
     }
 
-    private ArrayList<VideoData> setVideoResolution(List<VideoData> sessionVideoDataList) {
+    private ArrayList<VideoData> setVideoResolution(List<VideoData> sessionVideoDataList, String screenShareDimensions) {
 	log.debug(":::setting resolution of sessionVideoPlaylist Videos:::");
 	// mencoder.exe wb_audio.avi -oac copy -ovc lavc -vf scale=800:600 -o
 	// wb_audio3.avi
+	String dim[] = screenShareDimensions.split("x");
 	ArrayList<VideoData> uniformSessionVideoDataList = new ArrayList<VideoData>();
 	VideoData vd = null;
 	// String newVideoPath = PlaybackUtil.getUnique();
@@ -506,12 +519,12 @@ public class PlaybackDataService {
 	    long a = (sessionVideoDataList.get(i).getEndTime().getTime() - sessionVideoDataList.get(i).getStartTime().getTime());
 	    log.debug("::::DURATION::::" + PlaybackUtil.secondsToHours(a));
 	   // screenShareDimension
-	    cmd = " " + sessionVideoDataList.get(i).getFilePath() + " -oac copy -ovc lavc -vf scale=800:600 -o " + sessionVideoDataList.get(i).getFilePath().replace(".avi", "800x600.avi");
+	    cmd = " " + sessionVideoDataList.get(i).getFilePath() + " -oac copy -ovc lavc -vf scale="+dim[0]+":"+dim[1]+" -o " + sessionVideoDataList.get(i).getFilePath().replace(".avi", dim[0]+"x"+dim[1]+".avi");
 	    log.debug("::::MenCoder Command for setting resolution of video" + i + "/" + sessionVideoDataList.size() + "::::" + cmd);
 	    PlaybackUtil.invokeMencoderProcess(cmd);
 	    vd.setStartTime(sessionVideoDataList.get(i).getStartTime());
 	    vd.setEndTime(sessionVideoDataList.get(i).getEndTime());
-	    vd.setFilePath(sessionVideoDataList.get(i).getFilePath().replace(".avi", "800x600.avi"));
+	    vd.setFilePath(sessionVideoDataList.get(i).getFilePath().replace(".avi", dim[0]+"x"+dim[1]+".avi"));
 	    uniformSessionVideoDataList.add(vd);
 	}
 	return uniformSessionVideoDataList;
