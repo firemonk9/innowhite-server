@@ -72,7 +72,7 @@ public class PlaybackUtil {
 	// log.debug(" populating the width , height, size and duration :: duration : "
 	// + playlist.getDuration() + " size " + playlist.getSize() + "  width "
 	// + playlist.getWidth() + " height + playlist.getHeight());
-	log.debug("return from the ffmpeg process executor :: " + val);
+	log.debug("return from the vidAttrib ffmpeg process executor :: " + val);
     }
 
     public static void invokeFfmpegProcess(String cmd) {
