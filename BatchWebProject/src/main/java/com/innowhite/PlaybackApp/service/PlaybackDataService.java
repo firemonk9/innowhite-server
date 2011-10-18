@@ -20,7 +20,6 @@ import com.innowhite.PlaybackApp.model.PlayBackPlayList;
 import com.innowhite.PlaybackApp.model.SessionBucket;
 import com.innowhite.PlaybackApp.model.SessionRecordings;
 import com.innowhite.PlaybackApp.model.VideoData;
-import com.innowhite.PlaybackApp.model.VideoPlayBackPlayListBucket;
 import com.innowhite.PlaybackApp.util.PlaybackUtil;
 import com.innowhite.PlaybackApp.util.PlaybackVO;
 
@@ -399,9 +398,11 @@ public class PlaybackDataService {
 	    if (videoType != null && videoType.equals("DESKTOP")) {
 		vd = new VideoData();
 		String newVideoPath = PlaybackUtil.getUnique();
-		log.debug("screen share video found. Padding with 3sec vid");
+		log.debug("screen share video found. Padding with 3sec vid :");
+		log.debug(" printing the hash map ... videohm::"+videohm);
+		
 		long dbDuration = sessionVideoDataList.get(i).getEndTime().getTime() - sessionVideoDataList.get(i).getStartTime().getTime();
-		long actualDuration = Long.parseLong(videohm.get("duration"));
+		long actualDuration = PlaybackUtil.getNumLong(videohm.get("duration"));
 		long padDuration = (int) (dbDuration - actualDuration);
 		long start_time = sessionVideoDataList.get(i).getStartTime().getTime();
 		vd.setStartTime(new Date(start_time));
@@ -726,6 +727,8 @@ public class PlaybackDataService {
 	// log.debug("videoData: End Time:: "+vd.getEndTime());
 	if (vd != null) {
 	    log.debug("videoData: File Path:: " + vd.getFilePath());
+	    vd.setVideoType(videoData.getVideoType());
+	    vd.setRoomName(videoData.getRoomName());
 	    sb.getVideoDataList().add(vd);
 	} else {
 
