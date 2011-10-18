@@ -62,7 +62,7 @@ public class ProcessExecutor {
 
 	} catch (Exception t) {
 	    t.printStackTrace();
-	    log.error(t.getMessage(),t);
+	    log.error(t.getMessage(), t);
 	}
 
 	return false;
@@ -74,9 +74,9 @@ class StreamGobbler extends Thread {
     Logger log = LoggerFactory.getLogger(StreamGobbler.class);
     InputStream is;
     String type;
-    //PlayBackPlayList pbp;
+    // PlayBackPlayList pbp;
     HashMap<String, String> videohm;
-    
+
     StreamGobbler(InputStream is, String type, HashMap<String, String> videohmin) {
 	this.is = is;
 	this.type = type;
@@ -88,28 +88,27 @@ class StreamGobbler extends Thread {
 	    InputStreamReader isr = new InputStreamReader(is);
 	    BufferedReader br = new BufferedReader(isr);
 	    String line = null;
-    	while ((line = br.readLine()) != null){
-	    	if(line.contains("duration")){
-	    		String duration = line.substring(line.indexOf(":")+2);
-	    		this.videohm.put("duration",duration);
-	    	}
-	    	else if(line.contains("width")){
-	    		String width = line.substring(line.indexOf(":")+2);
-	    		this.videohm.put("width",width);
-	    	}
-	    	else if(line.contains("height")){
-	    		String height = line.substring(line.indexOf(":")+2);
-	    		this.videohm.put("height",height);
-	    	}
-	    	else if(line.contains("filesize")){
-	    		String size = line.substring(line.indexOf(":")+2);
-	    		this.videohm.put("size",size);
-	    	}
+	    if (this.videohm != null) {
+		while ((line = br.readLine()) != null) {
+		    if (line.contains("duration")) {
+			String duration = line.substring(line.indexOf(":") + 2);
+			this.videohm.put("duration", duration);
+		    } else if (line.contains("width")) {
+			String width = line.substring(line.indexOf(":") + 2);
+			this.videohm.put("width", width);
+		    } else if (line.contains("height")) {
+			String height = line.substring(line.indexOf(":") + 2);
+			this.videohm.put("height", height);
+		    } else if (line.contains("filesize")) {
+			String size = line.substring(line.indexOf(":") + 2);
+			this.videohm.put("size", size);
+		    }
+		}
 	    }
-		// Show output in development
-		log.debug(type + ">" + line);
+	    // Show output in development
+	    log.debug(type + ">" + line);
 	} catch (Exception ioe) {
-	    log.error(""+ioe.getMessage(),ioe);
+	    log.error("" + ioe.getMessage(), ioe);
 	    ioe.printStackTrace();
 	}
     }

@@ -10,10 +10,18 @@ import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.Table;
 
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
+
+import com.innowhite.PlaybackApp.util.ProcessExecutor;
+
 @Entity
 @Table(name = "video_data")
 public class VideoData implements Serializable {
 
+    
+    
+    public static final Logger log = LoggerFactory.getLogger(VideoData.class);
     /**
 	 * 
 	 */
@@ -100,5 +108,21 @@ public class VideoData implements Serializable {
     public static void main(String[] args) {
 	//whiteboard
     }
+    
+    
+    public String toString(){
+	
+	StringBuffer sb = new StringBuffer();
+	sb.append(" id: "+id);
+	sb.append(" startTime: "+startTime);
+	sb.append(" endTime: "+endTime);
+	sb.append(" filePath: "+filePath);
+	sb.append(" roomName: "+roomName);
+	sb.append(" videoType: "+videoType);
+	
+	
+	return sb.toString();
+    }
+    
 
 }

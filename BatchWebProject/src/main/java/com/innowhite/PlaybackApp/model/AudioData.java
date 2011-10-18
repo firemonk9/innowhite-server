@@ -85,4 +85,19 @@ public class AudioData implements Serializable {
 	//whiteboard
     }
 
+    
+ public String toString(){
+	
+	StringBuffer sb = new StringBuffer();
+	sb.append(" id: "+id);
+	sb.append(" startTime: "+startTime);
+	sb.append(" endTime: "+endTime);
+	sb.append(" filePath: "+filePath);
+	sb.append(" roomName: "+roomName);
+	
+	
+	
+	return sb.toString();
+    }
+    
 }

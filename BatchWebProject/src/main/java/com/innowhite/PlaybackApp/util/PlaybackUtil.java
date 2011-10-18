@@ -62,13 +62,16 @@ public class PlaybackUtil {
     /*
      * invokes process executor class and executes the ffmpeg cmd
      */
-    //public static void invokeVideoAttribProcess(String cmd, PlayBackPlayList playlist) {
+    // public static void invokeVideoAttribProcess(String cmd, PlayBackPlayList
+    // playlist) {
     public static void invokeVideoAttribProcess(String cmd, HashMap<String, String> videohm) {
 	ProcessExecutor pe = new ProcessExecutor();
 	// MakeExectuable obj = new MakeExectu
 
 	boolean val = pe.executeProcess(playbackVO.getFfmpegPath() + " " + cmd, playbackVO.getTempLocation(), videohm);
-	//log.debug(" populating the width , height, size and duration :: duration : " + playlist.getDuration() + " size " + playlist.getSize() + "  width " + playlist.getWidth() + "  height + playlist.getHeight());
+	// log.debug(" populating the width , height, size and duration :: duration : "
+	// + playlist.getDuration() + " size " + playlist.getSize() + "  width "
+	// + playlist.getWidth() + " height + playlist.getHeight());
 	log.debug("return from the ffmpeg process executor :: " + val);
     }
 
@@ -171,5 +174,27 @@ public class PlaybackUtil {
 	log.warn("videoEndTime ::" + videoEndTime);
 	log.warn("sessionEndTime ::" + sessionEndTime);
 
+    }
+
+    public static int getNum(String string) {
+	try {
+
+	    if (string != null)
+		return Integer.parseInt(string.trim());
+	} catch (Exception e) {
+
+	}
+	return 0;
+    }
+
+    public static long getNumLong(String string) {
+	try {
+
+	    if (string != null)
+		return Long.parseLong(string.trim());
+	} catch (Exception e) {
+
+	}
+	return 0;
     }
 }
