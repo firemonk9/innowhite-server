@@ -171,6 +171,11 @@ var innowhitePluginLoaded = false;
 
 
 
+		
+		function make_skype_call(){
+			
+			skype:innowhiteconf?call;
+		}
 
      function close_session(moderator)
      {
