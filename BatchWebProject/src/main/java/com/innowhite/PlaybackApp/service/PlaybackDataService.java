@@ -292,15 +292,17 @@ public class PlaybackDataService {
 		    HashMap<String, String> videohm = new HashMap<String, String>();
 		    // VideoPlayBackPlayListBucket vppb = new
 		    // VideoPlayBackPlayListBucket();
-		    String screenShareDimensions = getScreenShareDimensions(sessionVideoDataList, videohm);
+		    String[] screenShareArr = getScreenShareDimensions(sessionVideoDataList, videohm).split("##");
+		    String videoDimensions = screenShareArr[0];
+		    String screenShareFlag = screenShareArr[1];
 		    // if session has atleast 1 video
 		    if (sessionVideoDataList.size() > 0) {
 			// if screen-share was recorded
-			if (screenShareDimensions != null) {
-			    paddedSessionVideoPlaylist = padSessionVideoPlaylist(sessionVideoDataList, screenShareDimensions, videohm);
+			if (screenShareFlag.equals("true")) {
+			    paddedSessionVideoPlaylist = padSessionVideoPlaylist(sessionVideoDataList, videoDimensions, videohm);
 			}
 			// Set resolution of all Session Bucket Videos
-			uniformSessionVideoDataList = setVideoFormatResolution(paddedSessionVideoPlaylist, screenShareDimensions);
+			uniformSessionVideoDataList = setVideoFormatResolution(paddedSessionVideoPlaylist, videoDimensions);
 			log.debug("_______________________________________________________________");
 			log.debug("Number of videos after setting resolution :: " + uniformSessionVideoDataList.size());
 			for (int i = 0; i < uniformSessionVideoDataList.size(); i++) {
@@ -447,22 +449,26 @@ public class PlaybackDataService {
     private String getScreenShareDimensions(List<VideoData> sessionVideoDataList, HashMap<String, String> videohm) {
 
 	log.debug("Enterd getScreenShareDimensions");
+	String screenShareFlag = "false";
 	for (int i = 0; i < sessionVideoDataList.size(); i++) {
-	    String videoType = sessionVideoDataList.get(i).getVideoType();
-	    if (videoType != null && videoType.equals("DESKTOP")) {
-		String cmd = " -i " + sessionVideoDataList.get(i).getFilePath();
-		PlaybackUtil.invokeVideoAttribProcess(cmd, videohm);
-		break;// i=sessionVideoDataList.size();
-	    }
-	    
-	    if(videoType == null)
-	    {
-		log.warn(" printing the videoObj :: "+sessionVideoDataList);
-	    }
-	    
+		String videoType = sessionVideoDataList.get(i).getVideoType();
+		if (videoType != null && videoType.equals("DESKTOP")) {
+			screenShareFlag = "true";
+			String cmd = " -i " + sessionVideoDataList.get(i).getFilePath();
+			PlaybackUtil.invokeVideoAttribProcess(cmd, videohm);
+			break;// i=sessionVideoDataList.size();
+		}
+		// executed only when all videos have been parsed and no screen
+		// share detected
+		if (i == sessionVideoDataList.size()) {
+			String cmd = " -i " + sessionVideoDataList.get(i).getFilePath();
+			PlaybackUtil.invokeVideoAttribProcess(cmd, videohm);
+		}
+		if (videoType == null) {
+			log.warn(" printing the videoObj :: " + sessionVideoDataList);
+		}
 	}
-	String dimensions = videohm.get("width") + "x" + videohm.get("height");
-	return dimensions;
+	return videohm.get("width") + "x" + videohm.get("height")+"##"+screenShareFlag;
     }
 
     private String mergeAudioVideo(AudioData sessionAudio, VideoData sessionVideo) {
