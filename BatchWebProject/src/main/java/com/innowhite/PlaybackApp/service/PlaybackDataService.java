@@ -405,14 +405,15 @@ public class PlaybackDataService {
 		log.debug("screen share video found. Padding with 3sec vid :");
 		log.debug(" printing the hash map ... videohm::" + videohm);
 
-		long dbDuration = sessionVideoDataList.get(i).getEndTime().getTime() - sessionVideoDataList.get(i).getStartTime().getTime();
+		long dbDuration = (sessionVideoDataList.get(i).getEndTime().getTime() - sessionVideoDataList.get(i).getStartTime().getTime())/1000;
 		long actualDuration = PlaybackUtil.getNumLong(videohm.get("duration"));
 		long padDuration = (int) (dbDuration - actualDuration);
+		
 		long start_time = sessionVideoDataList.get(i).getStartTime().getTime();
 		vd.setStartTime(new Date(start_time));
 		vd.setEndTime(new Date(start_time + (padDuration)));
 		
-		padDuration = padDuration / 1000;
+		
 		log.debug(" Actual video file  duration :: " + actualDuration);
 		log.debug(" Expected video file duration(from database) :: " + dbDuration);
 		log.debug(" duration to pad is ::" + padDuration);
