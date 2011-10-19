@@ -316,9 +316,9 @@ public class PlaybackDataService {
 		    }
 		    // if room has atleast one video
 		    else {
-			log.debug("ERROR ALERT::Session has no videos.. Something's gotta be wrong!");
+			log.warn("ERROR ALERT::Session has no videos.. Something's gotta be wrong!");
 			if (videoDataList.size() < 1) {
-			    log.debug("ERROR ALERT::Room Itself has no videos.. Something's terribly wrong!");
+			    log.warn("ERROR ALERT::Room Itself has no videos.. Something's terribly wrong!");
 			}
 		    }
 		    log.debug("FINAL SESSION VIDEO PATH::" + sessionVideo.getFilePath());
@@ -412,40 +412,41 @@ public class PlaybackDataService {
 		vd.setStartTime(new Date(start_time));
 		vd.setEndTime(new Date(start_time + (padDuration)));
 
+		padDuration = padDuration / 1000;
 		log.debug(" Actual video file  duration :: " + actualDuration);
 		log.debug(" Expected video file duration(from database) :: " + dbDuration);
 		log.debug(" duration to pad is ::" + padDuration);
-		
-		if (padDuration > 0 && padDuration < 7) {
 
-		    // actualDuration-dbDuration
-		    // String cmd =
-		    // " -r 1 -b 200 -s "+screenShareDimensions+" -i %03d.jpg "+newVideoPath+" padScreenShareVideo.avi";
-		    // PlaybackUtil.invokeFfmpegProcess(curDir);
-		    File f = new File(sessionVideoDataList.get(i).getFilePath());
-		    String curDir = null;
-		    if (f != null && f.isFile())
-			curDir = f.getParent();
-		    else {
-			log.warn(" The file path is null... this is not right. ");
+		// if (padDuration > 0 && padDuration < 7) {
 
-		    }
+		// actualDuration-dbDuration
+		// String cmd =
+		// " -r 1 -b 200 -s "+screenShareDimensions+" -i %03d.jpg "+newVideoPath+" padScreenShareVideo.avi";
+		// PlaybackUtil.invokeFfmpegProcess(curDir);
+		File f = new File(sessionVideoDataList.get(i).getFilePath());
+		String curDir = null;
+		if (f != null && f.isFile())
+		    curDir = f.getParent();
+		else {
+		    log.warn(" The file path is null... this is not right. ");
 
-		    vd.setFilePath(curDir + "/padScreenShareVideo" + padDuration + ".avi");
-		    // vd.setId(sessionVideoDataList.get(i).getId());
-		    // vd.setRoomName(sessionVideoDataList.get(i).getRoomName());
-		    // vd.setVideoType("VIDEO");
-		    tempSessionVideoPlaylist.add(vd);
-
-		    vd = new VideoData();
-		    vd.setStartTime(new Date(start_time + padDuration));
-		    vd.setEndTime(sessionVideoDataList.get(i).getEndTime());
-		    vd.setFilePath(sessionVideoDataList.get(i).getFilePath());
-		    vd.setId(sessionVideoDataList.get(i).getId());
-		    vd.setRoomName(sessionVideoDataList.get(i).getRoomName());
-		    vd.setVideoType(videoType);
-		    tempSessionVideoPlaylist.add(sessionVideoDataList.get(i));
 		}
+
+		vd.setFilePath(curDir + "/padScreenShareVideo" + padDuration + ".avi");
+		// vd.setId(sessionVideoDataList.get(i).getId());
+		// vd.setRoomName(sessionVideoDataList.get(i).getRoomName());
+		// vd.setVideoType("VIDEO");
+		tempSessionVideoPlaylist.add(vd);
+
+		vd = new VideoData();
+		vd.setStartTime(new Date(start_time + padDuration));
+		vd.setEndTime(sessionVideoDataList.get(i).getEndTime());
+		vd.setFilePath(sessionVideoDataList.get(i).getFilePath());
+		vd.setId(sessionVideoDataList.get(i).getId());
+		vd.setRoomName(sessionVideoDataList.get(i).getRoomName());
+		vd.setVideoType(videoType);
+		tempSessionVideoPlaylist.add(sessionVideoDataList.get(i));
+		// }
 	    } else {
 		tempSessionVideoPlaylist.add(sessionVideoDataList.get(i));
 	    }
