@@ -6,15 +6,9 @@ import java.io.FileWriter;
 import java.io.InputStream;
 import java.io.InputStreamReader;
 import java.util.HashMap;
-import java.util.Iterator;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
-
-import com.innowhite.PlaybackApp.model.PlayBackPlayList;
-import com.innowhite.PlaybackApp.model.SessionBucket;
-import com.innowhite.PlaybackApp.model.SessionRecordings;
-import com.innowhite.PlaybackApp.model.VideoPlayBackPlayListBucket;
 
 public class ProcessExecutor {
 
@@ -83,34 +77,46 @@ class StreamGobbler extends Thread {
 	this.videohm = videohmin;
     }
 
-	public void run() {
-		try {
-			InputStreamReader isr = new InputStreamReader(is);
-			BufferedReader br = new BufferedReader(isr);
-			String line = null;
-			if (this.videohm != null) {
-				while ((line = br.readLine()) != null) {
-					if (line.contains("duration")) {
-						this.videohm.put("duration", getSubstr(line));
-					} else if (line.contains("width")) {
-						this.videohm.put("width", getSubstr(line));
-					} else if (line.contains("height")) {
-						this.videohm.put("height", getSubstr(line));
-					} else if (line.contains("filesize")) {
-						this.videohm.put("size", getSubstr(line));
-					}
-				}
-			}
-			// Show output in development
-			log.debug(type + ">" + line);
-		} catch (Exception ioe) {
-			log.error("" + ioe.getMessage(), ioe);
-			ioe.printStackTrace();
+    public void run() {
+	try {
+	    InputStreamReader isr = new InputStreamReader(is);
+	    BufferedReader br = new BufferedReader(isr);
+	    String line = null;
+	    if (this.videohm != null) {
+		while ((line = br.readLine()) != null) {
+		    if (line.contains("duration")) {
+			getSubstr(line, "duration", videohm);
+
+		    } else if (line.contains("width")) {
+			getSubstr(line, "width", videohm);
+
+		    } else if (line.contains("height")) {
+			getSubstr(line, "height", videohm);
+
+		    } else if (line.contains("filesize")) {
+			getSubstr(line, "filesize", videohm);
+
+		    }
 		}
+	    }
+	    // Show output in development
+	    log.debug(type + ">" + line);
+	} catch (Exception ioe) {
+	    log.error("" + ioe.getMessage(), ioe);
+	    ioe.printStackTrace();
 	}
-    
-	public String getSubstr(String line) {
-		String temp[] = line.split(":");
-		return temp[1].trim();
+    }
+
+    public void getSubstr(String line, String val, HashMap videohm) {
+
+	String temp[] = line.split(":");
+	if (temp.length == 2) {
+	    if (temp[1] != null && PlaybackUtil.getNumLong(temp[1]) > 0) {
+		videohm.put(val, temp[1].trim());
+	    }
+	    // if (val != null)
+	    // this.videohm.put("size", val);
 	}
+
+    }
 }

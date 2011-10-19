@@ -411,7 +411,7 @@ public class PlaybackDataService {
 		long start_time = sessionVideoDataList.get(i).getStartTime().getTime();
 		vd.setStartTime(new Date(start_time));
 		vd.setEndTime(new Date(start_time + (padDuration)));
-
+		
 		padDuration = padDuration / 1000;
 		log.debug(" Actual video file  duration :: " + actualDuration);
 		log.debug(" Expected video file duration(from database) :: " + dbDuration);
