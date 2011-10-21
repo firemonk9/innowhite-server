@@ -67,7 +67,7 @@
 		update video_data
 		set
 		end_time = now()
-		where id=#id#
+		where id=#id# and end_time is null
 			
       </update>
 

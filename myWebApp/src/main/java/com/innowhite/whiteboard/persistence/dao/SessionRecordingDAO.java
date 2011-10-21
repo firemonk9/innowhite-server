@@ -56,9 +56,12 @@ public class SessionRecordingDAO {
 	boolean roomCreated = false;
 	int x = 0;
 	try {
-	    log.debug("Entered updateVideoData id ::" + roomId);
+	    log.debug("Entered endSessionRecording id ::" + roomId);
 	    x = (Integer) sqlMapClient.update("endSessionRecording", roomId);
 	    log.debug(" saveMedia returned " + x);
+	    
+	    
+	    
 	} catch (SQLException e) {
 
 	    e.printStackTrace();

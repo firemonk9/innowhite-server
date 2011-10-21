@@ -13,6 +13,7 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
 import com.innowhite.whiteboard.persistence.dao.SessionRecordingDAO;
+import com.innowhite.whiteboard.service.WhiteboardToVideoService;
 import com.innowhite.whiteboard.test.InnowhiteServiceTest;
 
 /**
@@ -51,6 +52,10 @@ public class SessionRecording extends HttpServlet {
 		SessionRecordingDAO.startSessionRecording(roomId);
 	    } else  if (recordStatus != null && recordStatus.equals("recordStop")) {
 		SessionRecordingDAO.endSessionRecording(roomId);
+		
+// TO DO		// This is a temporary fix.When closing a record session, send a request to close
+		// video also.
+		WhiteboardToVideoService.stopRecording(roomId);
 	    }
 
 	    // String xmlReply = "<Reply><Message>"+msg+"</Message></Reply>";

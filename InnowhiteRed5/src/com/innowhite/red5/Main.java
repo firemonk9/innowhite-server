@@ -260,12 +260,8 @@ public class Main extends MultiThreadedApplicationAdapter {
 	String roomName = Red5.getConnectionLocal().getScope().getName();
 	RoomVO roomVO = shapeSeqMap.get(roomName);
 
-	log.debug(" videovo  ::" + videovo.isAudio() + "  " + videovo.isVideo() + "   " + videovo.getUsername() + "  date   " + roomVO.getMediaDate() + "  and seq " + videovo.getSeq() + " flvpath  "
-		+ videovo.getFlvpath() + " the width " + videovo.getVideoWidth() + "  the height " + videovo.getVideoHeight());
-
-	System.err.println(" videovo  ::" + videovo.isAudio() + "  " + videovo.isVideo() + "   " + videovo.getUsername() + "  date   " + roomVO.getMediaDate() + "  and seq " + videovo.getSeq()
-		+ " flvpath  " + videovo.getFlvpath() + " the width " + videovo.getVideoWidth() + "  the height " + videovo.getVideoHeight());
-
+	log.debug("  the video vo obj is : "+videovo);
+	
 	videoSO.setAttribute("" + videovo.getSeq(), videovo);
 
 	if (roomVO.getMediaDate() == null && (videovo.isAudio() == true || videovo.isVideo() == true)) {

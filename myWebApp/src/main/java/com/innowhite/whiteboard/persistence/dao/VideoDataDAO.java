@@ -39,7 +39,7 @@ public class VideoDataDAO {
 	    x = (Integer) sqlMapClient.insert("saveVideoData", videoDataVO);
 
 	} catch (SQLException e) {
-
+	    log.error(e.getMessage(),e);
 	    e.printStackTrace();
 	}
 	return x;
@@ -55,7 +55,7 @@ public class VideoDataDAO {
 	    x = (Integer) sqlMapClient.update("updateVideoData", id);
 	    log.debug(" saveMedia returned " + x);
 	} catch (SQLException e) {
-
+	    log.error(e.getMessage(),e);
 	    e.printStackTrace();
 	}
 	if (x > 0) {
@@ -77,6 +77,7 @@ public class VideoDataDAO {
 		value = 0;
 
 	} catch (SQLException e) {
+	    log.error(e.getMessage(),e);
 	    e.printStackTrace();
 	    return null;
 	}
@@ -97,6 +98,7 @@ public class VideoDataDAO {
 	    value = (List) sqlMapClient.queryForList("getVideosForRoom", roomName);
 
 	} catch (SQLException e) {
+	    log.error(e.getMessage(),e);
 	    e.printStackTrace();
 	    return null;
 	}

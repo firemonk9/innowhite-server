@@ -2,99 +2,115 @@ package com.innowhite.red5.vo;
 
 public class VideoDisplayVO {
 
-	String username;
-	String flvpath;
-	boolean audio;
-	boolean video;
-	int seq;
-	
-	int videoHeight;
-	String streamType; // DESKTOP or VIDEO
-	String shareStatus; //START_DESKTOP_SHARE or STOP_DESKTOP_SHARE
-	int videoWidth;
-	
-	
-	
-	
-	public int getSeq() {
-		return seq;
-	}
+    String username;
+    String flvpath;
+    boolean audio;
+    boolean video;
+    int seq;
 
-	public void setSeq(int seq) {
-		this.seq = seq;
-	}
+    int videoHeight;
+    String streamType; // DESKTOP or VIDEO
+    String shareStatus; // START_DESKTOP_SHARE or STOP_DESKTOP_SHARE
+    int videoWidth;
 
-	
-	public int getVideoWidth() {
-		return videoWidth;
-	}
+    String currentVideoPosition;
 
-	public void setVideoWidth(int videoWidth) {
-		this.videoWidth = videoWidth;
-	}
+    public String getCurrentVideoPosition() {
+	return currentVideoPosition;
+    }
 
-	public int getVideoHeight() {
-		return videoHeight;
-	}
+    public void setCurrentVideoPosition(String currentVideoPosition) {
+	this.currentVideoPosition = currentVideoPosition;
+    }
 
-	public void setVideoHeight(int videoHeight) {
-		this.videoHeight = videoHeight;
-	}
+    public int getSeq() {
+	return seq;
+    }
 
-	public String getStreamType() {
-		return streamType;
-	}
+    public void setSeq(int seq) {
+	this.seq = seq;
+    }
 
-	public void setStreamType(String streamType) {
-		this.streamType = streamType;
-	}
+    public int getVideoWidth() {
+	return videoWidth;
+    }
 
-	public String getShareStatus() {
-		return shareStatus;
-	}
+    public void setVideoWidth(int videoWidth) {
+	this.videoWidth = videoWidth;
+    }
 
-	public void setShareStatus(String shareStatus) {
-		this.shareStatus = shareStatus;
-	}
+    public int getVideoHeight() {
+	return videoHeight;
+    }
 
-	
-	
-	
-	public String getUsername() {
-		return username;
-	}
+    public void setVideoHeight(int videoHeight) {
+	this.videoHeight = videoHeight;
+    }
 
-	public void setUsername(String username) {
-		this.username = username;
-	}
+    public String getStreamType() {
+	return streamType;
+    }
 
-	public boolean isAudio() {
-		return audio;
-	}
+    public void setStreamType(String streamType) {
+	this.streamType = streamType;
+    }
 
-	public void setAudio(boolean audio) {
-		this.audio = audio;
-	}
+    public String getShareStatus() {
+	return shareStatus;
+    }
 
-	public boolean isVideo() {
-		return video;
-	}
+    public void setShareStatus(String shareStatus) {
+	this.shareStatus = shareStatus;
+    }
 
-	public void setVideo(boolean video) {
-		this.video = video;
-	}
+    public String getUsername() {
+	return username;
+    }
 
-	public boolean getVideo() {
-		return video;
-	}
+    public void setUsername(String username) {
+	this.username = username;
+    }
 
-	
-	public String getFlvpath() {
-		return flvpath;
-	}
+    public boolean isAudio() {
+	return audio;
+    }
 
-	public void setFlvpath(String flvpath) {
-		this.flvpath = flvpath;
-	}
-	
+    public void setAudio(boolean audio) {
+	this.audio = audio;
+    }
+
+    public boolean isVideo() {
+	return video;
+    }
+
+    public void setVideo(boolean video) {
+	this.video = video;
+    }
+
+    public boolean getVideo() {
+	return video;
+    }
+
+    public String getFlvpath() {
+	return flvpath;
+    }
+
+    public void setFlvpath(String flvpath) {
+	this.flvpath = flvpath;
+    }
+
+    public String toString() {
+
+	StringBuffer sb = new StringBuffer();
+	sb.append(" username :" + username + " , " + flvpath + " : " + flvpath + "  , audio : " + audio);
+	sb.append("video :" + video + ", ");
+	sb.append("seq :" + seq + ", ");
+	sb.append("videoHeight :" + videoHeight + ", ");
+	sb.append("streamType :" + streamType + ", ");
+	sb.append("shareStatus :" + shareStatus + ", ");
+	sb.append("videoWidth :" + videoWidth + ", ");
+	sb.append("currentVideoPosition :" + currentVideoPosition + ", ");
+	return sb.toString();
+    }
+
 }
