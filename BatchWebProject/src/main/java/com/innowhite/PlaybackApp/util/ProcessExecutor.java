@@ -86,16 +86,12 @@ class StreamGobbler extends Thread {
 		while ((line = br.readLine()) != null) {
 		    if (line.contains("duration")) {
 			getSubstr(line, "duration", videohm);
-
 		    } else if (line.contains("width")) {
 			getSubstr(line, "width", videohm);
-
 		    } else if (line.contains("height")) {
 			getSubstr(line, "height", videohm);
-
 		    } else if (line.contains("filesize")) {
 			getSubstr(line, "filesize", videohm);
-
 		    }
 		}
 	    }
@@ -108,15 +104,14 @@ class StreamGobbler extends Thread {
     }
 
     public void getSubstr(String line, String val, HashMap videohm) {
-
-	String temp[] = line.split(":");
-	if (temp.length == 2) {
-	    if (temp[1] != null && PlaybackUtil.getNumLong(temp[1]) > 0) {
-		videohm.put(val, temp[1].trim());
-	    }
-	    // if (val != null)
-	    // this.videohm.put("size", val);
-	}
-
+		String temp[] = line.split(":");
+		if (temp.length == 2) {
+		    if (temp[1] != null && PlaybackUtil.getNumLong(temp[1]) > 0) {
+		    	log.debug("-->Inside ProcessExecutor.. "+val+"="+temp[1].trim());
+		    	videohm.put(val, temp[1].trim());
+		    }
+		    // if (val != null)
+		    // this.videohm.put("size", val);
+		}
     }
 }
