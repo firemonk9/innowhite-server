@@ -265,7 +265,7 @@ public class PlaybackDataService {
 		    else {
 			if (audioDataList.size() > 0) {
 			    log.debug("Session has no audios. Since, room has audios.. creating silent audio for this session.");
-			    sessionAudio = createSilentAudio(sessionEndTime - sessionStartTime);
+			    sessionAudio = createSilentAudio((int)sessionEndTime - sessionStartTime);
 			} else {
 			    sessionAudio = null;
 			}
@@ -625,7 +625,8 @@ public class PlaybackDataService {
 		long prevAudioEndTime = sessionAudioDataList.get(i - 1).getEndTime().getTime();
 		if ((audioStartTime - prevAudioEndTime) > 0) {
 		    log.debug(":::padAudioPlaylist:::(audioStartTime-prevAudioEndTime)>0");
-		    String silentAudioPath = createSilentAudio(audioStartTime - audioStartTime - prevAudioEndTime).getFilePath();
+		    //String silentAudioPath = createSilentAudio(audioStartTime - audioStartTime - prevAudioEndTime).getFilePath();
+		    String silentAudioPath = createSilentAudio(audioStartTime - prevAudioEndTime).getFilePath();
 		    log.debug("silentAudioPath: " + silentAudioPath);
 		    ad.setStartTime(new Date(prevAudioEndTime));
 		    ad.setEndTime(new Date(audioStartTime));
@@ -653,11 +654,12 @@ public class PlaybackDataService {
 	String silentAudioPath = playbackVO.getSilentAudioPath();// "C:/Users/sony/Desktop/Innowhite/playback/silence.avi";
 	String newAudioPath = PlaybackUtil.getUnique();
 	String cmd = null;
-	if (duration <= 3600) {
-	    cmd = "-i " + silentAudioPath + " -ss 00:00:00 -t " + PlaybackUtil.secondsToHours(duration) + " -ar 44100 -ab 64k " + silentAudioPath.replace(".avi", newAudioPath + "silence.mp3");
+	if (duration <= 36000) {
+	    cmd = " -i " + silentAudioPath + " -ss 00:00:00 -t " + PlaybackUtil.secondsToHours(duration) + " -ar 44100 -ab 64k " + silentAudioPath.replace(".avi", newAudioPath + "silence.mp3");
 	} else {
-	    log.debug("cannot create silent audio of " + duration + " (>3600)seconds");
+	    log.debug("cannot create silent audio of " + duration + " (>36000)seconds");
 	}
+	//cmd = cmd = " -i "+silentAudioPath+"";
 	PlaybackUtil.invokeFfmpegProcess(cmd);
 	ad.setStartTime(new Date(0));
 	ad.setEndTime(new Date(duration));
