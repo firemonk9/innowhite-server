@@ -204,6 +204,7 @@ public class PlaybackDataService {
 			    // session audios in mp3 format
 			    prepareAudioForSessionBucket(sb, j, audioDataList.get(j), sessionStartTime, sessionEndTime);
 			}
+			log.debug("DONE: Prepared session bucket audios!");
 		    }
 		    // if room has videos, find which of them lie in the current
 		    // session
@@ -221,7 +222,7 @@ public class PlaybackDataService {
 		log.debug("session buckets prepared!!");
 
 		log.debug("--------------------------------------------------------------");
-		log.debug("Preparing Video(concat audio and video) Playlist for each session!");
+		log.debug("Preparing VideoPlaylist(concat final audio/video) for each session!");
 		log.debug("--------------------------------------------------------------");
 		Iterator sessionKeys = sessionMap.keySet().iterator();
 		String cmd = null;
@@ -759,7 +760,7 @@ public class PlaybackDataService {
 
     private static void prepareAudioForSessionBucket(SessionBucket sb, int j, AudioData audioData, long sessionStartTime, long sessionEndTime) {
 	log.debug("------------------------------------");
-	log.debug("preparing AudioForSessionBucket.....");
+	log.debug("preparing Audio "+j+" ForSessionBucket.....");
 	log.debug("------------------------------------");
 	long audioStartTime = audioData.getStartTime().getTime();
 	long audioEndTime = audioData.getEndTime().getTime();
@@ -832,11 +833,13 @@ public class PlaybackDataService {
 	if (ad != null) {
 	    log.debug("audioData: File Path:: " + ad.getFilePath());
 	    sb.getAudioDataList().add(ad);
-	} else {
-	    log.debug("audioData: File Path:: " + ad.getFilePath());
-	    sb.getAudioDataList().add(ad);
+	} 
+	else {
+		log.warn("no audio");
+//	    log.debug("audioData: File Path:: " + ad.getFilePath());
+//	    sb.getAudioDataList().add(ad);
 	}
-	log.debug("DONE! Preparing audios for session bucket!");
+	log.debug("Prepared audio "+j+" for session bucket!");
     }
 
     private static ArrayList<String> mapAudioToVideoStartBetween(List<AudioData> audioList, int j, List<VideoData> videos, long sessionStartTime, long sessionEndTime) {
