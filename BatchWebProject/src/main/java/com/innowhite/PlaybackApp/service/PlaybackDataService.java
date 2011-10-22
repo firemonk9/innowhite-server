@@ -265,7 +265,7 @@ public class PlaybackDataService {
 		    else {
 			if (audioDataList.size() > 0) {
 			    log.debug("Session has no audios. Since, room has audios.. creating silent audio for this session.");
-			    sessionAudio = createSilentAudio((int)sessionEndTime - sessionStartTime);
+			    sessionAudio = createSilentAudio(sessionEndTime - sessionStartTime);
 			} else {
 			    sessionAudio = null;
 			}
@@ -296,14 +296,17 @@ public class PlaybackDataService {
 		    String[] screenShareArr = getScreenShareDimensions(sessionVideoDataList, videohm).split("##");
 		    String videoDimensions = screenShareArr[0];
 		    String screenShareFlag = screenShareArr[1];
+		    log.info("videoDimensions:: "+videoDimensions);
+		    log.info("screenShareFlag:: "+screenShareFlag);
 		    // if session has atleast 1 video
 		    if (sessionVideoDataList.size() > 0) {
 			// if screen-share was recorded
 			if (screenShareFlag.equals("true")) {
 			    paddedSessionVideoPlaylist = padSessionVideoPlaylist(sessionVideoDataList, videoDimensions, videohm);
+			    uniformSessionVideoDataList = setVideoFormatResolution(paddedSessionVideoPlaylist, videoDimensions);
 			}
 			// Set resolution of all Session Bucket Videos
-			uniformSessionVideoDataList = setVideoFormatResolution(paddedSessionVideoPlaylist, videoDimensions);
+			uniformSessionVideoDataList = setVideoFormatResolution(sessionVideoDataList, videoDimensions);
 			log.debug("_______________________________________________________________");
 			log.debug("Number of videos after setting resolution :: " + uniformSessionVideoDataList.size());
 			for (int i = 0; i < uniformSessionVideoDataList.size(); i++) {
@@ -546,7 +549,7 @@ public class PlaybackDataService {
 	VideoData vd = null;
 	// String newVideoPath = PlaybackUtil.getUnique();
 	String cmd = null;
-
+	log.debug(":::setting resolution :::"+dim[0] + ":" + dim[1]);
 	for (int i = 0; i < sessionVideoDataList.size(); i++) {
 	    vd = new VideoData();
 	    long a = (sessionVideoDataList.get(i).getEndTime().getTime() - sessionVideoDataList.get(i).getStartTime().getTime());
