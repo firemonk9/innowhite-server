@@ -294,8 +294,8 @@ public class PlaybackDataService {
 		    String[] screenShareArr = getScreenShareDimensions(sessionVideoDataList, videohm).split("##");
 		    String videoDimensions = screenShareArr[0];
 		    String screenShareFlag = screenShareArr[1];
-		    log.info("videoDimensions:: "+videoDimensions);
-		    log.info("screenShareFlag:: "+screenShareFlag);
+		    log.debug("videoDimensions:: "+videoDimensions);
+		    log.debug("screenShareFlag:: "+screenShareFlag);
 		    // if session has atleast 1 video
 		    if (sessionVideoDataList.size() > 0) {
 				// if screen-share was recorded
@@ -463,14 +463,12 @@ public class PlaybackDataService {
 				PlaybackUtil.invokeVideoAttribProcess(cmd, videohm);
 				log.debug("DESKTOP Video :: breaking out!!"+videoType);
 				break;// i=sessionVideoDataList.size();
-		    }
-		    // executed only when last video is being processed and no screen-share detected
-		    if (i == sessionVideoDataList.size()-1) {
+		    }else if (videoType != null && i == (sessionVideoDataList.size()-1)) {
+		    	// executed only when last video is being processed and no screen-share detected
 		    	log.debug("i == sessionVideoDataList.size()-1.. no screen-share.. getting dimensions of whiteboard video..");
 				String cmd = " -i "+sessionVideoDataList.get(0).getFilePath();
 				PlaybackUtil.invokeVideoAttribProcess(cmd, videohm);
-		    }
-		    if (videoType == null) {
+		    }else if (videoType == null) {
 		    	log.warn("printing the videoObj :: " + sessionVideoDataList);
 		    }
 		}
