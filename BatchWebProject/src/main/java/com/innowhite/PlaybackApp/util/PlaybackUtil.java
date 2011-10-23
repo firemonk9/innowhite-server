@@ -163,9 +163,9 @@ public class PlaybackUtil {
 	} else if (isUbuntu()) {
 	    playbackVO.setFfmpegPath(playbackVO.getUbuntuFFmpegPath());
 	    playbackVO.setTempLocation(playbackVO.getUbuntuTempLocation());
-	    playbackVO.setMencoderPath(playbackVO.getWinMencoderPath());
-	    playbackVO.setMp3WrapPath(playbackVO.getWinMp3WrapPath());
-	    playbackVO.setSilentAudioPath(playbackVO.getWinSilentAudioPath());
+	    playbackVO.setMencoderPath(playbackVO.getUbuntuMencoderPath());
+	    playbackVO.setMp3WrapPath(playbackVO.getUbuntuMp3WrapPath());
+	    playbackVO.setSilentAudioPath(playbackVO.getUbuntuSilentAudioPath());
 	}
     }
 
