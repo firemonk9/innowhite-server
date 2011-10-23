@@ -47,6 +47,17 @@ public class PlayBackPlayList implements Serializable {
     @Column(name = "height")
     int height;
 
+    @Column(name = "youtube_url")
+    String youtubeUrl;
+    
+    public String getYoutubeUrl() {
+        return youtubeUrl;
+    }
+
+    public void setYoutubeUrl(String youtubeUrl) {
+        this.youtubeUrl = youtubeUrl;
+    }
+
     public long getSize() {
 	return size;
     }
