@@ -649,7 +649,7 @@ public class PlaybackDataService {
 	String newAudioPath = PlaybackUtil.getUnique();
 	String cmd = null;
 	if (duration <= 7200000) {
-	    cmd = " -i " + silentAudioPath + " -ss 00:00:00 -t " + PlaybackUtil.secondsToHours(duration) + " -ar 44100 -ab 64k " + silentAudioPath.replace(".mp4", newAudioPath + "silence.mp3");
+	    cmd = " -i " + silentAudioPath + " -ss 00:00:00 -t " + PlaybackUtil.secondsToHours(duration) + " -ar 44100 -ab 64k " + silentAudioPath.replace(".mp4", newAudioPath + "silent.mp3");
 	} else {
 	    log.debug("cannot create silent audio of " + duration + " (>7200000)seconds");
 	}
