@@ -117,7 +117,15 @@ public class PlaybackDataService {
 	    // VideoDataDao videoDataDao = (VideoDataDao)
 	    // factory.getBean("videoDataDao");
 	    List<VideoData> videoDataList = videoDataDao.getVideoDataList(roomId);
-
+	    for(int i=0; i<videoDataList.size(); i++){
+	    	long vS = videoDataList.get(i).getStartTime().getTime();
+	    	long vE = videoDataList.get(i).getEndTime().getTime();
+	    	if ((vE-vS)<3){
+	    		videoDataList.remove(i);
+	    		log.debug("removing video at index:"+i+" with end-time:"+vE+" and start-time:"+vS);
+	    	}
+	    }
+	    
 	    // Process each of the video files to transcode for seek.
 	    PreProcessFLV.processFLV(videoDataList, playbackVO);
 
