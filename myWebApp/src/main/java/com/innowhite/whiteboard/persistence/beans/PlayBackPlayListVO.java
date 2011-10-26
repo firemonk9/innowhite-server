@@ -9,8 +9,26 @@ public class PlayBackPlayListVO {
    
     private String width;
     private String height;
+    private String youtubeUrl;
+    private String status;
     
     
+    public String getStatus() {
+        return status;
+    }
+
+    public void setStatus(String status) {
+        this.status = status;
+    }
+
+    public String getYoutubeUrl() {
+        return youtubeUrl;
+    }
+
+    public void setYoutubeUrl(String youtubeUrl) {
+        this.youtubeUrl = youtubeUrl;
+    }
+
     public String getWidth() {
         return width;
     }

@@ -14,13 +14,21 @@
 		<result property="size" column="size" />
 		<result property="width" column="width" />
 		<result property="height" column="height" />
+		<result property="height" column="height" />
+		<result property="youtubeUrl" column="youtube_url" />
+		<result property="status" column="status" />
+		
+		
+		
+		
+		
 	
 	</resultMap>
 
 
 	<select id="getPlayListQuery" resultMap="playListMapId" parameterClass="java.lang.String">
 		select
-		duration, file_path, server , size , width, height from playback_playlist where room_id=#room_id# order by id asc;
+		duration, file_path, server , size , width, height,youtube_url,status  from playback_playlist where room_id=#room_id# order by id asc;
 	</select>
 
 
