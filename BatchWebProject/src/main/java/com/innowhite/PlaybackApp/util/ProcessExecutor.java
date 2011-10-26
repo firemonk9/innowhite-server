@@ -50,6 +50,19 @@ public class ProcessExecutor {
 	    int exitVal = proc.waitFor();
 	    // log.debug("ExitValue: " + exitVal);
 
+	    
+	    // TO DO -- This is a temporary fix... need to find a permanent solution.
+	    while(true)
+	    {
+		if(errorGobbler.isAlive() || outputGobbler.isAlive()){
+		    log.debug(" The threads which read the data from the terminal are still alive --------so sleeping for 10 seconds...  ");
+		    Thread.sleep(10000);
+		}else{
+		    break;
+		}
+	    }
+	    
+	    
 	    if (exitVal == 0) {
 		return true;
 	    }
@@ -83,7 +96,14 @@ class StreamGobbler extends Thread {
 	    BufferedReader br = new BufferedReader(isr);
 	    String line = null;
 	    if (this.videohm != null) {
+		
+//		log.debug(" starting sleep for the thred ... ");
+//		Thread.sleep(10000);
+//		log.debug(" Thread woke up");
+		
 		while ((line = br.readLine()) != null) {
+		    //log.debug(" line ::::---- "+line);		    
+		    
 		    if (line.contains("duration")) {
 			getSubstr(line, "duration", videohm);
 		    } else if (line.contains("width")) {
