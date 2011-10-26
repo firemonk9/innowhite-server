@@ -377,7 +377,7 @@ public class PlaybackDataService {
 		    PlaybackUtil.invokeVideoAttribProcess(cmd1, videohm);
 		    playlist.setWidth(PlaybackUtil.getNum(videohm.get("width")));
 		    playlist.setHeight(PlaybackUtil.getNum(videohm.get("height")));
-		    playlist.setSize(PlaybackUtil.getNumLong(videohm.get("size")));
+		    playlist.setSize(PlaybackUtil.getNumLong(videohm.get("filesize")));
 		    playlist.setDuration(videohm.get("duration"));
 		    playlist.setFilePath(flv_filepath);
 		    playlist.setInsertedDate(new Date());
