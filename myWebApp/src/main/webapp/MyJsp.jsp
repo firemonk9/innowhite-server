@@ -108,6 +108,8 @@ if(userName==null || userName.equals("null")){
 
 <html lang="en">
 
+
+
 <!--
 Smart developers always View Source.
 
@@ -191,8 +193,12 @@ var innowhitePluginLoaded = false;
      }
 
 
-     
-  
+     function make_skype_call(){
+    	 var a =1;
+    	 //skype:innowhiteconf?call.click();
+    	 //skype().innowhiteConf?call;
+     }
+   
      
 var screen_sharing=false;
 
@@ -326,7 +332,7 @@ function plugin()
 	  {
 		  
 		 // alert("sending to net");
-		  $.get(loadUrl, { roomId: roomName, recordStatus: "recordStop" } );
+		  $.get(loadUrl, { roomId: roomName, recordStatus: "recordStopKill" } );
 		  alert(" Session Recording is stopping");
 		 // $("#result").html(ajax_load).load(loadUrl, "language=php&version=5");    
 	  }
@@ -549,6 +555,9 @@ if ( hasProductInstall && !hasRequestedVersion ) {
 		<br>
 		<div class="DOMWindowContent" style="width:100%;height: 100%;"></div>
 	</div>
+	
+	<a href="skype:innowhiteconf?call" id="skypeid"><img src="http://download.skype.com/share/skypebuttons/buttons/call_green_white_153x63.png" visible=false style="border: none;" width="153" height="63" alt="Skype Me!" /></a>
+	
 	<!--
 <object id="plugin0" type="application/x-innowhite" width="300" height="300">
     <param name="onload" value="pluginLoaded" />

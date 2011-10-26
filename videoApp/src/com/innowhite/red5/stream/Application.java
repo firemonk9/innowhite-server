@@ -173,10 +173,15 @@ public class Application extends MultiThreadedApplicationAdapter implements IApp
 	    // getSharedObject(stream.getScope().getParent(),
 	    // INNOWHITE_STREAM_STATUS_SO);
 
-	    ISharedObject screenShareSo = screenShareSharedObjectMap.get(stream.getScope().getName());
-	    if (screenShareSo != null)
-		screenShareSo.sendMessage("screenShareStopped", new ArrayList<Object>());
+	    log.debug(" obj recording :: " + obj.isRecording());
+	    if (obj.isRecording() == true) {
 
+		ISharedObject screenShareSo = screenShareSharedObjectMap.get(stream.getScope().getName());
+		log.debug("  screenShareSo  "+screenShareSo);
+		if (screenShareSo != null) {
+		    screenShareSo.sendMessage("screenShareStopped", new ArrayList<Object>());
+		}
+	    }
 	    // if (obj.isRecording() == true) {
 
 	    // stream.getScope().getS
@@ -214,14 +219,13 @@ public class Application extends MultiThreadedApplicationAdapter implements IApp
     /** {@inheritDoc} */
     @Override
     public boolean appConnect(IConnection conn, Object[] params) {
-	log.info("VideoApp appConnect"+params);
-	for (Object val : params){
+	log.info("VideoApp appConnect" + params);
+	for (Object val : params) {
 	    log.info(val.toString());
 	}
-	
-	log.info("VideoApp connection "+conn);
-	
-	
+
+	log.info("VideoApp connection " + conn);
+
 	return super.appConnect(conn, params);
     }
 

@@ -23,7 +23,7 @@ public class SessionRecording extends HttpServlet {
     private static final long serialVersionUID = 1L;
 
     private static final Logger log = LoggerFactory.getLogger(SessionRecording.class);
-    
+
     /**
      * @see HttpServlet#HttpServlet()
      */
@@ -45,18 +45,20 @@ public class SessionRecording extends HttpServlet {
 	    // instead of the InputStream directly?
 	    String roomId = request.getParameter("roomId");
 	    String recordStatus = request.getParameter("recordStatus");
-	    
-	    log.debug(" got req to start/stop recording for room "+roomId+" recordStatus  "+recordStatus);
-	    
+
+	    log.debug(" got req to start/stop recording for room " + roomId + " recordStatus  " + recordStatus);
+
 	    if (recordStatus != null && recordStatus.equals("recordStart")) {
 		SessionRecordingDAO.startSessionRecording(roomId);
-	    } else  if (recordStatus != null && recordStatus.equals("recordStop")) {
+	    } else if (recordStatus != null && recordStatus.equals("recordStopKill")) 
+		// this is force kill when user closes the browser while recording is still on. 
+	    {
 		SessionRecordingDAO.endSessionRecording(roomId);
-		
-// TO DO		// This is a temporary fix.When closing a record session, send a request to close
-		// video also.
 		WhiteboardToVideoService.stopRecording(roomId);
+	    } else if (recordStatus != null && recordStatus.equals("recordStop")) {
+		SessionRecordingDAO.endSessionRecording(roomId);
 	    }
+	    //
 
 	    // String xmlReply = "<Reply><Message>"+msg+"</Message></Reply>";
 	    // byte[] data = xmlReply.getBytes("UTF-8");

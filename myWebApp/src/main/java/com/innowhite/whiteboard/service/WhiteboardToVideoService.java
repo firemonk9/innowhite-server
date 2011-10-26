@@ -52,7 +52,7 @@ public class WhiteboardToVideoService {
     }
 
     public static void stopRecording(String roomId) {
-	log.debug("entered stopRecording ");
+	log.debug("entered stopRecording for room "+roomId);
 
 	try {
 	    if (roomId != null && roomFileMap.get(roomId) != null) {

@@ -35,7 +35,7 @@ public class VideoDataDAO {
 
 	int x = 0;
 	try {
-	    log.debug(" entered saveVideoData  ");
+	    log.debug(" entered saveVideoData  "+videoDataVO);
 	    x = (Integer) sqlMapClient.insert("saveVideoData", videoDataVO);
 
 	} catch (SQLException e) {
