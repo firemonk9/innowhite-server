@@ -21,15 +21,13 @@ public class PlayBackPlayListDao {
     }
 
     @Transactional
-    public void savePlayBackPlayList(List<PlayBackPlayList> playBackPlayList) {
+    public void savePlayBackPlayList(PlayBackPlayList flowPlayerVideo) {
 
-	for (PlayBackPlayList obj : playBackPlayList) {
-	    
+//	for (PlayBackPlayList obj : flowPlayerVideo) {
 	    // hard coding the server 2 addr for now. will need to change it.
-	    obj.setServer("innos2.innowhite.com");
-	    save(obj);
-	}
-
+    	flowPlayerVideo.setServer("innos2.innowhite.com");
+	    save(flowPlayerVideo);
+//    }
     }
 
     @Transactional
