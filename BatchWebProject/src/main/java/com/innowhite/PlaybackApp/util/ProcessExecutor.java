@@ -123,7 +123,7 @@ class StreamGobbler extends Thread {
 	}
     }
 
-    public void getSubstr(String line, String val, HashMap videohm) {
+    public void getSubstr(String line, String val, HashMap<String,String> videohm) {
 		String temp[] = line.split(":");
 		if (temp.length == 2) {
 		    if (temp[1] != null && PlaybackUtil.getNumLong(temp[1]) > 0) {

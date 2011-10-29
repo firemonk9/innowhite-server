@@ -86,21 +86,23 @@ public class PlaybackUtil {
     }
 
     public static void invokeMp3Process(String cmd) {
-	ProcessExecutor pe = new ProcessExecutor();
-	// MakeExectuable obj = new MakeExectu
-
-	boolean val = pe.executeProcess(playbackVO.getMp3WrapPath() + " " + cmd, playbackVO.getTempLocation(), null);
-	log.debug("return from the Mp3Wrap process executor :: " + val);
+		ProcessExecutor pe = new ProcessExecutor();
+		boolean val = pe.executeProcess(playbackVO.getMp3WrapPath() + " " + cmd, playbackVO.getTempLocation(), null);
+		log.debug("return from the Mp3Wrap process executor :: " + val);
     }
 
     public static void invokeMencoderProcess(String cmd) {
-	ProcessExecutor pe = new ProcessExecutor();
-	// MakeExectuable obj = new MakeExectu
-
-	boolean val = pe.executeProcess(playbackVO.getMencoderPath() + " " + cmd, playbackVO.getTempLocation(), null);
-	log.debug("return from the Mencoder process executor :: " + val);
+		ProcessExecutor pe = new ProcessExecutor();
+		boolean val = pe.executeProcess(playbackVO.getMencoderPath() + " " + cmd, playbackVO.getTempLocation(), null);
+		log.debug("return from the Mencoder process executor :: " + val);
     }
 
+	public static void invokeImageMagickProcess(String cmd) {
+		ProcessExecutor pe = new ProcessExecutor();
+		boolean val = pe.executeProcess(cmd, playbackVO.getTempLocation(), null);
+		log.debug("return from the ImageMagick process executor :: " + val);
+	}
+    
     public static String secondsToHours(long seconds) {
 	int ss = (int) ((seconds / 1000) % 60);
 	int mm = (int) ((seconds / 1000) / 60);
@@ -155,6 +157,7 @@ public class PlaybackUtil {
 	    playbackVO.setTempLocation(playbackVO.getWinTempLocation());
 	    playbackVO.setMencoderPath(playbackVO.getWinMencoderPath());
 	    playbackVO.setMp3WrapPath(playbackVO.getWinMp3WrapPath());
+//	    playbackVO.setImageMagickPath(playbackVO.getWinImageMagickPath());
 	    playbackVO.setSilentAudioPath(playbackVO.getWinSilentAudioPath());
 
 	} else if (isMac()) {
@@ -165,17 +168,16 @@ public class PlaybackUtil {
 	    playbackVO.setTempLocation(playbackVO.getUbuntuTempLocation());
 	    playbackVO.setMencoderPath(playbackVO.getUbuntuMencoderPath());
 	    playbackVO.setMp3WrapPath(playbackVO.getUbuntuMp3WrapPath());
+//	    playbackVO.setImageMagickPath(playbackVO.getUbuntuImageMagickPath());
 	    playbackVO.setSilentAudioPath(playbackVO.getUbuntuSilentAudioPath());
 	}
     }
 
     public static void printVals(long videoStartTime, long sessionStartTime, long videoEndTime, long sessionEndTime) {
-
-	log.warn("videoStartTime ::" + videoStartTime);
-	log.warn("sessionStartTime ::" + sessionStartTime);
-	log.warn("videoEndTime ::" + videoEndTime);
-	log.warn("sessionEndTime ::" + sessionEndTime);
-
+		log.warn("videoStartTime ::" + videoStartTime);
+		log.warn("sessionStartTime ::" + sessionStartTime);
+		log.warn("videoEndTime ::" + videoEndTime);
+		log.warn("sessionEndTime ::" + sessionEndTime);
     }
 
     public static int getNum(String string) {
@@ -199,4 +201,5 @@ public class PlaybackUtil {
 	}
 	return 0;
     }
+
 }
