@@ -401,15 +401,18 @@ public class PlaybackDataService {
     }
 
     private List<VideoData> formatSessionVideoPlaylist(List<VideoData> paddedSessionVideoDatalist, String maxVideoDimensions) {
-	    //TODO convert videos to images
+	    log.debug("Inside formatSessionVideoPlaylist...");
+    	//TODO convert videos to images
     	List<VideoData> tempVideoDataList = paddedSessionVideoDatalist;
 	    String cmd = null;
 	    int duration;
 	    String uniquePath = PlaybackUtil.getUnique();
 	    
+	    log.debug("creating black background image..");
 	    cmd = " convert -size "+maxVideoDimensions+" xc:black "+playbackVO.getTempLocation()+"/backgroundImage"+uniquePath+".jpg";
 	    PlaybackUtil.invokeImageMagickProcess(cmd);
 	    for(int i=0; i<tempVideoDataList.size();i++){
+	    	log.debug("convert video to images..");
 	    	cmd = " -i "+tempVideoDataList.get(i).getFilePath()+" -r 2 -f image2 "+playbackVO.getTempLocation()+"/sessionVideos/%05d.jpg";
 	    	PlaybackUtil.invokeFfmpegProcess(cmd);
 	    	
@@ -417,15 +420,34 @@ public class PlaybackDataService {
 	    	cmd = " -i " + tempVideoDataList.get(i).getFilePath();
 	    	PlaybackUtil.invokeVideoAttribProcess(cmd, videohm1);
 		    duration = PlaybackUtil.getNum(videohm1.get("duration"));
-	    	
+		    log.debug("duration"+duration);
+		    
+		    String strDirectoy ="sessionVideo"+uniquePath;
+		    //TODO Create random sessionVideo directory
+		    boolean success = (new File(strDirectoy)).mkdir();
+		    if (success) {
+		    	log.debug("Random sessionVideo Directory: "+ strDirectoy + " created!");
+		    }  else{
+		    	log.warn("directory not created. may already exist"+strDirectoy);
+		    }
+
 	    	//TODO compose all images to a max width:height black background image
+		    log.debug("compose all images to a max width:height black background image");
 	    	for(int j=0; j<duration*2;j++){
-		    	cmd = " convert "+playbackVO.getTempLocation()+"/backgroundImage"+uniquePath+".jpg -gravity Center -draw \"image Over 0,0 0,0 '"+playbackVO.getTempLocation()+"/sessionVideos/"+String.format("%05d", j)+".jpg'\" "+String.format("%05d", j)+".jpg";
-			    PlaybackUtil.invokeImageMagickProcess(cmd);
+	    		//TODO check if file exists
+	    		File f = new File(playbackVO.getTempLocation()+"/"+strDirectoy+"/"+String.format("%05d", j)+".jpg");
+	    		if(f.exists()){
+//	    			log.debug("converting ");
+	    			cmd = " convert "+playbackVO.getTempLocation()+"/backgroundImage"+uniquePath+".jpg -gravity Center -draw \"image Over 0,0 0,0 '"+playbackVO.getTempLocation()+"/"+strDirectoy+"/"+String.format("%05d", j)+".jpg'\" "+String.format("%05d", j)+".jpg";
+				    PlaybackUtil.invokeImageMagickProcess(cmd);
+	    		}else{
+	    			log.warn("file/image does not exist.. exiting..");
+	    		}
 	    	}
 	    	
 		    //TODO convert images to videos
-		    cmd = " -y -r 2 -i "+playbackVO.getTempLocation()+"/sessionVideos/%05d.jpg -an "+paddedSessionVideoDatalist.get(i).getFilePath();
+	    	log.debug("convert images to videos");
+		    cmd = " -y -r 2 -i "+playbackVO.getTempLocation()+"/"+strDirectoy+"/%05d.jpg -an "+paddedSessionVideoDatalist.get(i).getFilePath();
 		    PlaybackUtil.invokeFfmpegProcess(cmd);
 //		    tempVideoDataList.remove(i);
 //		    vd.setFilePath(tempVideoDataList.get(i).get);
@@ -515,7 +537,6 @@ public class PlaybackDataService {
 			    log.warn(" The file path is null... this is not right. ");
 			}
 			
-			
 			//TODO resize screenShareImage using ImageMagick
 			String imagePath = curDir + "/screenShareImage.jpg";
 			String cmd = " convert "+imagePath+" -resize "+maxVideoDimensions+" "+playbackVO.getTempLocation()+"/01.jpg";
@@ -523,7 +544,7 @@ public class PlaybackDataService {
 	    	cmd = " convert "+imagePath+" -resize "+maxVideoDimensions+" "+playbackVO.getTempLocation()+"/02.jpg";
 	    	PlaybackUtil.invokeImageMagickProcess(cmd);
 			//TODO make 1sec video of screenShareImage 
-			cmd = "ffmpeg -r 2 -i "+playbackVO.getTempLocation()+"/%02d.jpg -an "+playbackVO.getTempLocation()+"tempPadScreenShareVideo"+padDuration+".flv";
+			cmd = " -y -r 2 -i "+playbackVO.getTempLocation()+"/%02d.jpg -an "+playbackVO.getTempLocation()+"tempPadScreenShareVideo"+padDuration+".flv";
 			PlaybackUtil.invokeFfmpegProcess(cmd);
 			//TODO concat (padDuration)number of 1sec videos
 			cmd = " -oac copy -ovc lavc ";
@@ -560,7 +581,6 @@ public class PlaybackDataService {
 	}
 	return tempSessionVideoPlaylist;
     }
-
 
 	private String getMaxVideoDimensions(List<VideoData> videoList, HashMap<String, String> vhm) {
 		log.debug("Entered getMaxVideoDimensions");

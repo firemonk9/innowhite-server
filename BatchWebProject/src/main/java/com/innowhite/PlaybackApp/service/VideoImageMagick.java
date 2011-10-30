@@ -16,9 +16,9 @@ public class VideoImageMagick {
 	    int duration = 0;
 	    String uniquePath = PlaybackUtil.getUnique();
 	    
-	    cmd = " convert -size "+maxVideoDimensions+" xc:black C:/Innowhite-git/temp/backgroundImage"+uniquePath+".jpg";
-	    System.out.println("command for converting video to images::"+cmd);
-	    PlaybackUtil.invokeImageMagickProcess(cmd);
+//	    cmd = " convert -size "+maxVideoDimensions+" xc:black C:/Innowhite-git/temp/backgroundImage"+uniquePath+".jpg";
+//	    System.out.println("command for converting video to images::"+cmd);
+//	    PlaybackUtil.invokeImageMagickProcess(cmd);
 	    
 	    for(int i=0; i<tempVideoDataList.size();i++){
 	    	cmd = " -i "+tempVideoDataList.get(i).getFilePath()+" -r 2 -f image2 C:/Innowhite-git/temp/sessionVideos/%05d.jpg";
@@ -56,7 +56,7 @@ public class VideoImageMagick {
 //		vd.setEndTime(endTime);
 		vd.setVideoType("WHITEBOARD");
 		vd.setFilePath("C:/Innowhite-git/temp/442664077_0384542695800x600finalSessionVideo6484551163playlist.flv");
-		vdList.set(0, vd);
+		vdList.add(0, vd);
 		VideoImageMagick vim = new VideoImageMagick();
 		vim.formatSessionVideoPlaylist(vdList, "1080x699");
 	}

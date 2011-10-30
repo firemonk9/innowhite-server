@@ -64,13 +64,12 @@ public class PlaybackUtil {
      */
     // public static void invokeVideoAttribProcess(String cmd, PlayBackPlayList
     // playlist) {
-	public static void invokeVideoAttribProcess(String cmd,
-			HashMap<String, String> videohm) {
+	public static void invokeVideoAttribProcess(String cmd,HashMap<String, String> videohm) {
 		ProcessExecutor pe = new ProcessExecutor();
 		// MakeExectuable obj = new MakeExectu
 
-		boolean val = pe.executeProcess(playbackVO.getFfmpegPath() + " " + cmd,
-				playbackVO.getTempLocation(), videohm);
+//		boolean val = pe.executeProcess(playbackVO.getFfmpegPath() + " " + cmd,playbackVO.getTempLocation(), videohm);
+		boolean val = pe.executeProcess("ffmpeg " + cmd,"C:/Innowhite-git/temp", videohm);
 		// log.debug(" populating the width , height, size and duration :: duration : "
 		// + playlist.getDuration() + " size " + playlist.getSize() + "  width "
 		// + playlist.getWidth() + " height + playlist.getHeight());
@@ -78,28 +77,31 @@ public class PlaybackUtil {
 	}
 
     public static void invokeFfmpegProcess(String cmd) {
-	ProcessExecutor pe = new ProcessExecutor();
-	// MakeExectuable obj = new MakeExectu
-
-	boolean val = pe.executeProcess(playbackVO.getFfmpegPath() + " " + cmd, playbackVO.getTempLocation(), null);
-	log.debug("return from the ffmpeg process executor :: " + val);
+		ProcessExecutor pe = new ProcessExecutor();
+		// MakeExectuable obj = new MakeExectu
+//		boolean val = pe.executeProcess(playbackVO.getFfmpegPath() + " " + cmd, playbackVO.getTempLocation(), null);
+		boolean val = pe.executeProcess("ffmpeg " + cmd, "C:/Innowhite-git/temp", null);
+		log.debug("return from the ffmpeg process executor :: " + val);
     }
 
     public static void invokeMp3Process(String cmd) {
 		ProcessExecutor pe = new ProcessExecutor();
-		boolean val = pe.executeProcess(playbackVO.getMp3WrapPath() + " " + cmd, playbackVO.getTempLocation(), null);
+//		boolean val = pe.executeProcess(playbackVO.getMp3WrapPath() + " " + cmd, playbackVO.getTempLocation(), null);
+		boolean val = pe.executeProcess("mp3wrap " + cmd, "C:/Innowhite-git/temp", null);
 		log.debug("return from the Mp3Wrap process executor :: " + val);
     }
 
     public static void invokeMencoderProcess(String cmd) {
 		ProcessExecutor pe = new ProcessExecutor();
-		boolean val = pe.executeProcess(playbackVO.getMencoderPath() + " " + cmd, playbackVO.getTempLocation(), null);
+//		boolean val = pe.executeProcess(playbackVO.getMencoderPath() + " " + cmd, playbackVO.getTempLocation(), null);
+		boolean val = pe.executeProcess("mencoder " + cmd, "C:/Innowhite-git/temp", null);
 		log.debug("return from the Mencoder process executor :: " + val);
     }
 
 	public static void invokeImageMagickProcess(String cmd) {
 		ProcessExecutor pe = new ProcessExecutor();
-		boolean val = pe.executeProcess(cmd, playbackVO.getTempLocation(), null);
+//		boolean val = pe.executeProcess(cmd, playbackVO.getTempLocation(), null);
+		boolean val = pe.executeProcess(cmd, "C:/Innowhite-git/temp", null);
 		log.debug("return from the ImageMagick process executor :: " + val);
 	}
     
