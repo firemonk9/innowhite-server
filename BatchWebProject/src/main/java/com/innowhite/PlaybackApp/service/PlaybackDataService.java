@@ -316,11 +316,11 @@ public class PlaybackDataService {
 					log.debug("session contains screenshare video..");
 				    paddedSessionVideoDatalist = padSessionVideoPlaylist(sessionVideoDataList, videohm, maxVideoDimensions);
 				    //uniformSessionVideoDataList = setVideoFormatResolution(paddedSessionVideoPlaylist, videoDimensions);
-//	TODO			    uniformSessionVideoDatalist = formatSessionVideoPlaylist(paddedSessionVideoDatalist, maxVideoDimensions);
+				    uniformSessionVideoDataList = formatSessionVideoPlaylist(paddedSessionVideoDatalist, maxVideoDimensions);
 				}else{
 					// Set resolution of all Session Bucket Videos
 					//uniformSessionVideoDataList = setVideoFormatResolution(sessionVideoDataList, videoDimensions);
-//	TODO				uniformSessionVideoDatalist = formatSessionVideoPlaylist(sessionVideoDataList, maxVideoDimensions);
+					uniformSessionVideoDataList = formatSessionVideoPlaylist(sessionVideoDataList, maxVideoDimensions);
 				}
 				log.debug("_______________________________________________________________");
 				log.debug("Number of videos after setting resolution :: " + uniformSessionVideoDataList.size());
@@ -400,14 +400,36 @@ public class PlaybackDataService {
 	}
     }
 
-    private Object formatSessionVideoPlaylist(List<VideoData> paddedSessionVideoDatalist, String maxVideoDimensions) {
+    private List<VideoData> formatSessionVideoPlaylist(List<VideoData> paddedSessionVideoDatalist, String maxVideoDimensions) {
 	    //TODO convert videos to images
-	    //ffmpeg -i 442664077_0384542695800x600finalSessionVideo6484551163playlist.flv -r 1 -f image2 %05d.jpg
-	    //TODO compose all images to a max width:height black background image
-	    //convert composite.jpg -gravity Center -draw "image Over 0,0 0,0 '00019.jpg'" zzzzzz.jpg
-	    //TODO convert images to videos
-	    //ffmpeg -i ffmpeg_temp/%05d.png -b 512 video2.mpg
-    	return null;
+    	List<VideoData> tempVideoDataList = paddedSessionVideoDatalist;
+	    String cmd = null;
+	    int duration;
+	    cmd = " convert -size "+maxVideoDimensions+" xc:black "+playbackVO.getTempLocation()+"/back_image.jpg";
+	    PlaybackUtil.invokeImageMagickProcess(cmd);
+	    for(int i=0; i<tempVideoDataList.size();i++){
+	    	cmd = " -i "+tempVideoDataList.get(i).getFilePath()+" -r 2 -f image2 "+playbackVO.getTempLocation()+"/sessionVideos/%05d.jpg";
+	    	PlaybackUtil.invokeFfmpegProcess(cmd);
+	    	
+	    	HashMap<String, String> videohm1 = new HashMap<String, String>();
+	    	cmd = " -i " + tempVideoDataList.get(i).getFilePath();
+	    	PlaybackUtil.invokeVideoAttribProcess(cmd, videohm1);
+		    duration = PlaybackUtil.getNum(videohm1.get("duration"));
+	    	
+	    	//TODO compose all images to a max width:height black background image
+	    	for(int j=0; j<duration*2;j++){
+		    	cmd = " convert "+playbackVO.getTempLocation()+"/back_image.jpg -gravity Center -draw \"image Over 0,0 0,0 '"+playbackVO.getTempLocation()+"/sessionVideos/"+String.format("%05d", j)+".jpg'\" "+String.format("%05d", j)+".jpg";
+			    PlaybackUtil.invokeImageMagickProcess(cmd);
+	    	}
+	    	
+		    //TODO convert images to videos
+		    cmd = " -y -r 2 -i "+playbackVO.getTempLocation()+"/%05d.jpg -an "+paddedSessionVideoDatalist.get(i).getFilePath();
+		    PlaybackUtil.invokeFfmpegProcess(cmd);
+//		    tempVideoDataList.remove(i);
+//		    vd.setFilePath(tempVideoDataList.get(i).get);
+//		    tempVideoDataList.add(i, paddedSessionVideoDatalist.get(i).getFilePath());
+	    }
+    	return tempVideoDataList ;
 	}
 
 	private PlayBackPlayList setPlayBackPlayList(String videoPath, String roomId) {
