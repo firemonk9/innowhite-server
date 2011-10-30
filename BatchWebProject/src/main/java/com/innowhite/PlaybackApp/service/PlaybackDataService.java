@@ -405,7 +405,9 @@ public class PlaybackDataService {
     	List<VideoData> tempVideoDataList = paddedSessionVideoDatalist;
 	    String cmd = null;
 	    int duration;
-	    cmd = " convert -size "+maxVideoDimensions+" xc:black "+playbackVO.getTempLocation()+"/back_image.jpg";
+	    String uniquePath = PlaybackUtil.getUnique();
+	    
+	    cmd = " convert -size "+maxVideoDimensions+" xc:black "+playbackVO.getTempLocation()+"/backgroundImage"+uniquePath+".jpg";
 	    PlaybackUtil.invokeImageMagickProcess(cmd);
 	    for(int i=0; i<tempVideoDataList.size();i++){
 	    	cmd = " -i "+tempVideoDataList.get(i).getFilePath()+" -r 2 -f image2 "+playbackVO.getTempLocation()+"/sessionVideos/%05d.jpg";
@@ -418,18 +420,18 @@ public class PlaybackDataService {
 	    	
 	    	//TODO compose all images to a max width:height black background image
 	    	for(int j=0; j<duration*2;j++){
-		    	cmd = " convert "+playbackVO.getTempLocation()+"/back_image.jpg -gravity Center -draw \"image Over 0,0 0,0 '"+playbackVO.getTempLocation()+"/sessionVideos/"+String.format("%05d", j)+".jpg'\" "+String.format("%05d", j)+".jpg";
+		    	cmd = " convert "+playbackVO.getTempLocation()+"/backgroundImage"+uniquePath+".jpg -gravity Center -draw \"image Over 0,0 0,0 '"+playbackVO.getTempLocation()+"/sessionVideos/"+String.format("%05d", j)+".jpg'\" "+String.format("%05d", j)+".jpg";
 			    PlaybackUtil.invokeImageMagickProcess(cmd);
 	    	}
 	    	
 		    //TODO convert images to videos
-		    cmd = " -y -r 2 -i "+playbackVO.getTempLocation()+"/%05d.jpg -an "+paddedSessionVideoDatalist.get(i).getFilePath();
+		    cmd = " -y -r 2 -i "+playbackVO.getTempLocation()+"/sessionVideos/%05d.jpg -an "+paddedSessionVideoDatalist.get(i).getFilePath();
 		    PlaybackUtil.invokeFfmpegProcess(cmd);
 //		    tempVideoDataList.remove(i);
 //		    vd.setFilePath(tempVideoDataList.get(i).get);
 //		    tempVideoDataList.add(i, paddedSessionVideoDatalist.get(i).getFilePath());
 	    }
-    	return tempVideoDataList ;
+    	return tempVideoDataList;
 	}
 
 	private PlayBackPlayList setPlayBackPlayList(String videoPath, String roomId) {
