@@ -169,7 +169,7 @@ public class PlaybackVO {
     public void setSilentAudioPath(String silentAudioPath) {
 	this.silentAudioPath = silentAudioPath;
     }
-
+    
     public String getUbuntuSilentAudioPath() {
 	return ubuntuSilentAudioPath;
     }
@@ -177,7 +177,7 @@ public class PlaybackVO {
     public void setUbuntuSilentAudioPath(String ubuntuSilentAudioPath) {
 	this.ubuntuSilentAudioPath = ubuntuSilentAudioPath;
     }
-
+   
     public String getUbuntuAudioPath() {
 	return ubuntuAudioPath;
     }
@@ -201,6 +201,39 @@ public class PlaybackVO {
     public void setAwsSecretKey(String awsSecretKey) {
 	this.awsSecretKey = awsSecretKey;
     }
+    
+//	public String getImageMagickPath() {
+//		return imageMagickPath;
+//	}
+//
+//	public void setImageMagickPath(String imageMagickPath) {
+//		this.imageMagickPath = imageMagickPath;
+//	}
+//
+//	public String getMacImageMagickPath() {
+//		return macImageMagickPath;
+//	}
+//
+//	public void setMacImageMagickPath(String macImageMagickPath) {
+//		this.macImageMagickPath = macImageMagickPath;
+//	}
+//
+//	public String getUbuntuImageMagickPath() {
+//		return ubuntuImageMagickPath;
+//	}
+//
+//	public void setUbuntuImageMagickPath(String ubuntuImageMagickPath) {
+//		this.ubuntuImageMagickPath = ubuntuImageMagickPath;
+//	}
+//
+//	public void setWinImageMagickPath(String winImageMagickPath) {
+//		this.winImageMagickPath = winImageMagickPath;
+//	}
+//
+//	public String getWinImageMagickPath() {
+//		return winImageMagickPath;
+//	}
+
 
     private String winAudioPath;
     private String ubuntuAudioPath;
@@ -212,7 +245,12 @@ public class PlaybackVO {
     private String mp3wrapPath;
     private String mencoderPath;
     private String silentAudioPath;
+//    private String imageMagickPath;
 
+//	private String winImageMagickPath;
+//	private String macImageMagickPath;
+//    private String ubuntuImageMagickPath;
+    
     private String winMencoderPath;
     private String macMencoderPath;
     private String ubuntuMencoderPath;
@@ -231,8 +269,7 @@ public class PlaybackVO {
 
     private String ubuntuSilentAudioPath;
     private String winSilentAudioPath;
-
+    
     private String awsAccessKey;
     private String awsSecretKey;
-
 }

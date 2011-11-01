@@ -20,16 +20,16 @@ public class ProcessExecutor {
 	    // String cmd = executable + " -i " + input + " " + params + " " +
 	    // output;
 	    log.debug(cmd);
-
+	    System.out.println("cmd from process executor::"+cmd);
 	    if (PlaybackUtil.isWindows() == false) {
-		File f = new File(tempPath + "/file_" + Math.random() * 10000 + ".sh");
-		FileWriter fw = new FileWriter(f);
-		fw.write("#!/bin/bash \n");
-		fw.write(cmd + "\n");
-		fw.close();
-		cmd = f.getAbsolutePath();
-
-		MakeExectuable.getInstance().setExecutable(cmd);
+			File f = new File(tempPath + "/file_" + Math.random() * 10000 + ".sh");
+			FileWriter fw = new FileWriter(f);
+			fw.write("#!/bin/bash \n");
+			fw.write(cmd + "\n");
+			fw.close();
+			cmd = f.getAbsolutePath();
+			
+			MakeExectuable.getInstance().setExecutable(cmd);
 	    }
 
 	    Runtime rt = Runtime.getRuntime();
@@ -123,7 +123,7 @@ class StreamGobbler extends Thread {
 	}
     }
 
-    public void getSubstr(String line, String val, HashMap videohm) {
+    public void getSubstr(String line, String val, HashMap<String,String> videohm) {
 		String temp[] = line.split(":");
 		if (temp.length == 2) {
 		    if (temp[1] != null && PlaybackUtil.getNumLong(temp[1]) > 0) {

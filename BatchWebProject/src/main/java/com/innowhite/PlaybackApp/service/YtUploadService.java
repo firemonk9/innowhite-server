@@ -37,13 +37,13 @@ public class YtUploadService {
 	String client_id = "innowhite";
 	String developer_key = "AI39si6Nb_onkYi1b7Efa13CIKvXb1Ivyz2JhSPfcuTdVd0ckNQ3fHMu3DzTXzij1aCLbCsjMP6I-M8LDNaWTQxPjwG0p9OUDw";
 	YouTubeService service = new YouTubeService(client_id, developer_key);
-	service.setUserCredentials("username", "password");
+	service.setUserCredentials("rahul7588@gmail.com", "");
 	VideoEntry newEntry = new VideoEntry();
 
 	YouTubeMediaGroup mg = newEntry.getOrCreateMediaGroup();
 	mg.setTitle(new MediaTitle());
 	mg.getTitle().setPlainTextContent("My Web Movie");
-	mg.addCategory(new MediaCategory(YouTubeNamespace.CATEGORY_SCHEME, "Web-conference"));
+	mg.addCategory(new MediaCategory(YouTubeNamespace.CATEGORY_SCHEME, "Tech"));
 	mg.setKeywords(new MediaKeywords());
 	mg.getKeywords().addKeyword("conference");
 	mg.setDescription(new MediaDescription());
@@ -56,7 +56,7 @@ public class YtUploadService {
 	// alternatively, one could specify just a descriptive string
 	// newEntry.setLocation("Hyderabad, India");
 
-	MediaFileSource ms = new MediaFileSource(new File("48938931307_0.avi"), "video/avi");
+	MediaFileSource ms = new MediaFileSource(new File("testFinal.avi"), "video/avi");
 	newEntry.setMediaSource(ms);
 
 	String uploadUrl = "http://uploads.gdata.youtube.com/feeds/api/users/default/uploads";
