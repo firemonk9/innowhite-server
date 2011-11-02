@@ -443,7 +443,7 @@ public class PlaybackDataService {
 		File f = new File(strDirectoy + "/" + String.format("%05d", j) + ".jpg");
 		if (f.exists()) {
 		    // log.debug("converting ");
-		    cmd = " convert " + playbackVO.getTempLocation() + "/backgroundImage" + uniquePath + ".jpg -gravity Center -draw \"image Over 0,0 0,0 '" +  strDirectoy + "/" + String.format("%05d", j) + ".jpg'\" " + strDirectoy+String.format("%05d", j) + ".jpg";
+		    cmd = " convert " + playbackVO.getTempLocation() + "/backgroundImage" + uniquePath + ".jpg -gravity Center -draw \"image Over 0,0 0,0 '" +  strDirectoy + "/" + String.format("%05d", j) + ".jpg'\" " + strDirectoy+"/"+String.format("%05d", j) + ".jpg";
 		    PlaybackUtil.invokeImageMagickProcess(cmd);
 		} else {
 		    log.warn("file/image does not exist.. exiting.." + f.getAbsolutePath());
