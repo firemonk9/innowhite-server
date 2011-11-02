@@ -410,7 +410,7 @@ public class PlaybackDataService {
 	String uniquePath = PlaybackUtil.getUnique();
 
 	log.debug("creating black background image..");
-	cmd = " convert -size " + maxVideoDimensions + " xc:black " + playbackVO.getTempLocation() + "/backgroundImage" + uniquePath + ".jpg";
+	cmd = " -size " + maxVideoDimensions + " xc:black " + playbackVO.getTempLocation() + "/backgroundImage" + uniquePath + ".jpg";
 	PlaybackUtil.invokeImageMagickProcess(cmd);
 	for (int i = 0; i < tempVideoDataList.size(); i++) {
 	    log.debug("convert video to images..");
@@ -443,7 +443,7 @@ public class PlaybackDataService {
 		File f = new File(strDirectoy + "/" + String.format("%05d", j) + ".jpg");
 		if (f.exists()) {
 		    // log.debug("converting ");
-		    cmd = " convert " + playbackVO.getTempLocation() + "/backgroundImage" + uniquePath + ".jpg -gravity Center -draw \"image Over 0,0 0,0 '" +  strDirectoy + "/" + String.format("%05d", j) + ".jpg'\" " + strDirectoy+String.format("%05d", j) + ".jpg";
+		    cmd =  playbackVO.getTempLocation() + "/backgroundImage" + uniquePath + ".jpg -gravity Center -draw \"image Over 0,0 0,0 '" +  strDirectoy + "/" + String.format("%05d", j) + ".jpg'\" " + strDirectoy+String.format("%05d", j) + ".jpg";
 		    PlaybackUtil.invokeImageMagickProcess(cmd);
 		} else {
 		    log.warn("file/image does not exist.. exiting.." + f.getAbsolutePath());
@@ -559,9 +559,9 @@ public class PlaybackDataService {
 
 		// TODO resize screenShareImage using ImageMagick
 		String imagePath = curDir + "/screenShareImage.jpg";
-		String cmd = " convert " + imagePath + " -resize " + maxVideoDimensions + " " + playbackVO.getTempLocation() + "/01.jpg";
+		String cmd =   imagePath + " -resize " + maxVideoDimensions + " " + playbackVO.getTempLocation() + "/01.jpg";
 		PlaybackUtil.invokeImageMagickProcess(cmd);
-		cmd = " convert " + imagePath + " -resize " + maxVideoDimensions + " " + playbackVO.getTempLocation() + "/02.jpg";
+		cmd =  imagePath + " -resize " + maxVideoDimensions + " " + playbackVO.getTempLocation() + "/02.jpg";
 		PlaybackUtil.invokeImageMagickProcess(cmd);
 		// TODO make 1sec video of screenShareImage
 		cmd = " -y -r 2 -i " + playbackVO.getTempLocation() + "/%02d.jpg -an " + playbackVO.getTempLocation() + "tempPadScreenShareVideo" + padDuration + ".flv";

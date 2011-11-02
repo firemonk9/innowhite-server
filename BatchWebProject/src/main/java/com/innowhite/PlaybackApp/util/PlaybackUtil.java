@@ -62,47 +62,55 @@ public class PlaybackUtil {
      */
     // public static void invokeVideoAttribProcess(String cmd, PlayBackPlayList
     // playlist) {
-	public static void invokeVideoAttribProcess(String cmd,HashMap<String, String> videohm) {
-		ProcessExecutor pe = new ProcessExecutor();
-		// MakeExectuable obj = new MakeExectu
-
-		boolean val = pe.executeProcess(playbackVO.getFfmpegPath() + " " + cmd,playbackVO.getTempLocation(), videohm);
-	//	boolean val = pe.executeProcess("ffmpeg " + cmd,"C:/Innowhite-git/temp", videohm);
-		// log.debug(" populating the width , height, size and duration :: duration : "
-		// + playlist.getDuration() + " size " + playlist.getSize() + "  width "
-		// + playlist.getWidth() + " height + playlist.getHeight());
-		log.debug("return from the vidAttrib ffmpeg process executor :: " + val);
-	}
+    public static void invokeVideoAttribProcess(String cmd, HashMap<String, String> videohm) {
+	ProcessExecutor pe = new ProcessExecutor();
+	// MakeExectuable obj = new MakeExectu
+	log.debug(" The command executed :  " + playbackVO.getFfmpegPath() + " " + cmd);
+	boolean val = pe.executeProcess(playbackVO.getFfmpegPath() + " " + cmd, playbackVO.getTempLocation(), videohm);
+	// boolean val = pe.executeProcess("ffmpeg " +
+	// cmd,"C:/Innowhite-git/temp", videohm);
+	// log.debug(" populating the width , height, size and duration :: duration : "
+	// + playlist.getDuration() + " size " + playlist.getSize() + "  width "
+	// + playlist.getWidth() + " height + playlist.getHeight());
+	log.debug("return from the vidAttrib ffmpeg process executor :: " + val);
+    }
 
     public static void invokeFfmpegProcess(String cmd) {
-		ProcessExecutor pe = new ProcessExecutor();
-		// MakeExectuable obj = new MakeExectu
-		boolean val = pe.executeProcess(playbackVO.getFfmpegPath() + " " + cmd, playbackVO.getTempLocation(), null);
-//		boolean val = pe.executeProcess("ffmpeg " + cmd, "C:/Innowhite-git/temp", null);
-		log.debug("return from the ffmpeg process executor :: " + val);
+	ProcessExecutor pe = new ProcessExecutor();
+	// MakeExectuable obj = new MakeExectu
+	log.debug(" The command executed :  " + playbackVO.getFfmpegPath() + " " + cmd);
+	boolean val = pe.executeProcess(playbackVO.getFfmpegPath() + " " + cmd, playbackVO.getTempLocation(), null);
+	// boolean val = pe.executeProcess("ffmpeg " + cmd,
+	// "C:/Innowhite-git/temp", null);
+	log.debug("return from the ffmpeg process executor :: " + val);
     }
 
     public static void invokeMp3Process(String cmd) {
-		ProcessExecutor pe = new ProcessExecutor();
-		boolean val = pe.executeProcess(playbackVO.getMp3WrapPath() + " " + cmd, playbackVO.getTempLocation(), null);
-//		boolean val = pe.executeProcess("mp3wrap " + cmd, "C:/Innowhite-git/temp", null);
-		log.debug("return from the Mp3Wrap process executor :: " + val);
+	ProcessExecutor pe = new ProcessExecutor();
+	log.debug(" The command executed :  " + playbackVO.getMp3WrapPath() + " " + cmd);
+	boolean val = pe.executeProcess(playbackVO.getMp3WrapPath() + " " + cmd, playbackVO.getTempLocation(), null);
+	// boolean val = pe.executeProcess("mp3wrap " + cmd,
+	// "C:/Innowhite-git/temp", null);
+	log.debug("return from the Mp3Wrap process executor :: " + val);
     }
 
     public static void invokeMencoderProcess(String cmd) {
-		ProcessExecutor pe = new ProcessExecutor();
-		boolean val = pe.executeProcess(playbackVO.getMencoderPath() + " " + cmd, playbackVO.getTempLocation(), null);
-//		boolean val = pe.executeProcess("mencoder " + cmd, "C:/Innowhite-git/temp", null);
-		log.debug("return from the Mencoder process executor :: " + val);
+	ProcessExecutor pe = new ProcessExecutor();
+	log.debug(" The command executed :  " + playbackVO.getMencoderPath() + " " + cmd);
+	boolean val = pe.executeProcess(playbackVO.getMencoderPath() + " " + cmd, playbackVO.getTempLocation(), null);
+	// boolean val = pe.executeProcess("mencoder " + cmd,
+	// "C:/Innowhite-git/temp", null);
+	log.debug("return from the Mencoder process executor :: " + val);
     }
 
-	public static void invokeImageMagickProcess(String cmd) {
-		ProcessExecutor pe = new ProcessExecutor();
-		boolean val = pe.executeProcess(cmd, playbackVO.getTempLocation(), null);
-//		boolean val = pe.executeProcess(cmd, "C:/Innowhite-git/temp", null);
-		log.debug("return from the ImageMagick process executor :: " + val);
-	}
-    
+    public static void invokeImageMagickProcess(String cmd) {
+	ProcessExecutor pe = new ProcessExecutor();
+	log.debug(" The command executed : /usr/bin/convert " + cmd);
+	boolean val = pe.executeProcess("/usr/bin/convert " + cmd, playbackVO.getTempLocation(), null);
+	// boolean val = pe.executeProcess(cmd, "C:/Innowhite-git/temp", null);
+	log.debug("return from the ImageMagick process executor :: " + val);
+    }
+
     public static String secondsToHours(long seconds) {
 	int ss = (int) ((seconds / 1000) % 60);
 	int mm = (int) ((seconds / 1000) / 60);
@@ -157,7 +165,7 @@ public class PlaybackUtil {
 	    playbackVO.setTempLocation(playbackVO.getWinTempLocation());
 	    playbackVO.setMencoderPath(playbackVO.getWinMencoderPath());
 	    playbackVO.setMp3WrapPath(playbackVO.getWinMp3WrapPath());
-//	    playbackVO.setImageMagickPath(playbackVO.getWinImageMagickPath());
+	    // playbackVO.setImageMagickPath(playbackVO.getWinImageMagickPath());
 	    playbackVO.setSilentAudioPath(playbackVO.getWinSilentAudioPath());
 
 	} else if (isMac()) {
@@ -168,16 +176,16 @@ public class PlaybackUtil {
 	    playbackVO.setTempLocation(playbackVO.getUbuntuTempLocation());
 	    playbackVO.setMencoderPath(playbackVO.getUbuntuMencoderPath());
 	    playbackVO.setMp3WrapPath(playbackVO.getUbuntuMp3WrapPath());
-//	    playbackVO.setImageMagickPath(playbackVO.getUbuntuImageMagickPath());
+	    // playbackVO.setImageMagickPath(playbackVO.getUbuntuImageMagickPath());
 	    playbackVO.setSilentAudioPath(playbackVO.getUbuntuSilentAudioPath());
 	}
     }
 
     public static void printVals(long videoStartTime, long sessionStartTime, long videoEndTime, long sessionEndTime) {
-		log.warn("videoStartTime ::" + videoStartTime);
-		log.warn("sessionStartTime ::" + sessionStartTime);
-		log.warn("videoEndTime ::" + videoEndTime);
-		log.warn("sessionEndTime ::" + sessionEndTime);
+	log.warn("videoStartTime ::" + videoStartTime);
+	log.warn("sessionStartTime ::" + sessionStartTime);
+	log.warn("videoEndTime ::" + videoEndTime);
+	log.warn("sessionEndTime ::" + sessionEndTime);
     }
 
     public static int getNum(String string) {
