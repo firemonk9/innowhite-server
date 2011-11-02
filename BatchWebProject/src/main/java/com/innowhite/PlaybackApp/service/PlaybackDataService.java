@@ -760,7 +760,7 @@ public class PlaybackDataService {
 	// mencoder.exe -oac copy -ovc lavc wb_audio3.avi
 	// screen_share_audio3.avi -o complete33.avi
 	VideoData vd = new VideoData();
-	String sessionVideoPath = uniformSessionVideoDataList.get(0).getFilePath().replace(".avi", "SessionVideo" + sessionCounter + ".avi");
+	String sessionVideoPath = uniformSessionVideoDataList.get(0).getFilePath().replace(".flv", "SessionVideo" + sessionCounter + ".avi");
 	;
 	if (uniformSessionVideoDataList.size() > 1) {
 	    String cmd = " -oac copy -ovc lavc ";
