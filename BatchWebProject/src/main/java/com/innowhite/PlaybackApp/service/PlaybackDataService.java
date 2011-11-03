@@ -436,15 +436,16 @@ public class PlaybackDataService {
 	    // TODO compose all images to a max width:height black background
 	    // image
 	    log.debug("compose all images to a max width:height black background image");
-	    for (int j = 0; j < duration * 2; j++) {
+	    for (int j = 1; j <= duration * 2; j++) {
 		// TODO check if file exists
 		File f = new File(strDirectoy + "/" + String.format("%05d", j) + ".jpg");
 		if (f.exists()) {
 		    // log.debug("converting ");
-
-		    cmd = playbackVO.getTempLocation() + "/backgroundImage" + uniquePath + ".jpg -gravity Center -draw \"image Over 0,0 0,0 '" + strDirectoy + "/" + String.format("%05d", j)
-			    + ".jpg'\" " + strDirectoy + String.format("%05d", j) + ".jpg";
-
+			String biPath = playbackVO.getTempLocation() + "/backgroundImage" + uniquePath + ".jpg";
+			String imPath = strDirectoy + "/" + String.format("%05d", j) + ".jpg";
+			//convert composite.jpg -gravity Center -draw "image Over 0,0 0,0 '00019.jpg'" zzzzzz.jpg
+		    cmd = " "+biPath+" -gravity Center -draw \"image Over 0,0 0,0 '"+imPath+"'\" "+imPath;
+		    log.debug("Composing "+imPath);
 		    PlaybackUtil.invokeImageMagickProcess(cmd);
 		} else {
 		    log.warn("file/image does not exist.. exiting.." + f.getAbsolutePath());

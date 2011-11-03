@@ -46,7 +46,8 @@ public class YoutubeUploadService {
 			log.debug("youtube: started uploading video on youtube...");
 			log.debug("youtube: video_url to be uploaded-"+video_url);
 			YouTubeService service = new YouTubeService(client_id,developer_key);
-			service.setUserCredentials("innowhite.com@gmail.com", "dhiraj31");
+			log.debug("youtube: creating service object::"+service);
+			service.setUserCredentials("innowhite.com@gmail.a", "dhiraj31");
 			log.debug("youtube: username, password...");
 			
 			VideoEntry newEntry = new VideoEntry();
