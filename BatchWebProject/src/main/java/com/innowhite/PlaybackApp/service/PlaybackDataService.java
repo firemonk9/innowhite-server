@@ -414,16 +414,16 @@ public class PlaybackDataService {
 	PlaybackUtil.invokeImageMagickProcess(cmd);
 	for (int i = 0; i < tempVideoDataList.size(); i++) {
 	    log.debug("convert video to images..");
-	    
+
 	    String strDirectoy = playbackVO.getTempLocation() + "/sessionVideo" + uniquePath;
 	    // TODO Create random sessionVideo directory
 	    boolean success = createDir(strDirectoy);
-	    if(success == false){
+	    if (success == false) {
 		log.warn(" Could not create the directory.... returnign  ");
 		return null;
-		
+
 	    }
-	    
+
 	    cmd = " -i " + tempVideoDataList.get(i).getFilePath() + " -r 2 -f image2 " + strDirectoy + "/%05d.jpg";
 	    PlaybackUtil.invokeFfmpegProcess(cmd);
 
@@ -433,8 +433,6 @@ public class PlaybackDataService {
 	    duration = PlaybackUtil.getNum(videohm1.get("duration"));
 	    log.debug("duration" + duration);
 
-	  
-
 	    // TODO compose all images to a max width:height black background
 	    // image
 	    log.debug("compose all images to a max width:height black background image");
@@ -443,11 +441,10 @@ public class PlaybackDataService {
 		File f = new File(strDirectoy + "/" + String.format("%05d", j) + ".jpg");
 		if (f.exists()) {
 		    // log.debug("converting ");
-<<<<<<< HEAD
-		    cmd =  playbackVO.getTempLocation() + "/backgroundImage" + uniquePath + ".jpg -gravity Center -draw \"image Over 0,0 0,0 '" +  strDirectoy + "/" + String.format("%05d", j) + ".jpg'\" " + strDirectoy+String.format("%05d", j) + ".jpg";
-=======
-		    cmd = " convert " + playbackVO.getTempLocation() + "/backgroundImage" + uniquePath + ".jpg -gravity Center -draw \"image Over 0,0 0,0 '" +  strDirectoy + "/" + String.format("%05d", j) + ".jpg'\" " + strDirectoy+"/"+String.format("%05d", j) + ".jpg";
->>>>>>> 94250b3fe6c4a687b8a77d1a17ccde03997e50cf
+
+		    cmd = playbackVO.getTempLocation() + "/backgroundImage" + uniquePath + ".jpg -gravity Center -draw \"image Over 0,0 0,0 '" + strDirectoy + "/" + String.format("%05d", j)
+			    + ".jpg'\" " + strDirectoy + String.format("%05d", j) + ".jpg";
+
 		    PlaybackUtil.invokeImageMagickProcess(cmd);
 		} else {
 		    log.warn("file/image does not exist.. exiting.." + f.getAbsolutePath());
@@ -563,9 +560,9 @@ public class PlaybackDataService {
 
 		// TODO resize screenShareImage using ImageMagick
 		String imagePath = curDir + "/screenShareImage.jpg";
-		String cmd =   imagePath + " -resize " + maxVideoDimensions + " " + playbackVO.getTempLocation() + "/01.jpg";
+		String cmd = imagePath + " -resize " + maxVideoDimensions + " " + playbackVO.getTempLocation() + "/01.jpg";
 		PlaybackUtil.invokeImageMagickProcess(cmd);
-		cmd =  imagePath + " -resize " + maxVideoDimensions + " " + playbackVO.getTempLocation() + "/02.jpg";
+		cmd = imagePath + " -resize " + maxVideoDimensions + " " + playbackVO.getTempLocation() + "/02.jpg";
 		PlaybackUtil.invokeImageMagickProcess(cmd);
 		// TODO make 1sec video of screenShareImage
 		cmd = " -y -r 2 -i " + playbackVO.getTempLocation() + "/%02d.jpg -an " + playbackVO.getTempLocation() + "tempPadScreenShareVideo" + padDuration + ".flv";
