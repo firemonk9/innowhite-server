@@ -43,11 +43,12 @@ public class YoutubeUploadService {
 
 	public String uploadVideo(String video_url) {
 		try {
-
-			log.debug("started uploading video on youtube...");
+			log.debug("youtube: started uploading video on youtube...");
+			log.debug("youtube: video_url to be uploaded-"+video_url);
 			YouTubeService service = new YouTubeService(client_id,developer_key);
 			service.setUserCredentials("innowhite.com@gmail.com", "dhiraj31");
-
+			log.debug("youtube: username, password...");
+			
 			VideoEntry newEntry = new VideoEntry();
 			XmlBlob xmlBlob = new XmlBlob();
 			xmlBlob.setBlob("<yt:accessControl action='list' permission='denied'/>");
@@ -57,11 +58,15 @@ public class YoutubeUploadService {
 			// mg.setXmlBlob(xmlBlob);
 			mg.setTitle(new MediaTitle());
 			mg.getTitle().setPlainTextContent("Third Conference");
+			log.debug("youtube: set title..");
 			mg.addCategory(new MediaCategory(YouTubeNamespace.CATEGORY_SCHEME,"Tech"));
+			log.debug("youtube:  set category");
 			mg.setKeywords(new MediaKeywords());
 			mg.getKeywords().addKeyword("conference");
+			log.debug("youtube: set keywords");
 			mg.setDescription(new MediaDescription());
 			mg.getDescription().setPlainTextContent("Innowhite's hello world 3 YT upload");
+			log.debug("youtube: set description");
 			mg.setPrivate(false);
 			mg.addCategory(new MediaCategory(YouTubeNamespace.DEVELOPER_TAG_SCHEME, "mydevtag"));
 			mg.addCategory(new MediaCategory(YouTubeNamespace.DEVELOPER_TAG_SCHEME, "anotherdevtag"));
@@ -76,10 +81,11 @@ public class YoutubeUploadService {
 			String uploadUrl = "http://uploads.gdata.youtube.com/feeds/api/users/default/uploads";
 
 			VideoEntry createdEntry = service.insert(new URL(uploadUrl),newEntry);
+			log.debug("youtube: uploading finished");
 			YouTubeMediaGroup mediaGroup = createdEntry.getMediaGroup();
 			MediaPlayer mediaPlayer = mediaGroup.getPlayer();
 			youtube_url = mediaPlayer.getUrl();
-			log.debug("Youtube URL:: " + youtube_url);
+			log.debug("Youtube: UploadURL" + youtube_url);
 			// printVideoEntry(createdEntry, true);
 		} catch (MalformedURLException e) {
 			log.error(e.getMessage(), e);
