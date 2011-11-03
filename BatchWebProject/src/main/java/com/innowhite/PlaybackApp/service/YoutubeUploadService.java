@@ -100,6 +100,9 @@ public class YoutubeUploadService {
 			log.debug(se.getResponseBody());
 			return "";
 			// e.printStackTrace();
+		} catch (Exception ee){
+			log.error(ee.getMessage(), ee);
+			ee.printStackTrace();
 		}
 		log.debug("Video uploaded successfully on youtube!");
 		return youtube_url;
