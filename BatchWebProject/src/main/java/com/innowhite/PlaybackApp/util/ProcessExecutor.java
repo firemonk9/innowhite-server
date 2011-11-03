@@ -19,8 +19,8 @@ public class ProcessExecutor {
 	try {
 	    // String cmd = executable + " -i " + input + " " + params + " " +
 	    // output;
-	    log.debug(cmd);
-	    System.out.println("cmd from process executor::"+cmd);
+	    //log.debug(cmd);
+	    //System.out.println("cmd from process executor::"+cmd);
 	    if (PlaybackUtil.isWindows() == false) {
 			File f = new File(tempPath + "/file_" + Math.random() * 10000 + ".sh");
 			FileWriter fw = new FileWriter(f);

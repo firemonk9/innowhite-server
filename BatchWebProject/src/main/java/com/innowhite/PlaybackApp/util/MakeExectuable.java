@@ -29,7 +29,7 @@ public class MakeExectuable {
 	public String setExecutable(String fileName){
 		try {
 			
-			log.debug("setExecutable: "+fileName);
+			//log.debug("setExecutable: "+fileName);
 			
 			String[] cmd = new String[1];
 			cmd[0] = "chmod +x "+fileName;
