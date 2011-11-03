@@ -17,13 +17,13 @@ public class VideoService extends ApplicationAdapter {
     public void stopScreenShare(String roomId) {
 	//String conference = getConfId(roomId);
 	
-	
 	IClientBroadcastStream stream = Application.screenShareStremIdMap.get(roomId);
-	
 	log.debug("Request has come from client to stop screen share ::"+roomId+"  and streamId :"+stream);
-	
 	StreamServiceHelper.closeStream(stream);
 	// freeSwitchGateway.mute(conference, mute);
     }
+    
+   
+    
 
 }
