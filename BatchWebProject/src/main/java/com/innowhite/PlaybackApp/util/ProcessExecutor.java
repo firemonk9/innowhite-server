@@ -116,7 +116,7 @@ class StreamGobbler extends Thread {
 		}
 	    }
 	    // Show output in development
-	    log.debug(type + ">" + line);
+	    //log.debug(type + ">" + line);
 	} catch (Exception ioe) {
 	    log.error("" + ioe.getMessage(), ioe);
 	    ioe.printStackTrace();
