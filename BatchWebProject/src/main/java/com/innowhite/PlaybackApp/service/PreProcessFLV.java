@@ -6,6 +6,7 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
 import com.innowhite.PlaybackApp.model.VideoData;
+import com.innowhite.PlaybackApp.util.PlaybackUtil;
 import com.innowhite.PlaybackApp.util.PlaybackVO;
 import com.innowhite.PlaybackApp.util.ProcessExecutor;
 
@@ -26,6 +27,9 @@ public class PreProcessFLV {
 	for (VideoData vData : videoDataList) {
 
 	    String flvPath = vData.getFilePath();
+	    
+	    convertToAVIAndBackToFlv(flvPath);
+	    
 	    
 	    long duration = (vData.getEndTime().getTime() - vData.getStartTime().getTime());
 	    
@@ -50,4 +54,24 @@ public class PreProcessFLV {
 
     }
 
+    
+    private static void convertToAVIAndBackToFlv(String path){
+	
+	try{
+	    
+	    log.debug(" Temporary fix for whiteboard video size problem. Need to find better solution ");
+	    String cmd = " -i "+path+" "+path.replace("flv", "avi");
+	    PlaybackUtil.invokeFfmpegProcess(cmd);
+	    
+	    cmd = " -i "+path.replace("flv", "avi")+" -y "+path;
+	    PlaybackUtil.invokeFfmpegProcess(cmd);
+	    
+	    
+	    
+	}catch(Exception e){
+	    log.error(" error in  convertToAVIAndBackToFlv :: "+e.getMessage(),e);
+	}
+    }
+    
+    
 }
