@@ -1,7 +1,6 @@
 package com.innowhite.PlaybackApp.service;
 
 import java.io.File;
-import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 
@@ -30,7 +29,7 @@ public class VideoImageMagick {
 	for (int i = 0; i < tempVideoDataList.size(); i++) {
 	    log.debug("convert video to images..");
 
-	    String strDirectoy = playbackVO.getTempLocation() + "/sessionVideo" + uniquePath;
+	    String strDirectoy = playbackVO.getTempLocation() + "/sessionVideo" + uniquePath + i;
 	    // TODO Create random sessionVideo directory
 	    boolean success = createDir(strDirectoy);
 	    if (success == false) {
@@ -60,7 +59,7 @@ public class VideoImageMagick {
 			String imPath = strDirectoy + "/" + String.format("%05d", j) + ".jpg";
 			//convert composite.jpg -gravity Center -draw "image Over 0,0 0,0 '00019.jpg'" zzzzzz.jpg
 		    cmd = " "+biPath+" -gravity Center -draw \"image Over 0,0 0,0 '"+imPath+"'\" "+imPath;
-		    log.debug("Composing "+imPath);
+		    //log.debug("Composing "+imPath);
 		    PlaybackUtil.invokeImageMagickProcess(cmd);
 		} else {
 		    log.warn("file/image does not exist.. exiting.." + f.getAbsolutePath());
