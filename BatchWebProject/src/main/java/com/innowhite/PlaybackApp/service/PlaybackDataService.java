@@ -527,6 +527,7 @@ public class PlaybackDataService {
 	    
 		// TODO resize screenShareImage (in current directory) using ImageMagick
 		String imagePath = curDir + "/screenShareImage.jpg";
+		log.debug("before creating two images...");
 		cmd = " "+ imagePath + " -resize " + maxVideoDimensions + " " + strDirectoy + "/01.jpg";
 		PlaybackUtil.invokeImageMagickProcess(cmd);
 		log.debug("debug 1::"+cmd);
