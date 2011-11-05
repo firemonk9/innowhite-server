@@ -10,6 +10,9 @@ public class RahulTest {
 		String line = "width           : 1080 ";
 		String[] temp = line.split(":");// substring(line.indexOf(":") + 2);
 		System.out.println(temp[1].trim());
+		
+		String a = "abcd.wav";
+		System.out.println("audio: "+a.replace(a.substring(0), "avcd"));
 	}
 
 }

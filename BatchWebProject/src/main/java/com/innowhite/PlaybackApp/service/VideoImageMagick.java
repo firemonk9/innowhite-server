@@ -79,7 +79,7 @@ public class VideoImageMagick {
     }
 	    
 	    
-    private static boolean createDir(String strDirectoy) {
+    public static boolean createDir(String strDirectoy) {
 
 	boolean success = (new File(strDirectoy)).mkdir();
 	if (success) {
