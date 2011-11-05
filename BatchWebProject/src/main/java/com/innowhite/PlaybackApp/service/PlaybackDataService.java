@@ -527,11 +527,13 @@ public class PlaybackDataService {
 	    
 		// TODO resize screenShareImage (in current directory) using ImageMagick
 		String imagePath = curDir + "/screenShareImage.jpg";
-		cmd = imagePath + " -resize " + maxVideoDimensions + " " + strDirectoy + "/01.jpg";
+		cmd = " "+ imagePath + " -resize " + maxVideoDimensions + " " + strDirectoy + "/01.jpg";
 		PlaybackUtil.invokeImageMagickProcess(cmd);
-		cmd = imagePath + " -resize " + maxVideoDimensions + " " + strDirectoy + "/02.jpg";
+		log.debug("debug 1::"+cmd);
+		cmd = " "+imagePath + " -resize " + maxVideoDimensions + " " + strDirectoy + "/02.jpg";
 		PlaybackUtil.invokeImageMagickProcess(cmd);
-
+		log.debug("debug 1::"+cmd);
+		
 		// TODO make 1sec video of 2 screenShareImage's (2 frames)
 		String imageVideoPath = strDirectoy + "/tempSSPad" + uniquePath + ".flv";
 		cmd = " -y -r 2 -i " + strDirectoy + "/%02d.jpg -an " + imageVideoPath;
