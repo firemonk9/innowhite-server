@@ -499,6 +499,13 @@ public class PlaybackDataService {
 		log.debug(" Expected video duration(from database) :: " + dbDuration);
 		log.debug(" duration to pad is ::" + padDuration);
 
+		
+		if(padDuration == 0){
+		    
+		    log.debug("Padding is not needed as the pad duration is 0");
+		    return sessionVideoDataList; 
+		}
+		
 		// if (padDuration > 0 && padDuration < 7) {
 
 		// actualDuration-dbDuration
