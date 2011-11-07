@@ -27,15 +27,16 @@ public class PreProcessFLV {
 	for (VideoData vData : videoDataList) {
 
 	    String flvPath = vData.getFilePath();
-	    
-	    convertToAVIAndBackToFlv(flvPath);
-	    
-	    
-	    long duration = (vData.getEndTime().getTime() - vData.getStartTime().getTime());
-	    
-	    log.debug("entered pre processing of FLV file for " + flvPath+"  video type "+vData.getVideoType()+"  video actual duration "+duration);
 
-	    String command = "ruby /opt/InnowhiteData/scripts/Transcoder/transcoder.rb " + flvPath+" "+vData.getVideoType()+" "+duration;
+	    if (vData.getVideoType() != null && vData.getVideoType().equals("WHITEBOARD")) {
+		convertToAVIAndBackToFlv(flvPath);
+	    }
+
+	    long duration = (vData.getEndTime().getTime() - vData.getStartTime().getTime());
+
+	    log.debug("entered pre processing of FLV file for " + flvPath + "  video type " + vData.getVideoType() + "  video actual duration " + duration);
+
+	    String command = "ruby /opt/InnowhiteData/scripts/Transcoder/transcoder.rb " + flvPath + " " + vData.getVideoType() + " " + duration;
 
 	    ProcessExecutor pe = new ProcessExecutor();
 	    // MakeExectuable obj = new MakeExectu
@@ -47,31 +48,27 @@ public class PreProcessFLV {
 	    command = "flvtool2 -U " + flvPath;
 
 	    val = pe.executeProcess(command, "/opt/InnowhiteData/scripts/Transcoder/", null);
-	    
+
 	    log.debug(" the script that is  exeucted  ::" + command + " and the return val is " + val);
 
 	}
 
     }
 
-    
-    private static void convertToAVIAndBackToFlv(String path){
-	
-	try{
-	    
+    private static void convertToAVIAndBackToFlv(String path) {
+
+	try {
+
 	    log.debug(" Temporary fix for whiteboard video size problem. Need to find better solution ");
-	    String cmd = " -i "+path+" "+path.replace("flv", "avi");
+	    String cmd = " -i " + path + " " + path.replace("flv", "avi");
 	    PlaybackUtil.invokeFfmpegProcess(cmd);
-	    
-	    cmd = " -i "+path.replace("flv", "avi")+" -y "+path;
+
+	    cmd = " -i " + path.replace("flv", "avi") + " -y " + path;
 	    PlaybackUtil.invokeFfmpegProcess(cmd);
-	    
-	    
-	    
-	}catch(Exception e){
-	    log.error(" error in  convertToAVIAndBackToFlv :: "+e.getMessage(),e);
+
+	} catch (Exception e) {
+	    log.error(" error in  convertToAVIAndBackToFlv :: " + e.getMessage(), e);
 	}
     }
-    
-    
+
 }
