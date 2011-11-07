@@ -1,5 +1,6 @@
 package com.innowhite.PlaybackApp.util;
 
+import java.io.File;
 import java.util.Calendar;
 import java.util.HashMap;
 import java.util.List;
@@ -208,6 +209,17 @@ public class PlaybackUtil {
 
 	}
 	return 0;
+    }
+
+    public static boolean fileExists(String path) {
+	File f = new File(path);
+	if(f.exists() && f.length() > 0)
+	    return true;
+	else
+	{  
+	    log.warn(" The file  "+path+"  either does not exists or is of size 0");
+	    return false;
+	}
     }
 
 }

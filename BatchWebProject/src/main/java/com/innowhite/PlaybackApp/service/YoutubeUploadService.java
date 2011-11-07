@@ -27,6 +27,7 @@ import com.google.gdata.data.youtube.YtPublicationState;
 import com.google.gdata.data.youtube.YtStatistics;
 import com.google.gdata.util.ServiceException;
 import com.google.gdata.util.XmlBlob;
+import com.innowhite.PlaybackApp.util.PlaybackUtil;
 
 public class YoutubeUploadService {
 
@@ -43,6 +44,12 @@ public class YoutubeUploadService {
 
 	public String uploadVideo(String video_url) {
 		try {
+		    
+		    	if(PlaybackUtil.fileExists(video_url) == false)
+		    	{   
+		    	    log.warn("Cannot upload to youtube as the file does not exist");
+		    	    return null;
+		    	}
 			log.debug("youtube: started uploading video on youtube...");
 			log.debug("youtube: video_url to be uploaded-"+video_url);
 			YouTubeService service = new YouTubeService(client_id,developer_key);

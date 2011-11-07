@@ -120,12 +120,11 @@ public class PlaybackDataService {
 	    // TODO remove videos with (<=)3seconds duration
 	    List<VideoData> videoDataList = videoDataDao.getVideoDataList(roomId);
 	    for (int i = 0; i < videoDataList.size(); i++) {
-		
-		if(videoDataList.get(i) == null || videoDataList.get(i).getStartTime() == null || videoDataList.get(i).getEndTime() == null)
-		{
+
+		if (videoDataList.get(i) == null || videoDataList.get(i).getStartTime() == null || videoDataList.get(i).getEndTime() == null) {
 		    log.warn(" video cannot have bacis information null so exiting the process.  ");
-		    log.warn(" Getting invalid information for video obj "+videoDataList.get(i));
-		    
+		    log.warn(" Getting invalid information for video obj " + videoDataList.get(i));
+
 		    return;
 		}
 		long vS = videoDataList.get(i).getStartTime().getTime();
@@ -258,7 +257,7 @@ public class PlaybackDataService {
 		int sessionCounter = 0;
 		while (sessionKeys.hasNext()) {
 		    // to maintain a count of all the sessions
-			sessionCounter++;
+		    sessionCounter++;
 		    SessionRecordings session = (SessionRecordings) sessionKeys.next();
 		    long sessionStartTime = session.getStartTime().getTime();
 		    long sessionEndTime = session.getEndTime().getTime();
@@ -269,7 +268,8 @@ public class PlaybackDataService {
 		    log.debug("--------------------------------------------------------------");
 		    // sessionAudioDataList contains - session audios
 		    List<AudioData> sessionAudioDataList = sessionBucket.getAudioDataList();
-		    // paddedSessionAudioDataList contains - session audios are padded
+		    // paddedSessionAudioDataList contains - session audios are
+		    // padded
 		    List<AudioData> paddedSessionAudioDataList = new ArrayList<AudioData>();
 		    // contains the final audio
 		    AudioData sessionAudio = null;
@@ -302,11 +302,7 @@ public class PlaybackDataService {
 		    } else {
 			log.debug("Final session audio path:: NULL (Reason-No audios in Room)");
 		    }
-		    
-		    
-		    
-		    
-		    
+
 		    log.debug("--------------------------------------------------------------");
 		    log.debug("PREPARING SESSION VIDEO (pad screenshare, frmtRes(IM) and concat)");
 		    log.debug("--------------------------------------------------------------");
@@ -329,13 +325,13 @@ public class PlaybackDataService {
 			    // uniformSessionVideoDataList =
 			    // setVideoFormatResolution(paddedSessionVideoPlaylist,
 			    // videoDimensions);
-			    uniformSessionVideoDataList = VideoImageMagick.formatSessionVideoPlaylist(paddedSessionVideoDatalist, maxVideoDimensions,playbackVO);
+			    uniformSessionVideoDataList = VideoImageMagick.formatSessionVideoPlaylist(paddedSessionVideoDatalist, maxVideoDimensions, playbackVO);
 			} else {
 			    // Set resolution of all Session Bucket Videos
 			    // uniformSessionVideoDataList =
 			    // setVideoFormatResolution(sessionVideoDataList,
 			    // videoDimensions);
-			    uniformSessionVideoDataList = VideoImageMagick.formatSessionVideoPlaylist(sessionVideoDataList, maxVideoDimensions,playbackVO);
+			    uniformSessionVideoDataList = VideoImageMagick.formatSessionVideoPlaylist(sessionVideoDataList, maxVideoDimensions, playbackVO);
 			}
 			log.debug("_______________________________________________________________");
 			log.debug("Number of videos after setting resolution :: " + uniformSessionVideoDataList.size());
@@ -356,7 +352,7 @@ public class PlaybackDataService {
 			}
 		    }
 		    log.debug("FINAL SESSION VIDEO PATH::" + sessionVideo.getFilePath());
-		    
+
 		    log.debug("--------------------------------------------------------------");
 		    log.debug("PREPARING FINAL SESSION VIDEO: Merging Audio-Video");
 		    log.debug("--------------------------------------------------------------");
@@ -410,9 +406,9 @@ public class PlaybackDataService {
 		YoutubeUploadService ytUpload = new YoutubeUploadService();
 		String youtubeURL = ytUpload.uploadVideo(flowPlayerVideo.getFilePath());
 		log.debug("_______________________________________________________________");
-	    log.debug("flowPlayerVideoPath :: " + flowPlayerVideoPath);
-	    log.debug("youtubeURL :: " + youtubeURL);
-	    log.debug("_______________________________________________________________");
+		log.debug("flowPlayerVideoPath :: " + flowPlayerVideoPath);
+		log.debug("youtubeURL :: " + youtubeURL);
+		log.debug("_______________________________________________________________");
 		flowPlayerVideo.setYoutubeUrl(youtubeURL);
 		updateFinalVideoTable(flowPlayerVideo, playBackPlayListDao);
 	    }
@@ -420,7 +416,6 @@ public class PlaybackDataService {
 	    log.error(e.getMessage(), e);
 	}
     }
-
 
     private PlayBackPlayList setPlayBackPlayList(String videoPath, String roomId) {
 	HashMap<String, String> videohm1 = new HashMap<String, String>();
@@ -473,15 +468,15 @@ public class PlaybackDataService {
 	    if (videoType != null && videoType.equals("DESKTOP")) {
 		vd = new VideoData();
 		// String newVideoPath = PlaybackUtil.getUnique();
-		
+
 		log.debug("screen share video found. Padding with 3sec vid :");
 
-		//get the ffmpeg duration
+		// get the ffmpeg duration
 		HashMap<String, String> vhm = new HashMap<String, String>();
 		String cmd = " -i " + sessionVideoDataList.get(i).getFilePath();
-	    PlaybackUtil.invokeVideoAttribProcess(cmd, vhm);
-	    log.debug(" printing the video hash map ...::" + vhm);
-	    
+		PlaybackUtil.invokeVideoAttribProcess(cmd, vhm);
+		log.debug(" printing the video hash map ...::" + vhm);
+
 		long start_time = sessionVideoDataList.get(i).getStartTime().getTime();
 		long end_time = sessionVideoDataList.get(i).getEndTime().getTime();
 		long dbDuration = (end_time - start_time) / 1000;
@@ -492,20 +487,19 @@ public class PlaybackDataService {
 		vd.setEndTime(new Date(start_time + (padDuration)));
 
 		log.debug(" ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~");
-		log.debug(" start time for screen share video:: "+start_time);
-		log.debug(" end time for screen share video:: "+end_time);
+		log.debug(" start time for screen share video:: " + start_time);
+		log.debug(" end time for screen share video:: " + end_time);
 		log.debug(" ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~");
 		log.debug(" Actual (ffmpeg) video duration :: " + actualDuration);
 		log.debug(" Expected video duration(from database) :: " + dbDuration);
 		log.debug(" duration to pad is ::" + padDuration);
 
-		
-		if(padDuration == 0){
-		    
+		if (padDuration == 0) {
+
 		    log.debug("Padding is not needed as the pad duration is 0");
-		    return sessionVideoDataList; 
+		    return sessionVideoDataList;
 		}
-		
+
 		// if (padDuration > 0 && padDuration < 7) {
 
 		// actualDuration-dbDuration
@@ -521,27 +515,28 @@ public class PlaybackDataService {
 		else {
 		    log.warn(" The file path is null... this is not right. ");
 		}
-		
+
 		// Driectory for pad creating temp pads for screenshare
 		String uniquePath = PlaybackUtil.getUnique();
-		String strDirectoy = playbackVO.getTempLocation() + "/SSPads"+uniquePath;
-	    // TODO Create random sessionVideo directory
-	    boolean success = VideoImageMagick.createDir(strDirectoy);
-	    if (success == false) {
-	    	log.warn(" Could not create the directory.... returnign  ");
-		return null;
-	    }
-	    
-		// TODO resize screenShareImage (in current directory) using ImageMagick
+		String strDirectoy = playbackVO.getTempLocation() + "/SSPads" + uniquePath;
+		// TODO Create random sessionVideo directory
+		boolean success = VideoImageMagick.createDir(strDirectoy);
+		if (success == false) {
+		    log.warn(" Could not create the directory.... returnign  ");
+		    return null;
+		}
+
+		// TODO resize screenShareImage (in current directory) using
+		// ImageMagick
 		String imagePath = curDir + "/screenShareImage.jpg";
 		log.debug("before creating two images...");
-		cmd = " "+ imagePath + " -resize " + maxVideoDimensions + " " + strDirectoy + "/01.jpg";
+		cmd = " " + imagePath + " -resize " + maxVideoDimensions + " " + strDirectoy + "/01.jpg";
 		PlaybackUtil.invokeImageMagickProcess(cmd);
-		log.debug("debug 1::"+cmd);
-		cmd = " "+imagePath + " -resize " + maxVideoDimensions + " " + strDirectoy + "/02.jpg";
+		log.debug("debug 1::" + cmd);
+		cmd = " " + imagePath + " -resize " + maxVideoDimensions + " " + strDirectoy + "/02.jpg";
 		PlaybackUtil.invokeImageMagickProcess(cmd);
-		log.debug("debug 1::"+cmd);
-		
+		log.debug("debug 1::" + cmd);
+
 		// TODO make 1sec video of 2 screenShareImage's (2 frames)
 		String imageVideoPath = strDirectoy + "/tempSSPad" + uniquePath + ".flv";
 		cmd = " -y -r 2 -i " + strDirectoy + "/%02d.jpg -an " + imageVideoPath;
@@ -549,7 +544,7 @@ public class PlaybackDataService {
 		// TODO concat (padDuration)number of 1sec videos
 		cmd = " -oac copy -ovc lavc ";
 		for (int j = 0; j < (int) padDuration; j++) {
-		    cmd = cmd + imageVideoPath;
+		    cmd = cmd + " " + imageVideoPath;
 		}
 		cmd = cmd + " -o " + curDir + "/padScreenShareVideo" + uniquePath + ".flv";
 		log.debug("MenCoder Command for concatenating videos:::" + cmd);
@@ -650,14 +645,13 @@ public class PlaybackDataService {
 	return videohm.get("width") + "x" + videohm.get("height") + "##" + screenShareFlag;
     }
 
-   
     private String mergeAudioVideo(AudioData sessionAudio, VideoData sessionVideo) {
-    log.debug("Inside Merge finalSessionAudio and finalSessionVideo..............");
-    log.debug("_______________________________________________________________");
-    log.debug("sessionAudio :: " + sessionAudio.getFilePath());
+	log.debug("Inside Merge finalSessionAudio and finalSessionVideo..............");
+	log.debug("_______________________________________________________________");
+	log.debug("sessionAudio :: " + sessionAudio.getFilePath());
 	log.debug("sessionVideo :: " + sessionVideo.getFilePath());
 	log.debug("_______________________________________________________________");
-	
+
 	String newVideoPath = PlaybackUtil.getUnique();
 	String cmd = null;
 	// ffmpeg.exe -i 1332_2011-06-01-14-42-064756410402.mp3 -ar 44100 -ab
@@ -677,19 +671,18 @@ public class PlaybackDataService {
 											 // +
 											 // duration;
     }
-    
 
     private AudioData concatenateAudios(List<AudioData> paddedSessionAudioDataList, int sessionCounter) {
 	log.debug("Inside concatenateAudios..............");
 	AudioData ad = new AudioData();
 	String sessionAudioPath = paddedSessionAudioDataList.get(0).getFilePath().replace(".mp3", "SessionAudio" + sessionCounter + ".mp3");
 	if (paddedSessionAudioDataList.size() > 1) {
-	    String cmd = " "+sessionAudioPath;
+	    String cmd = " " + sessionAudioPath;
 	    // String cmd =
 	    // paddedSessionAudioDataList.get(0).getFilePath().replace(".mp3",
 	    // "finalSessionAudio.mp3");
 	    for (int i = 0; i < paddedSessionAudioDataList.size(); i++) {
-	    	cmd = cmd + " " + paddedSessionAudioDataList.get(i).getFilePath();
+		cmd = cmd + " " + paddedSessionAudioDataList.get(i).getFilePath();
 	    }
 	    log.debug("Mp3Wrap Command for concatenating audios:::" + cmd);
 	    PlaybackUtil.invokeMp3Process(cmd);
@@ -701,7 +694,8 @@ public class PlaybackDataService {
 	    ad.setEndTime(paddedSessionAudioDataList.get(0).getEndTime());
 	}
 	ad.setStartTime(paddedSessionAudioDataList.get(0).getStartTime());
-	//ad.setFilePath(paddedSessionAudioDataList.get(0).getFilePath().replace(".mp3", "finalSessionAudio.mp3"));
+	// ad.setFilePath(paddedSessionAudioDataList.get(0).getFilePath().replace(".mp3",
+	// "finalSessionAudio.mp3"));
 	ad.setFilePath(sessionAudioPath);
 	// ad.setId(id);
 	// ad.setRoomName(roomName);
@@ -761,12 +755,11 @@ public class PlaybackDataService {
 	vd.setFilePath(sessionVideoPath);
 	return vd;
     }
-    
 
     private List<AudioData> padAudioPlaylist(List<AudioData> sessionAudioDataList, long sessionStartTime) {
 	// Temporary sessionAudioPlaylist contains audios for this session
 	log.debug("Inside padAudioPlaylist..............");
-	//"silence"+newAudioPath+".mp3";
+	// "silence"+newAudioPath+".mp3";
 	List<AudioData> tempSessionAudioPlaylist = new ArrayList<AudioData>();
 	AudioData ad = null;
 	for (int i = 0; i < sessionAudioDataList.size(); i++) {
@@ -823,7 +816,7 @@ public class PlaybackDataService {
     }
 
     private AudioData createSilentAudio(long duration) {
-    log.debug("Inside createSilentAudio of " + duration + " seconds..............");
+	log.debug("Inside createSilentAudio of " + duration + " seconds..............");
 	AudioData ad = new AudioData();
 	String silentAudioPath = playbackVO.getSilentAudioPath();// "C:/Users/sony/Desktop/Innowhite/playback/silence.mp4";
 	String newAudioPath = PlaybackUtil.getUnique();
@@ -855,8 +848,8 @@ public class PlaybackDataService {
     }
 
     private String convertAVItoFLV(String avi_filepath) {
-    log.debug("Inside convertAVItoFLV ..............");
-    String cmd = " -i " + avi_filepath + " " + avi_filepath.replace(".avi", ".flv");
+	log.debug("Inside convertAVItoFLV ..............");
+	String cmd = " -i " + avi_filepath + " " + avi_filepath.replace(".avi", ".flv");
 	PlaybackUtil.invokeFfmpegProcess(cmd);
 	String flv_filepath = avi_filepath.replace(".avi", ".flv");
 	return flv_filepath;
@@ -1317,8 +1310,8 @@ public class PlaybackDataService {
     }
 
     private static void updateFinalVideoTable(PlayBackPlayList flowPlayerVideo, PlayBackPlayListDao playBackPlayListDao) {
-    log.debug("Inside updateFinalVideoTable ..............");
-    // ClassPathXmlApplicationContext appContext = new
+	log.debug("Inside updateFinalVideoTable ..............");
+	// ClassPathXmlApplicationContext appContext = new
 	// ClassPathXmlApplicationContext(new String[] { "root-context.xml" });
 	// of course, an ApplicationContext is just a BeanFactory
 	// BeanFactory factory = (BeanFactory) appContext;
