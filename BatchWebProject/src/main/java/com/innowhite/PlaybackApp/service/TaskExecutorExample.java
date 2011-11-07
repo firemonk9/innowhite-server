@@ -21,7 +21,7 @@ public class TaskExecutorExample {
 	    public void run() {
 		try {
 		    log.debug(" Before starting the wait thread ... ");
-		    Thread.sleep(30000);
+		    Thread.sleep(10000);
 		    log.debug(" After starting the wait thread ... ");
                 } catch (Exception ee) {
                     ee.printStackTrace();
