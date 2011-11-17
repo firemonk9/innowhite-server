@@ -24,16 +24,16 @@ public class VideoImageMagick {
 	String uniquePath = PlaybackUtil.getUnique();
 
 	log.debug("creating black background image..");
-	cmd = " -size " + maxVideoDimensions + " xc:black " + playbackVO.getTempLocation() + "/backgroundImage" + uniquePath + ".jpg";
+	cmd = " -size " + maxVideoDimensions + " xc:black " + playbackVO.getTempLocation()+"/backgroundImage"+uniquePath+".jpg";
 	PlaybackUtil.invokeImageMagickProcess(cmd);
 	for (int i = 0; i < tempVideoDataList.size(); i++) {
-	    log.debug("convert video to images..");
+	    log.debug("converting video "+i+" to images..");
 
 	    String strDirectoy = playbackVO.getTempLocation() + "/sessionVideo" + uniquePath + i;
 	    // TODO Create random sessionVideo directory
 	    boolean success = createDir(strDirectoy);
 	    if (success == false) {
-		log.warn(" Could not create the directory.... returnign  ");
+		log.warn(" Could not create the directory.... returning  ");
 		return null;
 
 	    }
@@ -45,11 +45,10 @@ public class VideoImageMagick {
 	    cmd = " -i " + tempVideoDataList.get(i).getFilePath();
 	    PlaybackUtil.invokeVideoAttribProcess(cmd, videohm1);
 	    duration = PlaybackUtil.getNum(videohm1.get("duration"));
-	    log.debug("duration" + duration);
+	    log.debug("duration of video "+i+":: "+ duration);
 
-	    // TODO compose all images to a max width:height black background
-	    // image
-	    log.debug("compose all images to a max width:height black background image");
+	    // TODO compose all images to a max width:height black background image
+	    log.debug("compose all images of video "+i+" on a black background image");
 	    for (int j = 1; j <= duration * 2; j++) {
 		// TODO check if file exists
 		File f = new File(strDirectoy + "/" + String.format("%05d", j) + ".jpg");
@@ -67,7 +66,7 @@ public class VideoImageMagick {
 	    }
 
 	    // TODO convert images to videos
-	    log.debug("convert images to videos");
+	    log.debug("convert images of video "+i+" back to videos");
 	    cmd = " -y -r 2 -i " + strDirectoy + "/%05d.jpg -an " + paddedSessionVideoDatalist.get(i).getFilePath();
 	    PlaybackUtil.invokeFfmpegProcess(cmd);
 	    // tempVideoDataList.remove(i);

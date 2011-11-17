@@ -107,10 +107,10 @@ public class PlaybackUtil {
 
     public static void invokeImageMagickProcess(String cmd) {
 	ProcessExecutor pe = new ProcessExecutor();
-	//log.debug(" The command executed : /usr/bin/convert " + cmd);
+	log.debug(" The command executed : /usr/bin/convert " + cmd);
 	boolean val = pe.executeProcess("/usr/bin/convert " + cmd, playbackVO.getTempLocation(), null);
 	// boolean val = pe.executeProcess(cmd, "C:/Innowhite-git/temp", null);
-	//log.debug("return from the ImageMagick process executor :: " + val);
+	log.debug("return from the ImageMagick process executor :: " + val);
     }
 
     public static String secondsToHours(long millis) {

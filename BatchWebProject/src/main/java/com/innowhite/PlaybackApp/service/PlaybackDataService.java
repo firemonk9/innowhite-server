@@ -556,7 +556,7 @@ public class PlaybackDataService {
 		//set the resolution
 		String[] dim = maxVideoDimensions.split("x");
 		PlaybackUtil.invokeFfmpegProcess(cmd);
-		cmd = " "+curDir+"/SSPad"+uniquePath+".flv -oac copy -ovc lavc -vf scale="+dim[0]+":"+dim[1]+" -o "+curDir+"/SSPad"+uniquePath+".flv";
+		cmd = " "+curDir+"/SSPad"+uniquePath+".flv -oac copy -ovc lavc -vf scale="+dim[0]+":"+dim[1]+" -o "+curDir+"/SSPad"+uniquePath+dim[0]+":"+dim[1]+".flv";
 		PlaybackUtil.invokeMencoderProcess(cmd);
 		
 		// String[] dim = maxVideoDimensions.split("x");
@@ -570,7 +570,7 @@ public class PlaybackDataService {
 		// PlaybackUtil.invokeMencoderProcess(cmd);
 		// padDuation determines - one of 6 videos (of 3s duration) path
 		// from the current directory
-		vd.setFilePath(curDir + "/SSPad"+uniquePath+".flv");
+		vd.setFilePath(curDir+"/SSPad"+uniquePath+dim[0]+":"+dim[1]+".flv");
 		// vd.setId(sessionVideoDataList.get(i).getId());
 		// vd.setRoomName(sessionVideoDataList.get(i).getRoomName());
 		// vd.setVideoType("VIDEO");
@@ -884,7 +884,7 @@ public class PlaybackDataService {
 	if (videoStartTime <= sessionStartTime && videoEndTime <= sessionEndTime && videoEndTime >= sessionStartTime) {
 	    log.debug("videoStartTime<=sessionStartTime && videoEndTime<=sessionEndTime && videoEndTime>=sessionStartTime");
 	    String newVideoPath = PlaybackUtil.getUnique();
-	    cmd = "-i " + videoPath + " -ss " + PlaybackUtil.secondsToHours(sessionStartTime - videoStartTime) + " -an -t " + PlaybackUtil.secondsToHours(videoEndTime - sessionStartTime) + " "
+	    cmd = "-i " + videoPath + " -ss " + PlaybackUtil.secondsToHours(sessionStartTime - videoStartTime) + " -an -t " + PlaybackUtil.secondsToHours(videoEndTime - sessionStartTime) + " -acodec copy -vcodec copy "
 		    + videoPath.replace(".flv", newVideoPath + ".flv");
 	    PlaybackUtil.invokeFfmpegProcess(cmd);
 	    vd = new VideoData();
@@ -894,7 +894,7 @@ public class PlaybackDataService {
 	} else if (videoStartTime <= sessionStartTime && videoEndTime >= sessionEndTime) {
 	    log.debug("videoStartTime<=sessionStartTime && videoEndTime>=sessionEndTime");
 	    String newVideoPath = PlaybackUtil.getUnique();
-	    cmd = "-i " + videoPath + " -ss " + PlaybackUtil.secondsToHours(sessionStartTime - videoStartTime) + " -an -t " + PlaybackUtil.secondsToHours(sessionEndTime - sessionStartTime) + " "
+	    cmd = "-i " + videoPath + " -ss " + PlaybackUtil.secondsToHours(sessionStartTime - videoStartTime) + " -an -t " + PlaybackUtil.secondsToHours(sessionEndTime - sessionStartTime) + " -acodec copy -vcodec copy "
 		    + videoPath.replace(".flv", newVideoPath + ".flv");
 	    PlaybackUtil.invokeFfmpegProcess(cmd);
 	    vd = new VideoData();
@@ -904,7 +904,7 @@ public class PlaybackDataService {
 	} else if (videoStartTime >= sessionStartTime && videoStartTime <= sessionEndTime && videoEndTime <= sessionEndTime && videoEndTime >= sessionStartTime) {
 	    log.debug("videoStartTime>=sessionStartTime && videoStartTime<=sessionEndTime && videoEndTime<=sessionEndTime && videoEndTime>=sessionStartTime");
 	    String newVideoPath = PlaybackUtil.getUnique();
-	    cmd = "-i " + videoPath + " -ss 00:00:00 -an -t " + PlaybackUtil.secondsToHours(videoEndTime - videoStartTime) + " " + videoPath.replace(".flv", newVideoPath + ".flv");
+	    cmd = "-i " + videoPath + " -ss 00:00:00 -an -t " + PlaybackUtil.secondsToHours(videoEndTime - videoStartTime) + " -acodec copy -vcodec copy " + videoPath.replace(".flv", newVideoPath + ".flv");
 	    PlaybackUtil.invokeFfmpegProcess(cmd);
 	    vd = new VideoData();
 	    vd.setFilePath(videoPath.replace(".flv", newVideoPath + ".flv"));
@@ -913,7 +913,7 @@ public class PlaybackDataService {
 	} else if (videoStartTime >= sessionStartTime && videoStartTime <= sessionEndTime && videoEndTime >= sessionEndTime) {
 	    log.debug("videoStartTime>=sessionStartTime && videoStartTime<=sessionEndTime && videoEndTime>=sessionEndTime");
 	    String newVideoPath = PlaybackUtil.getUnique();
-	    cmd = "-i " + videoPath + " -ss 00:00:00 -an -t " + PlaybackUtil.secondsToHours(sessionEndTime - videoStartTime) + " " + videoPath.replace(".flv", newVideoPath + ".flv");
+	    cmd = "-i " + videoPath + " -ss 00:00:00 -an -t " + PlaybackUtil.secondsToHours(sessionEndTime - videoStartTime) + " -acodec copy -vcodec copy " + videoPath.replace(".flv", newVideoPath + ".flv");
 	    PlaybackUtil.invokeFfmpegProcess(cmd);
 	    vd = new VideoData();
 	    vd.setFilePath(videoPath.replace(".flv", newVideoPath + ".flv"));
