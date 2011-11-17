@@ -558,7 +558,7 @@ public class PlaybackDataService {
 		PlaybackUtil.invokeFfmpegProcess(cmd);
 		int width = Integer.parseInt(dim[0]) - 10;
 		int height = Integer.parseInt(dim[1]) - 5;
-		cmd = " "+curDir+"/SSPad"+uniquePath+".flv -oac copy -ovc lavc -vf scale="+width+":"+height+" -o "+curDir+"/SSPad"+uniquePath+maxVideoDimensions+".flv";
+		cmd = " "+curDir+"/SSPad"+uniquePath+".flv -oac copy -ovc lavc -vf scale="+width+":"+height+" -o "+curDir+"/SSPad"+uniquePath+width+"x"+height+".flv";
 		PlaybackUtil.invokeMencoderProcess(cmd);
 		
 		// String[] dim = maxVideoDimensions.split("x");
@@ -572,7 +572,7 @@ public class PlaybackDataService {
 		// PlaybackUtil.invokeMencoderProcess(cmd);
 		// padDuation determines - one of 6 videos (of 3s duration) path
 		// from the current directory
-		vd.setFilePath(curDir+"/SSPad"+uniquePath+maxVideoDimensions+".flv");
+		vd.setFilePath(curDir+"/SSPad"+uniquePath+width+"x"+height+".flv");
 		// vd.setId(sessionVideoDataList.get(i).getId());
 		// vd.setRoomName(sessionVideoDataList.get(i).getRoomName());
 		// vd.setVideoType("VIDEO");
