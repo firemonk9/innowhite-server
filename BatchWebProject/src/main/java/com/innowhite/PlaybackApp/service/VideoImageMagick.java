@@ -20,7 +20,7 @@ public class VideoImageMagick {
 	// TODO convert videos to images
 	List<VideoData> tempVideoDataList = paddedSessionVideoDatalist;
 	String cmd = null;
-	int duration;
+	int duration = 0;
 	String uniquePath = PlaybackUtil.getUnique();
 
 	log.debug("creating black background image..");
