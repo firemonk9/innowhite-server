@@ -556,7 +556,7 @@ public class PlaybackDataService {
 		//set the resolution
 		String[] dim = maxVideoDimensions.split("x");
 		PlaybackUtil.invokeFfmpegProcess(cmd);
-		cmd = " "+curDir+"/SSPad"+uniquePath+".flv -oac copy -ovc lavc -vf scale="+dim[0]+":"+dim[1]+" -o "+curDir+"/SSPad"+uniquePath+dim[0]+":"+dim[1]+".flv";
+		cmd = " "+curDir+"/SSPad"+uniquePath+".flv -oac copy -ovc lavc -vf scale="+dim[0]+":"+dim[1]+" -o "+curDir+"/SSPad"+uniquePath+dim[0]+"x"+dim[1]+".flv";
 		PlaybackUtil.invokeMencoderProcess(cmd);
 		
 		// String[] dim = maxVideoDimensions.split("x");
@@ -570,7 +570,7 @@ public class PlaybackDataService {
 		// PlaybackUtil.invokeMencoderProcess(cmd);
 		// padDuation determines - one of 6 videos (of 3s duration) path
 		// from the current directory
-		vd.setFilePath(curDir+"/SSPad"+uniquePath+dim[0]+":"+dim[1]+".flv");
+		vd.setFilePath(curDir+"/SSPad"+uniquePath+dim[0]+"x"+dim[1]+".flv");
 		// vd.setId(sessionVideoDataList.get(i).getId());
 		// vd.setRoomName(sessionVideoDataList.get(i).getRoomName());
 		// vd.setVideoType("VIDEO");
@@ -626,7 +626,7 @@ public class PlaybackDataService {
 		log.warn("printing the videoObj :: " + videoList);
 	    }
 	}
-	return maxWidth + "x" + maxHeight + "##" + screenShareFlag;
+	return (maxWidth+5) + "x" + (maxHeight+5) + "##" + screenShareFlag;
     }
 
     private String getScreenShareDimensions(List<VideoData> videoList, HashMap<String, String> videohm) {
