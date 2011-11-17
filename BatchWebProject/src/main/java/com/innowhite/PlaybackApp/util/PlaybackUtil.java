@@ -4,6 +4,7 @@ import java.io.File;
 import java.util.Calendar;
 import java.util.HashMap;
 import java.util.List;
+import java.util.concurrent.TimeUnit;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -112,12 +113,23 @@ public class PlaybackUtil {
 	//log.debug("return from the ImageMagick process executor :: " + val);
     }
 
-    public static String secondsToHours(long seconds) {
-	int ss = (int) ((seconds / 1000) % 60);
-	int mm = (int) ((seconds / 1000) / 60);
-	int hh = (int) ((seconds / 1000) / 3600);
+    public static String secondsToHours(long millis) {
+//	int ss = (int) ((seconds / 1000) % 60);
+//	int mm = (int) ((seconds / 1000) / 60);
+//	int hh = (int) ((seconds / 1000) / 3600);
+//	return (hh + ":" + mm + ":" + ss + ".000");
+    long days = TimeUnit.MILLISECONDS.toDays(millis);
+    millis -= TimeUnit.DAYS.toMillis(days);
+    
+    long hours = TimeUnit.MILLISECONDS.toHours(millis);
+    millis -= TimeUnit.HOURS.toMillis(hours);
+    
+    long minutes = TimeUnit.MILLISECONDS.toMinutes(millis);
+    millis -= TimeUnit.MINUTES.toMillis(minutes);
+    
+    long seconds = TimeUnit.MILLISECONDS.toSeconds(millis);
+    return (hours + ":" + minutes + ":" + seconds + ".000");
 	// slog.debug("seconds to hours::" + hh + ":" + mm + ":" + ss);
-	return (hh + ":" + mm + ":" + ss + ".000");
     }
 
     /* Send the object Audio and video and the windows folder */

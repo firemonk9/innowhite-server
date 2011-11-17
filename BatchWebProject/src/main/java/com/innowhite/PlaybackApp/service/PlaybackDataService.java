@@ -469,7 +469,7 @@ public class PlaybackDataService {
 		vd = new VideoData();
 		// String newVideoPath = PlaybackUtil.getUnique();
 
-		log.debug("screen share video found. Padding with 3sec vid :");
+		log.debug("screen share video found. Padding with (diffDuration)sec vid :");
 
 		// get the ffmpeg duration
 		HashMap<String, String> vhm = new HashMap<String, String>();
@@ -481,7 +481,7 @@ public class PlaybackDataService {
 		long end_time = sessionVideoDataList.get(i).getEndTime().getTime();
 		long dbDuration = (end_time - start_time) / 1000;
 		long actualDuration = PlaybackUtil.getNumLong(vhm.get("duration"));
-		long padDuration = (int) (dbDuration - actualDuration);
+		long padDuration = (dbDuration - actualDuration);
 
 		vd.setStartTime(new Date(start_time));
 		vd.setEndTime(new Date(start_time + (padDuration)));
@@ -552,7 +552,7 @@ public class PlaybackDataService {
 
 		//cut the 1hr video to specified duration
 		String SSPaddingVideoPath = "/opt/InnowhiteData/scripts/ScreenSharePad.flv";
-		cmd = " -i "+SSPaddingVideoPath+" -t " + PlaybackUtil.secondsToHours(padDuration) + " -ar 44100 -ab 64k "+curDir+"/SSPad"+uniquePath+".flv";
+		cmd = " -i "+SSPaddingVideoPath+" -t " + PlaybackUtil.secondsToHours(padDuration*1000) + " -ar 44100 -ab 64k "+curDir+"/SSPad"+uniquePath+".flv";
 		//set the resolution
 		String[] dim = maxVideoDimensions.split("x");
 		PlaybackUtil.invokeFfmpegProcess(cmd);
@@ -780,7 +780,7 @@ public class PlaybackDataService {
 	    if (i == 0) {
 		if ((audioStartTime - sessionStartTime) > 0) {
 		    log.debug("(audio Starts after session Start");
-		    String silentAudioPath = createSilentAudio(audioStartTime - sessionStartTime).getFilePath();
+		    String silentAudioPath = (createSilentAudio(audioStartTime - sessionStartTime)).getFilePath();
 		    log.debug("silentAudioPath: " + silentAudioPath);
 		    ad.setStartTime(new Date(sessionStartTime));
 		    ad.setEndTime(new Date(audioStartTime));
