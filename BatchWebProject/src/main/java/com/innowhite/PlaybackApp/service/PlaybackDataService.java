@@ -556,7 +556,9 @@ public class PlaybackDataService {
 		//set the resolution
 		String[] dim = maxVideoDimensions.split("x");
 		PlaybackUtil.invokeFfmpegProcess(cmd);
-		cmd = " "+curDir+"/SSPad"+uniquePath+".flv -oac copy -ovc lavc -vf scale="+dim[0]+":"+dim[1]+" -o "+curDir+"/SSPad"+uniquePath+dim[0]+"x"+dim[1]+".flv";
+		int width = Integer.parseInt(dim[0]) - 10;
+		int height = Integer.parseInt(dim[1]) - 5;
+		cmd = " "+curDir+"/SSPad"+uniquePath+".flv -oac copy -ovc lavc -vf scale="+width+":"+height+" -o "+curDir+"/SSPad"+uniquePath+dim[0]+"x"+dim[1]+".flv";
 		PlaybackUtil.invokeMencoderProcess(cmd);
 		
 		// String[] dim = maxVideoDimensions.split("x");
