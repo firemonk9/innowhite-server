@@ -518,37 +518,6 @@ public class PlaybackDataService {
 
 //		// Driectory for pad creating temp pads for screenshare
 		String uniquePath = PlaybackUtil.getUnique();
-//		String strDirectoy = playbackVO.getTempLocation() + "/SSPads" + uniquePath;
-//		// TODO Create random sessionVideo directory
-//		boolean success = VideoImageMagick.createDir(strDirectoy);
-//		if (success == false) {
-//		    log.warn(" Could not create the directory.... returnign  ");
-//		    return null;
-//		}
-
-//		// TODO resize screenShareImage (in current directory) using
-//		// ImageMagick
-//		String imagePath = curDir + "/screenShareImage.jpg";
-//		log.debug("before creating two images...");
-//		cmd = " " + imagePath + " -resize " + maxVideoDimensions + " " + strDirectoy + "/01.jpg";
-//		PlaybackUtil.invokeImageMagickProcess(cmd);
-//		log.debug("debug 1::" + cmd);
-//		cmd = " " + imagePath + " -resize " + maxVideoDimensions + " " + strDirectoy + "/02.jpg";
-//		PlaybackUtil.invokeImageMagickProcess(cmd);
-//		log.debug("debug 1::" + cmd);
-//
-//		// TODO make 1sec video of 2 screenShareImage's (2 frames)
-//		String imageVideoPath = strDirectoy + "/tempSSPad" + uniquePath + ".flv";
-//		cmd = " -y -r 2 -i " + strDirectoy + "/%02d.jpg -an " + imageVideoPath;
-//		PlaybackUtil.invokeFfmpegProcess(cmd);
-//		// TODO concat (padDuration)number of 1sec videos
-//		cmd = " -oac copy -ovc lavc ";
-//		for (int j = 0; j < (int) padDuration; j++) {
-//		    cmd = cmd + " " + imageVideoPath;
-//		}
-//		cmd = cmd + " -o " + curDir + "/padScreenShareVideo" + uniquePath + ".flv";
-//		log.debug("MenCoder Command for concatenating videos:::" + cmd);
-//		PlaybackUtil.invokeMencoderProcess(cmd);
 
 		//cut the 1hr video to specified duration
 		String SSPaddingVideoPath = "/opt/InnowhiteData/scripts/ScreenSharePad.flv";
@@ -573,6 +542,7 @@ public class PlaybackDataService {
 		// padDuation determines - one of 6 videos (of 3s duration) path
 		// from the current directory
 		vd.setFilePath(curDir+"/SSPad"+uniquePath+width+"x"+height+".flv");
+		vd.setDuration(""+padDuration);
 		// vd.setId(sessionVideoDataList.get(i).getId());
 		// vd.setRoomName(sessionVideoDataList.get(i).getRoomName());
 		// vd.setVideoType("VIDEO");
@@ -585,6 +555,7 @@ public class PlaybackDataService {
 		vd.setId(sessionVideoDataList.get(i).getId());
 		vd.setRoomName(sessionVideoDataList.get(i).getRoomName());
 		vd.setVideoType(videoType);
+		
 		tempSessionVideoPlaylist.add(sessionVideoDataList.get(i));
 	    } else {
 		tempSessionVideoPlaylist.add(sessionVideoDataList.get(i));

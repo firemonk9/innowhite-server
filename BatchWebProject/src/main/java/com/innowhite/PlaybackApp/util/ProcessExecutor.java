@@ -54,13 +54,14 @@ public class ProcessExecutor {
 	    // TO DO -- This is a temporary fix... need to find a permanent solution.
 	    while(true)
 	    {
-		if(errorGobbler.isAlive() || outputGobbler.isAlive()){
+		if(errorGobbler.isAlive() || outputGobbler.isAlive() ){
 		    log.debug(" The threads which read the data from the terminal are still alive --------so sleeping for 10 seconds...  ");
-		    Thread.sleep(10000);
+		    Thread.sleep(2000);
 		}else{
 		    break;
 		}
 	    }
+	    
 	    
 	    
 	    if (exitVal == 0) {
@@ -114,9 +115,10 @@ class StreamGobbler extends Thread {
 			getSubstr(line, "filesize", videohm);
 		    }
 		}
+		log.debug(type + ">" + line);
 	    }
 	    // Show output in development
-	    //log.debug(type + ">" + line);
+	    
 	} catch (Exception ioe) {
 	    log.error("" + ioe.getMessage(), ioe);
 	    ioe.printStackTrace();

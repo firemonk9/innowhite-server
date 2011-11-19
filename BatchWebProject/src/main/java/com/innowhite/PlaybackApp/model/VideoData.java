@@ -13,8 +13,6 @@ import javax.persistence.Table;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
-import com.innowhite.PlaybackApp.util.ProcessExecutor;
-
 @Entity
 @Table(name = "video_data")
 public class VideoData implements Serializable {
@@ -49,8 +47,19 @@ public class VideoData implements Serializable {
     @Column(name = "video_type")
     String videoType;
     
-    
+    @Column(name = "duration")
+    String duration;
       
+  
+
+    public String getDuration() {
+        return duration;
+    }
+
+    public void setDuration(String duration) {
+        this.duration = duration;
+    }
+
     public String getVideoType() {
         return videoType;
     }

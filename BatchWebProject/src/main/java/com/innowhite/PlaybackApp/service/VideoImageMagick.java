@@ -42,14 +42,28 @@ public class VideoImageMagick {
 	    cmd = " -i " + tempVideoDataList.get(i).getFilePath() + " -r 2 -f image2 " + strDirectoy + "/%05d.jpg";
 	    PlaybackUtil.invokeFfmpegProcess(cmd);
 
+	    ProcessExecutor pe = new ProcessExecutor();
+	    String command = "flvtool2 -U " + tempVideoDataList.get(i).getFilePath();
+	    boolean val = pe.executeProcess(command, "/opt/InnowhiteData/scripts/Transcoder/", null);
+	    log.debug("running flvtool -U after creating video from images. "+val);
+	    
 	    File ff = new File(tempVideoDataList.get(i).getFilePath());
 	   	    
 	    HashMap<String, String> videohm1 = new HashMap<String, String>();
 	    cmd = " -i " + tempVideoDataList.get(i).getFilePath();
 	    PlaybackUtil.invokeVideoAttribProcess(cmd, videohm1);
 	    duration = PlaybackUtil.getNum(videohm1.get("duration"));
-	    log.debug("duration of video "+i+":: "+ duration);
-
+	    log.debug("duration of video "+i+":: "+ duration+" previous dur ");
+	    
+	    log.debug("  This is absolute hack... need to find a soluton as why a video file is having 0 duration..."+tempVideoDataList.get(i).getDuration());
+	    if(duration == 0 && tempVideoDataList.get(i).getDuration() != null && PlaybackUtil.getNum(tempVideoDataList.get(i).getDuration()) >0)
+	    {
+		
+		duration = PlaybackUtil.getNum(tempVideoDataList.get(i).getDuration());
+		log.debug("  setting duration from vo. "+duration);
+	    }
+	    
+	    
 	    // TODO compose all images to a max width:height black background image
 	    log.debug("compose all images of video "+i+" on a black background image");
 	    for (int j = 1; j <= duration * 2; j++) {
@@ -74,11 +88,9 @@ public class VideoImageMagick {
 	    PlaybackUtil.invokeFfmpegProcess(cmd);
 
 	    
-	    ProcessExecutor pe = new ProcessExecutor();
+	   
 	    // MakeExectuable obj = new MakeExectu
-	    String command = "flvtool2 -U " + paddedSessionVideoDatalist.get(i).getFilePath();
-	    boolean val = pe.executeProcess(command, "/opt/InnowhiteData/scripts/Transcoder/", null);
-	    log.debug("running flvtool -U after creating video from images. "+val);
+	    
 	    
 //	    command = "flvtool2 -D " + paddedSessionVideoDatalist.get(i).getFilePath();
 //	    val = pe.executeProcess(command, "/opt/InnowhiteData/scripts/Transcoder/", null);
