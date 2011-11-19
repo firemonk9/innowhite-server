@@ -10,6 +10,7 @@ import org.slf4j.LoggerFactory;
 import com.innowhite.PlaybackApp.model.VideoData;
 import com.innowhite.PlaybackApp.util.PlaybackUtil;
 import com.innowhite.PlaybackApp.util.PlaybackVO;
+import com.innowhite.PlaybackApp.util.ProcessExecutor;
 
 public class VideoImageMagick {
 
@@ -41,6 +42,8 @@ public class VideoImageMagick {
 	    cmd = " -i " + tempVideoDataList.get(i).getFilePath() + " -r 2 -f image2 " + strDirectoy + "/%05d.jpg";
 	    PlaybackUtil.invokeFfmpegProcess(cmd);
 
+	    File ff = new File(tempVideoDataList.get(i).getFilePath());
+	   	    
 	    HashMap<String, String> videohm1 = new HashMap<String, String>();
 	    cmd = " -i " + tempVideoDataList.get(i).getFilePath();
 	    PlaybackUtil.invokeVideoAttribProcess(cmd, videohm1);
@@ -69,10 +72,18 @@ public class VideoImageMagick {
 	    log.debug("convert images of video "+i+" back to videos");
 	    cmd = " -y -r 2 -i " + strDirectoy + "/%05d.jpg -an " + paddedSessionVideoDatalist.get(i).getFilePath();
 	    PlaybackUtil.invokeFfmpegProcess(cmd);
-	    // tempVideoDataList.remove(i);
-	    // vd.setFilePath(tempVideoDataList.get(i).get);
-	    // tempVideoDataList.add(i,
-	    // paddedSessionVideoDatalist.get(i).getFilePath());
+
+	    
+	    ProcessExecutor pe = new ProcessExecutor();
+	    // MakeExectuable obj = new MakeExectu
+	    String command = "flvtool2 -U " + paddedSessionVideoDatalist.get(i).getFilePath();
+	    boolean val = pe.executeProcess(command, "/opt/InnowhiteData/scripts/Transcoder/", null);
+	    log.debug("running flvtool -U after creating video from images. "+val);
+	    
+//	    command = "flvtool2 -D " + paddedSessionVideoDatalist.get(i).getFilePath();
+//	    val = pe.executeProcess(command, "/opt/InnowhiteData/scripts/Transcoder/", null);
+//	    log.debug("running flvtool -D after creating video from images. "+val);
+	    
 	}
 	return tempVideoDataList;
     }
