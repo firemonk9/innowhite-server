@@ -44,7 +44,7 @@ public class VideoImageMagick {
 
 	    ProcessExecutor pe = new ProcessExecutor();
 	    String command = "flvtool2 -U " + tempVideoDataList.get(i).getFilePath();
-	    boolean val = pe.executeProcess(command, "/opt/InnowhiteData/scripts/Transcoder/", null);
+	    boolean val = pe.executeProcess(command, "/opt/InnowhiteData/scripts/Transcoder/", null,true);
 	    log.debug("running flvtool -U after creating video from images. "+val);
 	    
 	    File ff = new File(tempVideoDataList.get(i).getFilePath());
