@@ -16,7 +16,7 @@ public class TaskExecutorExample {
 	this.playbackDataService = playbackDataService;
     }
 
-    public void fire(final String parameter) {
+    public void fire(final String parameter, final boolean upload) {
 	taskExecutor.execute(new Runnable() {
 	    public void run() {
 		try {
@@ -26,7 +26,7 @@ public class TaskExecutorExample {
                 } catch (Exception ee) {
                     ee.printStackTrace();
                 }
-		playbackDataService.process(parameter);
+		playbackDataService.process(parameter,upload);
 	    }
 	});
     }

@@ -49,10 +49,11 @@ public class CreatePlaybackSession extends HttpServlet {
      */
     protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 	String roomId = request.getParameter("ROOM_ID");
+	String ytUpload = request.getParameter("YU");
 	if (roomId != null && context != null) {
 
 	    TaskExecutorExample basicThreadCreator = (TaskExecutorExample) context.getBean("taskExecutorExample");
-	    basicThreadCreator.fire(roomId);
+	    basicThreadCreator.fire(roomId,false);
 	}
 
 	// TODO Auto-generated method stub

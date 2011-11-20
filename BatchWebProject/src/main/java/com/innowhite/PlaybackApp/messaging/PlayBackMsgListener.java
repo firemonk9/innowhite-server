@@ -36,7 +36,7 @@ public class PlayBackMsgListener implements MessageListener {
 		String arr[] = msg.split("_");
 		String roomId = arr[0];
 		// roomStatusService.saveRoomStatus("  "+msg);
-		taskExecutorExample.fire(roomId);
+		taskExecutorExample.fire(roomId,true);
 		
 	    } catch (JMSException ex) {
 		log.error(ex.getMessage(), ex);
