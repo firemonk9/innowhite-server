@@ -37,12 +37,12 @@ public class PreProcessFLV {
 	    File myFile = new File(flvPath);
 	    String outPutfile=null;
 	    if(myFile.exists()){
-		outPutfile = flvPath.replace(myFile.getName(), "key_frame_"+myFile.getName());
+		outPutfile = flvPath.replace(myFile.getName(), myFile.getName());
 		vData.setFilePath(outPutfile);
 	    }
 	    long duration = (vData.getEndTime().getTime() - vData.getStartTime().getTime());
 
-	    String command = "ruby /opt/InnowhiteData/scripts/Transcoder/transcoder.rb " + flvPath + " " + vData.getVideoType() + " " + duration +" "+outPutfile;
+	    String command = "ruby /opt/InnowhiteData/scripts/Transcoder/transcoder.rb " + flvPath + " " + vData.getVideoType() + " " + duration;
 	    
 	    ProcessExecutor pe = new ProcessExecutor();
 	    // MakeExectuable obj = new MakeExectu
