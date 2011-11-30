@@ -412,6 +412,12 @@ public class PlaybackDataService {
 		    log.debug("youtubeURL :: " + youtubeURL);
 		    log.debug("_______________________________________________________________");
 		    flowPlayerVideo.setYoutubeUrl(youtubeURL);
+		    
+		    // send notification so that the innowhite server can send email to all users in the room.
+		    if(youtubeURL != null && youtubeURL.length() >0)
+		    {
+			NotifyPlayBackReadyStatus.notifyPlayBackReady(roomId);
+		    }
 		}
 
 		updateFinalVideoTable(flowPlayerVideo, playBackPlayListDao);
