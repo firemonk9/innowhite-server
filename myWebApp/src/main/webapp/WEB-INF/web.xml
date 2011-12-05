@@ -247,12 +247,21 @@
     <url-pattern>/StreamVideoServlet</url-pattern>
   </servlet-mapping>
   <servlet>
-  
     <servlet-name>OrgManageServlet</servlet-name>
     <servlet-class>com.innowhite.whiteboard.Servlet.OrgManageServlet</servlet-class>
   </servlet>
   <servlet-mapping>
     <servlet-name>OrgManageServlet</servlet-name>
     <url-pattern>/Organization</url-pattern>
+  </servlet-mapping>
+  <servlet>
+    <javaee:description></javaee:description>
+    <javaee:display-name>InviteServlet</javaee:display-name>
+    <servlet-name>InviteServlet</servlet-name>
+    <servlet-class>com.innowhite.whiteboard.Servlet.InviteServlet</servlet-class>
+  </servlet>
+  <servlet-mapping>
+    <servlet-name>InviteServlet</servlet-name>
+    <url-pattern>/servlet/InviteServlet</url-pattern>
   </servlet-mapping>
 </web-app>
