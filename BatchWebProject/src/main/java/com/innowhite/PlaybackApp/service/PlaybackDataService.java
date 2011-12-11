@@ -1,7 +1,6 @@
 package com.innowhite.PlaybackApp.service;
 
 import java.io.File;
-import java.io.IOException;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.HashMap;
@@ -13,6 +12,7 @@ import org.slf4j.LoggerFactory;
 
 import com.innowhite.PlaybackApp.dao.AudioDataDao;
 import com.innowhite.PlaybackApp.dao.PlayBackPlayListDao;
+import com.innowhite.PlaybackApp.dao.RoomDao;
 import com.innowhite.PlaybackApp.dao.SessionRecordingDao;
 import com.innowhite.PlaybackApp.dao.VideoDataDao;
 import com.innowhite.PlaybackApp.model.AudioData;
@@ -22,7 +22,6 @@ import com.innowhite.PlaybackApp.model.SessionRecordings;
 import com.innowhite.PlaybackApp.model.VideoData;
 import com.innowhite.PlaybackApp.util.PlaybackUtil;
 import com.innowhite.PlaybackApp.util.PlaybackVO;
-import com.sun.xml.internal.bind.v2.TODO;
 
 //
 
@@ -54,7 +53,15 @@ public class PlaybackDataService {
     public void setSessionRecordingsDao(SessionRecordingDao sessionRecordingsDao) {
 	this.sessionRecordingsDao = sessionRecordingsDao;
     }
+    public RoomDao getRoomDao() {
+        return roomDao;
+    }
 
+    public void setRoomDao(RoomDao roomDao) {
+        this.roomDao = roomDao;
+    }
+
+    private RoomDao roomDao;
     private AudioDataDao audioDataDao;
     private VideoDataDao videoDataDao;
     private SessionRecordingDao sessionRecordingsDao;
@@ -406,7 +413,14 @@ public class PlaybackDataService {
 
 		if (upload) {
 		    YoutubeUploadService ytUpload = new YoutubeUploadService();
-		    String youtubeURL = ytUpload.uploadVideo(flowPlayerVideo.getFilePath());
+		    String xml = roomDao.getSessionDetailXML(roomId);		
+		    String roomName="Name not available for room :: "+roomId;
+		    String roomDescription=" Description not available for room "+roomId;
+		    if(xml  != null){
+			roomName = UtilService.getRoomName(xml);
+			roomDescription = UtilService.getRoomDescription(xml);
+		    }
+		    String youtubeURL = ytUpload.uploadVideo(flowPlayerVideo.getFilePath(),roomName,roomDescription);
 		    log.debug("_______________________________________________________________");
 		    log.debug("flowPlayerVideoPath :: " + flowPlayerVideoPath);
 		    log.debug("youtubeURL :: " + youtubeURL);

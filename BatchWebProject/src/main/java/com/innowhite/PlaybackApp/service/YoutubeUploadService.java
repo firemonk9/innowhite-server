@@ -42,7 +42,7 @@ public class YoutubeUploadService {
 	String youtube_url = null;
 	private static final Logger log = LoggerFactory.getLogger(YoutubeUploadService.class);
 
-	public String uploadVideo(String video_url) {
+	public String uploadVideo(String video_url, String roomName, String roomDescription) {
 		try {
 		    
 		    	if(PlaybackUtil.fileExists(video_url) == false)
@@ -65,7 +65,11 @@ public class YoutubeUploadService {
 			YouTubeMediaGroup mg = newEntry.getOrCreateMediaGroup();
 			// mg.setXmlBlob(xmlBlob);
 			mg.setTitle(new MediaTitle());
-			mg.getTitle().setPlainTextContent("Third Conference");
+			if(roomName == null)
+			    mg.getTitle().setPlainTextContent("Third Conference");
+			else
+			    mg.getTitle().setPlainTextContent(roomName);
+			
 			log.debug("youtube: set title..");
 			mg.addCategory(new MediaCategory(YouTubeNamespace.CATEGORY_SCHEME,"Tech"));
 			log.debug("youtube:  set category");
@@ -73,7 +77,13 @@ public class YoutubeUploadService {
 			mg.getKeywords().addKeyword("conference");
 			log.debug("youtube: set keywords");
 			mg.setDescription(new MediaDescription());
-			mg.getDescription().setPlainTextContent("Innowhite's hello world 3 YT upload");
+			
+			
+			if(roomDescription == null)
+			    mg.getDescription().setPlainTextContent("Innowhite's hello world 3 YT upload");
+			else
+			    mg.getDescription().setPlainTextContent(roomDescription);
+			
 			log.debug("youtube: set description");
 			mg.setPrivate(false);
 			mg.addCategory(new MediaCategory(YouTubeNamespace.DEVELOPER_TAG_SCHEME, "mydevtag"));
@@ -116,43 +126,43 @@ public class YoutubeUploadService {
 	}
 
 	public static void printVideoEntry(VideoEntry videoEntry, boolean detailed) {
-		System.out.println("Title: " + videoEntry.getTitle().getPlainText());
+		log.debug("Title: " + videoEntry.getTitle().getPlainText());
 
 		if (videoEntry.isDraft()) {
-			System.out.println("Video is not live");
+			log.debug("Video is not live");
 			YtPublicationState pubState = videoEntry.getPublicationState();
 			if (pubState.getState() == YtPublicationState.State.PROCESSING) {
-				System.out.println("Video is still being processed.");
+				log.debug("Video is still being processed.");
 			} else if (pubState.getState() == YtPublicationState.State.REJECTED) {
 				System.out.print("Video has been rejected because: ");
-				System.out.println(pubState.getDescription());
+				log.debug(pubState.getDescription());
 				System.out.print("For help visit: ");
-				System.out.println(pubState.getHelpUrl());
+				log.debug(pubState.getHelpUrl());
 			} else if (pubState.getState() == YtPublicationState.State.FAILED) {
 				System.out.print("Video failed uploading because: ");
-				System.out.println(pubState.getDescription());
+				log.debug(pubState.getDescription());
 				System.out.print("For help visit: ");
-				System.out.println(pubState.getHelpUrl());
+				log.debug(pubState.getHelpUrl());
 			}
 		}
 
 		if (videoEntry.getEditLink() != null) {
-			System.out.println("Video is editable by current user.");
+			log.debug("Video is editable by current user.");
 		}
 
 		if (detailed) {
 
 			YouTubeMediaGroup mediaGroup = videoEntry.getMediaGroup();
 
-			System.out.println("Uploaded by: " + mediaGroup.getUploader());
+			log.debug("Uploaded by: " + mediaGroup.getUploader());
 
-			System.out.println("Video ID: " + mediaGroup.getVideoId());
-			System.out.println("Description: "
+			log.debug("Video ID: " + mediaGroup.getVideoId());
+			log.debug("Description: "
 					+ mediaGroup.getDescription().getPlainTextContent());
 
 			MediaPlayer mediaPlayer = mediaGroup.getPlayer();
 			String youtube_url = mediaPlayer.getUrl();
-			System.out.println("Web Player URL: " + youtube_url);
+			log.debug("Web Player URL: " + youtube_url);
 			MediaKeywords keywords = mediaGroup.getKeywords();
 			System.out.print("Keywords: ");
 			for (String keyword : keywords.getKeywords()) {
@@ -161,44 +171,43 @@ public class YoutubeUploadService {
 
 			GeoRssWhere location = videoEntry.getGeoCoordinates();
 			if (location != null) {
-				System.out.println("Latitude: " + location.getLatitude());
-				System.out.println("Longitude: " + location.getLongitude());
+				log.debug("Latitude: " + location.getLatitude());
+				log.debug("Longitude: " + location.getLongitude());
 			}
 
 			Rating rating = videoEntry.getRating();
 			if (rating != null) {
-				System.out.println("Average rating: " + rating.getAverage());
+				log.debug("Average rating: " + rating.getAverage());
 			}
 
 			YtStatistics stats = videoEntry.getStatistics();
 			if (stats != null) {
-				System.out.println("View count: " + stats.getViewCount());
+				log.debug("View count: " + stats.getViewCount());
 			}
 
-			System.out.println("\tThumbnails:");
+			log.debug("\tThumbnails:");
 			for (MediaThumbnail mediaThumbnail : mediaGroup.getThumbnails()) {
-				System.out.println("\t\tThumbnail URL: "
+				log.debug("\t\tThumbnail URL: "
 						+ mediaThumbnail.getUrl());
-				System.out.println("\t\tThumbnail Time Index: "
+				log.debug("\t\tThumbnail Time Index: "
 						+ mediaThumbnail.getTime());
 
 			}
 
-			System.out.println("\tMedia:");
+			log.debug("\tMedia:");
 			for (YouTubeMediaContent mediaContent : mediaGroup
 					.getYouTubeContents()) {
-				System.out.println("\t\tMedia Location: "
+				log.debug("\t\tMedia Location: "
 						+ mediaContent.getUrl());
-				System.out.println("\t\tMedia Type: " + mediaContent.getType());
-				System.out.println("\t\tDuration: "
+				log.debug("\t\tMedia Type: " + mediaContent.getType());
+				log.debug("\t\tDuration: "
 						+ mediaContent.getDuration());
 
 			}
 
 			for (YouTubeMediaRating mediaRating : mediaGroup
 					.getYouTubeRatings()) {
-				System.out
-						.println("Video restricted in the following countries: "
+				log.debug("Video restricted in the following countries: "
 								+ mediaRating.getCountries().toString());
 			}
 		}
