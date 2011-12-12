@@ -255,8 +255,7 @@
     <url-pattern>/Organization</url-pattern>
   </servlet-mapping>
   <servlet>
-    <javaee:description></javaee:description>
-    <javaee:display-name>InviteServlet</javaee:display-name>
+  
     <servlet-name>InviteServlet</servlet-name>
     <servlet-class>com.innowhite.whiteboard.Servlet.InviteServlet</servlet-class>
   </servlet>

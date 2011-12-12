@@ -1,5 +1,6 @@
 package com.innowhite.PlaybackApp.service;
 
+import java.io.ByteArrayInputStream;
 import java.io.IOException;
 
 import javax.xml.parsers.DocumentBuilder;
@@ -48,7 +49,10 @@ public class UtilService {
 	DocumentBuilder builder;
 	try {
 	    builder = factory.newDocumentBuilder();
-	    Document doc = builder.parse(xml);
+	    
+	    ByteArrayInputStream bs = new ByteArrayInputStream(xml.getBytes());
+	    
+	    Document doc = builder.parse(bs);
 
 	    XPathFactory xpathfactory = XPathFactory.newInstance();
 	    XPath xpath = xpathfactory.newXPath();
