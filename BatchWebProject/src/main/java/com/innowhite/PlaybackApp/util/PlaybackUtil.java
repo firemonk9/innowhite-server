@@ -118,8 +118,8 @@ public class PlaybackUtil {
 //	int mm = (int) ((seconds / 1000) / 60);
 //	int hh = (int) ((seconds / 1000) / 3600);
 //	return (hh + ":" + mm + ":" + ss + ".000");
-    long days = TimeUnit.MILLISECONDS.toDays(millis);
-    millis -= TimeUnit.DAYS.toMillis(days);
+//    long days = TimeUnit.MILLISECONDS.toDays(millis);
+//    millis -= TimeUnit.DAYS.toMillis(days);
     
     long hours = TimeUnit.MILLISECONDS.toHours(millis);
     millis -= TimeUnit.HOURS.toMillis(hours);
@@ -128,6 +128,7 @@ public class PlaybackUtil {
     millis -= TimeUnit.MINUTES.toMillis(minutes);
     
     long seconds = TimeUnit.MILLISECONDS.toSeconds(millis);
+    log.debug("Converted "+millis+"millis to "+hours+ ":" + minutes + ":" + seconds);
     return (hours + ":" + minutes + ":" + seconds + ".000");
 	// slog.debug("seconds to hours::" + hh + ":" + mm + ":" + ss);
     }

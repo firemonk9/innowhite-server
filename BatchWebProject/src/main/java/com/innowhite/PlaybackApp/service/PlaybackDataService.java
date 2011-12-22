@@ -270,6 +270,8 @@ public class PlaybackDataService {
 		    sessionCounter++;
 		    SessionRecordings session = (SessionRecordings) sessionKeys.next();
 		    long sessionStartTime = session.getStartTime().getTime();
+		    Date sst = session.getStartTime();
+		    log.debug("sessionStartTime(long)::::: "+PlaybackUtil.secondsToHours(sessionStartTime)+" sessionStartTime(Date)::::"+sst);
 		    long sessionEndTime = session.getEndTime().getTime();
 
 		    SessionBucket sessionBucket = sessionMap.get(session);
@@ -716,7 +718,7 @@ public class PlaybackDataService {
 	ad.setStartTime(paddedSessionAudioDataList.get(0).getStartTime());
 	// ad.setFilePath(paddedSessionAudioDataList.get(0).getFilePath().replace(".mp3",
 	// "finalSessionAudio.mp3"));
-	ad.setFilePath(sessionAudioPath);
+	ad.setFilePath(sessionAudioPath.replace(".mp3","_MP3WRAP.mp3"));
 	// ad.setId(id);
 	// ad.setRoomName(roomName);
 	return ad;
@@ -790,7 +792,7 @@ public class PlaybackDataService {
 	    // if its the first audio of the session
 	    if (i == 0) {
 		if ((audioStartTime - sessionStartTime) > 0) {
-		    log.debug("(audio Starts after session Start");
+		    log.debug("audio Starts after session Start");
 		    String silentAudioPath = (createSilentAudio(audioStartTime - sessionStartTime)).getFilePath();
 		    log.debug("silentAudioPath: " + silentAudioPath);
 		    ad.setStartTime(new Date(sessionStartTime));
@@ -798,14 +800,18 @@ public class PlaybackDataService {
 		    // ad.setId(id);
 		    // ad.setRoomName(roomName);
 		    ad.setFilePath(silentAudioPath);
+		    tempSessionAudioPlaylist.add(ad);
+		    tempSessionAudioPlaylist.add(sessionAudioDataList.get(i));
 
 		} else {
-		    log.debug("(audio and session Start at the same Time");
-		    ad.setStartTime(sessionAudioDataList.get(i).getStartTime());
-		    ad.setEndTime(sessionAudioDataList.get(i).getEndTime());
+		    log.debug("audio and session Start at the same Time");
+		    
+		    tempSessionAudioPlaylist.add(sessionAudioDataList.get(i));
+//		    ad.setStartTime(sessionAudioDataList.get(i).getStartTime());
+//		    ad.setEndTime(sessionAudioDataList.get(i).getEndTime());
 		    // ad.setId(id);
 		    // ad.setRoomName(roomName);
-		    ad.setFilePath(sessionAudioDataList.get(i).getFilePath());
+//		    ad.setFilePath(sessionAudioDataList.get(i).getFilePath());
 		}
 	    } else {
 		long prevAudioEndTime = sessionAudioDataList.get(i - 1).getEndTime().getTime();
@@ -820,16 +826,20 @@ public class PlaybackDataService {
 		    // ad.setId(id);
 		    // ad.setRoomName(roomName);
 		    ad.setFilePath(silentAudioPath);
+		    tempSessionAudioPlaylist.add(ad);
+		    tempSessionAudioPlaylist.add(sessionAudioDataList.get(i));
 		} else {
 		    log.debug("next audio Starts soon after previous audio");
-		    ad.setStartTime(sessionAudioDataList.get(i).getStartTime());
-		    ad.setEndTime(sessionAudioDataList.get(i).getEndTime());
+		    
+		    tempSessionAudioPlaylist.add(sessionAudioDataList.get(i));
+//		    ad.setStartTime(sessionAudioDataList.get(i).getStartTime());
+//		    ad.setEndTime(sessionAudioDataList.get(i).getEndTime());
 		    // ad.setId(id);
 		    // ad.setRoomName(roomName);
-		    ad.setFilePath(sessionAudioDataList.get(i).getFilePath());
+//		    ad.setFilePath(sessionAudioDataList.get(i).getFilePath());
 		}
 	    }
-	    tempSessionAudioPlaylist.add(ad);
+//	    tempSessionAudioPlaylist.add(ad);
 	}
 	log.debug("tempSessionAudioPlaylist.size()" + tempSessionAudioPlaylist.size());
 	return tempSessionAudioPlaylist;
