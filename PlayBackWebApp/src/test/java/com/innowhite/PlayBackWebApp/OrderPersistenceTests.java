@@ -18,9 +18,12 @@ package com.innowhite.PlayBackWebApp;
 import static org.junit.Assert.assertEquals;
 
 import java.util.Date;
+import java.util.List;
 
+import org.hibernate.Criteria;
 import org.hibernate.SessionFactory;
 import org.hibernate.classic.Session;
+import org.hibernate.criterion.Restrictions;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -29,6 +32,8 @@ import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
 import org.springframework.transaction.annotation.Transactional;
 
 import com.innowhite.PlayBackWebApp.model.AudioData;
+import com.innowhite.PlayBackWebApp.model.CallBackUrlsData;
+import com.innowhite.PlayBackWebApp.model.RoomData;
 import com.innowhite.PlayBackWebApp.model.WhiteboardData;
 
 @ContextConfiguration
@@ -66,20 +71,48 @@ public class OrderPersistenceTests {
 //	// Otherwise the query returns the existing order (and we didn't set the
 //	// parent in the item)...
 //	session.clear();
-	assertEquals(1, 1);
+	
 
-//	int val = updateAudioData(wb);
+	CallBackUrlsData  val = updateAudioData("room192");
+	if(val != null)
+	    assertEquals(1, 1);
+	else
+	    assertEquals(1, 0);
+	
 	//assertEquals(1, val);
     }
 
     @Transactional
-    private int updateAudioData(AudioData audioData) throws Exception {
+    private CallBackUrlsData updateAudioData(String roomId) throws Exception {
 
 	Session session = sessionFactory.getCurrentSession();
 
-	String query = "update AudioData o set o.endTime=:endTime  where o.roomName=:roomName and o.filePath=:filePath";
-	int val = session.createQuery(query).setTimestamp("endTime", new Date()).setString("roomName", audioData.getRoomName()).setString("filePath", audioData.getFilePath()).executeUpdate();
-	return val;
+	Criteria crit = session.createCriteria(RoomData.class);
+	@SuppressWarnings("unchecked")
+	List<RoomData> list2 = crit.add(Restrictions.eq("roomName", roomId)).list();
+	System.err.println(" list2 "+list2);	
+	if (list2 != null && list2.size() == 1) {
+
+	    
+	    RoomData roomVo = (RoomData) list2.get(0);
+	    
+	    System.err.println(" roomVo:: "+roomVo);
+	    String orgName = roomVo.getOrgName();
+	    
+	    System.err.println(" orgName:: "+orgName);
+	    
+	    
+	    crit = session.createCriteria(CallBackUrlsData.class);
+	    @SuppressWarnings("unchecked")
+	    List<CallBackUrlsData> list = crit.add(Restrictions.eq("orgName", orgName)).list();
+	    if(list != null && list.size() ==1)
+	 	return list.get(0);
+	    
+	}
+	session.clear();
+	session.flush();
+
+	return null;
 	// /log.debug("");
 
     }

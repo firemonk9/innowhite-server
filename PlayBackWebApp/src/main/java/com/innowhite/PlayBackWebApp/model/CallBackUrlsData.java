@@ -11,8 +11,8 @@ import javax.persistence.Id;
 import javax.persistence.Table;
 
 @Entity
-@Table(name = "room")
-public class RoomData implements Serializable {
+@Table(name = "call_back_urls")
+public class CallBackUrlsData implements Serializable {
 
     /**
 	 * 
@@ -24,21 +24,12 @@ public class RoomData implements Serializable {
     private Long id;
 
     
-    @Column(name = "start_date")
-    Date startTime;
-    
-    
-    @Column(name = "end_date")
-    Date endTime;
-    
-     
-    @Column(name = "room_id")
-    String roomName;
-    
     @Column(name = "org_name")
     String orgName;
-    
-    
+
+    @Column(name = "close_room_url")
+    String close_room_url;
+
     public String getOrgName() {
         return orgName;
     }
@@ -46,33 +37,15 @@ public class RoomData implements Serializable {
     public void setOrgName(String orgName) {
         this.orgName = orgName;
     }
-      
-    public String getRoomName() {
-	return roomName;
+
+    public String getClose_room_url() {
+        return close_room_url;
     }
 
-    public void setRoomName(String roomName) {
-	this.roomName = roomName;
+    public void setClose_room_url(String close_room_url) {
+        this.close_room_url = close_room_url;
     }
 
-   
-    public Date getStartTime() {
-	return startTime;
-    }
-
-    public void setStartTime(Date startTime) {
-	this.startTime = startTime;
-    }
-    
-    public Date getEndTime() {
-	return endTime;
-    }
-
-    public void setEndTime(Date endTime) {
-	this.endTime = endTime;
-    }
-
-  
     public void setId(Long id) {
 	this.id = id;
     }

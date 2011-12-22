@@ -104,6 +104,7 @@
 		class="com.innowhite.PlayBackWebApp.service.RoomStatusService">
 		<property name="roomDataDao" ref="roomDataDao" />
 		<property name="roomUserDataDao" ref="roomUserDataDao" />
+		<property name="callBackUrlsDao" ref="callBackUrlsDao" />
 		
 		
 	</bean>

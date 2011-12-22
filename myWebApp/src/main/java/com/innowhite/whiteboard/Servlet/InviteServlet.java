@@ -40,6 +40,7 @@ public class InviteServlet extends HttpServlet {
      */
     protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 	String xml = request.getParameter("xml");
+	//String roomId = request.getParameter("roomId");
 	log.debug(" The xml from flex client is :: " + xml);
 	if(xml != null){
 	    

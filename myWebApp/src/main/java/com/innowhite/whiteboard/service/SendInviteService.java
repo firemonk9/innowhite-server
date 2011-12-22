@@ -20,6 +20,9 @@ import org.apache.http.message.BasicNameValuePair;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
+import com.innowhite.whiteboard.persistence.beans.CallBackURLsVO;
+import com.innowhite.whiteboard.persistence.dao.CallBackUrlsDAO;
+
 public class SendInviteService {
 
     private static final Logger log = LoggerFactory.getLogger(SendInviteService.class);
@@ -31,8 +34,12 @@ public class SendInviteService {
 
     public static void main(String args[]) {
 
-	String myXml = "<?xml version=\"1.0\" encoding=\"UTF-8\"?><invitees><roomId>123123123</roomId><list>abc@abc.com, qwe@aqsdfa.com</list></invitees>";
-	sendInviteService(myXml);
+	String myXml = "<?xml version=\"1.0\" encoding=\"UTF-8\"?><invitees>" +
+			"<roomId> 123123123</roomId>" +
+			"<list>abc@abc.com, qwe@aqsdfa.com</list></invitees>";
+	getRoomId(myXml);
+	
+	//sendInviteService(myXml);
 	
     }
 
@@ -60,7 +67,17 @@ public class SendInviteService {
 								// comptedCheckum;
 	    	
 	    
-
+	    String roomId = getRoomId(xml);
+	    
+	    CallBackURLsVO vo = CallBackUrlsDAO.getCallBackVO(roomId);
+	    if(vo != null)
+	    {
+		finalURL=vo.getInviteSendEmailsUrl();	
+	    }else{
+		
+		log.warn(" Did not get call back URL VO object for roomId :: "+roomId);
+	    }
+	    
 	    log.debug(" executing the url to getRoomDetailService:: " + finalURL);
 
 	    HttpPost httpPost = new HttpPost(finalURL);
@@ -100,6 +117,19 @@ public class SendInviteService {
 	    e.printStackTrace();
 	}
 	// return null;
+    }
+
+    private static String getRoomId(String xml) {
+	if(xml != null)
+	{
+	    int begin = xml.indexOf("<roomId>");
+	    int end = xml.indexOf("</roomId>");
+	    String roomId = xml.substring(begin+8, end);
+	    //System.err.println(" roomId ::"+roomId);
+	    return roomId;
+	}
+	
+	return null;
     }
 
 }

@@ -114,6 +114,11 @@
 		<property name="sessionFactory" ref="sessionFactory" />
 	</bean>
 
+	<bean id="callBackUrlsDao" name="callBackUrlsDao"
+		class="com.innowhite.PlayBackWebApp.dao.CallBackUrlsDao">
+		<property name="sessionFactory" ref="sessionFactory" />
+	</bean>
+
 
 
 

@@ -1,7 +1,6 @@
 package com.innowhite.PlaybackApp.model;
 
 import java.io.Serializable;
-import java.util.Date;
 
 import javax.persistence.Column;
 import javax.persistence.Entity;
@@ -29,6 +28,18 @@ public class RoomData implements Serializable {
 
     @Column(name = "room_detail_xml")
     String roomDetailXml;
+
+    @Column(name = "org_name")
+    String orgName;
+    
+    
+    public String getOrgName() {
+        return orgName;
+    }
+
+    public void setOrgName(String orgName) {
+        this.orgName = orgName;
+    }
 
     public String getRoomName() {
         return roomName;

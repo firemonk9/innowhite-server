@@ -1,18 +1,33 @@
 package com.innowhite.PlayBackWebApp.service;
 
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
+
+import com.innowhite.PlayBackWebApp.dao.CallBackUrlsDao;
 import com.innowhite.PlayBackWebApp.dao.RoomDataDao;
 import com.innowhite.PlayBackWebApp.dao.RoomUserDataDao;
+import com.innowhite.PlayBackWebApp.model.CallBackUrlsData;
 
 public class RoomStatusService {
 
-    
     private RoomDataDao roomDataDao;
-    
-    private  RoomUserDataDao roomUserDataDao;
-    
-    
+
+    private RoomUserDataDao roomUserDataDao;
+
+    private CallBackUrlsDao callBackUrlsDao;
+
+    private static final Logger log = LoggerFactory.getLogger(RoomStatusService.class);
+    /*
+     * This is a temporary fix. The saltkey and the url needs to be read from
+     * database based on orgname.
+     */
+
+    public void setCallBackUrlsDao(CallBackUrlsDao callBackUrlsDao) {
+	this.callBackUrlsDao = callBackUrlsDao;
+    }
+
     public void setRoomUserDataDao(RoomUserDataDao roomUserDataDao) {
-        this.roomUserDataDao = roomUserDataDao;
+	this.roomUserDataDao = roomUserDataDao;
     }
 
     public void saveRoomStatus(String m) {
@@ -26,13 +41,23 @@ public class RoomStatusService {
 	    String status = arr[1];
 	    String time = arr[2];
 
-	    roomDataDao.updateRoomData(arr[1],  roomId, time);
+	    roomDataDao.updateRoomData(arr[1], roomId, time);
 
 	    // check if the room is stopped, invoke stop service.
 	    if (m != null && m.contains("_STOPPED_")) {
 
+		CallBackUrlsData callBackUrlsData = callBackUrlsDao.getURLData(roomId);
+
+		
+		String url = null;
+		if(callBackUrlsData != null){
+		    url=callBackUrlsData.getClose_room_url();
+		}else{
+		    
+		    log.warn("Not able to get URL from the data base for room ::  "+roomId);
+		}
 		// invoke remote http service to notify the room close.
-		InvokeRemoteHttpService.roomCloseService(roomId);
+		InvokeRemoteHttpService.roomCloseService(roomId,url);
 
 	    }
 	} catch (Exception e) {
@@ -53,25 +78,20 @@ public class RoomStatusService {
 	    String status = arr[2];
 	    String time = arr[3];
 
-	    
-	    roomUserDataDao.updateUserRoomStatus(userId,status , roomId, time);
+	    roomUserDataDao.updateUserRoomStatus(userId, status, roomId, time);
 
-	    
 	} catch (Exception e) {
 	    e.printStackTrace();
 	}
 
     }
 
-    
-    
     /**
-     * @param roomDataDao the roomDataDao to set
+     * @param roomDataDao
+     *            the roomDataDao to set
      */
     public void setRoomDataDao(RoomDataDao roomDataDao) {
 	this.roomDataDao = roomDataDao;
     }
-
-
 
 }

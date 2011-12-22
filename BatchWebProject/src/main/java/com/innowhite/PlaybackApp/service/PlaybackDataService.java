@@ -11,11 +11,13 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
 import com.innowhite.PlaybackApp.dao.AudioDataDao;
+import com.innowhite.PlaybackApp.dao.CallBackUrlsDao;
 import com.innowhite.PlaybackApp.dao.PlayBackPlayListDao;
 import com.innowhite.PlaybackApp.dao.RoomDao;
 import com.innowhite.PlaybackApp.dao.SessionRecordingDao;
 import com.innowhite.PlaybackApp.dao.VideoDataDao;
 import com.innowhite.PlaybackApp.model.AudioData;
+import com.innowhite.PlaybackApp.model.CallBackUrlsData;
 import com.innowhite.PlaybackApp.model.PlayBackPlayList;
 import com.innowhite.PlaybackApp.model.SessionBucket;
 import com.innowhite.PlaybackApp.model.SessionRecordings;
@@ -53,12 +55,13 @@ public class PlaybackDataService {
     public void setSessionRecordingsDao(SessionRecordingDao sessionRecordingsDao) {
 	this.sessionRecordingsDao = sessionRecordingsDao;
     }
+
     public RoomDao getRoomDao() {
-        return roomDao;
+	return roomDao;
     }
 
     public void setRoomDao(RoomDao roomDao) {
-        this.roomDao = roomDao;
+	this.roomDao = roomDao;
     }
 
     private RoomDao roomDao;
@@ -413,24 +416,29 @@ public class PlaybackDataService {
 
 		if (upload) {
 		    YoutubeUploadService ytUpload = new YoutubeUploadService();
-		    String xml = roomDao.getSessionDetailXML(roomId);		
-		    String roomName="Name not available for room :: "+roomId;
-		    String roomDescription=" Description not available for room "+roomId;
-		    if(xml  != null){
+		    String xml = roomDao.getSessionDetailXML(roomId);
+		    String roomName = "Name not available for room :: " + roomId;
+		    String roomDescription = " Description not available for room " + roomId;
+		    if (xml != null) {
 			roomName = UtilService.getRoomName(xml);
 			roomDescription = UtilService.getRoomDescription(xml);
 		    }
-		    String youtubeURL = ytUpload.uploadVideo(flowPlayerVideo.getFilePath(),roomName,roomDescription);
+		    String youtubeURL = ytUpload.uploadVideo(flowPlayerVideo.getFilePath(), roomName, roomDescription);
 		    log.debug("_______________________________________________________________");
 		    log.debug("flowPlayerVideoPath :: " + flowPlayerVideoPath);
 		    log.debug("youtubeURL :: " + youtubeURL);
 		    log.debug("_______________________________________________________________");
 		    flowPlayerVideo.setYoutubeUrl(youtubeURL);
-		    
-		    // send notification so that the innowhite server can send email to all users in the room.
-		    if(youtubeURL != null && youtubeURL.length() >0)
-		    {
-			NotifyPlayBackReadyStatus.notifyPlayBackReady(roomId);
+
+		    // send notification so that the innowhite server can send
+		    // email to all users in the room.
+		    if (youtubeURL != null && youtubeURL.length() > 0) {
+			CallBackUrlsData callBackVO = callBackUrlsDao.getURLData(roomId);
+			String url = null;
+			if (callBackVO != null) {
+			    url = callBackVO.getPlaybackReadyUrl();
+			}
+			NotifyPlayBackReadyStatus.notifyPlayBackReady(roomId, null);
 		    }
 		}
 
@@ -439,6 +447,12 @@ public class PlaybackDataService {
 	} catch (Exception e) {
 	    log.error(e.getMessage(), e);
 	}
+    }
+
+    CallBackUrlsDao callBackUrlsDao;
+
+    public void setCallBackUrlsDao(CallBackUrlsDao callBackUrlsDao) {
+	this.callBackUrlsDao = callBackUrlsDao;
     }
 
     private PlayBackPlayList setPlayBackPlayList(String videoPath, String roomId) {

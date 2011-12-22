@@ -23,7 +23,7 @@ public class NotifyPlayBackReadyStatus {
      * @param args
      */
     public static void main(String[] args) {
-	notifyPlayBackReady("993048460");
+	notifyPlayBackReady("993048460","");
 
     }
 
@@ -32,7 +32,7 @@ public class NotifyPlayBackReadyStatus {
      * database based on orgname.
      */
 
-    public static void notifyPlayBackReady(String roomId) {
+    public static void notifyPlayBackReady(String roomId, String notifyPlayBackStatusUrl) {
 
 	log.info(" Enterd notifyPlayBackReady roomID " + roomId);
 	try {
