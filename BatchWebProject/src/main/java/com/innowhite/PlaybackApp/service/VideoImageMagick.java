@@ -1,8 +1,11 @@
 package com.innowhite.PlaybackApp.service;
 
 import java.io.File;
+import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
+
+import net.sf.cglib.transform.impl.AddDelegateTransformer;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -17,18 +20,20 @@ public class VideoImageMagick {
     private static final Logger log = LoggerFactory.getLogger(VideoImageMagick.class);
     
     public static List<VideoData> formatSessionVideoPlaylist(List<VideoData> paddedSessionVideoDatalist, String maxVideoDimensions, PlaybackVO playbackVO) throws Exception {
-	log.debug("Inside formatSessionVideoPlaylist...");
+	log.debug("Inside formatSessionVideoPlaylist...........................................");
 	// TODO convert videos to images
-	List<VideoData> tempVideoDataList = paddedSessionVideoDatalist;
+	List<VideoData> tempVideoDataList = new ArrayList<VideoData>();
+	List<VideoData> inputVideoDataList = paddedSessionVideoDatalist;
 	String cmd = null;
 	int duration = 0;
 	String uniquePath = PlaybackUtil.getUnique();
-
-	log.debug("creating black background image..");
-	cmd = " -size " + maxVideoDimensions + " xc:black " + playbackVO.getTempLocation()+"/backgroundImage"+uniquePath+".jpg";
+	String backgroudImagePath =  playbackVO.getTempLocation()+"/backgroundImage"+uniquePath+".jpg";
+			
+	log.debug("-->Creating a black background image..");
+	cmd = " -size " + maxVideoDimensions + " xc:black " + backgroudImagePath;
 	PlaybackUtil.invokeImageMagickProcess(cmd);
-	for (int i = 0; i < tempVideoDataList.size(); i++) {
-	    log.debug("converting video "+i+" to images..");
+	for (int i = 0; i < inputVideoDataList.size(); i++) {
+	    log.debug("-->Converting video "+i+" to images..");
 
 	    String strDirectoy = playbackVO.getTempLocation() + "/sessionVideo" + uniquePath + i;
 	    // TODO Create random sessionVideo directory
@@ -36,45 +41,42 @@ public class VideoImageMagick {
 	    if (success == false) {
 		log.warn(" Could not create the directory.... returning  ");
 		return null;
-
 	    }
-
-	    cmd = " -i " + tempVideoDataList.get(i).getFilePath() + " -r 2 -f image2 " + strDirectoy + "/%05d.jpg";
+	    cmd = " -i " + inputVideoDataList.get(i).getFilePath() + " -r 2 -sameq -f image2 " + strDirectoy + "/%05d.jpg";
 	    PlaybackUtil.invokeFfmpegProcess(cmd);
 
-	    ProcessExecutor pe = new ProcessExecutor();
-	    String command = "flvtool2 -U " + tempVideoDataList.get(i).getFilePath();
-	    boolean val = pe.executeProcess(command, "/opt/InnowhiteData/scripts/Transcoder/", null,true);
-	    log.debug("running flvtool -U after creating video from images. "+val);
+//	    log.debug("-->Transcoding the video..");
+//	    ProcessExecutor pe = new ProcessExecutor();
+//	    String command = "flvtool2 -U " + tempVideoDataList.get(i).getFilePath();
+//	    boolean val = pe.executeProcess(command, "/opt/InnowhiteData/scripts/Transcoder/", null,true);
+//	    log.debug("running flvtool -U after creating video from images. "+val);
 	    
-	    File ff = new File(tempVideoDataList.get(i).getFilePath());
-	   	    
+	    File ff = new File(inputVideoDataList.get(i).getFilePath());
+	   	//Duration 0 hack    
 	    HashMap<String, String> videohm1 = new HashMap<String, String>();
-	    cmd = " -i " + tempVideoDataList.get(i).getFilePath();
+	    cmd = " -i " + inputVideoDataList.get(i).getFilePath();
 	    PlaybackUtil.invokeVideoAttribProcess(cmd, videohm1);
 	    duration = PlaybackUtil.getNum(videohm1.get("duration"));
-	    log.debug("duration of video "+i+":: "+ duration+" previous dur ");
+	    log.debug("-->duration of video "+i+":: "+ duration+" previous dur ");
 	    
-	    log.debug("  This is absolute hack... need to find a soluton as why a video file is having 0 duration..."+tempVideoDataList.get(i).getDuration());
-	    if(duration == 0 && tempVideoDataList.get(i).getDuration() != null && PlaybackUtil.getNum(tempVideoDataList.get(i).getDuration()) >0)
+	    log.debug("  This is absolute hack... need to find a soluton as why a video file is having 0 duration..."+inputVideoDataList.get(i).getDuration());
+	    if(duration == 0 && inputVideoDataList.get(i).getDuration() != null && PlaybackUtil.getNum(inputVideoDataList.get(i).getDuration()) >0)
 	    {
-		
-		duration = PlaybackUtil.getNum(tempVideoDataList.get(i).getDuration());
-		log.debug("  setting duration from vo. "+duration);
+			duration = PlaybackUtil.getNum(inputVideoDataList.get(i).getDuration());
+			log.debug("  setting duration from vo. "+duration);
 	    }
 	    
-	    
 	    // TODO compose all images to a max width:height black background image
-	    log.debug("compose all images of video "+i+" on a black background image");
+	    log.debug("-->Compose all images of video "+i+" on a black background image");
 	    for (int j = 1; j <= duration * 2; j++) {
 		// TODO check if file exists
 		File f = new File(strDirectoy + "/" + String.format("%05d", j) + ".jpg");
+		String imPath = null;
 		if (f.exists()) {
 		    // log.debug("converting ");
-			String biPath = playbackVO.getTempLocation() + "/backgroundImage" + uniquePath + ".jpg";
-			String imPath = strDirectoy + "/" + String.format("%05d", j) + ".jpg";
+			imPath = strDirectoy + "/" + String.format("%05d", j) + ".jpg";
 			//convert composite.jpg -gravity Center -draw "image Over 0,0 0,0 '00019.jpg'" zzzzzz.jpg
-		    cmd = " "+biPath+" -gravity Center -draw \"image Over 0,0 0,0 '"+imPath+"'\" "+imPath;
+		    cmd = " "+backgroudImagePath+" -gravity Center -draw \"image Over 0,0 0,0 '"+imPath+"'\" "+imPath;
 		    //log.debug("Composing "+imPath);
 		    PlaybackUtil.invokeImageMagickProcess(cmd);
 		} else {
@@ -83,19 +85,23 @@ public class VideoImageMagick {
 	    }
 
 	    // TODO convert images to videos
-	    log.debug("convert images of video "+i+" back to videos");
-	    cmd = " -y -r 2 -i " + strDirectoy + "/%05d.jpg -an " + paddedSessionVideoDatalist.get(i).getFilePath();
+	    log.debug("->Convert images of video "+i+" back to videos");
+	    cmd = " -y -r 2 -f image2 -i "+strDirectoy+"/%05d.jpg -an -sameq "+inputVideoDataList.get(i).getFilePath().replace(".flv", "_new.flv");
 	    PlaybackUtil.invokeFfmpegProcess(cmd);
 
-	    
-	   
 	    // MakeExectuable obj = new MakeExectu
-	    
-	    
-//	    command = "flvtool2 -D " + paddedSessionVideoDatalist.get(i).getFilePath();
+//	    command = "flvtool2 -D " + inputVideoDataList.get(i).getFilePath();
 //	    val = pe.executeProcess(command, "/opt/InnowhiteData/scripts/Transcoder/", null);
 //	    log.debug("running flvtool -D after creating video from images. "+val);
-	    
+	    VideoData vd = new VideoData();
+	    vd.setStartTime(inputVideoDataList.get(i).getStartTime());
+	    vd.setEndTime(inputVideoDataList.get(i).getEndTime());
+	    vd.setDuration(inputVideoDataList.get(i).getDuration());
+	    vd.setFilePath(inputVideoDataList.get(i).getFilePath().replace(".flv", "_new.flv"));
+	    vd.setId(inputVideoDataList.get(i).getId());
+	    vd.setRoomName(inputVideoDataList.get(i).getRoomName());
+	    vd.setVideoType(inputVideoDataList.get(i).getVideoType());
+	    tempVideoDataList.add(vd);
 	}
 	return tempVideoDataList;
     }

@@ -107,10 +107,10 @@ public class PlaybackUtil {
 
     public static void invokeImageMagickProcess(String cmd) {
 	ProcessExecutor pe = new ProcessExecutor();
-	//log.debug(" The command executed : /usr/bin/convert " + cmd);
+//	log.debug(" The command executed : /usr/bin/convert " + cmd);
 	boolean val = pe.executeProcess("/usr/bin/convert " + cmd, playbackVO.getTempLocation(), null,false);
 	// boolean val = pe.executeProcess(cmd, "C:/Innowhite-git/temp", null);
-	//log.debug("return from the ImageMagick process executor :: " + val);
+//	log.debug("return from the ImageMagick process executor :: " + val);
     }
 
     public static String secondsToHours(long millis) {
@@ -118,8 +118,8 @@ public class PlaybackUtil {
 //	int mm = (int) ((seconds / 1000) / 60);
 //	int hh = (int) ((seconds / 1000) / 3600);
 //	return (hh + ":" + mm + ":" + ss + ".000");
-//    long days = TimeUnit.MILLISECONDS.toDays(millis);
-//    millis -= TimeUnit.DAYS.toMillis(days);
+    long days = TimeUnit.MILLISECONDS.toDays(millis);
+    millis -= TimeUnit.DAYS.toMillis(days);
     
     long hours = TimeUnit.MILLISECONDS.toHours(millis);
     millis -= TimeUnit.HOURS.toMillis(hours);
