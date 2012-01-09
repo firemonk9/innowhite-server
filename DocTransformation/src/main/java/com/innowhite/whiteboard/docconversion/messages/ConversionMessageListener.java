@@ -118,19 +118,22 @@ public class ConversionMessageListener implements MessageListener {
 	    //
 	    // } else // if the file is ppt or pptx
 	    // {
-	    if (convertType != null && convertType.equals("swf")) {
-		fileTransBean.setActualFileCommand(swfActualFileCommand);
-		fileTransBean.setSwf(true);
-	    } else {
-		fileTransBean.setActualFileCommand(imgActualFileCommand);
-		fileTransBean.setSwf(false);
-	    }
-	    fileTransBean.setThumbsCommand(thumbsCommand);
+	    
+//	    if (convertType != null && convertType.equals("swf")) {
+//		fileTransBean.setActualFileCommand(swfActualFileCommand);
+//		fileTransBean.setSwf(true);
+//	    } 
+//	    else {
+//		fileTransBean.setActualFileCommand(imgActualFileCommand);
+//		fileTransBean.setSwf(false);
+//	    }
+	    
+//	    fileTransBean.setThumbsCommand(thumbsCommand);
 	    ThumbnailThread thumbnailThread = new ThumbnailThread(docBean, fileTransBean);
 	    thumbnailThread.start();
 
-	    SWFThread thread = new SWFThread(docBean, fileTransBean);
-	    thread.start();
+//	    SWFThread thread = new SWFThread(docBean, fileTransBean);
+//	    thread.start();
 	    // }
 
 	} catch (JMSException e) {

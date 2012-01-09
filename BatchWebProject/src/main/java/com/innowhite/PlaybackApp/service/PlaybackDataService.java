@@ -552,7 +552,7 @@ public class PlaybackDataService {
 		if (f != null && f.isFile())
 		    curDir = f.getParent();
 		else {
-		    log.warn(" The file path is null... this is not right. ");
+		    log.warn(" The file path is null... this is not right..  ");
 		}
 
 		log.debug("directory for padding video.. ");
@@ -887,9 +887,9 @@ public class PlaybackDataService {
     }
 
     private static void prepareVideoForSessionBucket(SessionBucket sb, int j, VideoData videoData, long sessionStartTime, long sessionEndTime) {
-	log.debug("------------------------------------");
-	log.debug("preparing VideoForSessionBucket.....");
-	log.debug("------------------------------------");
+	log.debug("-----------------------------------------");
+	log.debug("preparing Video "+j+" ForSessionBucket.....");
+	log.debug("-----------------------------------------");
 
 	// if (videoData.getStartTime() != null && videoData.getEndTime() !=
 	// null) {
@@ -903,14 +903,7 @@ public class PlaybackDataService {
 	String cmd = null;
     String newVideoPath = PlaybackUtil.getUnique();
     
-//    log.debug("Temporary fix for HEAD PARSED WARNING!!");
-//    log.debug("Re-forming the original flv!!");
-//    cmd = "-i " + videoPath + " -acodec copy -vcodec copy "
-//	    + videoPath.replace(".flv", "_bucket.flv");
-//    PlaybackUtil.invokeFfmpegProcess(cmd);
-    
-//    cmd = "-i " + videoPath + " -oac copy -ovc lavc -ss "+PlaybackUtil.secondsToHours(sessionStartTime - videoStartTime)+" -endpos "+PlaybackUtil.secondsToHours(videoEndTime - sessionStartTime)+" -vf scale="+width+":"+height+" -o "+videoPath.replace(".flv", newVideoPath + ".flv");
-//	PlaybackUtil.invokeMencoderProcess(cmd);
+    boolean sessionBucketFlag=true;
     
 	if (videoStartTime <= sessionStartTime && videoEndTime <= sessionEndTime && videoEndTime >= sessionStartTime) {
 	    log.debug("videoStartTime<=sessionStartTime && videoEndTime<=sessionEndTime && videoEndTime>=sessionStartTime");
@@ -928,34 +921,40 @@ public class PlaybackDataService {
 	    log.debug("videoStartTime>=sessionStartTime && videoStartTime<=sessionEndTime && videoEndTime>=sessionEndTime");
 	    cmd = "-i " + videoPath + " -ss 00:00:00 -an -t " + PlaybackUtil.secondsToHours(sessionEndTime - videoStartTime) + " -acodec copy -vcodec copy "
 		    + videoPath.replace(".flv", newVideoPath + ".flv");
+	} else{
+		sessionBucketFlag = false;
 	}
 	
-	PlaybackUtil.invokeFfmpegProcess(cmd);
-	VideoData vd = new VideoData();
-    vd.setFilePath(videoPath.replace(".flv", newVideoPath + ".flv"));
-    vd.setStartTime(new Date(videoStartTime));
-    vd.setEndTime(new Date(sessionEndTime));
-    
-	// log.debug("videoData"+j+"::"+vd);
-	// log.debug("videoData: Start Time:: "+vd.getStartTime());
-	// log.debug("videoData: End Time:: "+vd.getEndTime());
-	if (vd != null) {
-	    log.debug("videoData: File Path:: " + vd.getFilePath());
-	    vd.setVideoType(videoData.getVideoType());
-	    vd.setRoomName(videoData.getRoomName());
-	    sb.getVideoDataList().add(vd);
-	} else {
-	    log.warn(" printing all vals because there seems to be some thing wrong ");
-	    PlaybackUtil.printVals(videoStartTime, sessionStartTime, videoEndTime, sessionEndTime);
+	if(sessionBucketFlag){
+		PlaybackUtil.invokeFfmpegProcess(cmd);
+		VideoData vd = new VideoData();
+	    vd.setFilePath(videoPath.replace(".flv", newVideoPath + ".flv"));
+	    vd.setStartTime(new Date(videoStartTime));
+	    vd.setEndTime(new Date(sessionEndTime));
+	    
+		// log.debug("videoData"+j+"::"+vd);
+		// log.debug("videoData: Start Time:: "+vd.getStartTime());
+		// log.debug("videoData: End Time:: "+vd.getEndTime());
+		if (vd != null) {
+		    log.debug("videoData: File Path:: " + vd.getFilePath());
+		    vd.setVideoType(videoData.getVideoType());
+		    vd.setRoomName(videoData.getRoomName());
+		    sb.getVideoDataList().add(vd);
+		} else {
+		    log.warn(" printing all vals because there seems to be some thing wrong ");
+		    PlaybackUtil.printVals(videoStartTime, sessionStartTime, videoEndTime, sessionEndTime);
+		}
+		log.debug("Video " + j + " was added to session bucket!");
+	}else{
+		log.debug("Video " + j + " was NOT added to session bucket!");
 	}
-	log.debug("DONE! Preparing videos for session bucket!");
-	// }
+	
     }
 
     private static void prepareAudioForSessionBucket(SessionBucket sb, int j, AudioData audioData, long sessionStartTime, long sessionEndTime) {
-	log.debug("------------------------------------");
+	log.debug("-----------------------------------------");
 	log.debug("preparing Audio " + j + " ForSessionBucket.....");
-	log.debug("------------------------------------");
+	log.debug("-----------------------------------------");
 	long audioStartTime = audioData.getStartTime().getTime();
 	long audioEndTime = audioData.getEndTime().getTime();
 	String audioPath = audioData.getFilePath();
@@ -965,7 +964,8 @@ public class PlaybackDataService {
 
 	String cmd = null;
     String newAudioPath = PlaybackUtil.getUnique();
-
+    boolean sessionBucketFlag =true;
+    
 	if (audioStartTime <= sessionStartTime && audioEndTime <= sessionEndTime && audioEndTime >= sessionStartTime) {
 	    log.debug("audioStartTime<=sessionStartTime && audioEndTime<=sessionEndTime && audioEndTime>=sessionStartTime");
 	    // cmd =
@@ -996,25 +996,33 @@ public class PlaybackDataService {
 	    // "-i "+audioPath+" -ss 00:00:00 -t "+PlaybackUtil.secondsToHours(sessionEndTime-audioStartTime)+"  -ab 32k -acodec libmp3lame -qscale 8 -ab 196608 "
 	    // +audioPath.replace(".wav", newAudioPath+".mp3");
 	    cmd = " -i " + audioPath + " -ss 00:00:00 -t " + PlaybackUtil.secondsToHours(sessionEndTime - audioStartTime) + " -ar 44100 -ab 64k " + audioPath.replace(".wav", newAudioPath + ".mp3");
+	} else{
+		sessionBucketFlag = false;
 	}
-	AudioData ad = new AudioData();
-	PlaybackUtil.invokeFfmpegProcess(cmd);
-    ad.setFilePath(audioPath.replace(".wav", newAudioPath + ".mp3"));
-    ad.setStartTime(new Date(sessionStartTime));
-    ad.setEndTime(new Date(audioEndTime));
 	
-	// log.debug("audioData"+j+"::"+ad);
-	// log.debug("audioData: Start Time:: "+ad.getStartTime());
-	// log.debug("audioData: End Time:: "+ad.getEndTime());
-	if (ad != null) {
-	    log.debug("audioData: File Path:: " + ad.getFilePath());
-	    sb.getAudioDataList().add(ad);
-	} else {
-	    log.warn("no audio");
-	    // log.debug("audioData: File Path:: " + ad.getFilePath());
-	    // sb.getAudioDataList().add(ad);
+	if(sessionBucketFlag){
+		AudioData ad = new AudioData();
+		PlaybackUtil.invokeFfmpegProcess(cmd);
+	    ad.setFilePath(audioPath.replace(".wav", newAudioPath + ".mp3"));
+	    ad.setStartTime(new Date(sessionStartTime));
+	    ad.setEndTime(new Date(audioEndTime));
+		
+		// log.debug("audioData"+j+"::"+ad);
+		// log.debug("audioData: Start Time:: "+ad.getStartTime());
+		// log.debug("audioData: End Time:: "+ad.getEndTime());
+		if (ad != null) {
+		    log.debug("audioData: File Path:: " + ad.getFilePath());
+		    sb.getAudioDataList().add(ad);
+		} else {
+		    log.warn("no audio");
+		    // log.debug("audioData: File Path:: " + ad.getFilePath());
+		    // sb.getAudioDataList().add(ad);
+		}
+		log.debug("Audio " + j + " was added to session bucket!");
+	}else{
+		log.debug("Audio " + j + " was NOT added to session bucket!");
 	}
-	log.debug("Prepared audio " + j + " for session bucket!");
+	
     }
 
     @SuppressWarnings("unused")
