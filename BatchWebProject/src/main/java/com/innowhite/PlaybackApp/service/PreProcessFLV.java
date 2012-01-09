@@ -41,7 +41,7 @@ public class PreProcessFLV {
 		vData.setFilePath(outPutfile);
 	    }
 	    long duration = (vData.getEndTime().getTime() - vData.getStartTime().getTime());
-
+	    
 	    String command = "ruby /opt/InnowhiteData/scripts/Transcoder/transcoder.rb " + flvPath + " " + vData.getVideoType() + " " + duration;
 	    
 	    ProcessExecutor pe = new ProcessExecutor();
@@ -53,7 +53,7 @@ public class PreProcessFLV {
 
 	    command = "flvtool2 -U " + outPutfile;
 
-	    val = pe.executeProcess(command, "/opt/InnowhiteData/scripts/Transcoder/", null,true);
+	    val = pe.executeProcess(command, playbackVO.getTempLocation(), null,true);
 
 	    log.debug(" the script that is  exeucted  ::" + command + " and the return val is " + val);
 

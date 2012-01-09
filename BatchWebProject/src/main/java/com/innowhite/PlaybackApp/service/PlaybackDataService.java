@@ -621,6 +621,7 @@ public class PlaybackDataService {
 		if (i == 0) {
 		    cmd = " -i " + videoList.get(i).getFilePath();
 		    PlaybackUtil.invokeVideoAttribProcess(cmd, vhm);
+		    
 		    maxWidth = Integer.parseInt(vhm.get("width"));
 		    maxHeight = Integer.parseInt(vhm.get("height"));
 		} else if (i > 0) {

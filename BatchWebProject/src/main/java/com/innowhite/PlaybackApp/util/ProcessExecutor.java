@@ -6,6 +6,7 @@ import java.io.FileWriter;
 import java.io.InputStream;
 import java.io.InputStreamReader;
 import java.util.HashMap;
+import java.util.regex.Pattern;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -63,8 +64,6 @@ public class ProcessExecutor {
 		}
 	    }
 	    
-	    
-	    
 	    if (exitVal == 0) {
 		return true;
 	    }
@@ -116,8 +115,22 @@ class StreamGobbler extends Thread {
 			getSubstr(line, "height", videohm);
 		    } else if (line.contains("filesize")) {
 			getSubstr(line, "filesize", videohm);
+		    }else if (line.contains("Stream")){
+	    	getSubstr2(line, "dimensions", videohm);
 		    }
 		}
+		if(this.videohm.get("width")==null || this.videohm.get("height")==null || this.videohm.get("width")=="" || this.videohm.get("height")==""){
+			if(this.videohm.get("dimensions")!=null){
+				String dim[]=this.videohm.get("dimensions").split("x");
+				this.videohm.put("width",dim[0]);
+				this.videohm.put("height",dim[1]);
+				log.debug("since width and height are null.. setting them through Stream's dimensions");
+			}
+			else{
+				log.warn("even dimensions are null... somethings wrong!");
+			}
+		}
+		
 	    }
 	    // Show output in development
 	    if(printLog)
@@ -138,6 +151,17 @@ class StreamGobbler extends Thread {
 		    }
 		    // if (val != null)
 		    // this.videohm.put("size", val);
+		}
+    }
+
+    public void getSubstr2(String line, String val, HashMap<String,String> videohm) {
+		String temp[] = line.split(",");
+		for (int i=0; i<temp.length;i++) {
+			if(temp[i] != null && Pattern.matches("[\\d]+[x][\\d]+", temp[i].trim())){
+				if(printLog)
+				    log.debug("-->Inside ProcessExecutor.. "+val+"="+temp[i].trim());
+		    	videohm.put(val, temp[i].trim());
+			}
 		}
     }
 }
