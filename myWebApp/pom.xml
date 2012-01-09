@@ -458,7 +458,7 @@
 				<groupId>org.codehaus.mojo</groupId>
 				<artifactId>tomcat-maven-plugin</artifactId>
 				<configuration>
-					<warFile>target/myWebApp.war</warFile>
+					<warFile>target/whiteboard.war</warFile>
 				</configuration>
 			</plugin>
 			<plugin>
@@ -480,7 +480,7 @@
 				<groupId>org.apache.maven.plugins</groupId>
 				<artifactId>maven-war-plugin</artifactId>
 				<configuration>
-					<warName>myWebApp</warName>
+					<warName>whiteboard</warName>
 				</configuration>
 			</plugin>
 			<plugin>

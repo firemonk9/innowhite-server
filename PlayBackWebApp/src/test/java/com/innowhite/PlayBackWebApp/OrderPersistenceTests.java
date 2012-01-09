@@ -73,11 +73,11 @@ public class OrderPersistenceTests {
 //	session.clear();
 	
 
-	CallBackUrlsData  val = updateAudioData("room192");
-	if(val != null)
-	    assertEquals(1, 1);
-	else
-	    assertEquals(1, 0);
+//	CallBackUrlsData  val = updateAudioData("room192");
+//	if(val != null)
+//	    assertEquals(1, 1);
+//	else
+//	    assertEquals(1, 0);
 	
 	//assertEquals(1, val);
     }
@@ -85,32 +85,32 @@ public class OrderPersistenceTests {
     @Transactional
     private CallBackUrlsData updateAudioData(String roomId) throws Exception {
 
-	Session session = sessionFactory.getCurrentSession();
-
-	Criteria crit = session.createCriteria(RoomData.class);
-	@SuppressWarnings("unchecked")
-	List<RoomData> list2 = crit.add(Restrictions.eq("roomName", roomId)).list();
-	System.err.println(" list2 "+list2);	
-	if (list2 != null && list2.size() == 1) {
-
-	    
-	    RoomData roomVo = (RoomData) list2.get(0);
-	    
-	    System.err.println(" roomVo:: "+roomVo);
-	    String orgName = roomVo.getOrgName();
-	    
-	    System.err.println(" orgName:: "+orgName);
-	    
-	    
-	    crit = session.createCriteria(CallBackUrlsData.class);
-	    @SuppressWarnings("unchecked")
-	    List<CallBackUrlsData> list = crit.add(Restrictions.eq("orgName", orgName)).list();
-	    if(list != null && list.size() ==1)
-	 	return list.get(0);
-	    
-	}
-	session.clear();
-	session.flush();
+//	Session session = sessionFactory.getCurrentSession();
+//
+//	Criteria crit = session.createCriteria(RoomData.class);
+//	@SuppressWarnings("unchecked")
+//	List<RoomData> list2 = crit.add(Restrictions.eq("roomName", roomId)).list();
+//	System.err.println(" list2 "+list2);	
+//	if (list2 != null && list2.size() == 1) {
+//
+//	    
+//	    RoomData roomVo = (RoomData) list2.get(0);
+//	    
+//	    System.err.println(" roomVo:: "+roomVo);
+//	    String orgName = roomVo.getOrgName();
+//	    
+//	    System.err.println(" orgName:: "+orgName);
+//	    
+//	    
+//	    crit = session.createCriteria(CallBackUrlsData.class);
+//	    @SuppressWarnings("unchecked")
+//	    List<CallBackUrlsData> list = crit.add(Restrictions.eq("orgName", orgName)).list();
+//	    if(list != null && list.size() ==1)
+//	 	return list.get(0);
+//	    
+//	}
+//	session.clear();
+//	session.flush();
 
 	return null;
 	// /log.debug("");
