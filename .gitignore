@@ -12,3 +12,6 @@ PlaybackApp/target
 InnowhiteRed5/WebContent/WEB-INF/classes/
 springbatchconverter/
 *.swf
+BatchWebProject/.settings/
+whiteboard/.settings/
+DocTransformation/.settings/
