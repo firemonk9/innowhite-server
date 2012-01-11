@@ -21,7 +21,7 @@
 
 		select start_time, end_time from audio_data where
 		room_name=
-		#roomId#
+		#roomId# order by id asc
 	</select>
 
 
