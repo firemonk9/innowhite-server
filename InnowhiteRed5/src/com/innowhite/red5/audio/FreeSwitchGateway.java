@@ -25,6 +25,7 @@ import org.slf4j.Logger;
 
 import com.innowhite.red5.audio.commands.EjectParticipantCommand;
 import com.innowhite.red5.audio.commands.MuteParticipantCommand;
+import com.innowhite.red5.audio.commands.RecordAudioCommand;
 import com.innowhite.red5.audio.events.AudioFileStartStopEvent;
 import com.innowhite.red5.audio.events.ParticipantJoinedEvent;
 import com.innowhite.red5.audio.events.ParticipantLeftEvent;
@@ -114,6 +115,24 @@ public class FreeSwitchGateway extends Observable implements IEslEventListener {
 	this.audioEventListener = audioEventListener;
     }
 
+    
+    
+    // @Override
+    public void startRecord(String confRoom, Integer participant) {
+	RecordAudioCommand mpc = new RecordAudioCommand(confRoom, participant, true);
+	String jobId = managerConnection.getESLClient().sendAsyncApiCommand(mpc.getCommand(), mpc.getCommandArgs());
+	log.debug("startRecord called for room "+confRoom+" jobid [{}]"+participant+" jobId "+jobId);
+    }
+    
+    // @Override
+    public void stopRecord(String confRoom, Integer participant) {
+	RecordAudioCommand mpc = new RecordAudioCommand(confRoom, participant, false);
+	String jobId = managerConnection.getESLClient().sendAsyncApiCommand(mpc.getCommand(), mpc.getCommandArgs());
+	log.debug("stopRecord called for room "+confRoom+" jobid [{}]"+participant+" jobId "+jobId);
+    }
+    
+
+    
     // @Override
     public void mute(String confRoom, Integer participant, Boolean mute) {
 	MuteParticipantCommand mpc = new MuteParticipantCommand(confRoom, participant, mute, 0);

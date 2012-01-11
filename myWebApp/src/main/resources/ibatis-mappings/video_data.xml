@@ -41,7 +41,7 @@
 		resultMap="videosForRoomResult">
 
 		select user_id, video_type, start_time, end_time from video_data where
-		room_id= #roomId#
+		room_id= #roomId# order by id asc
 	</select>
 
 

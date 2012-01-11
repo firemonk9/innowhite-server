@@ -31,7 +31,28 @@ public class AudioDataDAO {
     }
 
     
+    /*returns list of VideoDataVO. 
+     * */
+    public static void updateAudiosEndTime(String roomName) {
 
+	log.debug("Entered updateAudiosEndTime");
+	log.info("Entered updateAudiosEndTime roomName  " + roomName);
+	List<AudioDataVO> value = null;
+	try {
+
+	  int i = sqlMapClient.update("updateAudioEndTime", roomName);
+	  log.debug("updating "+i+"  audio records.");
+	  
+	} catch (SQLException e) {
+	    e.printStackTrace();
+	    
+	}
+	
+
+    }
+
+    
+    
     
     /*returns list of VideoDataVO. 
      * */
