@@ -903,36 +903,34 @@ public class PlaybackDataService {
 
 	String cmd = null;
     String newVideoPath = PlaybackUtil.getUnique();
-    
     boolean sessionBucketFlag=true;
+    VideoData vd = new VideoData();
     
 	if (videoStartTime <= sessionStartTime && videoEndTime <= sessionEndTime && videoEndTime >= sessionStartTime) {
 	    log.debug("videoStartTime<=sessionStartTime && videoEndTime<=sessionEndTime && videoEndTime>=sessionStartTime");
 	    cmd = "-i " + videoPath + " -ss " + PlaybackUtil.secondsToHours(sessionStartTime - videoStartTime) + " -an -t " + PlaybackUtil.secondsToHours(videoEndTime - sessionStartTime)
 		    + " -acodec copy -vcodec copy " + videoPath.replace(".flv", newVideoPath + ".flv");
+	    executeFfmpegAndSetVideoData(cmd,vd,sessionStartTime,videoEndTime,videoPath.replace(".flv", newVideoPath + ".flv"));
 	} else if (videoStartTime <= sessionStartTime && videoEndTime >= sessionEndTime) {
 	    log.debug("videoStartTime<=sessionStartTime && videoEndTime>=sessionEndTime");
 	    cmd = "-i " + videoPath + " -ss " + PlaybackUtil.secondsToHours(sessionStartTime - videoStartTime) + " -an -t " + PlaybackUtil.secondsToHours(sessionEndTime - sessionStartTime)
 		    + " -acodec copy -vcodec copy " + videoPath.replace(".flv", newVideoPath + ".flv");
+	    executeFfmpegAndSetVideoData(cmd,vd,sessionStartTime,sessionEndTime,videoPath.replace(".flv", newVideoPath + ".flv"));
 	} else if (videoStartTime >= sessionStartTime && videoStartTime <= sessionEndTime && videoEndTime <= sessionEndTime && videoEndTime >= sessionStartTime) {
 	    log.debug("videoStartTime>=sessionStartTime && videoStartTime<=sessionEndTime && videoEndTime<=sessionEndTime && videoEndTime>=sessionStartTime");
 	    cmd = "-i " + videoPath + " -ss 00:00:00 -an -t " + PlaybackUtil.secondsToHours(videoEndTime - videoStartTime) + " -acodec copy -vcodec copy "
 		    + videoPath.replace(".flv", newVideoPath + ".flv");
+	    executeFfmpegAndSetVideoData(cmd,vd,videoStartTime,videoEndTime,videoPath.replace(".flv", newVideoPath + ".flv"));
 	} else if (videoStartTime >= sessionStartTime && videoStartTime <= sessionEndTime && videoEndTime >= sessionEndTime) {
 	    log.debug("videoStartTime>=sessionStartTime && videoStartTime<=sessionEndTime && videoEndTime>=sessionEndTime");
 	    cmd = "-i " + videoPath + " -ss 00:00:00 -an -t " + PlaybackUtil.secondsToHours(sessionEndTime - videoStartTime) + " -acodec copy -vcodec copy "
 		    + videoPath.replace(".flv", newVideoPath + ".flv");
+	    executeFfmpegAndSetVideoData(cmd,vd,videoStartTime,sessionEndTime,videoPath.replace(".flv", newVideoPath + ".flv"));
 	} else{
 		sessionBucketFlag = false;
 	}
 	
 	if(sessionBucketFlag){
-		PlaybackUtil.invokeFfmpegProcess(cmd);
-		VideoData vd = new VideoData();
-	    vd.setFilePath(videoPath.replace(".flv", newVideoPath + ".flv"));
-	    vd.setStartTime(new Date(videoStartTime));
-	    vd.setEndTime(new Date(sessionEndTime));
-	    
 		// log.debug("videoData"+j+"::"+vd);
 		// log.debug("videoData: Start Time:: "+vd.getStartTime());
 		// log.debug("videoData: End Time:: "+vd.getEndTime());
@@ -952,7 +950,7 @@ public class PlaybackDataService {
 	
     }
 
-    private static void prepareAudioForSessionBucket(SessionBucket sb, int j, AudioData audioData, long sessionStartTime, long sessionEndTime) {
+	private static void prepareAudioForSessionBucket(SessionBucket sb, int j, AudioData audioData, long sessionStartTime, long sessionEndTime) {
 	log.debug("-----------------------------------------");
 	log.debug("preparing Audio " + j + " ForSessionBucket.....");
 	log.debug("-----------------------------------------");
@@ -966,6 +964,7 @@ public class PlaybackDataService {
 	String cmd = null;
     String newAudioPath = PlaybackUtil.getUnique();
     boolean sessionBucketFlag =true;
+    AudioData ad = new AudioData();
     
 	if (audioStartTime <= sessionStartTime && audioEndTime <= sessionEndTime && audioEndTime >= sessionStartTime) {
 	    log.debug("audioStartTime<=sessionStartTime && audioEndTime<=sessionEndTime && audioEndTime>=sessionStartTime");
@@ -974,6 +973,7 @@ public class PlaybackDataService {
 	    // +audioPath.replace(".wav", newAudioPath+".mp3");
 	    cmd = " -i " + audioPath + " -ss " + PlaybackUtil.secondsToHours(sessionStartTime - audioStartTime) + " -t " + PlaybackUtil.secondsToHours(audioEndTime - sessionStartTime)
 		    + " -ar 44100 -ab 64k " + audioPath.replace(".wav", newAudioPath + ".mp3");
+	    executeFfmpegAndSetAudioData(cmd,ad,sessionStartTime,audioEndTime,audioPath.replace(".wav", newAudioPath + ".mp3"));
 	} else if (audioStartTime <= sessionStartTime && audioEndTime >= sessionEndTime) {
 	    log.debug("audioStartTime<=sessionStartTime && audioEndTime>=sessionEndTime");
 	    // cmd =
@@ -981,6 +981,7 @@ public class PlaybackDataService {
 	    // +audioPath.replace(".wav", newAudioPath+".mp3");
 	    cmd = " -i " + audioPath + " -ss " + PlaybackUtil.secondsToHours(sessionStartTime - audioStartTime) + " -t " + PlaybackUtil.secondsToHours(sessionEndTime - sessionStartTime)
 		    + " -ar 44100 -ab 64k " + audioPath.replace(".wav", newAudioPath + ".mp3");
+	    executeFfmpegAndSetAudioData(cmd,ad,sessionStartTime,sessionEndTime,audioPath.replace(".wav", newAudioPath + ".mp3"));
 	}
 	// audio in b/w the session
 	else if (audioStartTime >= sessionStartTime && audioStartTime <= sessionEndTime && audioEndTime <= sessionEndTime && audioEndTime >= sessionStartTime) {
@@ -989,6 +990,7 @@ public class PlaybackDataService {
 	    // "-i "+audioPath+" -ss 00:00:00 -t "+PlaybackUtil.secondsToHours(audioEndTime-audioStartTime)+"  -ab 32k -acodec libmp3lame -qscale 8 -ab 196608 "
 	    // +audioPath.replace(".wav", newAudioPath+".mp3");
 	    cmd = " -i " + audioPath + " -ss 00:00:00 -t " + PlaybackUtil.secondsToHours(audioEndTime - audioStartTime) + " -ar 44100 -ab 64k " + audioPath.replace(".wav", newAudioPath + ".mp3");
+	    executeFfmpegAndSetAudioData(cmd,ad,audioStartTime,audioEndTime,audioPath.replace(".wav", newAudioPath + ".mp3"));
 	}
 	// starts in b/w and ends after
 	else if (audioStartTime >= sessionStartTime && audioStartTime <= sessionEndTime && audioEndTime >= sessionEndTime) {
@@ -997,17 +999,12 @@ public class PlaybackDataService {
 	    // "-i "+audioPath+" -ss 00:00:00 -t "+PlaybackUtil.secondsToHours(sessionEndTime-audioStartTime)+"  -ab 32k -acodec libmp3lame -qscale 8 -ab 196608 "
 	    // +audioPath.replace(".wav", newAudioPath+".mp3");
 	    cmd = " -i " + audioPath + " -ss 00:00:00 -t " + PlaybackUtil.secondsToHours(sessionEndTime - audioStartTime) + " -ar 44100 -ab 64k " + audioPath.replace(".wav", newAudioPath + ".mp3");
+	    executeFfmpegAndSetAudioData(cmd,ad,audioStartTime,sessionEndTime,audioPath.replace(".wav", newAudioPath + ".mp3"));
 	} else{
 		sessionBucketFlag = false;
 	}
 	
 	if(sessionBucketFlag){
-		AudioData ad = new AudioData();
-		PlaybackUtil.invokeFfmpegProcess(cmd);
-	    ad.setFilePath(audioPath.replace(".wav", newAudioPath + ".mp3"));
-	    ad.setStartTime(new Date(sessionStartTime));
-	    ad.setEndTime(new Date(audioEndTime));
-		
 		// log.debug("audioData"+j+"::"+ad);
 		// log.debug("audioData: Start Time:: "+ad.getStartTime());
 		// log.debug("audioData: End Time:: "+ad.getEndTime());
@@ -1026,7 +1023,22 @@ public class PlaybackDataService {
 	
     }
 
-    @SuppressWarnings("unused")
+    private static void executeFfmpegAndSetAudioData(String cmd, AudioData ad, long start_time, long end_time, String audio_path) {
+	    PlaybackUtil.invokeFfmpegProcess(cmd);
+	    ad.setStartTime(new Date(start_time));
+	    ad.setEndTime(new Date(end_time));
+	    ad.setFilePath(audio_path);
+	}
+    
+	private static void executeFfmpegAndSetVideoData(String cmd, VideoData vd, long start_time, long end_time, String video_path) {
+	    PlaybackUtil.invokeFfmpegProcess(cmd);
+	    vd.setStartTime(new Date(start_time));
+	    vd.setEndTime(new Date(end_time));
+	    vd.setFilePath(video_path);
+	}    
+	
+
+	@SuppressWarnings("unused")
     private static ArrayList<String> mapAudioToVideoStartBetween(List<AudioData> audioList, int j, List<VideoData> videos, long sessionStartTime, long sessionEndTime) {
 	log.debug("--------------------------------------------");
 	log.debug("mappingAudioToVideoStartBetween.....audio +" + j);
