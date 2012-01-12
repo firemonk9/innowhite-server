@@ -7,6 +7,7 @@ import org.hibernate.Criteria;
 import org.hibernate.Query;
 import org.hibernate.SessionFactory;
 import org.hibernate.classic.Session;
+import org.hibernate.criterion.Order;
 import org.hibernate.criterion.Restrictions;
 import org.hibernate.transform.Transformers;
 import org.slf4j.Logger;
@@ -25,28 +26,22 @@ public class VideoDataDao {
     public void setSessionFactory(SessionFactory sessionFactory) {
 	this.sessionFactory = sessionFactory;
     }
-
     
-    
-    
-    
-    @Transactional
-    public List<VideoData> getVideoDataList(String roomId) {
+	@Transactional
+	public List<VideoData> getVideoDataList(String roomId) {
 
-	Session session = sessionFactory.getCurrentSession();
+		Session session = sessionFactory.getCurrentSession();
 
-	Criteria crit = session.createCriteria(VideoData.class);
-	@SuppressWarnings("unchecked")
-	
-	List<VideoData> list2 = crit.add(Restrictions.eq("roomName", roomId))
-	       .add( Restrictions.in( "videoType", new String[] { "DESKTOP", "WHITEBOARD" } ) )
-	    .list();
-	
-	session.clear();
-	session.flush();
-	return list2;
+		Criteria crit = session.createCriteria(VideoData.class);
+		@SuppressWarnings("unchecked")
+		List<VideoData> list2 = (List<VideoData>) ((Criteria) crit.add(Restrictions.eq("roomName", roomId)).add(Restrictions.in("videoType", new String[] { "DESKTOP","WHITEBOARD" })).list()).addOrder(Order.asc("id"));
 
-    }
+		session.clear();
+		session.flush();
+		return list2;
+
+	}
+    
 
     @Transactional
     public void saveVideoData(String recordStatus, String filePath, String roomName, Date curDate) {
