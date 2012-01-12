@@ -1,0 +1,46 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE sqlMap PUBLIC "-//ibatis.apache.org//DTD SQL Map 2.0//EN"
+"http://ibatis.apache.org/dtd/sql-map-2.dtd">
+<sqlMap>
+
+
+	<parameterMap id="paramLessonPlanXML"
+		class="com.innowhite.whiteboard.persistence.beans.LessonPlanVO">
+		<parameter property="courseId" jdbcType="VARCHAR" />
+		<parameter property="lessonPlanId" jdbcType="VARCHAR" />
+		<parameter property="lessonPlanXML" jdbcType="VARCHAR" />
+		<parameter property="orgName" jdbcType="VARCHAR" />
+	</parameterMap>
+
+
+
+	<insert id="saveLessonPlanXML" parameterMap="paramLessonPlanXML">
+		INSERT INTO lesson_plan (
+		course_id,
+		lesson_plan_id,
+		lesson_plan_xml,
+		org_name,
+		inserted_Date)
+		VALUES
+		( ?,?,?, ? ,now())
+		<selectKey keyProperty="id" resultClass="java.lang.Integer">
+			SELECT @@identity
+			</selectKey>
+	</insert>
+
+
+
+	<select id="getLessonPlanXML" resultClass="java.lang.String"
+		parameterClass="java.util.HashMap">
+		select lesson_plan_xml from lesson_plan where course_id = #courseId# and
+		lesson_plan_id=#lessonPlanId# and org_name = #orgName#
+      </select>
+
+	<delete id="deleteLessonPlanXML" parameterClass="java.util.HashMap">
+		delete from lesson_plan where course_id = #courseId# and
+		lesson_plan_id=#lessonPlanId# and org_name = #orgName#
+      </delete>
+
+
+</sqlMap>
+ 

@@ -47,6 +47,6 @@ public class AudioRecordMessageProducer {
 			}
 		};
 		jmsTemplate.send(destination, creator);
-
+		log.debug("Audio Record message sent "+msg);
 	}
 }

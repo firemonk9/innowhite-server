@@ -38,7 +38,7 @@ public class RecordAudioCommand extends FreeswitchCommand {
             String action = "stop";
             if (recordStatus) action = "start";
 
-            return RECORD + SPACE + room+ SPACE + action ;
+            return  RECORD + SPACE + room+ SPACE + action ;
     }
 
 }

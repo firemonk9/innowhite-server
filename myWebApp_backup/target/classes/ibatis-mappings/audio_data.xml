@@ -1,0 +1,43 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE sqlMap PUBLIC "-//ibatis.apache.org//DTD SQL Map 2.0//EN"
+"http://ibatis.apache.org/dtd/sql-map-2.dtd">
+<sqlMap>
+
+
+
+	<resultMap id="audiosForRoomResult"
+		class="com.innowhite.whiteboard.persistence.beans.AudioDataVO">
+
+
+
+		<result property="startTime" column="start_time" />
+		<result property="endTime" column="end_time" />
+
+	</resultMap>
+
+
+	<select id="getAudiosForRoom" parameterClass="java.lang.String"
+		resultMap="audiosForRoomResult">
+
+		select start_time, end_time from audio_data where
+		room_name=
+		#roomId# order by id asc
+	</select>
+
+
+	<update id="updateAudioEndTime" parameterClass="java.lang.String">
+
+
+		update audio_data a set a.end_time=now() where a.room_name=#room# and
+		a.end_time is null and a.id
+		= (select max(id) from (select max(b.id) from audio_data b where
+		b.room_name=#room# ) as temptable )
+		   
+	</update>
+
+
+
+
+
+</sqlMap>
+ 

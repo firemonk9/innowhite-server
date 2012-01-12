@@ -1,0 +1,128 @@
+/* CSS file */
+@namespace s "library://ns.adobe.com/flex/spark";
+@namespace mx "library://ns.adobe.com/flex/mx";
+@namespace components "innowhite.components.*";
+@namespace core "mx.core.*";
+@namespace thumbnail "innowhite.views.thumbnail.*";
+@namespace thumbnail1 "innowhite.components.thumbnail.*";
+
+/*
+@font-face
+{
+	src: url("/assets/fonts/Helvetica.ttf") ;
+	font-family: "Tahoma";
+	font-weight: bold;
+	embedAsCFF: true;
+}
+*/
+
+global
+{
+	font-family: Verdana;
+}
+
+components|InnoPanel
+{
+	skinClass: ClassReference("innowhite.skins.InnoPanelSkin");
+}
+
+
+components|InnoPanel_userPanel
+{
+	skinClass: ClassReference("innowhite.skins.InnoPanelSkin_userPanel");
+}
+
+
+s|HScrollBar
+{
+	skinClass: ClassReference("innowhite.skins.ScrollBars.HScrollBarSkin");
+}
+
+s|VScrollBar
+{
+	skinClass: ClassReference("innowhite.skins.ScrollBars.VScrollBarSkin");
+}
+
+
+mx|ToolTip {
+	backgroundAlpha: 0.75;
+	backgroundColor: black;
+	color: white;
+	cornerRadius: 5;
+	borderColor: white;
+	borderStyle:solid;
+	fontSize: 13;
+}
+
+
+mx|Menu
+{
+	borderSkin: ClassReference("innowhite.skins.menu.MenuBorderSkin");
+	separator-skin: ClassReference("innowhite.skins.menu.MenuSeparatorSkin");
+	vertical-align:middle;
+	text-roll-over-color: #ffffff;
+	roll-over-color: #C7CFC7;
+}
+
+thumbnail|Thumbnail
+{
+	skin-class: ClassReference("innowhite.skins.thumbnail.ThumbnailSkin");
+}
+
+thumbnail|DrawingBoardThumbnail
+{
+
+	skin-class: ClassReference("innowhite.skins.thumbnail.DrawingBoardThumbnailSkin");	
+}
+
+
+s|Button
+{
+	skin-class: ClassReference("innowhite.skins.ButtonSkin");
+}
+
+s|ButtonBar
+{
+	skin-class: ClassReference("innowhite.skins.buttonBar.ButtonBarSkin");
+}
+
+s|CheckBox
+{
+	skin-class: ClassReference("innowhite.skins.CheckBoxSkin");
+}
+
+
+
+
+mx|Button
+{
+	font-family: Helvetica_embed_3;
+}
+mx|TextInput
+{
+	font-family: Helvetica_embed_3;
+}
+mx|ToolTip
+{
+	font-family: Helvetica_embed_3;
+}
+
+mx|DataGridItemRenderer
+{
+	font-family: Helvetica_embed_3;	
+}
+
+mx|DataGrid
+{
+	border-color: #b5b5b5;
+	vertical-grid-line-color: #b5b5b5;
+	alternatingItemColors: #FFFFFF, #F2F2F2;
+	text-selected-color: #ffffff;
+	roll-over-color: #D4DCD4;
+	selection-color: #BCC4BC;
+	headerBackgroundSkin: ClassReference("innowhite.skins.dataGrid.DataGridHeaderBackgroundSkin");
+	headerSeparatorSkin: ClassReference("innowhite.skins.dataGrid.DataGridHeaderSeparatorSkin");
+}
+
+
+

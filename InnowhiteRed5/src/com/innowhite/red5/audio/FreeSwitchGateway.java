@@ -117,14 +117,14 @@ public class FreeSwitchGateway extends Observable implements IEslEventListener {
 
     
     
-    // @Override
+   
     public void startRecord(String confRoom, Integer participant) {
 	RecordAudioCommand mpc = new RecordAudioCommand(confRoom, participant, true);
 	String jobId = managerConnection.getESLClient().sendAsyncApiCommand(mpc.getCommand(), mpc.getCommandArgs());
 	log.debug("startRecord called for room "+confRoom+" jobid [{}]"+participant+" jobId "+jobId);
     }
     
-    // @Override
+
     public void stopRecord(String confRoom, Integer participant) {
 	RecordAudioCommand mpc = new RecordAudioCommand(confRoom, participant, false);
 	String jobId = managerConnection.getESLClient().sendAsyncApiCommand(mpc.getCommand(), mpc.getCommandArgs());
@@ -186,6 +186,8 @@ public class FreeSwitchGateway extends Observable implements IEslEventListener {
 	// args);
     }
 
+    
+    /*This function prints all the events coming frmo FreeSwitch. Use ful for debug,*/
     private void printAllItemsinEvent(EslEvent event) {
 
 	Map<String, String> m = event.getEventHeaders();

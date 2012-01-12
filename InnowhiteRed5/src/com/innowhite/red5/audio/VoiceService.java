@@ -36,44 +36,17 @@ public class VoiceService extends ApplicationAdapter {
 
     private FreeSwitchGateway freeSwitchGateway;
 
-    // @SuppressWarnings("unchecked")
-    // public Map<String, List> getMeetMeUsers() {
-    // String voiceBridge =getConfId(roomId);
-    //
-    // log.debug("GetMeetmeUsers request for room[$voiceBridge]");
-    // ArrayList<Participant> p =
-    // conferenceService.getParticipants(voiceBridge);
-    //
-    // Map participants = new HashMap();
-    // if (p == null) {
-    // participants.put("count", 0);
-    // } else {
-    // participants.put("count", p.size());
-    // if (p.size() > 0) {
-    // participants.put("participants", arrayListToMap(p));
-    // }
-    // }
-    // log.info("MeetMe::service - Sending " + p.size() + " current users...");
-    // return participants;
-    // }
-    //
-    // private Map<Integer, Map> arrayListToMap(ArrayList<Participant> alp) {
-    // log.debug("Converting arraylist to Map " + alp.size());
-    // Map<Integer, Map> result = new HashMap();
-    //
-    // for (Participant p : alp) {
-    // Map<String, Object> pmap = new HashMap();
-    // pmap.put("participant", p.getId());
-    // pmap.put("name", p.getName());
-    // pmap.put("muted", p.isMuted());
-    // pmap.put("talking", p.isTalking());
-    // pmap.put("locked", p.isMuteLocked());
-    // log.debug("[$p.id,$p.name,$p.muted,$p.talking]");
-    // result.put(p.getId(), pmap);
-    // }
-    //
-    // return result;
-    // }
+
+
+    public void recordStart(String roomId) {
+	String conference = getConfId(roomId);
+	freeSwitchGateway.startRecord(conference, 0);
+    }
+
+    public void recordStop(String roomId) {
+	String conference = getConfId(roomId);
+	freeSwitchGateway.stopRecord(conference, 0);
+    }
 
     public void muteAllUsers(String roomId, boolean mute) {
 	String conference = getConfId(roomId);

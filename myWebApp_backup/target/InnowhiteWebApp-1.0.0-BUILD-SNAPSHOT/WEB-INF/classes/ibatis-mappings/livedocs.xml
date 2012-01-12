@@ -1,0 +1,29 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE sqlMap PUBLIC "-//ibatis.apache.org//DTD SQL Map 2.0//EN"
+"http://ibatis.apache.org/dtd/sql-map-2.dtd">
+<sqlMap>
+
+
+
+
+	<parameterMap id="paramLiveConversion"
+		class="com.innowhite.whiteboard.persistence.beans.LiveDocConversion">
+		<parameter property="userId" jdbcType="VARCHAR" />
+
+	</parameterMap>
+
+	<insert id="insertLiveDocConversion" parameterMap="paramLiveConversion">
+		INSERT INTO live_doc_conversion (user_id,created_time
+		)
+		VALUES
+		( ?,now())
+		<selectKey keyProperty="id" resultClass="java.lang.Integer">
+			SELECT @@identity
+			</selectKey>
+	</insert>
+
+
+
+
+</sqlMap>
+ 

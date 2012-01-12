@@ -14,7 +14,7 @@ PUBLIC "-//ibatis.apache.org//DTD SQL Map Config 2.0//EN"
 	<transactionManager type="JDBC">
 		<dataSource type="SIMPLE">
 			<property name="JDBC.Driver" value="com.mysql.jdbc.Driver" />
-			<property name="JDBC.ConnectionURL" value="jdbc:mysql://demo.innowhite.com:3306/ewhiteboard" />
+			<property name="JDBC.ConnectionURL" value="jdbc:mysql://dbserver.innowhite.com:3306/ewhiteboard" />
 			<property name="JDBC.Username" value="inno_user" />
 			<property name="JDBC.Password" value="inno_mysql" />
             <property name="Pool.MaximumActiveConnections" value="50"/>

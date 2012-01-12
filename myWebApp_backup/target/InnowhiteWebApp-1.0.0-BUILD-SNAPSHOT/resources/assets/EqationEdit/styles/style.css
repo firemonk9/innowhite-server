@@ -1,0 +1,87 @@
+/* CSS file */
+
+/*------------------------------------------------------------------------------ Fonts */
+
+
+
+/*@font-face
+{
+	src: 					url('./resources/assets/EqationEdit/fonts/STIXGeneral.otf');
+	fontFamily: 			'Mathfont';
+	fontWeight:				Semibold;
+}*/
+
+/*------------------------------------------------------------------------------ Global */
+
+
+
+/*------------------------------------------------------------------------------ Text */
+
+/*.title
+{
+	font-size:				24;
+	text-align:				right;	
+}
+.equationCanvas
+{
+	borderStyle: none;
+}
+TabNavigator
+{
+	borderStyle: solid;
+	cornerRadius: 0;
+	tabStyleName: tabNavigatorTab;
+}
+.tabNavigatorTab
+{
+	fillAlphas: 1.0, 1.0;
+	fillColors: #FBF8F3, #FADEA1;
+}
+Button.FuctionButton
+{
+	borderColor: #000000;
+	fillAlphas: 1.0, 1.0;
+	fillColors: #FFFFFF, #FFFFFF;
+	fontFamily: "Times New Roman";
+	themeColor: #FF9C00;
+}*/
+/*TabNavigator
+{
+	borderStyle: solid;
+	selectedTabTextStyleName: tabNavigatorSelectedTabText;
+	tabStyleName: tabNavigatorTab;
+	firstTabStyleName: tabNavigatorFirstTab;
+	borderColor: #8B8989;
+}
+.tabNavigatorSelectedTabText
+{
+	color: #050505;
+}
+.tabNavigatorTab
+{
+	fillAlphas: 1.0, 1.0;
+	fillColors: #A39F9F, #060606;
+	color: #F9FEFF;
+	borderColor: #717070;
+	themeColor: #444342;
+}
+.tabNavigatorFirstTab
+{
+	fillAlphas: 1.0, 1.0, 1.0, 1.0;
+	fillColors: #A39F9F, #060606;
+	borderColor: #8B8989;
+	color: #020202;
+	horizontalGap: 2;
+	themeColor: #696968;
+}*/
+/* BUTTON
+{
+	FILLALPHAS: 1.0, 1.0;
+	FILLCOLORS: #FDFAFA, #90908F, #F9D590, #FBA601;
+	FONTSIZE: 11;
+	FONTWEIGHT: BOLD;
+	THEMECOLOR: #3E3E3F;
+}
+ */
+
+/*------------------------------------------------------------------------------ Application */

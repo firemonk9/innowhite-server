@@ -51,7 +51,23 @@ public class AudioDataDAO {
 
     }
 
-    
+    public static boolean audioConfIsOn(String roomId){
+	log.debug("Entered audioConfIsOn");
+	log.debug("roomName  " + roomId);
+	List<AudioDataVO> value = null;
+	try {
+
+	    value = (List) sqlMapClient.queryForList("audioConfIsOnSql", roomId);
+	    if(value != null && value.size() > 0)
+		return true;
+	    else
+		return false;
+	} catch (SQLException e) {
+	    e.printStackTrace();
+	    return false;
+	}
+	
+    }
     
     
     /*returns list of VideoDataVO. 

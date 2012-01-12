@@ -1,0 +1,615 @@
+	/* 
+--------------------
+Embedded Fonts
+--------------------
+
+
+@font-face
+{
+    src								: url("resources/fonts/fonts.swf");
+    fontFamily						: CastleT;
+    font-weight						: normal;
+    fontAntiAliasType				: advanced;
+}
+
+@font-face
+{
+    src								: url("resources/fonts/fonts.swf");
+    fontFamily						: CastleT;
+    font-weight						: bold;
+    fontAntiAliasType				: advanced;
+}
+
+@font-face
+{
+    src								: url("resources/fonts/fonts.swf");
+    fontFamily						: CastleT;
+    font-style						: italic;
+    fontAntiAliasType				: advanced;
+}
+*/
+
+/************************************ 
+									Container Style 
+												 *****************************************/
+
+/*
+global
+{
+	font-family					: CastleT;
+   	font-size					: 11;
+   	color						: #000000;
+   	letter-spacing				: 0.6;
+   	theme-color					: #A7CDF4;
+}
+
+Application 
+{
+	backgroundColor				: #ffffff;
+   	backgroundGradientColors	: #ffffff, #ffffff;
+   	backgroundGradientAlphas	: 1, 1;
+   	padding-bottom				: 8;
+   	padding-left				: 8;
+   	padding-right				: 10;
+   	padding-top					: 8;
+   	vertical-gap				: 10;
+}
+
+VBox
+{
+	padding-bottom				: 0;
+   	padding-left				: 0;
+   	padding-right				: 0;
+   	padding-top					: 0;
+   	vertical-gap				: 0;
+   	horizontal-gap				: 0;
+}
+
+HBox
+{
+	padding-bottom				: 0;
+   	padding-left				: 0;
+   	padding-right				: 0;
+   	padding-top					: 0;
+   	vertical-gap				: 0;
+   	horizontal-gap				: 0;
+}
+
+
+VScrollBar 
+{
+   	cornerRadius				: 2;
+   	highlightAlphas				: 0.6, 0.2;
+   	fillAlphas					: 1, 1, 1, 1;
+   	fillColors					: #6DC8F7, #6DC8F7, #6DC8F7, #6DC8F7;
+   	trackColors					: #e7e7e7, #f4f4f4;
+   	themeColor					: #6DC8F7;
+   	borderColor					: #6DC8F7;
+}
+
+HScrollBar 
+{
+   	cornerRadius				: 2;
+   	highlightAlphas				: 0.6, 0.2;
+   	fillAlphas					: 1, 1, 1, 1;
+   	fillColors					: #6DC8F7, #6DC8F7, #6DC8F7, #6DC8F7;
+   	trackColors					: #e7e7e7, #f4f4f4;
+   	themeColor					: #6DC8F7;
+   	borderColor					: #6DC8F7;
+}
+
+
+
+	.mydataGridHeaderStyle 
+	{
+	   	color					: #4d4d4d;
+	}
+	
+
+HSlider 
+{
+   	dataTipOffset				: -6;
+   	tickColor					: #000000;
+   	showTrackHighlight			: true;
+   	invertThumbDirection		: false;
+   	borderColor					: #ffffff;
+   	trackColors					: #ffffff, #ffffff;
+   	themeColor					: #666666;
+   	fillAlphas					: 1, 1, 1, 1;
+   	fillColors					: #ffffff, #ffffff, #ffffff, #eeeeee;
+   	thumb-skin					: Embed(source='/resources/styles/skin.swf', symbol='sliderThumb');
+}
+
+ToolTip
+{
+	background-color			: #7DCBF6;
+	color						: #000000;
+	padding-bottom				: 0;
+   	padding-left				: 3;
+   	padding-right				: 3;
+   	padding-top					: 3;
+	
+}
+*/
+/************************************ 
+									Class Style 
+												 *****************************************/
+
+
+
+.usersDataGrid 
+{
+	alternatingItemColors		: #99FF66, #ffffff;
+	headerColors				: #ffffff, #ffffff;
+	verticalGridLines			: true;
+	rollOverColor				: #6EC8F7;
+	textRollOverColor			: #000000;
+	borderColor					: #ffffff;
+	iconColor					: #4d4d4d;
+	selectionColor				: #CBD9E7;
+	color						: #4d4d4d;
+	textSelectedColor			: #333333;
+	dropShadowEnabled			: false;
+	headerStyleName				: "mydataGridHeaderStyle";
+}
+
+@font-face
+{
+	src: 					url('/resources/fonts/STIXGeneral.otf');
+	fontFamily: 			'Mathfont';
+	fontWeight:				Semibold;
+}
+
+.wbapplication 
+{
+	backgroundColor				: #ffffff;
+	backgroundGradientColors	: #ffffff, #ffffff;
+	backgroundGradientAlphas	: 1, 1;
+	padding-bottom				: 0;
+	padding-left				: 3;
+	padding-right				: 3;
+	padding-top					: 3;
+	vertical-gap				: 3;
+}
+
+.topMenuHolderStyle 
+{
+	
+	background-size				: "100%";
+	corner-radius				: 8;
+	border-style				: solid;
+	border-thickness			: 0;
+
+   	shadowDistance				: 0;
+   	shadowDirection				: center;
+    horizontal-gap				: 10;
+   	padding-bottom				: 0;
+   	padding-left				: 8;
+   	padding-right				: 8;
+   	padding-top					: 3;
+   	vertical-align				: middle;
+}
+
+	/* starts toolbar menus */
+	
+	.btnInbox
+	{
+		up-skin						: Embed(source='/resources/images/topMenu/new/MyInbox.png');
+		over-skin					: Embed(source='/resources/images/topMenu/new/MyInboxH.png');
+		down-skin					: Embed(source='/resources/images/topMenu/new/MyInbox.png');
+	}
+	
+	.btnCapture
+	{
+		up-skin						: Embed(source='/resources/images/topMenu/new/ScreenCapture.png');
+		over-skin					: Embed(source='/resources/images/topMenu/new/ScreenCaptureH.png');
+		down-skin					: Embed(source='/resources/images/topMenu/new/ScreenCapture.png');
+	}
+	
+	.btnDesktop
+	{
+		up-skin						: Embed(source='/resources/images/topMenu/new/DesktopShare.png');
+		over-skin					: Embed(source='/resources/images/topMenu/new/DesktopShareH.png');
+		down-skin					: Embed(source='/resources/images/topMenu/new/DesktopShare.png');
+	}
+	
+	.btnZoom
+	{
+		up-skin						: Embed(source='/resources/images/topMenu/new/Zoom.png');
+		over-skin					: Embed(source='/resources/images/topMenu/new/ZoomH.png');
+		down-skin					: Embed(source='/resources/images/topMenu/new/Zoom.png');
+	}
+	
+	.btnNavigation
+	{
+		up-skin						: Embed(source='/resources/images/topMenu/new/navigation.png');
+		over-skin					: Embed(source='/resources/images/topMenu/new/navigationH.png');
+		down-skin					: Embed(source='/resources/images/topMenu/new/navigation.png');
+	}
+	
+	.btnPolling
+	{
+		up-skin						: Embed(source='/resources/images/topMenu/new/Polling.png');
+		over-skin					: Embed(source='/resources/images/topMenu/new/PollingH.png');
+		down-skin					: Embed(source='/resources/images/topMenu/new/Polling.png');
+	}
+	
+	.btnQuiz
+	{
+		up-skin						: Embed(source='/resources/images/topMenu/new/Quiz.png');
+		over-skin					: Embed(source='/resources/images/topMenu/new/QuizH.png');
+		down-skin					: Embed(source='/resources/images/topMenu/new/Quiz.png');
+	}
+	
+	.btnShared
+	{
+		up-skin						: Embed(source='/resources/images/topMenu/new/SharedWriting.png');
+		over-skin					: Embed(source='/resources/images/topMenu/new/SharedWritingH.png');
+		down-skin					: Embed(source='/resources/images/topMenu/new/SharedWriting.png');
+	}
+	
+	.btnInvite
+	{
+		up-skin						: Embed(source='/resources/images/topMenu/new/InviteParticipants.png');
+		over-skin					: Embed(source='/resources/images/topMenu/new/InviteParticipantsH.png');
+		down-skin					: Embed(source='/resources/images/topMenu/new/InviteParticipants.png');
+	}
+	
+	.btnFileT
+	{
+		up-skin						: Embed(source='/resources/images/topMenu/new/FileTransfer.png');
+		over-skin					: Embed(source='/resources/images/topMenu/new/FileTransferH.png');
+		down-skin					: Embed(source='/resources/images/topMenu/new/FileTransfer.png');
+	}
+	
+	.btnMathChart
+	{
+		up-skin						: Embed(source='/resources/images/topMenu/new/MathChart.png');
+		over-skin					: Embed(source='/resources/images/topMenu/new/MathChartH.png');
+		down-skin					: Embed(source='/resources/images/topMenu/new/MathChart.png');
+	}
+	
+	
+	/* ------- */
+	
+	.btnFile
+	{
+		up-skin						: Embed(source='/resources/images/topMenu/fileMenuHover.png');
+		over-skin					: Embed(source='/resources/images/topMenu/fileMenuHover.png');
+		down-skin					: Embed(source='/resources/images/topMenu/fileMenuHover.png');
+	}
+	
+	.btnMail
+	{
+		up-skin						: Embed(source='/resources/images/topMenu/mailNormal.png');
+		over-skin					: Embed(source='/resources/images/topMenu/mailHover.png');
+		down-skin					: Embed(source='/resources/images/topMenu/mailNormal.png');
+	}
+	
+	.btnCam
+	{
+		up-skin						: Embed(source='/resources/images/topMenu/camNormal.png');
+		over-skin					: Embed(source='/resources/images/topMenu/camHover.png');
+		down-skin					: Embed(source='/resources/images/topMenu/camNormal.png');
+	}
+	
+	.btnPic
+	{
+		up-skin						: Embed(source='/resources/images/topMenu/picNormal.png');
+		over-skin					: Embed(source='/resources/images/topMenu/picHover.png');
+		down-skin					: Embed(source='/resources/images/topMenu/picNormal.png');
+	}
+	
+	.btnDiag
+	{
+		up-skin						: Embed(source='/resources/images/topMenu/diagNormal.png');
+		over-skin					: Embed(source='/resources/images/topMenu/diagHover.png');
+		down-skin					: Embed(source='/resources/images/topMenu/diagNormal.png');
+	}
+	
+	.btnHelp
+	{
+		up-skin						: Embed(source='/resources/images/topMenu/helpNormal.png');
+		over-skin					: Embed(source='/resources/images/topMenu/helpHover.png');
+		down-skin					: Embed(source='/resources/images/topMenu/helpNormal.png');
+	}
+	
+	.btnNote
+	{
+		up-skin						: Embed(source='/resources/images/topMenu/notesNormal.png');
+		over-skin					: Embed(source='/resources/images/topMenu/notesHover.png');
+		down-skin					: Embed(source='/resources/images/topMenu/notesNormal.png');
+	}
+	
+	.btnUser
+	{
+		up-skin						: Embed(source='/resources/images/topMenu/userNormal.png');
+		over-skin					: Embed(source='/resources/images/topMenu/userHover.png');
+		down-skin					: Embed(source='/resources/images/topMenu/userNormal.png');
+	}
+	
+	.btnFileTransfer
+	{
+		up-skin						: Embed(source='/resources/images/topMenu/fileTransferNormal.png');
+		over-skin					: Embed(source='/resources/images/topMenu/fileTransferHover.png');
+		down-skin					: Embed(source='/resources/images/topMenu/fileTransferNormal.png');
+	}
+
+	.volumeSlider 
+	{
+		thumbSkin: Embed(source='/resources/images/volume.png');
+		dataTipPlacement: right;
+		
+	}
+
+	
+	.btnTools
+	{
+		up-skin						: Embed(source='/resources/images/topMenu/toolsNormal.png');
+		over-skin					: Embed(source='/resources/images/topMenu/toolsHover.png');
+		down-skin					: Embed(source='/resources/images/topMenu/toolsNormal.png');
+	}
+	
+	.btnConnection
+	{
+		up-skin						: Embed(source='/resources/images/topMenu/connect.png');
+		over-skin					: Embed(source='/resources/images/topMenu/connectHover.png');
+		down-skin					: Embed(source='/resources/images/topMenu/connect.png');
+		disabled-skin				: Embed(source='/resources/images/topMenu/connectDisabled.png');
+	}
+	
+	.btnDisConnection
+	{
+		up-skin						: Embed(source='/resources/images/topMenu/disconnect.png');
+		over-skin					: Embed(source='/resources/images/topMenu/disconnectHover.png');
+		down-skin					: Embed(source='/resources/images/topMenu/disconnect.png');
+		disabled-skin				: Embed(source='/resources/images/topMenu/disconnectDisabled.png');
+	}
+	
+	
+	
+	/* ends toolbar menus */
+
+.appHolder
+{
+	background-image			: Embed(source='/resources/styles/skin.swf', symbol='fileMenuHolderStyle');
+	background-size				: "100%";
+	corner-radius				: 8;
+	border-style				: solid;
+	border-thickness			: 0;
+	drop-shadow-enabled			: true;
+	shadow-color				: #D4D4D4;
+   	shadowDistance				: 0;
+   	shadowDirection				: center;
+   	horizontal-gap				: 10;
+   	padding-bottom				: 0;
+   	padding-left				: 10;
+   	padding-right				: 10;
+   	padding-top					: 10;
+}
+
+	.workArea
+	{
+		background-color			: #ffffff;
+		border-style				: solid;
+		border-thickness			: 1;
+		border-color				: #bebebe;
+		corner-radius				: 8;
+	}
+	
+	.toolBarStyle
+	{
+		background-color			: #ffffff;
+		border-color				: #777777;
+		border-style				: solid;
+		border-thickness			: 1;
+		corner-radius				: 8;
+		horizontal-align			: center;
+		vertical-gap				: 5;
+	}
+	
+		.toolBarHeadStyle
+		{
+			background-image			: Embed(source='/resources/styles/skin.swf', symbol='toolBarHead');
+			background-size				: "100%";
+		}
+		
+		/* starts toolbar menus */
+	
+		.toolMove
+		{
+			up-skin						: Embed(source='/resources/images/toolbar/move.png');
+			over-skin					: Embed(source='/resources/images/toolbar/moveH.png');
+			down-skin					: Embed(source='/resources/images/toolbar/move.png');
+		}
+		
+		.toolSelection
+		{
+			up-skin						: Embed(source='/resources/images/toolbar/selection.png');
+			over-skin					: Embed(source='/resources/images/toolbar/selectionH.png');
+			down-skin					: Embed(source='/resources/images/toolbar/selection.png');
+		}
+		
+		.toolMarker
+		{
+			up-skin						: Embed(source='/resources/images/toolbar/marker.png');
+			over-skin					: Embed(source='/resources/images/toolbar/markerH.png');
+			down-skin					: Embed(source='/resources/images/toolbar/marker.png');
+		}
+
+		.toolMarker
+		{
+			up-skin						: Embed(source='/resources/images/toolbar/marker.png');
+			over-skin					: Embed(source='/resources/images/toolbar/markerH.png');
+			down-skin					: Embed(source='/resources/images/toolbar/marker.png');
+		}
+
+		.toolHighlight
+		{
+			up-skin						: Embed(source='/resources/images/toolbar/highlight.png');
+			over-skin					: Embed(source='/resources/images/toolbar/highlightH.png');
+			down-skin					: Embed(source='/resources/images/toolbar/highlight.png');
+		}
+
+		.toolShapes
+		{
+			up-skin						: Embed(source='/resources/images/toolbar/shapes.png');
+			over-skin					: Embed(source='/resources/images/toolbar/shapesH.png');
+			down-skin					: Embed(source='/resources/images/toolbar/shapes.png');
+		}
+		
+		.toolRectangle
+		{
+			up-skin						: Embed(source='/resources/images/toolbar/rectangle.png');
+			over-skin					: Embed(source='/resources/images/toolbar/rectangleH.png');
+			down-skin					: Embed(source='/resources/images/toolbar/rectangle.png');
+		}
+		
+		.toolfx
+		{
+			up-skin						: Embed(source='/resources/images/toolbar/fx.png');
+			over-skin					: Embed(source='/resources/images/toolbar/fxH.png');
+			down-skin					: Embed(source='/resources/images/toolbar/fx.png');
+		}
+
+		.toolEllipse
+		{
+			up-skin						: Embed(source='/resources/images/toolbar/ellipse.png');
+			over-skin					: Embed(source='/resources/images/toolbar/ellipseH.png');
+			down-skin					: Embed(source='/resources/images/toolbar/ellipse.png');
+		}
+		
+		.toolTrinagle
+		{
+			up-skin						: Embed(source='/resources/images/toolbar/triangle.png');
+			over-skin					: Embed(source='/resources/images/toolbar/triangleH.png');
+			down-skin					: Embed(source='/resources/images/toolbar/triangle.png');
+		}
+		
+		.toolPen
+		{
+			up-skin						: Embed(source='/resources/images/toolbar/pen.png');
+			over-skin					: Embed(source='/resources/images/toolbar/penH.png');
+			down-skin					: Embed(source='/resources/images/toolbar/pen.png');
+		}
+		.toolText
+		{
+			up-skin						: Embed(source='/resources/images/toolbar/text.png');
+			over-skin					: Embed(source='/resources/images/toolbar/textH.png');
+			down-skin					: Embed(source='/resources/images/toolbar/text.png');
+		}
+		
+		.toolLine
+		{
+			up-skin						: Embed(source='/resources/images/toolbar/line.png');
+			over-skin					: Embed(source='/resources/images/toolbar/lineH.png');
+			down-skin					: Embed(source='/resources/images/toolbar/line.png');
+
+		}
+		
+		.toolDelete
+		{
+			up-skin						: Embed(source='/resources/images/toolbar/delete.png');
+			over-skin					: Embed(source='/resources/images/toolbar/deleteH.png');
+			down-skin					: Embed(source='/resources/images/toolbar/delete.png');
+		}
+		
+		.toolPencil
+		{
+			up-skin						: Embed(source='/resources/images/toolbar/pencil.png');
+			over-skin					: Embed(source='/resources/images/toolbar/pencilH.png');
+			down-skin					: Embed(source='/resources/images/toolbar/pencil.png');
+			selectedDownIcon			: Embed(source='/resources/images/toolbar/pencil.png');
+		}
+		
+		.toolBrush
+		{
+			up-skin						: Embed(source='/resources/images/toolbar/brush.png');
+			over-skin					: Embed(source='/resources/images/toolbar/brushH.png');
+			down-skin					: Embed(source='/resources/images/toolbar/brush.png');
+		}
+		
+		.toolUndo
+		{
+			up-skin						: Embed(source='/resources/images/toolbar/undo.png');
+			over-skin					: Embed(source='/resources/images/toolbar/undoH.png');
+			down-skin					: Embed(source='/resources/images/toolbar/undo.png');
+			selectedDownIcon			: Embed(source='/resources/images/toolbar/undo.png');
+		}
+		
+		.buttonSelected
+		{
+			borderThickness             :5
+		}
+		
+		
+		
+	
+	.rightPanelHolderStyle
+	{
+		vertical-gap				: 10;
+		horizontal-align			: center;
+	}
+
+		.rightPanelBlocks
+		{
+			background-color			: #CCCCCC;
+			border-color				: #777777;
+			border-style				: solid;
+			border-thickness			: 1;
+			corner-radius				: 8;
+			padding-bottom				: 10;
+		   	padding-left				: 11;
+		   	padding-right				: 0;
+		   	padding-top					: 6;
+		}
+		
+			.rightBlockLabel
+			{
+				font-size					: 13;
+				padding-bottom				: 0;
+		   		padding-left				: 0;
+		   		padding-right				: 0;
+		   		padding-top					: -7;
+		   		vertical-gap				: 0;
+			}
+			
+			.minMaxButton
+			{
+				background-color			: #777777;
+				border-color				: #000000;
+				border-style				: solid;
+				border-thickness			: 2;
+			}
+			
+			.btnMute
+			{
+				up-skin						: Embed(source='/resources/images/mute.png');
+				over-skin					: Embed(source='/resources/images/mute.png');
+				down-skin					: Embed(source='/resources/images/mute.png');
+			}
+			
+			.btnUnMute
+			{
+				up-skin						: Embed(source='/resources/images/unmute.png');
+				over-skin					: Embed(source='/resources/images/unmute.png');
+				down-skin					: Embed(source='/resources/images/unmute.png');
+			}
+	
+	.foreColorPickerImage {
+		skin : Embed(source='/resources/images/topMenu/color.png');	
+	}
+
+	.ZoomInButton {		
+		disabledSkin: Embed(source='/resources/images/topMenu/demoIcons.swf',symbol='MinusButton_Disabled');
+		downSkin: Embed(source='/resources/images/topMenu/demoIcons.swf',symbol='MinusButton_Down');
+		overSkin: Embed(source='/resources/images/topMenu/demoIcons.swf',symbol='MinusButton_Over');
+		upSkin: Embed(source='/resources/images/topMenu/demoIcons.swf',symbol='MinusButton_Up');		
+	}	
+	
+	.ZoomOutButton {		
+		disabledSkin: Embed(source='/resources/images/topMenu/demoIcons.swf',symbol='PlusButton_Disabled');
+		downSkin: Embed(source='/resources/images/topMenu/demoIcons.swf',symbol='PlusButton_Down');
+		overSkin: Embed(source='/resources/images/topMenu/demoIcons.swf',symbol='PlusButton_Over');
+		upSkin: Embed(source='/resources/images/topMenu/demoIcons.swf',symbol='PlusButton_Up');
+	}

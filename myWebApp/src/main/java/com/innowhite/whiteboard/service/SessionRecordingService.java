@@ -54,8 +54,8 @@ public class SessionRecordingService {
 	BeanFactory factory = InnowhiteProperties.getBeanFactory();
 	AudioRecordMessageProducer audioRecordMessageProducer = (AudioRecordMessageProducer) factory.getBean("audioRecordMessageProducer");
 
-	// check if audio conf is on. if yes send a message so that a message is sent to audio server to start recording.
-	if (true) {
+	// if audio conf is on send a message to start recording
+	if (audioConfOn(roomId)) {
 	    Map<String, String> data = new HashMap<String, String>();
 	    data.put("room", roomId);
 	    data.put("record", "start");
@@ -79,12 +79,18 @@ public class SessionRecordingService {
 	} else if (recordStatus != null && recordStatus.equals("recordStop")) {
 	    SessionRecordingDAO.endSessionRecording(roomId);
 	}
-	
-	// update audio end time ...
-	AudioDataDAO.updateAudiosEndTime(roomId);
-	
-	BeanFactory factory = InnowhiteProperties.getBeanFactory();
-	AudioRecordMessageProducer audioRecordMessageProducer = (AudioRecordMessageProducer) factory.getBean("audioRecordMessageProducer");
-	audioRecordMessageProducer.sendMessage("roomId_stop");
+
+	// if audio conf is on send a message to stop recording
+	if (audioConfOn(roomId)) {
+	    BeanFactory factory = InnowhiteProperties.getBeanFactory();
+	    AudioRecordMessageProducer audioRecordMessageProducer = (AudioRecordMessageProducer) factory.getBean("audioRecordMessageProducer");
+	    audioRecordMessageProducer.sendMessage("roomId_stop");
+	}
     }
+
+    private static boolean audioConfOn(String roomId) {
+	return true;
+	//return AudioDataDAO.audioConfIsOn(roomId);
+    }
+
 }

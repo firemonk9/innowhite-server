@@ -1,0 +1,76 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE sqlMap PUBLIC "-//ibatis.apache.org//DTD SQL Map 2.0//EN"
+"http://ibatis.apache.org/dtd/sql-map-2.dtd">
+<sqlMap>
+
+	<!-- This table keeps track(join time and leave time) of every user who 
+		joined a room. -->
+
+
+	<insert id="insertUserInRoom" parameterClass="java.util.HashMap">
+		INSERT INTO room_users
+		(room_id, user_id, conf_number ,start_time)
+		VALUES
+		(#roomId#, #userId#, #confNumber# ,NOW() )
+
+		<selectKey keyProperty="id" resultClass="java.lang.Integer">
+			SELECT @@identity
+		</selectKey>
+	</insert>
+
+
+	<update id="updateUserInRoom" parameterClass="java.util.HashMap">
+
+		update room_users
+		set
+		end_time = NOW()
+		where room_id=#roomId# and
+		user_id =
+		#userId#
+
+	</update>
+
+
+	<resultMap id="usersForRoomResult"
+		class="com.innowhite.whiteboard.persistence.beans.RoomUsersVO">
+
+		<result property="roomName" column="room_id" />
+		<result property="userId" column="user_id" />
+		<result property="startTime" column="start_time" />
+		<result property="endTime" column="end_time" />
+		
+		<result property="joinedPhoneConference" column="joined_phone_conference" />
+		<result property="joinedVoipConference" column="joined_voip_conference" />
+		
+	</resultMap>
+
+
+
+	<select id="getUsersForRoom" parameterClass="java.lang.String"
+		resultMap="usersForRoomResult">
+
+		select room_id, user_id ,start_time, end_time,joined_phone_conference,joined_voip_conference from room_users where
+		room_id= #roomId#
+	</select>
+
+	<!-- this will cause problem need to fix Fixed by using min() -->
+	<select id="selectCurrentConfNumber" resultClass="java.lang.String"
+		parameterClass="java.lang.String">
+		select max(conf_number) from room_users where
+		room_id=#roomId# 
+		
+		     
+      </select>
+
+	<!-- this will cause problem need to fix Fixed by using min() -->
+	<select id="selectConfNumber" resultClass="java.lang.String"
+		parameterClass="java.util.HashMap">
+		select min(conf_number) from room_users where
+		room_id=#roomId# and
+		user_id =
+		#userId#
+		     
+      </select>
+
+</sqlMap>
+ 
