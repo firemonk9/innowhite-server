@@ -677,22 +677,18 @@ public class PlaybackDataService {
 
 	String newVideoPath = PlaybackUtil.getUnique();
 	String cmd = null;
-	// ffmpeg.exe -i 1332_2011-06-01-14-42-064756410402.mp3 -ar 44100 -ab
-	// 64k Rahul3_audio.avi
+	// convert audio from mp3 to avi
 	log.debug(":::first converting sessionAudio.mp3 to sessionAudio.avi:::");
 	cmd = " -i " + sessionAudio.getFilePath() + " -ar 44100 -ab 64k " + sessionAudio.getFilePath().replace(".mp3", ".avi");
 	PlaybackUtil.invokeFfmpegProcess(cmd);
 	// merging session audio-video
-	cmd = " -i " + sessionVideo.getFilePath() + " -i " + sessionAudio.getFilePath().replace(".mp3", ".avi") + " -ar 44100 -ab 64k "
+	cmd = " -i " + sessionVideo.getFilePath() + " -i " + sessionAudio.getFilePath().replace(".mp3", ".avi") + " -ar 44100 -ab 64k -vcodec copy "
 		+ sessionVideo.getFilePath().replace(".avi", newVideoPath + "playlist.avi");
-	log.debug("ffmpeg Command for merging final session audio, video:::" + cmd);
+	log.debug(":::merging final session audio and final session video:::" + cmd);
 	PlaybackUtil.invokeFfmpegProcess(cmd);
 	// long duration = sessionVideo.getEndTime().getTime() -
 	// sessionVideo.getStartTime().getTime();
-	return sessionVideo.getFilePath().replace(".avi", newVideoPath + "playlist.avi");// +
-											 // "##"
-											 // +
-											 // duration;
+	return sessionVideo.getFilePath().replace(".avi", newVideoPath + "playlist.avi");// "##" + duration;
     }
 
     private AudioData concatenateAudios(List<AudioData> paddedSessionAudioDataList, int sessionCounter) {
@@ -761,7 +757,7 @@ public class PlaybackDataService {
 	String sessionVideoPath = uniformSessionVideoDataList.get(0).getFilePath().replace(".flv", "SessionVideo" + sessionCounter + ".avi");
 	;
 	if (uniformSessionVideoDataList.size() > 1) {
-	    String cmd = " -oac copy -ovc lavc ";
+	    String cmd = " -oac copy -ovc copy ";
 	    for (int i = 0; i < uniformSessionVideoDataList.size(); i++) {
 		cmd = cmd + " " + uniformSessionVideoDataList.get(i).getFilePath();
 	    }
