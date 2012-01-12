@@ -26,22 +26,24 @@ public class VideoDataDao {
     public void setSessionFactory(SessionFactory sessionFactory) {
 	this.sessionFactory = sessionFactory;
     }
-    
-	@Transactional
-	public List<VideoData> getVideoDataList(String roomId) {
 
-		Session session = sessionFactory.getCurrentSession();
+    @Transactional
+    public List<VideoData> getVideoDataList(String roomId) {
 
-		Criteria crit = session.createCriteria(VideoData.class);
-		@SuppressWarnings("unchecked")
-		List<VideoData> list2 = (List<VideoData>) ((Criteria) crit.add(Restrictions.eq("roomName", roomId)).add(Restrictions.in("videoType", new String[] { "DESKTOP","WHITEBOARD" })).list()).addOrder(Order.asc("id"));
+	Session session = sessionFactory.getCurrentSession();
 
-		session.clear();
-		session.flush();
-		return list2;
+	Criteria crit = session.createCriteria(VideoData.class);
+	@SuppressWarnings("unchecked")
+	
+	List<VideoData> list2 = crit.add(Restrictions.eq("roomName", roomId))
+	       .add( Restrictions.in( "videoType", new String[] { "DESKTOP", "WHITEBOARD" } ) )
+	    .addOrder(Order.asc("id")).list();
+	
+	session.clear();
+	session.flush();
+	return list2;
 
-	}
-    
+    }
 
     @Transactional
     public void saveVideoData(String recordStatus, String filePath, String roomName, Date curDate) {

@@ -66,7 +66,7 @@ public class YoutubeUploadService {
 			// mg.setXmlBlob(xmlBlob);
 			mg.setTitle(new MediaTitle());
 			if(roomName == null)
-			    mg.getTitle().setPlainTextContent("Third Conference");
+			    mg.getTitle().setPlainTextContent("No title available");
 			else
 			    mg.getTitle().setPlainTextContent(roomName);
 			
@@ -80,7 +80,7 @@ public class YoutubeUploadService {
 			
 			
 			if(roomDescription == null)
-			    mg.getDescription().setPlainTextContent("Innowhite's hello world 3 YT upload");
+			    mg.getDescription().setPlainTextContent("No description available!");
 			else
 			    mg.getDescription().setPlainTextContent(roomDescription);
 			
