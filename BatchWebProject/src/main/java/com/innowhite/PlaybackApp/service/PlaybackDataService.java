@@ -482,7 +482,7 @@ public class PlaybackDataService {
 	String cmd = null;
 	if (listPlayback.size() > 1) {
 	    log.debug("listPlayback.size() > 1");
-	    cmd = " -oac copy -ovc lavc ";
+	    cmd = " -oac copy -ovc copy ";
 	    for (int i = 0; i < listPlayback.size(); i++) {
 		cmd = cmd + " " + listPlayback.get(i).getFilePath();
 	    }
@@ -491,7 +491,7 @@ public class PlaybackDataService {
 	    PlaybackUtil.invokeMencoderProcess(cmd);
 	} else {
 	    log.debug("listPlayback.size() <= 1");
-	    cmd = " -i " + listPlayback.get(0).getFilePath() + " " + flowPlayerVideoPath;
+	    cmd = " -i " + listPlayback.get(0).getFilePath() + " -acodec copy -vcodec copy -ar 44100 -ab 64k " + flowPlayerVideoPath;
 	    log.debug("Ffmpeg Command for concatenating just the 1 video::: (renaming file)" + cmd);
 	    PlaybackUtil.invokeFfmpegProcess(cmd);
 	}
