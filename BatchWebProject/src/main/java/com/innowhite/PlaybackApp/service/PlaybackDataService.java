@@ -877,7 +877,7 @@ public class PlaybackDataService {
 
     private String convertAVItoFLV(String avi_filepath) {
 	log.debug("Inside convertAVItoFLV ..............");
-	String cmd = " -i " + avi_filepath + " " + avi_filepath.replace(".avi", ".flv");
+	String cmd = " -i " + avi_filepath + " -acodec copy -vcodec copy -ar 44100 -ab 64k " + avi_filepath.replace(".avi", ".flv");
 	PlaybackUtil.invokeFfmpegProcess(cmd);
 	String flv_filepath = avi_filepath.replace(".avi", ".flv");
 	return flv_filepath;
