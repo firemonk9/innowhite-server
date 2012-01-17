@@ -465,8 +465,8 @@ public class PlaybackDataService {
     		out_path=in_path.replace(".flv", "setDim.flv");
     		w=paddedSessionVideoDatalist.get(i).getWidth();
     		h=paddedSessionVideoDatalist.get(i).getHeight();
-    		pad_plus_w = w+20;
-    		pad_plus_h = h+20;
+    		pad_plus_w = w+(2*(pad_w));
+    		pad_plus_h = h+(2*(pad_h));
     		String color = "black";
     		log.info("--->Setting deminesions of video"+i);
     		cmd=" -i "+in_path+" -vf pad="+pad_plus_w+":"+pad_plus_h+":"+pad_w+":"+pad_h+":"+color+" -sameq "+out_path;
@@ -650,13 +650,15 @@ public class PlaybackDataService {
 			    maxHeight = Integer.parseInt(vhm.get("height"));
 			    videoList.get(i).setWidth(maxWidth);
 			    videoList.get(i).setHeight(maxHeight);
+			    log.info("setting  video width: "+videoList.get(i).getWidth()+"\n video height: "+videoList.get(i).getHeight());
 			} else if (i > 0) {
 			    cmd = " -i " + videoList.get(i).getFilePath();
 			    PlaybackUtil.invokeVideoAttribProcess(cmd, vhm);
 			    tempWidth = Integer.parseInt(vhm.get("width"));
 			    tempHeight = Integer.parseInt(vhm.get("height"));
-			    videoList.get(i).setWidth(maxWidth);
-			    videoList.get(i).setHeight(maxHeight);
+			    videoList.get(i).setWidth(tempWidth);
+			    videoList.get(i).setHeight(tempHeight);
+			    log.info("setting  video width: "+videoList.get(i).getWidth()+"\n video height: "+videoList.get(i).getHeight());
 			    if (tempWidth > maxWidth) {
 				maxWidth = tempWidth;
 			    }
