@@ -455,20 +455,21 @@ public class PlaybackDataService {
     }
 
     private List<VideoData> setDimensionsSessionVideoPlaylist(List<VideoData> paddedSessionVideoDatalist, String maxVideoDimensions, PlaybackVO playbackVO2) {
-    	log.info("Inside setDimensionsSessionVideoPlaylist...........................................");
+    	log.debug("Inside setDimensionsSessionVideoPlaylist...........................................");
     	String cmd = null, in_path=null,out_path=null;
     	int w=0,h=0,pad_plus_w=0,pad_plus_h=0, pad_w=10, pad_h=10;
-    	List<VideoData> sameDimensionSessionVideoDatalist = null;
+    	List<VideoData> sameDimensionSessionVideoDatalist = new ArrayList<VideoData>();
     	
     	for(int i=0; i<paddedSessionVideoDatalist.size();i++){
     		in_path=paddedSessionVideoDatalist.get(i).getFilePath();
     		out_path=in_path.replace(".flv", "setDim.flv");
     		w=paddedSessionVideoDatalist.get(i).getWidth();
     		h=paddedSessionVideoDatalist.get(i).getHeight();
+    		log.debug("--->Width: "+w+"\t Height: "+h);
     		pad_plus_w = w+(2*(pad_w));
     		pad_plus_h = h+(2*(pad_h));
     		String color = "black";
-    		log.info("--->Setting deminesions of video"+i);
+    		log.debug("--->Setting deminesions of video"+i);
     		cmd=" -i "+in_path+" -vf pad="+pad_plus_w+":"+pad_plus_h+":"+pad_w+":"+pad_h+":"+color+" -sameq "+out_path;
     		PlaybackUtil.invokeFfmpegProcess(cmd);
     		sameDimensionSessionVideoDatalist.add(paddedSessionVideoDatalist.get(i));
@@ -648,17 +649,19 @@ public class PlaybackDataService {
 			    PlaybackUtil.invokeVideoAttribProcess(cmd, vhm);
 			    maxWidth = Integer.parseInt(vhm.get("width"));
 			    maxHeight = Integer.parseInt(vhm.get("height"));
+			    log.debug("width:"+maxWidth+"\t height:"+maxHeight);
 			    videoList.get(i).setWidth(maxWidth);
 			    videoList.get(i).setHeight(maxHeight);
-			    log.info("setting  video width: "+videoList.get(i).getWidth()+"\n video height: "+videoList.get(i).getHeight());
+			    log.debug("printing video data: "+videoList.get(i));
 			} else if (i > 0) {
 			    cmd = " -i " + videoList.get(i).getFilePath();
 			    PlaybackUtil.invokeVideoAttribProcess(cmd, vhm);
 			    tempWidth = Integer.parseInt(vhm.get("width"));
 			    tempHeight = Integer.parseInt(vhm.get("height"));
+			    log.debug("width:"+tempWidth+"\t height:"+tempHeight);
 			    videoList.get(i).setWidth(tempWidth);
 			    videoList.get(i).setHeight(tempHeight);
-			    log.info("setting  video width: "+videoList.get(i).getWidth()+"\n video height: "+videoList.get(i).getHeight());
+			    log.debug("printing video data: "+videoList.get(i));
 			    if (tempWidth > maxWidth) {
 				maxWidth = tempWidth;
 			    }
