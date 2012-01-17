@@ -337,14 +337,16 @@ public class PlaybackDataService {
 			    // uniformSessionVideoDataList =
 			    // setVideoFormatResolution(paddedSessionVideoPlaylist,
 			    // videoDimensions);
-			    uniformSessionVideoDataList = VideoImageMagick.formatSessionVideoPlaylist(paddedSessionVideoDatalist, maxVideoDimensions, playbackVO);
+//			    uniformSessionVideoDataList = VideoImageMagick.formatSessionVideoPlaylist(paddedSessionVideoDatalist, maxVideoDimensions, playbackVO);
+			    uniformSessionVideoDataList = setDimensionsSessionVideoPlaylist(paddedSessionVideoDatalist, maxVideoDimensions, playbackVO);
 			} else {
 				log.debug("session does not contain screenshare video... no padding");
 			    // Set resolution of all Session Bucket Videos
 			    // uniformSessionVideoDataList =
 			    // setVideoFormatResolution(sessionVideoDataList,
 			    // videoDimensions);
-			    uniformSessionVideoDataList = VideoImageMagick.formatSessionVideoPlaylist(sessionVideoDataList, maxVideoDimensions, playbackVO);
+//			    uniformSessionVideoDataList = VideoImageMagick.formatSessionVideoPlaylist(sessionVideoDataList, maxVideoDimensions, playbackVO);
+				uniformSessionVideoDataList = setDimensionsSessionVideoPlaylist(paddedSessionVideoDatalist, maxVideoDimensions, playbackVO);
 			}
 			log.debug("_______________________________________________________________");
 			log.debug("Number of videos after setting resolution :: " + uniformSessionVideoDataList.size());
@@ -452,7 +454,30 @@ public class PlaybackDataService {
 	}
     }
 
-    CallBackUrlsDao callBackUrlsDao;
+    private List<VideoData> setDimensionsSessionVideoPlaylist(List<VideoData> paddedSessionVideoDatalist, String maxVideoDimensions, PlaybackVO playbackVO2) {
+    	log.info("Inside setDimensionsSessionVideoPlaylist...........................................");
+    	String cmd = null, in_path=null,out_path=null;
+    	int w=0,h=0,pad_plus_w=0,pad_plus_h=0, pad_w=10, pad_h=10;
+    	List<VideoData> sameDimensionSessionVideoDatalist = null;
+    	
+    	for(int i=0; i<paddedSessionVideoDatalist.size();i++){
+    		in_path=paddedSessionVideoDatalist.get(i).getFilePath();
+    		out_path=in_path.replace(".flv", "setDim.flv");
+    		w=paddedSessionVideoDatalist.get(i).getWidth();
+    		h=paddedSessionVideoDatalist.get(i).getHeight();
+    		pad_plus_w = w+20;
+    		pad_plus_h = h+20;
+    		String color = "black";
+    		log.info("--->Setting deminesions of video"+i);
+    		cmd=" -i "+in_path+" -vf pad="+pad_plus_w+":"+pad_plus_h+":"+pad_w+":"+pad_h+":"+color+" -sameq "+out_path;
+    		PlaybackUtil.invokeFfmpegProcess(cmd);
+    		sameDimensionSessionVideoDatalist.add(paddedSessionVideoDatalist.get(i));
+    		sameDimensionSessionVideoDatalist.get(i).setFilePath(out_path);
+    	}
+    	return sameDimensionSessionVideoDatalist;
+	}
+
+	CallBackUrlsDao callBackUrlsDao;
 
     public void setCallBackUrlsDao(CallBackUrlsDao callBackUrlsDao) {
 	this.callBackUrlsDao = callBackUrlsDao;
@@ -567,7 +592,7 @@ public class PlaybackDataService {
 		PlaybackUtil.invokeFfmpegProcess(cmd);
 		int width = Integer.parseInt(dim[0]) - 5;
 		int height = Integer.parseInt(dim[1]) - 5;
-		cmd = " " + curDir + "/SSPad" + uniquePath + ".flv -oac copy -ovc lavc -vf scale=" + width + ":" + height + " -o " + curDir + "/SSPad" + uniquePath + width + "x" + height + ".flv";
+		cmd = " " + curDir + "/SSPad" + uniquePath + ".flv -oac copy -ovc copy -vf scale=" + width + ":" + height + " -o " + curDir + "/SSPad" + uniquePath + width + "x" + height + ".flv";
 		PlaybackUtil.invokeMencoderProcess(cmd);
 
 		// String[] dim = maxVideoDimensions.split("x");
@@ -615,29 +640,32 @@ public class PlaybackDataService {
 	    String videoType = videoList.get(i).getVideoType();
 	    log.debug("Video" + i + " is of type:: " + videoType);
 	    if (videoType.equals("DESKTOP")) {
-		screenShareFlag = "true";
+	    	screenShareFlag = "true";
 	    }
 	    if (videoType != null) {
-		if (i == 0) {
-		    cmd = " -i " + videoList.get(i).getFilePath();
-		    PlaybackUtil.invokeVideoAttribProcess(cmd, vhm);
-		    
-		    maxWidth = Integer.parseInt(vhm.get("width"));
-		    maxHeight = Integer.parseInt(vhm.get("height"));
-		} else if (i > 0) {
-		    cmd = " -i " + videoList.get(i).getFilePath();
-		    PlaybackUtil.invokeVideoAttribProcess(cmd, vhm);
-		    tempWidth = Integer.parseInt(vhm.get("width"));
-		    tempHeight = Integer.parseInt(vhm.get("height"));
-		    if (tempWidth > maxWidth) {
-			maxWidth = tempWidth;
-		    }
-		    if (tempHeight > maxHeight) {
-			maxWidth = tempHeight;
-		    }
-		}
+			if (i == 0) {
+			    cmd = " -i " + videoList.get(i).getFilePath();
+			    PlaybackUtil.invokeVideoAttribProcess(cmd, vhm);
+			    maxWidth = Integer.parseInt(vhm.get("width"));
+			    maxHeight = Integer.parseInt(vhm.get("height"));
+			    videoList.get(i).setWidth(maxWidth);
+			    videoList.get(i).setHeight(maxHeight);
+			} else if (i > 0) {
+			    cmd = " -i " + videoList.get(i).getFilePath();
+			    PlaybackUtil.invokeVideoAttribProcess(cmd, vhm);
+			    tempWidth = Integer.parseInt(vhm.get("width"));
+			    tempHeight = Integer.parseInt(vhm.get("height"));
+			    videoList.get(i).setWidth(maxWidth);
+			    videoList.get(i).setHeight(maxHeight);
+			    if (tempWidth > maxWidth) {
+				maxWidth = tempWidth;
+			    }
+			    if (tempHeight > maxHeight) {
+				maxWidth = tempHeight;
+			    }
+			}
 	    } else if (videoType == null) {
-		log.warn("printing the videoObj :: " + videoList);
+	    	log.warn("printing the videoObj :: " + videoList);
 	    }
 	}
 	return (maxWidth + 5) + "x" + (maxHeight + 5) + "##" + screenShareFlag;
@@ -1033,7 +1061,6 @@ public class PlaybackDataService {
 	    vd.setFilePath(video_path);
 	}    
 	
-
 	@SuppressWarnings("unused")
     private static ArrayList<String> mapAudioToVideoStartBetween(List<AudioData> audioList, int j, List<VideoData> videos, long sessionStartTime, long sessionEndTime) {
 	log.debug("--------------------------------------------");

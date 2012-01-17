@@ -29,10 +29,8 @@ public class VideoData implements Serializable {
     @GeneratedValue(strategy = GenerationType.AUTO)
     private Long id;
 
-    
     @Column(name = "start_time")
     Date startTime;
-    
     
     @Column(name = "end_time")
     Date endTime;
@@ -43,16 +41,32 @@ public class VideoData implements Serializable {
     @Column(name = "room_id")
     String roomName;
     
-    
     @Column(name = "video_type")
     String videoType;
     
     @Column(name = "duration")
     String duration;
+    
+    int width;
+    int height;
       
-  
+    public int getWidth() {
+		return width;
+	}
 
-    public String getDuration() {
+	public void setWidth(int width) {
+		this.width = width;
+	}
+
+	public int getHeight() {
+		return height;
+	}
+
+	public void setHeight(int height) {
+		this.height = height;
+	}
+
+	public String getDuration() {
         return duration;
     }
 
@@ -128,6 +142,8 @@ public class VideoData implements Serializable {
 	sb.append(" filePath: "+filePath);
 	sb.append(" roomName: "+roomName);
 	sb.append(" videoType: "+videoType);
+	sb.append(" width: "+width);
+	sb.append(" height: "+height);
 	
 	
 	return sb.toString();
