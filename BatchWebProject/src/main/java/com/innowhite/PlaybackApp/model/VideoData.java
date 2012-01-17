@@ -47,7 +47,10 @@ public class VideoData implements Serializable {
     @Column(name = "duration")
     String duration;
     
+    @Column(name = "width")
     int width;
+    
+    @Column(name = "height")
     int height;
       
     public int getWidth() {
