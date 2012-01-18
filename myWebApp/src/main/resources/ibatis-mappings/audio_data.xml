@@ -20,9 +20,35 @@
 		resultMap="audiosForRoomResult">
 
 		select start_time, end_time from audio_data where
-		room_name= #roomId#
+		room_name=
+		#roomId# order by id asc
 	</select>
 
+
+
+	<select id="audioConfIsOnSql" parameterClass="java.lang.String"
+		resultMap="audiosForRoomResult">
+
+		select start_time, end_time from audio_data where
+		end_time is null and room_name =
+		#roomId# 
+	</select>
+
+
+
+
+	<update id="updateAudioEndTime" parameterClass="java.lang.String">
+
+
+		update audio_data
+		a set a.end_time=now() where a.room_name=#room# and
+		a.end_time is null
+		and a.id
+		= (select max(id) from (select max(b.id) from audio_data b
+		where
+		b.room_name=#room# ) as temptable )
+		   
+	</update>
 
 
 

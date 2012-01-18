@@ -68,7 +68,7 @@ public class StreamServlet extends HttpServlet {
 		if(serverVO == null)
 		    return;
 		
-		if(serverApp != null && ( serverApp.equals("VIDEO") || serverApp.equals("DESKTOP") ))
+		if(serverApp != null && ( serverApp.equals("VIDEO") || serverApp.equals("DESKTOP")  ))
 		    subRoomId = WhiteboardAuthenticationDAOImpl.createSubRoomID(roomId,streamType,user);
 		
 		response.setContentType("text/xml");

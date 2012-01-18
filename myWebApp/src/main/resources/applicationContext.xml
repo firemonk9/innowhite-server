@@ -38,6 +38,11 @@
 	<bean id="videoSecurityDestination" class="org.apache.activemq.command.ActiveMQTopic">
 		<constructor-arg value="Innowhite.videoSecurity" />
 	</bean>
+	
+	<!-- A destination in ActiveMQ -->
+	<bean id="audioRecordDestination" class="org.apache.activemq.command.ActiveMQTopic">
+		<constructor-arg value="Innowhite.audioRecord" />
+	</bean>
 
 
 	<!-- A JmsTemplate instance that uses the cached connection and destination -->
@@ -55,6 +60,11 @@
 	<bean id="videoSecurityProducerTemplate" class="org.springframework.jms.core.JmsTemplate"
 		p:connectionFactory-ref="cachedConnectionFactory"
 		p:defaultDestination-ref="videoSecurityDestination" />
+		
+	<!-- A JmsTemplate instance that uses the cached connection and destination -->
+	<bean id="audioRecordProducerTemplate" class="org.springframework.jms.core.JmsTemplate"
+		p:connectionFactory-ref="cachedConnectionFactory"
+		p:defaultDestination-ref="audioRecordDestination" />	
 
 
 	<bean id="messageProducer"
@@ -72,6 +82,13 @@
 		class="com.innowhite.transformation.messages.VideoNameMessageProducer">
 		<property name="jmsTemplate" ref="videoSecurityProducerTemplate"></property>
 		<property name="destination" ref="videoSecurityDestination"></property>
+
+	</bean>
+	
+	<bean id="audioRecordMessageProducer"
+		class="com.innowhite.transformation.messages.AudioRecordMessageProducer">
+		<property name="jmsTemplate" ref="audioRecordProducerTemplate"></property>
+		<property name="destination" ref="audioRecordDestination"></property>
 
 	</bean>
 

@@ -1,0 +1,111 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE sqlMap PUBLIC "-//ibatis.apache.org//DTD SQL Map 2.0//EN"
+"http://ibatis.apache.org/dtd/sql-map-2.dtd">
+<sqlMap>
+
+	<!-- <parameterMap id="employeeValues" class="java.util.Map"> <parameter 
+		property="empname" jdbcType="INTEGER"/> <parameter property="jobdesc" jdbcType="VARCHAR"/> 
+		</parameterMap> <insert id="setEmployee" parameterMap="employeeValues"> INSERT 
+		INTO employee (empname,jobdesc) VALUES (?,?) <selectKey keyProperty="emp_id" 
+		resultClass="java.lang.Integer" > SELECT @@identity </selectKey> </insert> -->
+
+	<resultMap id="CallBackUrlsResult"
+		class="com.innowhite.whiteboard.persistence.beans.CallBackURLsVO">
+		
+		<result property="closeRoomUrl" column="close_room_url" />
+		<result property="playbackReadyUrl" column="playback_ready_url" />
+		<result property="lockRoomUrl" column="lock_room_url" />
+		<result property="inviteSendEmailsUrl" column="invite_send_emails_url" />
+		
+	
+	</resultMap>
+	
+	
+	<select id="getCallBackUrls" resultMap="CallBackUrlsResult"
+		parameterClass="java.lang.String">
+		 select close_Room_Url,playback_Ready_Url,lock_Room_Url, invite_send_emails_url from call_back_urls c, room r where r.room_id=#roomId# 
+		 and c.org_name = r.org_name 
+      </select>
+      
+      
+<!--       <parameterMap id="insertOrgParamsMap" -->
+<!-- 		class="com.innowhite.whiteboard.persistence.beans.OrganizationVO"> -->
+		
+<!-- 		<parameter property="parentOrg" jdbcType="VARCHAR" /> -->
+<!-- 		<parameter property="orgName" jdbcType="VARCHAR" /> -->
+<!-- 		<parameter property="startDate" jdbcType="Date" /> -->
+<!-- 		<parameter property="expiryDate" jdbcType="Date" /> -->
+<!-- 		<parameter property="saltKey" jdbcType="VARCHAR" /> -->
+<!-- 		<parameter property="orgType" jdbcType="VARCHAR" /> -->
+<!-- 		<parameter property="roomCallback" jdbcType="VARCHAR" /> -->
+		
+<!-- 	</parameterMap> -->
+      
+      
+<!--       <insert id="saveOrganization" parameterMap="insertOrgParamsMap"> -->
+<!-- 		INSERT INTO organization ( -->
+		
+<!-- 		parent_org, -->
+<!-- 		org_Name, -->
+<!-- 		start_Date, -->
+<!-- 		exp_Date, -->
+<!-- 		salt_Key, -->
+<!-- 		org_type, -->
+<!-- 		room_callback, -->
+<!-- 		inserted_date) -->
+<!-- 		VALUES -->
+<!-- 		( ?,?,?,?,?,?,? ,now()) -->
+		
+<!-- 			<selectKey keyProperty="id" resultClass="java.lang.Integer"> -->
+<!-- 			SELECT @@identity -->
+<!-- 		</selectKey> -->
+		
+<!-- 	</insert> -->
+	
+<!-- 	<update id="updateOrganization" parameterClass="java.util.HashMap"> -->
+<!-- 		update organization set updated_date=now()  -->
+		
+<!-- 		<dynamic prepend=" , "> -->
+<!-- 			<isNotEmpty property="orgType"> -->
+<!-- 				org_type = #orgType# -->
+<!-- 			</isNotEmpty> -->
+<!-- 		</dynamic> -->
+
+<!-- 		<dynamic prepend=" , "> -->
+<!-- 			<isNotEmpty property="expiryDate"> -->
+<!-- 				exp_date = #expiryDate# -->
+<!-- 	      </isNotEmpty> -->
+<!-- 		</dynamic> -->
+
+<!-- 		<dynamic prepend=" , "> -->
+<!-- 			<isNotEmpty property="saltKey"> -->
+<!-- 				salt_key = #saltKey# -->
+<!-- 			</isNotEmpty> -->
+<!-- 		</dynamic> -->
+		
+<!-- 		<dynamic prepend=" , "> -->
+<!-- 			<isNotEmpty property="roomCallback"> -->
+<!-- 				room_callback = #roomCallback# -->
+<!-- 			</isNotEmpty> -->
+<!-- 		</dynamic> -->
+
+<!-- 		<dynamic prepend=" , "> -->
+<!-- 			<isNotEmpty property="orgName"> -->
+<!-- 				org_name = #orgName# -->
+<!-- 			</isNotEmpty> -->
+<!-- 		</dynamic> -->
+
+<!-- 		where -->
+<!-- 		org_name=#orgName# and parent_org = #parentOrg#  -->
+
+<!-- 	</update> -->
+	
+<!-- 	<delete id="deleteOrganization" parameterClass="java.util.HashMap"> -->
+		
+<!-- 		delete from organization where org_name = #orgName# and parent_org = #parentOrg# -->
+
+<!-- 	</delete> -->
+	
+      
+</sqlMap>
+ 

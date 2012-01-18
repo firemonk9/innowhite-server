@@ -1,0 +1,14 @@
+whiteboard/WEB-INF/classes/
+whiteboardInet/WEB-INF/classes/
+oflaDemo/WebContent/WEB-INF/classes/
+videoApp/WebContent/WEB-INF/classes/
+loadBalancer/target/
+DocTransformation/target/
+myWebApp/target/
+PlayBackWebApp/target/
+BatchWebProject/target/
+InnowhiteRed5/build/
+PlaybackApp/target
+InnowhiteRed5/WebContent/WEB-INF/classes/
+springbatchconverter/
+*.swf

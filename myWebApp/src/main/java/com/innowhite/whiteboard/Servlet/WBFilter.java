@@ -42,7 +42,7 @@ public class WBFilter implements Filter {
 
 	// log.debug(" WBFilter bSessionFlag value Entry:   "
 	// + Constants.bsessionFlag);
-	//log.debug(req.getQueryStri);
+	// log.debug(req.getQueryStri);
 	boolean bValidRequest = true;
 	HttpServletRequest request = (HttpServletRequest) req;
 	HttpServletResponse response = (HttpServletResponse) res;
@@ -54,7 +54,7 @@ public class WBFilter implements Filter {
 	String orgName = "";
 	String parentOrg = "";
 	String queryStringWithoutcheckSum = "";
-	String roomId="";
+	String roomId = "";
 	String validServiceStatus = InnowhiteConstants.AUTH_FAILED;
 
 	if (checkSum != null) {
@@ -77,7 +77,7 @@ public class WBFilter implements Filter {
 	    // log.debug("oflaDemo orgName: " + orgName);
 
 	    String hostURL = null;
-	    if (orgName != null &&  orgName.indexOf(Constants.WEB_DELIMITER) > 0 && orgName.contains("INET")) {
+	    if (orgName != null && orgName.indexOf(Constants.WEB_DELIMITER) > 0 && orgName.contains("INET")) {
 		StringTokenizer st = new StringTokenizer(orgName, Constants.WEB_DELIMITER);
 
 		parentOrg = st.nextToken();
@@ -88,7 +88,7 @@ public class WBFilter implements Filter {
 	    log.debug("oflaDemo orgName: " + orgName);
 	    log.debug("oflaDemo checkSum: " + checkSum);
 
-	    validServiceStatus = WhiteboardAuthenticatorService.validateRequest(queryStringWithoutcheckSum, parentOrg, checkSum,roomId);
+	    validServiceStatus = WhiteboardAuthenticatorService.validateRequest(queryStringWithoutcheckSum, parentOrg, checkSum, roomId);
 	    log.debug("validServiceStatus= " + validServiceStatus);
 	    if (validServiceStatus.equals(InnowhiteConstants.SUCCESS)) {
 		bValidRequest = true;
@@ -112,34 +112,39 @@ public class WBFilter implements Filter {
 
     public void init(FilterConfig config) throws ServletException {
 	InnowhiteProperties.getPropertyVal("dummy");
+	String testParam = null;
+	try {
+	    // log.debug("filter init::::##############");
+	    if (InnowhiteConstants.CONTEXT_PATH == null) {
+		// Get the IP address of client machine.
 
-	// log.debug("filter init::::##############");
-	if (InnowhiteConstants.CONTEXT_PATH == null) {
-	    // Get the IP address of client machine.
-	  
-	    String cont = config.getServletContext().getContextPath();
+		String cont = config.getServletContext().getContextPath();
 
-	    log.debug("  context Path ::::+++" + cont);
-	    InnowhiteConstants.CONTEXT_PATH = cont.substring(1);
-	    Constants.MAC_FOLDER_PATH = Constants.MAC_FOLDER_PATH.replaceAll(Constants.APP_NAME, InnowhiteConstants.CONTEXT_PATH);
-	    Constants.UBUNTU_FOLDER_PATH = Constants.UBUNTU_FOLDER_PATH.replaceAll(Constants.APP_NAME, InnowhiteConstants.CONTEXT_PATH);
-	    Constants.UBUNTU_FOLDER_PATH_COMMAND = Constants.UBUNTU_FOLDER_PATH_COMMAND.replaceAll(Constants.APP_NAME, InnowhiteConstants.CONTEXT_PATH);
-	    Constants.TEMP_LOCATION = Constants.TEMP_LOCATION.replaceAll(Constants.APP_NAME, InnowhiteConstants.CONTEXT_PATH);
-	    Constants.URL_MEDIA = Constants.URL_MEDIA.replaceAll(Constants.APP_NAME, InnowhiteConstants.CONTEXT_PATH);
+		log.debug("  context Path ::::+++" + cont);
+		InnowhiteConstants.CONTEXT_PATH = cont.substring(1);
+		Constants.MAC_FOLDER_PATH = Constants.MAC_FOLDER_PATH.replaceAll(Constants.APP_NAME, InnowhiteConstants.CONTEXT_PATH);
+		Constants.UBUNTU_FOLDER_PATH = Constants.UBUNTU_FOLDER_PATH.replaceAll(Constants.APP_NAME, InnowhiteConstants.CONTEXT_PATH);
+		Constants.UBUNTU_FOLDER_PATH_COMMAND = Constants.UBUNTU_FOLDER_PATH_COMMAND.replaceAll(Constants.APP_NAME, InnowhiteConstants.CONTEXT_PATH);
+		Constants.TEMP_LOCATION = Constants.TEMP_LOCATION.replaceAll(Constants.APP_NAME, InnowhiteConstants.CONTEXT_PATH);
+		Constants.URL_MEDIA = Constants.URL_MEDIA.replaceAll(Constants.APP_NAME, InnowhiteConstants.CONTEXT_PATH);
 
-	    // Constants.CLIENT_MEDIA_CONTENT_PATH =
-	    // Constants.CLIENT_MEDIA_CONTENT_PATH.replaceAll(Constants.APP_NAME,
-	    // InnowhiteConstants.CONTEXT_PATH);
+		// Constants.CLIENT_MEDIA_CONTENT_PATH =
+		// Constants.CLIENT_MEDIA_CONTENT_PATH.replaceAll(Constants.APP_NAME,
+		// InnowhiteConstants.CONTEXT_PATH);
 
-	    Constants.APP_NAME = InnowhiteConstants.CONTEXT_PATH;
-	    InnowhiteConstants.FILE_SEPRATOR = System.getProperty("file.separator");
+		Constants.APP_NAME = InnowhiteConstants.CONTEXT_PATH;
+		InnowhiteConstants.FILE_SEPRATOR = System.getProperty("file.separator");
 
-	    BeanService bs = new BeanService();
+		BeanService bs = new BeanService();
 
+	    }
+	    // Get init parameter
+	    testParam = config.getInitParameter("test-param");
+
+	} catch (Exception e) {
+	    e.printStackTrace();
+	    log.error(" print stack trace :: " + e.getMessage());
 	}
-	// Get init parameter
-	String testParam = config.getInitParameter("test-param");
-
 	// Print the init parameter
 	log.debug("Test Param: " + testParam);
     }

@@ -32,7 +32,7 @@ public class YtUploadService {
 
     private static final Logger log = LoggerFactory.getLogger(YtUploadService.class);
 
-    public YtUploadService() throws IOException, AuthenticationException {
+    public boolean YtUploadService() throws IOException, AuthenticationException {
 
 	String client_id = "innowhite";
 	String developer_key = "AI39si6Nb_onkYi1b7Efa13CIKvXb1Ivyz2JhSPfcuTdVd0ckNQ3fHMu3DzTXzij1aCLbCsjMP6I-M8LDNaWTQxPjwG0p9OUDw";
@@ -63,15 +63,20 @@ public class YtUploadService {
 	try {
 	    // VideoEntry createdEntry =
 	    service.insert(new URL(uploadUrl), newEntry);
+	    log.debug("Video uploaded successfully!");
+	    return true;
 	    // printVideoEntry(createdEntry, true);
 	} catch (MalformedURLException e) {
-	    e.printStackTrace();
+	    log.error(e.getMessage(),e);
 	} catch (ServiceException se) {
 	    log.debug("Sorry, your upload was invalid:");
+	    log.error(se.getMessage(),se);
 	    log.debug(se.getResponseBody());
-	    return;
+	   
 	}
-	log.debug("Video uploaded successfully!");
+	   
+	
+	return false;
     }
 
     public static void printVideoEntry(VideoEntry videoEntry, boolean detailed) {

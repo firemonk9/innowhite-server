@@ -13,8 +13,6 @@ import javax.persistence.Table;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
-import com.innowhite.PlaybackApp.util.ProcessExecutor;
-
 @Entity
 @Table(name = "video_data")
 public class VideoData implements Serializable {
@@ -31,10 +29,8 @@ public class VideoData implements Serializable {
     @GeneratedValue(strategy = GenerationType.AUTO)
     private Long id;
 
-    
     @Column(name = "start_time")
     Date startTime;
-    
     
     @Column(name = "end_time")
     Date endTime;
@@ -45,12 +41,42 @@ public class VideoData implements Serializable {
     @Column(name = "room_id")
     String roomName;
     
-    
     @Column(name = "video_type")
     String videoType;
     
+    @Column(name = "duration")
+    String duration;
     
+    @Column(name = "width")
+    int width;
+    
+    @Column(name = "height")
+    int height;
       
+    public int getWidth() {
+		return width;
+	}
+
+	public void setWidth(int width) {
+		this.width = width;
+	}
+
+	public int getHeight() {
+		return height;
+	}
+
+	public void setHeight(int height) {
+		this.height = height;
+	}
+
+	public String getDuration() {
+        return duration;
+    }
+
+    public void setDuration(String duration) {
+        this.duration = duration;
+    }
+
     public String getVideoType() {
         return videoType;
     }
@@ -119,6 +145,8 @@ public class VideoData implements Serializable {
 	sb.append(" filePath: "+filePath);
 	sb.append(" roomName: "+roomName);
 	sb.append(" videoType: "+videoType);
+	sb.append(" width: "+width);
+	sb.append(" height: "+height);
 	
 	
 	return sb.toString();

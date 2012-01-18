@@ -97,7 +97,11 @@ public class ConversionMessageListener implements MessageListener {
 
 	    log.info("convertType: " + convertType);
 
+<<<<<<< HEAD
 	    // // if the file is pdf
+=======
+	    // if the file is pdf
+>>>>>>> c0d2a068a758313d10d67a57b97b6f981b41c1ad
 	    // if (docBean.getFilePath() != null &&
 	    // docBean.getFilePath().endsWith(".pdf")) {
 	    //
@@ -118,6 +122,7 @@ public class ConversionMessageListener implements MessageListener {
 	    //
 	    // } else // if the file is ppt or pptx
 	    // {
+<<<<<<< HEAD
 	    //f (convertType != null && convertType.equals("swf")) {
 //		fileTransBean.setActualFileCommand(swfActualFileCommand);
 //		fileTransBean.setSwf(true);
@@ -126,6 +131,19 @@ public class ConversionMessageListener implements MessageListener {
 //		fileTransBean.setSwf(false);
 //	    }
 	    fileTransBean.setThumbsCommand(thumbsCommand);
+=======
+	    
+//	    if (convertType != null && convertType.equals("swf")) {
+//		fileTransBean.setActualFileCommand(swfActualFileCommand);
+//		fileTransBean.setSwf(true);
+//	    } 
+//	    else {
+//		fileTransBean.setActualFileCommand(imgActualFileCommand);
+//		fileTransBean.setSwf(false);
+//	    }
+	    
+//	    fileTransBean.setThumbsCommand(thumbsCommand);
+>>>>>>> c0d2a068a758313d10d67a57b97b6f981b41c1ad
 	    ThumbnailThread thumbnailThread = new ThumbnailThread(docBean, fileTransBean);
 	    thumbnailThread.start();
 
@@ -135,6 +153,8 @@ public class ConversionMessageListener implements MessageListener {
 
 	} catch (JMSException e) {
 	    log.error("jms exception", e.fillInStackTrace());
+	} catch (Exception e) {
+	    log.error(" exception", e.fillInStackTrace());
 	}
     }
 

@@ -169,10 +169,20 @@
 		<property name="sessionFactory" ref="sessionFactory" />
 	</bean>
 
+	<bean id="roomDao" name="roomDao" class="com.innowhite.PlaybackApp.dao.RoomDao">
+		<property name="sessionFactory" ref="sessionFactory" />
+	</bean>
+
 	<bean id="sessionRecordingsDao" name="sessionRecordingsDao"
 		class="com.innowhite.PlaybackApp.dao.SessionRecordingDao">
 		<property name="sessionFactory" ref="sessionFactory" />
 	</bean>
+
+	<bean id="callBackUrlsDao" name="callBackUrlsDao"
+		class="com.innowhite.PlaybackApp.dao.CallBackUrlsDao">
+		<property name="sessionFactory" ref="sessionFactory" />
+	</bean>
+
 
 
 
@@ -193,14 +203,17 @@
 		class="com.innowhite.PlaybackApp.service.PlaybackDataService">
 		<property name="audioDataDao" ref="audioDataDao" />
 		<property name="videoDataDao" ref="videoDataDao" />
+		<property name="roomDao" ref="roomDao" />
 		<property name="sessionRecordingsDao" ref="sessionRecordingsDao" />
 		<property name="playbackVO" ref="playBackVO" />
 		<property name="playBackPlayListDao" ref="playBackPlayListDao" />
-		
+				<property name="callBackUrlsDao" ref="callBackUrlsDao" />
+
+
 
 	</bean>
 
-	
+
 
 	<bean id="taskExecutor"
 		class="org.springframework.scheduling.concurrent.ThreadPoolTaskExecutor">

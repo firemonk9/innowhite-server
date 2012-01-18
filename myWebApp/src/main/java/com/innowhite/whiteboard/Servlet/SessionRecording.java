@@ -13,6 +13,7 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
 import com.innowhite.whiteboard.persistence.dao.SessionRecordingDAO;
+import com.innowhite.whiteboard.service.SessionRecordingService;
 import com.innowhite.whiteboard.service.WhiteboardToVideoService;
 import com.innowhite.whiteboard.test.InnowhiteServiceTest;
 
@@ -48,16 +49,7 @@ public class SessionRecording extends HttpServlet {
 
 	    log.debug(" got req to start/stop recording for room " + roomId + " recordStatus  " + recordStatus);
 
-	    if (recordStatus != null && recordStatus.equals("recordStart")) {
-		SessionRecordingDAO.startSessionRecording(roomId);
-	    } else if (recordStatus != null && recordStatus.equals("recordStopKill")) 
-		// this is force kill when user closes the browser while recording is still on. 
-	    {
-		SessionRecordingDAO.endSessionRecording(roomId);
-		WhiteboardToVideoService.stopRecording(roomId);
-	    } else if (recordStatus != null && recordStatus.equals("recordStop")) {
-		SessionRecordingDAO.endSessionRecording(roomId);
-	    }
+	    SessionRecordingService.sessionRecord(roomId, recordStatus);
 	    //
 
 	    // String xmlReply = "<Reply><Message>"+msg+"</Message></Reply>";

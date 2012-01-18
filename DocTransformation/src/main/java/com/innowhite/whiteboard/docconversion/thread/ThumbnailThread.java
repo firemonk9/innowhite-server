@@ -60,18 +60,14 @@ public class ThumbnailThread extends Thread {
 	BufferedWriter out = null;
 	try {
 	//    boolean bCreated = false;
-	    String originalFilePath = docBean != null ? docBean.getFilePath() : ""; // C:/Documents
-										    // and
-										    // Settings/Administrator/Desktop/Presentation1.pptx
+	    String originalFilePath = docBean != null ? docBean.getFilePath() : ""; // C:/Documents and Settings/Administrator/Desktop/Presentation1.pptx
 	    File f = new File(originalFilePath);
 	    if(!f.exists()){
-		
-		log.error(" There is a problem wiht the file :: "+originalFilePath);
-		return;
+			log.error(" There is a problem wiht the file :: "+originalFilePath);
+			return;
 	    }
 	    
-	    String thumbsFolder = f.getParent() + separator + DocTransUtil.THUMBNAIL; // C:/Documents										      // and
-										      // Settings/Administrator/Desktop/THUMBNAIL
+	    String thumbsFolder = f.getParent() + separator + DocTransUtil.THUMBNAIL; // C:/Documents and Settings/Administrator/Desktop/THUMBNAIL
 	    String thumbnailBatFileContent = "";
 	    fileTransBean.setOriginalFileName(f.getName());
 	    log.debug(" the file name :: " + f.getName() + "   " + fileTransBean.getOriginalFileName());

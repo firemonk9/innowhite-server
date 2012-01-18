@@ -1,5 +1,6 @@
 package com.innowhite.PlaybackApp.service;
 
+import java.io.File;
 import java.util.List;
 
 import org.slf4j.Logger;
@@ -32,22 +33,27 @@ public class PreProcessFLV {
 		convertToAVIAndBackToFlv(flvPath);
 	    }
 
+	    
+	    File myFile = new File(flvPath);
+	    String outPutfile=null;
+	    if(myFile.exists()){
+		outPutfile = flvPath.replace(myFile.getName(), myFile.getName());
+		vData.setFilePath(outPutfile);
+	    }
 	    long duration = (vData.getEndTime().getTime() - vData.getStartTime().getTime());
-
-	    log.debug("entered pre processing of FLV file for " + flvPath + "  video type " + vData.getVideoType() + "  video actual duration " + duration);
-
+	    
 	    String command = "ruby /opt/InnowhiteData/scripts/Transcoder/transcoder.rb " + flvPath + " " + vData.getVideoType() + " " + duration;
-
+	    
 	    ProcessExecutor pe = new ProcessExecutor();
 	    // MakeExectuable obj = new MakeExectu
 
-	    boolean val = pe.executeProcess(command, playbackVO.getTempLocation(), null);
+	    boolean val = pe.executeProcess(command, playbackVO.getTempLocation(), null,true);
 
 	    log.debug(" the script that is  exeucted  ::" + command + " and the return val is " + val);
 
-	    command = "flvtool2 -U " + flvPath;
+	    command = "flvtool2 -U " + outPutfile;
 
-	    val = pe.executeProcess(command, "/opt/InnowhiteData/scripts/Transcoder/", null);
+	    val = pe.executeProcess(command, playbackVO.getTempLocation(), null,true);
 
 	    log.debug(" the script that is  exeucted  ::" + command + " and the return val is " + val);
 
@@ -60,7 +66,7 @@ public class PreProcessFLV {
 	try {
 
 	    log.debug(" Temporary fix for whiteboard video size problem. Need to find better solution ");
-	    String cmd = " -i " + path + " " + path.replace("flv", "avi");
+	    String cmd = " -i " + path + "  -y " + path.replace("flv", "avi");
 	    PlaybackUtil.invokeFfmpegProcess(cmd);
 
 	    cmd = " -i " + path.replace("flv", "avi") + " -y " + path;

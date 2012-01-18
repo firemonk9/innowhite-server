@@ -19,6 +19,8 @@ public class LoadBalancerService {
 
     private static final Logger log = LoggerFactory.getLogger(LoadBalancerService.class);
 
+    private static String skypeId = null;
+    
     public static void forceClearCache() {
 	log.info("clearing server_data cache ...");
 	serversMap = new HashMap<String, List<ServerVO>>();
@@ -70,5 +72,23 @@ public class LoadBalancerService {
 	}
 
     }
+    
+    
+    public static String getSkypeId(){
+	
+	if(skypeId != null)
+	    return skypeId;
+	else{
+	    try{
+	    ServerVO obj =  getServerURL("SKYPE",null);
+	    skypeId = obj.getServerAddr();
+	    return skypeId;
+	    }catch(Exception e){
+		log.error(e.getMessage(),e);
+	    }
+	}
+	return null;
+    }
+    
 
 }

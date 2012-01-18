@@ -7,6 +7,7 @@ import org.hibernate.Criteria;
 import org.hibernate.Query;
 import org.hibernate.SessionFactory;
 import org.hibernate.classic.Session;
+import org.hibernate.criterion.Order;
 import org.hibernate.criterion.Restrictions;
 import org.hibernate.transform.Transformers;
 import org.slf4j.Logger;
@@ -26,10 +27,6 @@ public class VideoDataDao {
 	this.sessionFactory = sessionFactory;
     }
 
-    
-    
-    
-    
     @Transactional
     public List<VideoData> getVideoDataList(String roomId) {
 
@@ -40,7 +37,7 @@ public class VideoDataDao {
 	
 	List<VideoData> list2 = crit.add(Restrictions.eq("roomName", roomId))
 	       .add( Restrictions.in( "videoType", new String[] { "DESKTOP", "WHITEBOARD" } ) )
-	    .list();
+	    .addOrder(Order.asc("id")).list();
 	
 	session.clear();
 	session.flush();

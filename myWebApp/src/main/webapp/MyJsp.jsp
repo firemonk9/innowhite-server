@@ -1,4 +1,5 @@
 
+<%@page import="com.innowhite.whiteboard.service.LoadBalancerService"%>
 <%@page import="com.innowhite.whiteboard.util.InnowhiteConstants"%>
 <%@page import="java.util.Enumeration"%><!-- saved from url=(0014)about:internet -->
 <%@page import="java.util.StringTokenizer"%>
@@ -31,7 +32,7 @@ if(userName==null || userName.equals("null")){
 	String classRoom = (String) request.getParameter("classRoom");
 	String orgName = (String) request.getParameter("orgName");
 	String view = (String) request.getParameter("view");
-	
+	String skypeId = LoadBalancerService.getSkypeId();
 
 	// Whiteboard server and port
 	String wbSer = (String) request.getAttribute(InnowhiteConstants.WHITEBOARD_SERVER);
@@ -221,7 +222,7 @@ var innowhitePluginLoaded = false;
      
 var screen_sharing=false;
 
-function start_screen_share (stream_id,recordStatus, serverUrl,roomId)
+function start_screen_share (stream_id,recordStatus, serverUrl,roomId,port)
 {
 	var userAgent = typeof(window.navigator.userAgent) != 'udefined' ? window.navigator.userAgent : '';
 	 if( userAgent.search(/MSIE/) >= 0)
@@ -240,9 +241,12 @@ function start_screen_share (stream_id,recordStatus, serverUrl,roomId)
 		
 		if(serverUrl == null)
 			serverUrl='main.innowhite.com';
+		
+		if(port == null)
+			port=80;
     	//alert(" in start_screen_share"+pluginLoaded);
 		if(pluginIsLoad()){
-			plugin0().start_capture(stream_id, recordStatus, 75,2,serverUrl,roomId,1935,roomId);
+			plugin0().start_capture(stream_id, recordStatus, 75,2,serverUrl,roomId,port,15);
 			screen_sharing=true;
 			return "STARTED";
 		}
@@ -576,7 +580,7 @@ if ( hasProductInstall && !hasRequestedVersion ) {
 		<div class="DOMWindowContent" style="width:100%;height: 100%;"></div>
 	</div>
 	
-	<a href="skype:innowhiteconf?call" id="skypeid"><img src="http://download.skype.com/share/skypebuttons/buttons/call_green_white_153x63.png"  style="border: none;" width="153" height="63" alt="Skype Me!" /></a>
+	<a href="skype:<%=skypeId%>?call" id="skypeid"><img src="http://download.skype.com/share/skypebuttons/buttons/call_green_white_153x63.png"  style="border: none;" width="153" height="63" alt="Skype Me!" /></a>
 	
 	<!--
 <object id="plugin0" type="application/x-innowhite" width="300" height="300">
