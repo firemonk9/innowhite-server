@@ -408,7 +408,7 @@ public class PlaybackDataService {
 							// VideoImageMagick.formatSessionVideoPlaylist(sessionVideoDataList,
 							// maxVideoDimensions, playbackVO);
 							uniformSessionVideoDataList = setDimensionsSessionVideoPlaylist(
-									paddedSessionVideoDatalist,
+									sessionVideoDataList,
 									maxVideoDimensions, playbackVO);
 						}
 						log.debug("_______________________________________________________________");
@@ -455,17 +455,14 @@ public class PlaybackDataService {
 					 * corresponding videos
 					 */
 					if (sessionAudio != null) {
-						String sessionVideoPlaylist = mergeAudioVideo(
-								sessionAudio, sessionVideo);
-						log.debug("sessionVideoPlaylist :: "
-								+ sessionVideoPlaylist);
+						String sessionVideoPlaylist = mergeAudioVideo(sessionAudio, sessionVideo);
+						log.debug("sessionVideoPlaylist :: "+ sessionVideoPlaylist);
 						finalVideoPlaylist.add(sessionVideoPlaylist);
 					} else {
 						// long duration = sessionVideo.getEndTime().getTime() -
 						// sessionVideo.getStartTime().getTime();
-						log.debug("sessionVideoPlaylist :: "
-								+ sessionVideo.getFilePath());// +"##"+duration);
-						finalVideoPlaylist.add(sessionVideo.getFilePath());// +"##"+duration);
+						log.debug("sessionVideoPlaylist :: "+ sessionVideo.getFilePath()); // +"##"+duration);
+						finalVideoPlaylist.add(sessionVideo.getFilePath()); // +"##"+duration);
 					}
 				}
 				log.debug("--------------------------------------------------------------");
@@ -738,7 +735,7 @@ public class PlaybackDataService {
 				vd.setVideoType(videoType);
 				tempSessionVideoPlaylist.add(sessionVideoDataList.get(i));
 			} else {
-				log.debug("else.. video a SS video.. adding to paddingSessionVideoPlaylist");
+				log.debug("else.. video a whitboard video.. adding to paddingSessionVideoPlaylist");
 				tempSessionVideoPlaylist.add(sessionVideoDataList.get(i));
 			}
 		}
