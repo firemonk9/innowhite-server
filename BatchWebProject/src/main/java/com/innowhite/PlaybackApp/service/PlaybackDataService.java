@@ -268,9 +268,7 @@ public class PlaybackDataService {
 					} else {
 						for (int j = 0; j < audioDataList.size(); j++) {
 							// session audios in mp3 format
-							prepareAudioForSessionBucket(sb, j,
-									audioDataList.get(j), sessionStartTime,
-									sessionEndTime);
+							prepareAudioForSessionBucket(sb, j, audioDataList.get(j), sessionStartTime, sessionEndTime);
 						}
 						log.debug("Finished preparing session bucket audios!");
 					}
@@ -282,9 +280,7 @@ public class PlaybackDataService {
 					} else {
 						for (int j = 0; j < videoDataList.size(); j++) {
 							// session videos in flv format
-							prepareVideoForSessionBucket(sb, j,
-									videoDataList.get(j), sessionStartTime,
-									sessionEndTime);
+							prepareVideoForSessionBucket(sb, j, videoDataList.get(j), sessionStartTime, sessionEndTime);
 						}
 						log.debug("Finished preparing session bucket videos!");
 					}
@@ -372,8 +368,7 @@ public class PlaybackDataService {
 					log.debug("PREPARING SESSION VIDEO (pad screenshare, frmtRes(IM) and concat)");
 					log.debug("--------------------------------------------------------------");
 					// sessionVideoDataList = session videos
-					List<VideoData> sessionVideoDataList = sessionBucket
-							.getVideoDataList();
+					List<VideoData> sessionVideoDataList = sessionBucket.getVideoDataList();
 					// uniformSessionVideoDataList - session videos of same
 					// resolution, format
 					List<VideoData> uniformSessionVideoDataList = new ArrayList<VideoData>();
@@ -387,17 +382,14 @@ public class PlaybackDataService {
 						// if screen-share was recorded
 						if (screenShareFlag.equals("true")) {
 							log.debug("session contains screenshare video... padding it...");
-							paddedSessionVideoDatalist = padSessionVideoPlaylist(
-									sessionVideoDataList, maxVideoDimensions);
+							paddedSessionVideoDatalist = padSessionVideoPlaylist(sessionVideoDataList, maxVideoDimensions);
 							// uniformSessionVideoDataList =
 							// setVideoFormatResolution(paddedSessionVideoPlaylist,
 							// videoDimensions);
 							// uniformSessionVideoDataList =
 							// VideoImageMagick.formatSessionVideoPlaylist(paddedSessionVideoDatalist,
 							// maxVideoDimensions, playbackVO);
-							uniformSessionVideoDataList = setDimensionsSessionVideoPlaylist(
-									paddedSessionVideoDatalist,
-									maxVideoDimensions, playbackVO);
+							uniformSessionVideoDataList = setDimensionsSessionVideoPlaylist(paddedSessionVideoDatalist,maxVideoDimensions, playbackVO);
 						} else {
 							log.debug("session does not contain screenshare video... no padding");
 							// Set resolution of all Session Bucket Videos
@@ -407,9 +399,7 @@ public class PlaybackDataService {
 							// uniformSessionVideoDataList =
 							// VideoImageMagick.formatSessionVideoPlaylist(sessionVideoDataList,
 							// maxVideoDimensions, playbackVO);
-							uniformSessionVideoDataList = setDimensionsSessionVideoPlaylist(
-									sessionVideoDataList,
-									maxVideoDimensions, playbackVO);
+							uniformSessionVideoDataList = setDimensionsSessionVideoPlaylist(sessionVideoDataList,maxVideoDimensions, playbackVO);
 						}
 						log.debug("_______________________________________________________________");
 						log.debug("Number of videos after setting resolution :: "
@@ -541,9 +531,7 @@ public class PlaybackDataService {
 		}
 	}
 
-	private List<VideoData> setDimensionsSessionVideoPlaylist(
-			List<VideoData> paddedSessionVideoDatalist,
-			String maxVideoDimensions, PlaybackVO playbackVO2) {
+	private List<VideoData> setDimensionsSessionVideoPlaylist(List<VideoData> paddedSessionVideoDatalist,String maxVideoDimensions, PlaybackVO playbackVO2) {
 		log.debug("Inside setDimensionsSessionVideoPlaylist...........................................");
 		String cmd = null, in_path = null, out_path = null;
 		int w = 0, h = 0, pad_plus_w = 0, pad_plus_h = 0, pad_w = 10, pad_h = 10;
@@ -554,7 +542,7 @@ public class PlaybackDataService {
 			out_path = in_path.replace(".flv", "setDim.flv");
 			w = paddedSessionVideoDatalist.get(i).getWidth();
 			h = paddedSessionVideoDatalist.get(i).getHeight();
-			log.debug("--->Width: " + w + "\t Height: " + h);
+			log.debug("--->printing vido data: "+paddedSessionVideoDatalist.get(i));
 			pad_plus_w = w + (2 * (pad_w));
 			pad_plus_h = h + (2 * (pad_h));
 			String color = "black";
@@ -563,8 +551,7 @@ public class PlaybackDataService {
 					+ pad_plus_h + ":" + pad_w + ":" + pad_h + ":" + color
 					+ " -sameq " + out_path;
 			PlaybackUtil.invokeFfmpegProcess(cmd);
-			sameDimensionSessionVideoDatalist.add(paddedSessionVideoDatalist
-					.get(i));
+			sameDimensionSessionVideoDatalist.add(paddedSessionVideoDatalist.get(i));
 			sameDimensionSessionVideoDatalist.get(i).setFilePath(out_path);
 		}
 		return sameDimensionSessionVideoDatalist;
@@ -621,8 +608,7 @@ public class PlaybackDataService {
 		return flowPlayerVideoPath;
 	}
 
-	private List<VideoData> padSessionVideoPlaylist(
-			List<VideoData> sessionVideoDataList, String maxVideoDimensions) {
+	private List<VideoData> padSessionVideoPlaylist(List<VideoData> sessionVideoDataList, String maxVideoDimensions) {
 		// Temporary sessionVideoPlaylist contains videos for this session
 		log.debug("Inside padSessionVideoPlaylist...........................................");
 		List<VideoData> tempSessionVideoPlaylist = new ArrayList<VideoData>();
@@ -641,18 +627,11 @@ public class PlaybackDataService {
 				PlaybackUtil.invokeVideoAttribProcess(cmd, vhm);
 				log.debug(" printing the video hash map ...::" + vhm);
 
-				long start_time = sessionVideoDataList.get(i).getStartTime()
-						.getTime();
-				long end_time = sessionVideoDataList.get(i).getEndTime()
-						.getTime();
+				long start_time = sessionVideoDataList.get(i).getStartTime().getTime();
+				long end_time = sessionVideoDataList.get(i).getEndTime().getTime();
 				long dbDuration = (end_time - start_time) / 1000;
-				long actualDuration = PlaybackUtil.getNumLong(vhm
-						.get("duration"));
+				long actualDuration = PlaybackUtil.getNumLong(vhm.get("duration"));
 				long padDuration = (dbDuration - actualDuration);
-
-				vd = new VideoData();
-				vd.setStartTime(new Date(start_time));
-				vd.setEndTime(new Date(start_time + (padDuration)));
 
 				log.debug(" ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~");
 				log.debug(" start time for screen share video:: "
@@ -699,8 +678,8 @@ public class PlaybackDataService {
 				log.debug("setting the resolution of padding video..");
 				String[] dim = maxVideoDimensions.split("x");
 				PlaybackUtil.invokeFfmpegProcess(cmd);
-				int width = Integer.parseInt(dim[0]) - 5;
-				int height = Integer.parseInt(dim[1]) - 5;
+				int width = Integer.parseInt(dim[0])-10;
+				int height = Integer.parseInt(dim[1])-10;
 				cmd = " " + curDir + "/SSPad" + uniquePath
 						+ ".flv -oac copy -ovc copy -vf scale=" + width + ":"
 						+ height + " -o " + curDir + "/SSPad" + uniquePath
@@ -718,24 +697,35 @@ public class PlaybackDataService {
 				// PlaybackUtil.invokeMencoderProcess(cmd);
 				// padDuation determines - one of 6 videos (of 3s duration) path
 				// from the current directory
-				vd.setFilePath(curDir + "/SSPad" + uniquePath + width + "x"
-						+ height + ".flv");
+				
+				log.debug("-->adding screen share pad video to paddingSessionVideoPlaylist");
+				vd = new VideoData();
+//				vd.setVideoData(vd.getStartTime(),vd.getEndTime(), vd.getFilePath(),vd.getWidth(),vd.getHeight(),vd.getDuration(),vd.getVideoType(),vd.getId(),vd.getRoomName());
+				vd.setStartTime(new Date(start_time));
+				vd.setEndTime(new Date(start_time + (padDuration)));
+				vd.setFilePath(curDir + "/SSPad" + uniquePath + width + "x"+ height + ".flv");
 				vd.setDuration("" + padDuration);
-				// vd.setId(sessionVideoDataList.get(i).getId());
-				vd.setRoomName(sessionVideoDataList.get(i).getRoomName());
+				vd.setHeight(height);
+				vd.setWidth(width);
 				vd.setVideoType("VIDEO");
+				vd.setId(sessionVideoDataList.get(i).getId());
+				vd.setRoomName(sessionVideoDataList.get(i).getRoomName());
 				tempSessionVideoPlaylist.add(vd);
 
+				log.debug("-->adding screen share video to paddingSessionVideoPlaylist");
 				vd = new VideoData();
 				vd.setStartTime(new Date(start_time + padDuration));
 				vd.setEndTime(sessionVideoDataList.get(i).getEndTime());
 				vd.setFilePath(sessionVideoDataList.get(i).getFilePath());
+				vd.setDuration(sessionVideoDataList.get(i).getDuration());
+				vd.setHeight(sessionVideoDataList.get(i).getHeight());
+				vd.setWidth(sessionVideoDataList.get(i).getWidth());
+				vd.setVideoType(sessionVideoDataList.get(i).getVideoType());
 				vd.setId(sessionVideoDataList.get(i).getId());
 				vd.setRoomName(sessionVideoDataList.get(i).getRoomName());
-				vd.setVideoType(videoType);
-				tempSessionVideoPlaylist.add(sessionVideoDataList.get(i));
+				tempSessionVideoPlaylist.add(vd);
 			} else {
-				log.debug("else.. video a whitboard video.. adding to paddingSessionVideoPlaylist");
+				log.debug("-->adding whiteboard video to paddingSessionVideoPlaylist");
 				tempSessionVideoPlaylist.add(sessionVideoDataList.get(i));
 			}
 		}
@@ -907,7 +897,7 @@ public class PlaybackDataService {
 			// screenShareDimension
 			cmd = " "
 					+ sessionVideoDataList.get(i).getFilePath()
-					+ " -oac copy -ovc lavc -vf scale="
+					+ " -oac copy -ovc copy -vf scale="
 					+ dim[0]
 					+ ":"
 					+ dim[1]
@@ -1100,6 +1090,7 @@ public class PlaybackDataService {
 		log.debug("videoStartTime::" + videoData.getStartTime());
 		log.debug("videoEndTime::" + videoData.getEndTime());
 		log.debug("videoPath::" + videoPath);
+		log.debug("Also printing video data: "+videoData);
 
 		String cmd = null;
 		String newVideoPath = PlaybackUtil.getUnique();
@@ -1119,11 +1110,8 @@ public class PlaybackDataService {
 					+ PlaybackUtil.secondsToHours(videoEndTime
 							- sessionStartTime) + " -acodec copy -vcodec copy "
 					+ videoPath.replace(".flv", newVideoPath + ".flv");
-			executeFfmpegAndSetVideoData(cmd, vd, sessionStartTime,
-					videoEndTime,
-					videoPath.replace(".flv", newVideoPath + ".flv"));
-		} else if (videoStartTime <= sessionStartTime
-				&& videoEndTime >= sessionEndTime) {
+			executeFfmpegAndSetVideoData(cmd, vd, videoData, sessionStartTime, videoEndTime, videoPath.replace(".flv", newVideoPath + ".flv"));
+		} else if (videoStartTime <= sessionStartTime && videoEndTime >= sessionEndTime) {
 			log.debug("videoStartTime<=sessionStartTime && videoEndTime>=sessionEndTime");
 			cmd = "-i "
 					+ videoPath
@@ -1134,7 +1122,7 @@ public class PlaybackDataService {
 					+ PlaybackUtil.secondsToHours(sessionEndTime
 							- sessionStartTime) + " -acodec copy -vcodec copy "
 					+ videoPath.replace(".flv", newVideoPath + ".flv");
-			executeFfmpegAndSetVideoData(cmd, vd, sessionStartTime,
+			executeFfmpegAndSetVideoData(cmd, vd, videoData, sessionStartTime,
 					sessionEndTime,
 					videoPath.replace(".flv", newVideoPath + ".flv"));
 		} else if (videoStartTime >= sessionStartTime
@@ -1149,7 +1137,7 @@ public class PlaybackDataService {
 							.secondsToHours(videoEndTime - videoStartTime)
 					+ " -acodec copy -vcodec copy "
 					+ videoPath.replace(".flv", newVideoPath + ".flv");
-			executeFfmpegAndSetVideoData(cmd, vd, videoStartTime, videoEndTime,
+			executeFfmpegAndSetVideoData(cmd, vd, videoData, videoStartTime, videoEndTime,
 					videoPath.replace(".flv", newVideoPath + ".flv"));
 		} else if (videoStartTime >= sessionStartTime
 				&& videoStartTime <= sessionEndTime
@@ -1161,7 +1149,7 @@ public class PlaybackDataService {
 					+ PlaybackUtil.secondsToHours(sessionEndTime
 							- videoStartTime) + " -acodec copy -vcodec copy "
 					+ videoPath.replace(".flv", newVideoPath + ".flv");
-			executeFfmpegAndSetVideoData(cmd, vd, videoStartTime,
+			executeFfmpegAndSetVideoData(cmd, vd, videoData, videoStartTime,
 					sessionEndTime,
 					videoPath.replace(".flv", newVideoPath + ".flv"));
 		} else {
@@ -1312,11 +1300,17 @@ public class PlaybackDataService {
 	}
 
 	private static void executeFfmpegAndSetVideoData(String cmd, VideoData vd,
-			long start_time, long end_time, String video_path) {
+			VideoData videoData, long start_time, long end_time, String video_path) {
 		PlaybackUtil.invokeFfmpegProcess(cmd);
 		vd.setStartTime(new Date(start_time));
 		vd.setEndTime(new Date(end_time));
 		vd.setFilePath(video_path);
+		vd.setDuration(videoData.getDuration());
+		vd.setWidth(videoData.getWidth());
+		vd.setHeight(videoData.getHeight());
+		vd.setRoomName(videoData.getRoomName());
+		vd.setVideoType(videoData.getVideoType());
+		vd.setId(videoData.getId());
 	}
 
 	@SuppressWarnings("unused")

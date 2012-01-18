@@ -135,6 +135,17 @@ public class VideoData implements Serializable {
 	//whiteboard
     }
     
+    public void setVideoData(Date startTime, Date endTime, String filePath, int width, int height, String duration, String videoType, Long id, String roomName){
+    	this.setStartTime(startTime);
+		this.setEndTime(endTime);
+		this.setFilePath(filePath);
+		this.setWidth(width);
+		this.setHeight(height);
+		this.setDuration(duration);
+		this.setId(id);
+		this.setRoomName(roomName);
+		this.setVideoType(videoType);
+    }
     
     public String toString(){
 	
@@ -147,7 +158,6 @@ public class VideoData implements Serializable {
 	sb.append(" videoType: "+videoType);
 	sb.append(" width: "+width);
 	sb.append(" height: "+height);
-	
 	
 	return sb.toString();
     }
