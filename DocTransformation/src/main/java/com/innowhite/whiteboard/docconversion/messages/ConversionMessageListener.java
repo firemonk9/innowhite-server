@@ -97,39 +97,41 @@ public class ConversionMessageListener implements MessageListener {
 
 	    log.info("convertType: " + convertType);
 
-	    // if the file is pdf
-	    if (docBean.getFilePath() != null && docBean.getFilePath().endsWith(".pdf")) {
+	    // // if the file is pdf
+	    // if (docBean.getFilePath() != null &&
+	    // docBean.getFilePath().endsWith(".pdf")) {
+	    //
+	    // log.debug(" processing pdf file :: " + docBean.getFilePath());
+	    // log.debug(" processing pdf pages count :: " +
+	    // docBean.getServiceType());
+	    // fileTransBean.setActualFileCommand(pdfToSwf);
+	    // fileTransBean.setThumbsCommand(pdfToThumbnail);
+	    // // for swf files number of pages comes from unix server.
+	    // fileTransBean.setNumPages(docBean.getServiceType());
+	    //
+	    // // PDFThumbnailThread thumbnailThread = new
+	    // // PDFThumbnailThread(docBean, fileTransBean);
+	    // // thumbnailThread.start();
+	    //
+	    // PDFThread thread = new PDFThread(docBean, fileTransBean);
+	    // thread.start();
+	    //
+	    // } else // if the file is ppt or pptx
+	    // {
+	    //f (convertType != null && convertType.equals("swf")) {
+//		fileTransBean.setActualFileCommand(swfActualFileCommand);
+//		fileTransBean.setSwf(true);
+//	    } else {
+//		fileTransBean.setActualFileCommand(imgActualFileCommand);
+//		fileTransBean.setSwf(false);
+//	    }
+	    fileTransBean.setThumbsCommand(thumbsCommand);
+	    ThumbnailThread thumbnailThread = new ThumbnailThread(docBean, fileTransBean);
+	    thumbnailThread.start();
 
-		log.debug(" processing pdf file :: " + docBean.getFilePath());
-		log.debug(" processing pdf pages count :: " +  docBean.getServiceType());
-		fileTransBean.setActualFileCommand(pdfToSwf);
-		fileTransBean.setThumbsCommand(pdfToThumbnail);
-		// for swf files number of pages comes from unix server.
-		fileTransBean.setNumPages(docBean.getServiceType());
-		
-		// PDFThumbnailThread thumbnailThread = new
-		// PDFThumbnailThread(docBean, fileTransBean);
-		// thumbnailThread.start();
-
-		PDFThread thread = new PDFThread(docBean, fileTransBean);
-		thread.start();
-
-	    } else // if the file is ppt or pptx
-	    {
-		if (convertType != null && convertType.equals("swf")) {
-		    fileTransBean.setActualFileCommand(swfActualFileCommand);
-		    fileTransBean.setSwf(true);
-		} else {
-		    fileTransBean.setActualFileCommand(imgActualFileCommand);
-		    fileTransBean.setSwf(false);
-		}
-		fileTransBean.setThumbsCommand(thumbsCommand);
-		ThumbnailThread thumbnailThread = new ThumbnailThread(docBean, fileTransBean);
-		thumbnailThread.start();
-
-		SWFThread thread = new SWFThread(docBean, fileTransBean);
-		thread.start();
-	    }
+//	    SWFThread thread = new SWFThread(docBean, fileTransBean);
+//	    thread.start();
+	    // }
 
 	} catch (JMSException e) {
 	    log.error("jms exception", e.fillInStackTrace());

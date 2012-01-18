@@ -41,9 +41,9 @@ public class ThumbnailThread extends Thread {
 	    createBatchFile();
 	    b = invokeProcess();
 	    bSavedToDB = saveThumbnailsToDB(b);
-	    if (bSavedToDB) {
-		ConversionMessageListener.hTable.put(docBean.getConversionID(), true);
-	    }
+	    //if (bSavedToDB) {
+	    ConversionMessageListener.hTable.put(docBean.getConversionID(), true);
+	    //}
 
 	    // Thread.sleep(10000);
 	    log.info("IN Thread in Listener: ++++++++++++++++++++ ");
@@ -73,23 +73,22 @@ public class ThumbnailThread extends Thread {
 	    String thumbsFolder = f.getParent() + separator + DocTransUtil.THUMBNAIL; // C:/Documents										      // and
 										      // Settings/Administrator/Desktop/THUMBNAIL
 	    String thumbnailBatFileContent = "";
-
 	    fileTransBean.setOriginalFileName(f.getName());
-
 	    log.debug(" the file name :: " + f.getName() + "   " + fileTransBean.getOriginalFileName());
-
 	    // Batch File Content
 	    StringBuilder sb = new StringBuilder();
 	    // sb.append(" \"C:/Program Files/Ppt2SwfSDK/Samples/Precompiled/Ppt2SwfSampleCSharpConsole.exe\" ");
 	    // sb.append(" \"Dhiraj Peechara - Vireka LLC\" ");
 	    // sb.append(" \"d4f0ec7829702966119f20d2a5a74837\" -tc jpg 150 150 ");
 
-	    sb.append(fileTransBean.getThumbsCommand() + " ");
-	    sb.append("\"" + thumbsFolder + "\" ");
-	    sb.append("\"" + originalFilePath + "\" ");
-	    sb.append(" \"\"");
-	    thumbnailBatFileContent = sb.toString();
-	    log.info(sb.toString());
+	    String finalStr = fileTransBean.getThumbsCommand().replace("#INPUT#", "originalFilePath");
+	    
+//	    sb.append(fileTransBean.getThumbsCommand() + " ");
+//	    sb.append("\"" + thumbsFolder + "\" ");
+//	    sb.append("\"" + originalFilePath + "\" ");
+//	    sb.append(" \"\"");
+	    thumbnailBatFileContent = finalStr;
+	    log.info(" The command to be executed :: "+finalStr);
 	    // BatchFile path
 	    String originalDir = f.getParent(); // C:/Documents and
 						// Settings/Administrator/Desktop
