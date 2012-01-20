@@ -1126,7 +1126,7 @@ public class PlaybackDataService {
 							- videoStartTime)
 					+ " -an -t "
 					+ PlaybackUtil.secondsToHours(videoEndTime
-							- sessionStartTime) + " -acodec copy -vcodec copy "
+							- sessionStartTime) + " -sameq "
 					+ videoPath.replace(".flv", newVideoPath + ".flv");
 			executeFfmpegAndSetVideoData(cmd, vd, videoData, sessionStartTime, videoEndTime, videoPath.replace(".flv", newVideoPath + ".flv"));
 		} else if (videoStartTime <= sessionStartTime && videoEndTime >= sessionEndTime) {
@@ -1138,7 +1138,7 @@ public class PlaybackDataService {
 							- videoStartTime)
 					+ " -an -t "
 					+ PlaybackUtil.secondsToHours(sessionEndTime
-							- sessionStartTime) + " -acodec copy -vcodec copy "
+							- sessionStartTime) + " -sameq "
 					+ videoPath.replace(".flv", newVideoPath + ".flv");
 			executeFfmpegAndSetVideoData(cmd, vd, videoData, sessionStartTime,
 					sessionEndTime,
@@ -1153,7 +1153,7 @@ public class PlaybackDataService {
 					+ " -ss 00:00:00 -an -t "
 					+ PlaybackUtil
 							.secondsToHours(videoEndTime - videoStartTime)
-					+ " -acodec copy -vcodec copy "
+					+ " -acodec -sameq "
 					+ videoPath.replace(".flv", newVideoPath + ".flv");
 			executeFfmpegAndSetVideoData(cmd, vd, videoData, videoStartTime, videoEndTime,
 					videoPath.replace(".flv", newVideoPath + ".flv"));
@@ -1165,7 +1165,7 @@ public class PlaybackDataService {
 					+ videoPath
 					+ " -ss 00:00:00 -an -t "
 					+ PlaybackUtil.secondsToHours(sessionEndTime
-							- videoStartTime) + " -acodec copy -vcodec copy "
+							- videoStartTime) + " -sameq "
 					+ videoPath.replace(".flv", newVideoPath + ".flv");
 			executeFfmpegAndSetVideoData(cmd, vd, videoData, videoStartTime,
 					sessionEndTime,
