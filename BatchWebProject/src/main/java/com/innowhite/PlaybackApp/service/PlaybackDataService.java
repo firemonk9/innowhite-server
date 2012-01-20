@@ -227,7 +227,7 @@ public class PlaybackDataService {
 					.split("##");
 			String maxVideoDimensions = dimArr[0];
 			String screenShareFlag = dimArr[1];
-			log.debug("maxVideoDimensions (w+5)x(h+5):: " + maxVideoDimensions);
+			log.debug("maxVideoDimensions (w+pad)x(h+pad):: " + maxVideoDimensions);
 			log.debug("screenShareFlag:: " + screenShareFlag);
 
 			// if no sessions or no videos STOP PROCESS
@@ -493,17 +493,14 @@ public class PlaybackDataService {
 				if (upload) {
 					YoutubeUploadService ytUpload = new YoutubeUploadService();
 					String xml = roomDao.getSessionDetailXML(roomId);
-					String roomName = "Name not available for room :: "
-							+ roomId;
-					String roomDescription = " Description not available for room "
-							+ roomId;
+					String roomName = "Name not available for room :: "+ roomId;
+					String roomDescription = " Description not available for room "+ roomId;
 					if (xml != null) {
 						roomName = UtilService.getRoomName(xml);
 						roomDescription = UtilService.getRoomDescription(xml);
+						log.debug("roomName: "+roomName+"\t roomDescription: "+roomDescription);
 					}
-					String youtubeURL = ytUpload.uploadVideo(
-							flowPlayerVideo.getFilePath(), roomName,
-							roomDescription);
+					String youtubeURL = ytUpload.uploadVideo(flowPlayerVideo.getFilePath(), roomName,roomDescription);
 					log.debug("_______________________________________________________________");
 					log.debug("flowPlayerVideoPath :: " + flowPlayerVideoPath);
 					log.debug("youtubeURL :: " + youtubeURL);
@@ -534,22 +531,23 @@ public class PlaybackDataService {
 	private List<VideoData> setDimensionsSessionVideoPlaylist(List<VideoData> paddedSessionVideoDatalist,String maxVideoDimensions, PlaybackVO playbackVO2) {
 		log.debug("Inside setDimensionsSessionVideoPlaylist...........................................");
 		String cmd = null, in_path = null, out_path = null;
-		int w = 0, h = 0, pad_plus_w = 0, pad_plus_h = 0, pad_w = 10, pad_h = 10;
+		int vidWidth = 0, vidHeight = 0, padWidth = 0, padHeight = 0;
 		List<VideoData> sameDimensionSessionVideoDatalist = new ArrayList<VideoData>();
-
+		String temp[] = maxVideoDimensions.split("x");
+		int maxWidth=Integer.parseInt(temp[0]);
+		int maxHeight=Integer.parseInt(temp[1]);
+			
 		for (int i = 0; i < paddedSessionVideoDatalist.size(); i++) {
 			in_path = paddedSessionVideoDatalist.get(i).getFilePath();
-			out_path = in_path.replace(".flv", "setDim.flv");
-			w = paddedSessionVideoDatalist.get(i).getWidth();
-			h = paddedSessionVideoDatalist.get(i).getHeight();
+			out_path = in_path.replace(".flv", "_overlay.flv");
+			vidWidth = paddedSessionVideoDatalist.get(i).getWidth();
+			vidHeight = paddedSessionVideoDatalist.get(i).getHeight();
+			padWidth=((maxWidth-vidWidth)/2);
+			padHeight=((maxHeight-vidHeight)/2);
 			log.debug("--->printing vido data: "+paddedSessionVideoDatalist.get(i));
-			pad_plus_w = w + (2 * (pad_w));
-			pad_plus_h = h + (2 * (pad_h));
 			String color = "black";
 			log.debug("--->Setting deminesions of video" + i);
-			cmd = " -i " + in_path + " -vf pad=" + pad_plus_w + ":"
-					+ pad_plus_h + ":" + pad_w + ":" + pad_h + ":" + color
-					+ " -sameq " + out_path;
+			cmd = " -i " + in_path + " -vf pad=" + maxWidth + ":"+ maxHeight + ":" + padWidth + ":" + padHeight + ":" + color+ " -sameq " + out_path;
 			PlaybackUtil.invokeFfmpegProcess(cmd);
 			sameDimensionSessionVideoDatalist.add(paddedSessionVideoDatalist.get(i));
 			sameDimensionSessionVideoDatalist.get(i).setFilePath(out_path);
@@ -630,7 +628,16 @@ public class PlaybackDataService {
 				long start_time = sessionVideoDataList.get(i).getStartTime().getTime();
 				long end_time = sessionVideoDataList.get(i).getEndTime().getTime();
 				long dbDuration = (end_time - start_time) / 1000;
-				long actualDuration = PlaybackUtil.getNumLong(vhm.get("duration"));
+				long actualDuration = 0;
+				Long dur= PlaybackUtil.getNumLong(vhm.get("duration"));
+				Long Dur = PlaybackUtil.hoursToMillis(vhm.get("Duration"))/1000;
+				log.debug("((duration hack)) duration:: "+dur+"\t Duration:: "+Dur);
+				if(dur==0 || dur==null ){
+					actualDuration = Dur;
+				}else{
+					actualDuration = dur;
+				}
+				
 				long padDuration = (dbDuration - actualDuration);
 
 				log.debug(" ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~");
@@ -681,7 +688,7 @@ public class PlaybackDataService {
 				int width = Integer.parseInt(dim[0])-10;
 				int height = Integer.parseInt(dim[1])-10;
 				cmd = " " + curDir + "/SSPad" + uniquePath
-						+ ".flv -oac copy -ovc copy -vf scale=" + width + ":"
+						+ ".flv -oac copy -ovc lavc -vf scale=" + width + ":"
 						+ height + " -o " + curDir + "/SSPad" + uniquePath
 						+ width + "x" + height + ".flv";
 				PlaybackUtil.invokeMencoderProcess(cmd);
@@ -777,7 +784,18 @@ public class PlaybackDataService {
 				log.warn("printing the videoObj :: " + videoList);
 			}
 		}
-		return (maxWidth + 5) + "x" + (maxHeight + 5) + "##" + screenShareFlag;
+		if((maxWidth%2)==0){
+			maxWidth=maxWidth+10;
+		}else{
+			maxWidth=maxWidth+11;
+		}
+		if((maxHeight%2)==0){
+			maxHeight=maxHeight+10;
+		}else{
+			maxHeight=maxHeight+11;
+		}
+		
+		return maxWidth + "x" + maxHeight + "##" + screenShareFlag;
 	}
 
 	private String getScreenShareDimensions(List<VideoData> videoList,

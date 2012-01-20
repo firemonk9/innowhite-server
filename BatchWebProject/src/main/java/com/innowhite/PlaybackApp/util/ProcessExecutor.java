@@ -122,6 +122,8 @@ class StreamGobbler extends Thread {
 						getSubstr(line, "filesize", this.videohm);
 					} else if (line.contains("Stream")) {
 						getSubstr2(line, "dimensions", this.videohm);
+					} else if(line.contains("Duration")) {
+						getSubstr3(line, "Duration", this.videohm);
 					}
 				}
 				if (this.videohm.get("width") == null
@@ -150,14 +152,12 @@ class StreamGobbler extends Thread {
 		}
 	}
 
-	public void getSubstr(String line, String val,
-			HashMap<String, String> videohm) {
+	public void getSubstr(String line, String val,HashMap<String, String> videohm) {
 		String temp[] = line.split(":");
 		if (temp.length == 2) {
 			if (temp[1] != null && PlaybackUtil.getNumLong(temp[1]) > 0) {
 				if (printLog)
-					log.debug("-->Inside ProcessExecutor.. " + val + "="
-							+ temp[1].trim());
+					log.debug("-->Inside ProcessExecutor.. " + val + "="+ temp[1].trim());
 				videohm.put(val, temp[1].trim());
 			}
 			// if (val != null)
@@ -165,16 +165,28 @@ class StreamGobbler extends Thread {
 		}
 	}
 
-	public void getSubstr2(String line, String val,
-			HashMap<String, String> videohm) {
+	public void getSubstr2(String line, String val,HashMap<String, String> videohm) {
 		String temp[] = line.split(",");
 		for (int i = 0; i < temp.length; i++) {
-			if (temp[i] != null
-					&& Pattern.matches("[\\d]+[x][\\d]+", temp[i].trim())) {
+			if (temp[i] != null && Pattern.matches("[\\d]+[x][\\d]+", temp[i].trim())) {
 				if (printLog)
-					log.debug("-->Inside ProcessExecutor.. " + val + "="
-							+ temp[i].trim());
+					log.debug("-->Inside ProcessExecutor.. " + val + "="+ temp[i].trim());
 				videohm.put(val, temp[i].trim());
+			}
+		}
+	}
+	
+	public void getSubstr3(String line, String val,HashMap<String, String> videohm) {
+		String temp[] = line.split(",");
+		String Duration=null;
+		for (int i = 0; i < temp.length; i++) {
+			if (temp[i] != null) {
+				if(temp[i].contains("Duration:")){
+					Duration = temp[i].trim().substring(9).trim();
+				}
+				if (printLog)
+					log.debug("-->Inside ProcessExecutor.. " + val + "="+ Duration);
+				videohm.put(val, Duration);
 			}
 		}
 	}
