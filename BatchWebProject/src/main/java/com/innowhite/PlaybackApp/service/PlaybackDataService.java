@@ -211,6 +211,19 @@ public class PlaybackDataService {
 			if (sessionRecordingsList.size() == 0 || videoDataList.size() == 0) {
 				log.debug("ERROR ALERT::No Sessions or No Videos in Room!");
 			}
+			
+			// paddedSessionVideoPlaylist - padded session videos
+//			List<VideoData> paddedSessionVideoDatalist = new ArrayList<VideoData>();
+			// if session has atleast 1 video
+			if (videoDataList.size() > 0) {
+				// if screen-share was recorded
+				if (screenShareFlag.equals("true")) {
+					log.debug("session contains screenshare video... padding it...");
+					videoDataList = padSessionVideoPlaylist(videoDataList, maxVideoDimensions, roomId);
+				} else {
+					log.debug("session does not contain screenshare video... no padding");
+				}
+			}
 
 			/*
 			 * Each session has a Session Bucket sessionBucket contains audios,
@@ -324,35 +337,27 @@ public class PlaybackDataService {
 					// uniformSessionVideoDataList - session videos of same
 					// resolution, format
 					List<VideoData> uniformSessionVideoDataList = new ArrayList<VideoData>();
-					// paddedSessionVideoPlaylist - padded session videos
-					List<VideoData> paddedSessionVideoDatalist = new ArrayList<VideoData>();
+//					// paddedSessionVideoPlaylist - padded session videos
+//					List<VideoData> paddedSessionVideoDatalist = new ArrayList<VideoData>();
 					// contains the final video path
 					VideoData sessionVideo = null;
 
 					// if session has atleast 1 video
 					if (sessionVideoDataList.size() > 0) {
 						// if screen-share was recorded
-						if (screenShareFlag.equals("true")) {
-							log.debug("session contains screenshare video... padding it...");
-							paddedSessionVideoDatalist = padSessionVideoPlaylist(sessionVideoDataList, maxVideoDimensions, roomId);
-							// uniformSessionVideoDataList =
-							// setVideoFormatResolution(paddedSessionVideoPlaylist,
-							// videoDimensions);
-							// uniformSessionVideoDataList =
-							// VideoImageMagick.formatSessionVideoPlaylist(paddedSessionVideoDatalist,
-							// maxVideoDimensions, playbackVO);
-							uniformSessionVideoDataList = setDimensionsSessionVideoPlaylist(paddedSessionVideoDatalist, maxVideoDimensions, playbackVO);
-						} else {
-							log.debug("session does not contain screenshare video... no padding");
+//						if (screenShareFlag.equals("true")) {
+//							log.debug("session contains screenshare video... padding it...");
+//							paddedSessionVideoDatalist = padSessionVideoPlaylist(sessionVideoDataList, maxVideoDimensions, roomId);
+							// uniformSessionVideoDataList = setVideoFormatResolution(paddedSessionVideoPlaylist, videoDimensions);
+							// uniformSessionVideoDataList = VideoImageMagick.formatSessionVideoPlaylist(paddedSessionVideoDatalist, maxVideoDimensions, playbackVO);
+							uniformSessionVideoDataList = setDimensionsSessionVideoPlaylist(videoDataList, maxVideoDimensions, playbackVO);
+//						} else {
+//							log.debug("session does not contain screenshare video... no padding");
 							// Set resolution of all Session Bucket Videos
-							// uniformSessionVideoDataList =
-							// setVideoFormatResolution(sessionVideoDataList,
-							// videoDimensions);
-							// uniformSessionVideoDataList =
-							// VideoImageMagick.formatSessionVideoPlaylist(sessionVideoDataList,
-							// maxVideoDimensions, playbackVO);
-							uniformSessionVideoDataList = setDimensionsSessionVideoPlaylist(sessionVideoDataList, maxVideoDimensions, playbackVO);
-						}
+							// uniformSessionVideoDataList = setVideoFormatResolution(sessionVideoDataList, videoDimensions);
+							// uniformSessionVideoDataList = VideoImageMagick.formatSessionVideoPlaylist(sessionVideoDataList, maxVideoDimensions, playbackVO);
+//							uniformSessionVideoDataList = setDimensionsSessionVideoPlaylist(sessionVideoDataList, maxVideoDimensions, playbackVO);
+//						}
 						log.debug("_______________________________________________________________");
 						log.debug("Number of videos after setting resolution :: " + uniformSessionVideoDataList.size());
 						for (int i = 0; i < uniformSessionVideoDataList.size(); i++) {
@@ -802,11 +807,19 @@ public class PlaybackDataService {
 			ad.setEndTime(paddedSessionAudioDataList.get(paddedSessionAudioDataList.size() - 1).getEndTime());
 			ad.setFilePath(sessionAudioPath.replace(".mp3", "_MP3WRAP.mp3"));
 		} else {
-			String cmd = " -i " + paddedSessionAudioDataList.get(0).getFilePath() + " " + sessionAudioPath;
+//			String cmd = " -i " + paddedSessionAudioDataList.get(0).getFilePath() + " " + sessionAudioPath;
+//			log.debug("Ffmpeg Command for concat 1 audio::: (renaming file)" + cmd);
+//			PlaybackUtil.invokeFfmpegProcess(cmd);
+			
+			String cmd = " cp " + paddedSessionAudioDataList.get(0).getFilePath() + " " + sessionAudioPath;
+			ProcessExecutor pe = new ProcessExecutor();
 			log.debug("Ffmpeg Command for concat 1 audio::: (renaming file)" + cmd);
-			PlaybackUtil.invokeFfmpegProcess(cmd);
+			boolean val = pe.executeProcess(cmd, playbackVO.getTempLocation(), null, true);
+			log.debug("return from the UNIX COPY CMD process executor :: " + val);
+			
 			ad.setEndTime(paddedSessionAudioDataList.get(0).getEndTime());
 			ad.setFilePath(sessionAudioPath);
+			
 		}
 		ad.setStartTime(paddedSessionAudioDataList.get(0).getStartTime());
 		// ad.setFilePath(paddedSessionAudioDataList.get(0).getFilePath().replace(".mp3",
@@ -867,9 +880,16 @@ public class PlaybackDataService {
 			vd.setDuration("" + duration);
 			vd.setEndTime(new Date(video_end_time));
 		} else {
-			String cmd = " -i " + uniformSessionVideoDataList.get(0).getFilePath() + " " + out_path;
-			log.debug("Ffmpeg Command for concatenating just the 1 video::: (renaming file)" + cmd);
-			PlaybackUtil.invokeFfmpegProcess(cmd);
+//			String cmd = " -i " + uniformSessionVideoDataList.get(0).getFilePath() + " " + out_path;
+//			log.debug("Ffmpeg Command for concatenating just the 1 video::: (renaming file)" + cmd);
+//			PlaybackUtil.invokeFfmpegProcess(cmd);
+			
+			String cmd = " cp " + uniformSessionVideoDataList.get(0).getFilePath() + " " + out_path;
+			ProcessExecutor pe = new ProcessExecutor();
+			log.debug("Command for concatenating just the 1 video::: (renaming file)" + cmd);
+			boolean val = pe.executeProcess(cmd, playbackVO.getTempLocation(), null, true);
+			log.debug("return from the UNIX COPY CMD process executor :: " + val);
+			
 			vd.setEndTime(uniformSessionVideoDataList.get(0).getEndTime());
 			vd.setDuration("" + (uniformSessionVideoDataList.get(0).getEndTime().getTime() - uniformSessionVideoDataList.get(0).getStartTime().getTime()));
 		}
@@ -1451,4 +1471,5 @@ public class PlaybackDataService {
 		// factory.getBean("playBackPlayListDao");
 		playBackPlayListDao.savePlayBackPlayList(meetingRoomVideo);
 	}
+
 }
