@@ -126,15 +126,20 @@ public class PlaybackUtil {
 	}
 
 	public static long hoursToMillis(String hh_mm_ss_mmm) {
-		int hh = Integer.parseInt(hh_mm_ss_mmm.substring(0, 2));
-		int mm = Integer.parseInt(hh_mm_ss_mmm.substring(3, 5));
-		int ss = Integer.parseInt(hh_mm_ss_mmm.substring(6, 8));
-		int mmm = Integer.parseInt(hh_mm_ss_mmm.substring(9));
-		log.debug("---> " + hh + ":" + mm + ":" + ss+ "." + mmm);
+		if(hh_mm_ss_mmm!=null || hh_mm_ss_mmm!=""){
+			int hh = Integer.parseInt(hh_mm_ss_mmm.substring(0, 2));
+			int mm = Integer.parseInt(hh_mm_ss_mmm.substring(3, 5));
+			int ss = Integer.parseInt(hh_mm_ss_mmm.substring(6, 8));
+			int mmm = Integer.parseInt(hh_mm_ss_mmm.substring(9));
+			log.debug("---> " + hh + ":" + mm + ":" + ss+ "." + mmm);
 
-		long seconds = (hh * 3600) + (mm * 60) + (ss);
-		long millis = (seconds * 1000) + mmm;
-		return millis;
+			long seconds = (hh * 3600) + (mm * 60) + (ss);
+			long millis = (seconds * 1000) + mmm;
+			return millis;
+		}else{
+			log.warn("input to this function hoursToMillis() is not right: "+hh_mm_ss_mmm);
+			return 0;
+		}
 	}
 	
 	public static String secondsToHours(long millis) {

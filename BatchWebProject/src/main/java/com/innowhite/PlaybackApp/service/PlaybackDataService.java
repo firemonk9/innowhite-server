@@ -24,6 +24,7 @@ import com.innowhite.PlaybackApp.model.SessionRecordings;
 import com.innowhite.PlaybackApp.model.VideoData;
 import com.innowhite.PlaybackApp.util.PlaybackUtil;
 import com.innowhite.PlaybackApp.util.PlaybackVO;
+import com.innowhite.PlaybackApp.util.ProcessExecutor;
 
 //
 
@@ -470,9 +471,11 @@ public class PlaybackDataService {
 		int maxWidth = Integer.parseInt(temp[0]);
 		int maxHeight = Integer.parseInt(temp[1]);
 
+		String out_path_flv=null;
 		for (int i = 0; i < paddedSessionVideoDatalist.size(); i++) {
 			in_path = paddedSessionVideoDatalist.get(i).getFilePath();
-			out_path = in_path.replace(".flv", "_overlay.avi");
+			out_path = in_path.replace(".flv", "_overlay_avi.avi");
+			out_path_flv = in_path.replace(".flv", "_overlay.flv");
 			vidWidth = paddedSessionVideoDatalist.get(i).getWidth();
 			vidHeight = paddedSessionVideoDatalist.get(i).getHeight();
 			padWidth = ((maxWidth - vidWidth) / 2);
@@ -480,8 +483,12 @@ public class PlaybackDataService {
 			log.debug("--->printing vido data: " + paddedSessionVideoDatalist.get(i));
 			String color = "black";
 			log.debug("--->Setting deminesions of video" + i);
-			cmd = " -i " + in_path + " -vf pad=" + maxWidth + ":" + maxHeight + ":" + padWidth + ":" + padHeight + ":" + color + " -acodec copy -vodec copy " + out_path;
+			cmd = " -i " + in_path + " -vf pad=" + maxWidth + ":" + maxHeight + ":" + padWidth + ":" + padHeight + ":" + color + " -sameq " + out_path_flv;
 			PlaybackUtil.invokeFfmpegProcess(cmd);
+			
+			cmd= " -i "+out_path_flv+ " -r 2 -an -vcodec copy "+ out_path;
+			PlaybackUtil.invokeFfmpegProcess(cmd);
+			
 			sameDimensionSessionVideoDatalist.add(paddedSessionVideoDatalist.get(i));
 			sameDimensionSessionVideoDatalist.get(i).setFilePath(out_path);
 		}
@@ -503,14 +510,16 @@ public class PlaybackDataService {
 		playlist.setHeight(PlaybackUtil.getNum(videohm1.get("height")));
 		playlist.setSize(PlaybackUtil.getNumLong(videohm1.get("filesize")));
 
-		Long actualDuration;
-		Long dur = PlaybackUtil.getNumLong(videohm1.get("duration"));
-		Long Dur = PlaybackUtil.hoursToMillis(videohm1.get("Duration")) / 1000;
+		long actualDuration=0;
+		long dur = PlaybackUtil.getNumLong(videohm1.get("duration"));
+		long Dur = PlaybackUtil.hoursToMillis(videohm1.get("Duration")) / 1000;
 		log.debug("((duration hack)) duration:: " + dur + "\t Duration:: " + Dur);
-		if (dur == 0 || dur == null) {
-			actualDuration = Dur;
-		} else {
+		if(dur!=0){
 			actualDuration = dur;
+		}else if (Dur!=0) {
+			actualDuration = Dur;
+		} else{
+			log.warn("Video does not exist or is broken!");
 		}
 		playlist.setDuration("" + actualDuration);
 		playlist.setFilePath(videoPath);
@@ -537,9 +546,18 @@ public class PlaybackDataService {
 			PlaybackUtil.invokeMencoderProcess(cmd);
 		} else {
 			log.debug("listPlayback.size() <= 1");
-			cmd = " -i " + listPlayback.get(0).getFilePath() + " -acodec copy -vcodec copy -ar 44100 -ab 64k " + meetingRoomVideoPath;
-			log.debug("Ffmpeg Command for concatenating just the 1 video::: (renaming file)" + cmd);
-			PlaybackUtil.invokeFfmpegProcess(cmd);
+//			log.debug("Command for concatenating just the 1 video::: (renaming file)" + cmd);
+//			cmd = " -i " + listPlayback.get(0).getFilePath() + " " + meetingRoomVideoPath;
+//			log.debug("Ffmpeg Command for concatenating just the 1 video::: (renaming file)" + cmd);
+//			PlaybackUtil.invokeFfmpegProcess(cmd);
+			
+			
+			cmd = " cp " + listPlayback.get(0).getFilePath() + " " + meetingRoomVideoPath;
+			ProcessExecutor pe = new ProcessExecutor();
+			log.debug("Command for concatenating just the 1 video::: (renaming file)" + cmd);
+			boolean val = pe.executeProcess(cmd, playbackVO.getTempLocation(), null, true);
+			log.debug("return from the UNIX COPY CMD process executor :: " + val);
+			
 		}
 		return meetingRoomVideoPath;
 	}
@@ -567,13 +585,15 @@ public class PlaybackDataService {
 				long end_time = sessionVideoDataList.get(i).getEndTime().getTime();
 				long dbDuration = (end_time - start_time) / 1000;
 				long actualDuration = 0;
-				Long dur = PlaybackUtil.getNumLong(vhm.get("duration"));
-				Long Dur = PlaybackUtil.hoursToMillis(vhm.get("Duration")) / 1000;
+				long dur = PlaybackUtil.getNumLong(vhm.get("duration"));
+				long Dur = PlaybackUtil.hoursToMillis(vhm.get("Duration")) / 1000;
 				log.debug("((duration hack)) duration:: " + dur + "\t Duration:: " + Dur);
-				if (dur == 0 || dur == null) {
-					actualDuration = Dur;
-				} else {
+				if(dur!=0){
 					actualDuration = dur;
+				}else if (Dur!=0) {
+					actualDuration = Dur;
+				} else{
+					log.warn("Video -> "+sessionVideoDataList.get(i).getFilePath()+" <- does not exist or is broken!");
 				}
 
 				long padDuration = (dbDuration - actualDuration);
@@ -833,11 +853,11 @@ public class PlaybackDataService {
 		String out_path = uniformSessionVideoDataList.get(0).getFilePath().replace(".avi", "_session" + sessionCounter + ".avi");
 
 		if (uniformSessionVideoDataList.size() > 1) {
-			String cmd = " -oac copy -ovc copy ";
+			String cmd = " -nosound -ovc copy -msglevel all=4 -force-avi-aspect 1.777 ";
 			for (int i = 0; i < uniformSessionVideoDataList.size(); i++) {
 				cmd = cmd + " " + uniformSessionVideoDataList.get(i).getFilePath();
 			}
-			cmd = cmd + " -o " + out_path;
+			cmd = cmd + " -o " + out_path + "";
 			log.debug("MenCoder Command for concatenating videos:::" + cmd);
 			PlaybackUtil.invokeMencoderProcess(cmd);
 
