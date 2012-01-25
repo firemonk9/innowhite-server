@@ -653,7 +653,8 @@ public class PlaybackDataService {
 				// vd.setVideoData(vd.getStartTime(),vd.getEndTime(),
 				// vd.getFilePath(),vd.getWidth(),vd.getHeight(),vd.getDuration(),vd.getVideoType(),vd.getId(),vd.getRoomName());
 				vd.setStartTime(new Date(start_time));
-				vd.setEndTime(new Date(start_time + (padDuration)));
+				vd.setEndTime(new Date(start_time + (padDuration*1000)));
+				log.debug("setting end time for ss pad:: "+new Date(start_time + (padDuration*1000)) + " ::: padDuration*1000:: "+padDuration*1000);
 				vd.setFilePath(ss_pad_scaled_path);
 				vd.setDuration("" + padDuration);
 				vd.setHeight(height);
@@ -1020,7 +1021,7 @@ public class PlaybackDataService {
 		log.debug("Also printing video data: " + videoData);
 
 		String cmd = null;
-		 String newVideoPath = PlaybackUtil.getUnique();
+		String newVideoPath = PlaybackUtil.getUnique();
 		boolean sessionBucketFlag = true;
 		VideoData vd = new VideoData();
 
@@ -1028,17 +1029,15 @@ public class PlaybackDataService {
 
 		if (videoStartTime <= sessionStartTime && videoEndTime <= sessionEndTime && videoEndTime >= sessionStartTime) {
 			log.debug("videoStartTime<=sessionStartTime && videoEndTime<=sessionEndTime && videoEndTime>=sessionStartTime");
-			cmd = "-i " + videoPath + " -ss " + PlaybackUtil.secondsToHours(sessionStartTime - videoStartTime) + " -an -t " + PlaybackUtil.secondsToHours(videoEndTime - sessionStartTime) + " -sameq "
-					+ out_video_path;
+			cmd = "-i " + videoPath + " -ss " + PlaybackUtil.secondsToHours(sessionStartTime - videoStartTime) + " -an -t " + PlaybackUtil.secondsToHours(videoEndTime - sessionStartTime) + " -sameq "+ out_video_path;
 			executeFfmpegAndSetVideoData(cmd, vd, videoData, sessionStartTime, videoEndTime, out_video_path);
 		} else if (videoStartTime <= sessionStartTime && videoEndTime >= sessionEndTime) {
 			log.debug("videoStartTime<=sessionStartTime && videoEndTime>=sessionEndTime");
-			cmd = "-i " + videoPath + " -ss " + PlaybackUtil.secondsToHours(sessionStartTime - videoStartTime) + " -an -t " + PlaybackUtil.secondsToHours(sessionEndTime - sessionStartTime)
-					+ " -sameq " + out_video_path;
+			cmd = "-i " + videoPath + " -ss " + PlaybackUtil.secondsToHours(sessionStartTime - videoStartTime) + " -an -t " + PlaybackUtil.secondsToHours(sessionEndTime - sessionStartTime)+ " -sameq " + out_video_path;
 			executeFfmpegAndSetVideoData(cmd, vd, videoData, sessionStartTime, sessionEndTime, out_video_path);
 		} else if (videoStartTime >= sessionStartTime && videoStartTime <= sessionEndTime && videoEndTime <= sessionEndTime && videoEndTime >= sessionStartTime) {
 			log.debug("videoStartTime>=sessionStartTime && videoStartTime<=sessionEndTime && videoEndTime<=sessionEndTime && videoEndTime>=sessionStartTime");
-			cmd = "-i " + videoPath + " -ss 00:00:00 -an -t " + PlaybackUtil.secondsToHours(videoEndTime - videoStartTime) + " -acodec -sameq " + out_video_path;
+			cmd = "-i " + videoPath + " -ss 00:00:00 -an -t " + PlaybackUtil.secondsToHours(videoEndTime - videoStartTime) + " -sameq " + out_video_path;
 			executeFfmpegAndSetVideoData(cmd, vd, videoData, videoStartTime, videoEndTime, out_video_path);
 		} else if (videoStartTime >= sessionStartTime && videoStartTime <= sessionEndTime && videoEndTime >= sessionEndTime) {
 			log.debug("videoStartTime>=sessionStartTime && videoStartTime<=sessionEndTime && videoEndTime>=sessionEndTime");

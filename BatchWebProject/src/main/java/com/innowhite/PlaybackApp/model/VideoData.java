@@ -158,6 +158,7 @@ public class VideoData implements Serializable {
 	sb.append(" videoType: "+videoType);
 	sb.append(" width: "+width);
 	sb.append(" height: "+height);
+	sb.append(" duration: "+duration);
 	
 	return sb.toString();
     }
