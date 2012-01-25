@@ -1,7 +1,5 @@
 package com.innowhite.PlaybackApp.dao;
 
-import java.util.List;
-
 import org.hibernate.SessionFactory;
 import org.hibernate.classic.Session;
 import org.slf4j.Logger;

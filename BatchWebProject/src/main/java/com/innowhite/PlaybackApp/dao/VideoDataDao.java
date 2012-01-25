@@ -4,17 +4,14 @@ import java.util.Date;
 import java.util.List;
 
 import org.hibernate.Criteria;
-import org.hibernate.Query;
 import org.hibernate.SessionFactory;
 import org.hibernate.classic.Session;
 import org.hibernate.criterion.Order;
 import org.hibernate.criterion.Restrictions;
-import org.hibernate.transform.Transformers;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.transaction.annotation.Transactional;
 
-import com.innowhite.PlaybackApp.model.AudioData;
 import com.innowhite.PlaybackApp.model.VideoData;
 
 public class VideoDataDao {
@@ -27,6 +24,7 @@ public class VideoDataDao {
 	this.sessionFactory = sessionFactory;
     }
 
+    
     @Transactional
     public List<VideoData> getVideoDataList(String roomId) {
 

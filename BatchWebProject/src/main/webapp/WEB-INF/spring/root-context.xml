@@ -200,7 +200,7 @@
 	<!-- </bean> -->
 
 	<bean id="playbackDataservice" name="playbackDataservice"
-		class="com.innowhite.PlaybackApp.service.PlaybackDataService">
+		class="com.innowhite.PlaybackApp.service.PlaybackDataService" >
 		<property name="audioDataDao" ref="audioDataDao" />
 		<property name="videoDataDao" ref="videoDataDao" />
 		<property name="roomDao" ref="roomDao" />
