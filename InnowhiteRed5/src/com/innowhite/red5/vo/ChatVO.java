@@ -8,6 +8,18 @@ public class ChatVO implements Serializable{
 	String textcolor;
 	int seq;
 	String privateChatTo;
+	String recipient;
+	String sender;
+	boolean publicChat;
+	
+	public boolean isPublicChat() {
+		return publicChat;
+	}
+
+	public void setPublicChat(boolean publicChat) {
+		this.publicChat = publicChat;
+	}
+
 	public String getRecipient() {
 		return recipient;
 	}
@@ -23,11 +35,6 @@ public class ChatVO implements Serializable{
 	public void setSender(String sender) {
 		this.sender = sender;
 	}
-
-	String recipient;
-	String sender;
-	
-	
 	
 	public String getPrivateChatTo() {
 		return privateChatTo;

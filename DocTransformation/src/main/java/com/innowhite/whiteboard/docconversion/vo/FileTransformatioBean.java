@@ -154,7 +154,7 @@ public class FileTransformatioBean {
     public String toString() {
 	return "FileTransformatioBean [originalFilePath=" + originalFilePath + ", thumbsFolder=" + thumbsFolder + ", swfFolder=" + swfFolder + ", thumbnailBatFilePath=" + thumbnailBatFilePath
 		+ ", swfBatFilePath=" + swfBatFilePath + ", originalFileName=" + originalFileName + ", originalFileNameStripped=" + originalFileNameStripped + ", thumbnailBatFileContent="
-		+ thumbnailBatFileContent + ", swfBatFileContent=" + swfBatFileContent + ", originalDir=" + originalDir + "]";
+		+ thumbnailBatFileContent + ", swfBatFileContent=" + swfBatFileContent + ", originalDir=" + originalDir +", setThumbServerBasePath="+thumbServerBasePath+ "]";
     }
 
     /**

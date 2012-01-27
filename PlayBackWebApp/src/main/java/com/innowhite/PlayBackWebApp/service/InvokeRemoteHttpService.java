@@ -42,8 +42,17 @@ public class InvokeRemoteHttpService {
 
 	    String actUrl = Constants.ROOM_CLOSE_URL;
 	    if (url != null)
-		actUrl = url;
+	    	actUrl = url;
 
+	    if(actUrl != null)
+	    {
+	    	if(!actUrl.endsWith("?") == true)
+	    	{
+	    		actUrl+="?";
+	    	}
+	    	
+	    }
+	    
 	    String finalURL = actUrl + Constants.ROOM_STR + roomId + "&checksum=" + comptedCheckum;
 
 	    log.debug(" executing the url to notify of closing the room :: " + finalURL);
