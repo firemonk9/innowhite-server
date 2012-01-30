@@ -1,0 +1,53 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE sqlMap PUBLIC "-//ibatis.apache.org//DTD SQL Map 2.0//EN"
+"http://ibatis.apache.org/dtd/sql-map-2.dtd">
+<sqlMap>
+
+	
+	<resultMap id="meetminMapId"
+		class="com.innowhite.whiteboard.persistence.beans.MeetingMinutesVo">
+		<result property="id" column="id" />
+		<result property="roomId" column="room_id" />
+		<result property="description" column="description" />
+		<result property="createdTime" column="created_time" />
+		<result property="userId" column="user_id" />
+		
+	</resultMap>
+	
+	<parameterMap id="insertMeetingMinParamsMap"
+		class="com.innowhite.whiteboard.persistence.beans.MeetingMinutesVo">
+		<parameter property="roomId" jdbcType="VARCHAR" />
+		<parameter property="description" jdbcType="VARCHAR" />
+		<parameter property="userId" jdbcType="INTEGER" />
+	</parameterMap>
+      
+    <insert id="saveMeetingMinutes" parameterMap="insertMeetingMinParamsMap">
+		INSERT INTO meeting_minutes (
+		room_id,
+		description,
+		user_id,
+		created_time)
+		VALUES
+		(?,?,?,now())
+
+		<selectKey keyProperty="id" resultClass="java.lang.Integer">
+			SELECT @@identity
+		</selectKey>
+	</insert>
+	
+	<select id="meetingMinutesList" parameterClass="java.lang.String" resultMap="meetminMapId">
+		select id, room_id,description,created_time,user_id  from meeting_minutes where room_id =#roomId# order by id asc 
+	</select>
+	
+	<update id="updateMeetingMinute" parameterClass="java.util.HashMap">
+		update meeting_minutes set description= #description#,created_time=now() where id = #id# and room_id = #roomId#
+	</update>
+	
+	<delete id="deleteMeetingMinute" parameterClass="java.util.HashMap">
+		delete from meeting_minutes where id = #id# and room_id = #roomId# 
+	</delete>
+	
+	
+      
+</sqlMap>
+ 

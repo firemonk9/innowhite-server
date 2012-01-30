@@ -109,8 +109,6 @@ if(userName==null || userName.equals("null")){
 
 <html lang="en">
 
-
-
 <!--
 Smart developers always View Source.
 
@@ -123,10 +121,7 @@ Learn more about Flex at http://flex.org
 
 <head>
 <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
-
-
-<script src="http://jquery.com/src/jquery-latest.pack.js">
-	</script>
+<script src="http://jquery.com/src/jquery-latest.pack.js"></script>
 
 <!--  BEGIN Browser History required section -->
 <link rel="stylesheet" type="text/css" href="history/history.css" />
@@ -473,8 +468,33 @@ function plugin()
 //-->
 
 
+var countryName =null; var countryCode=null; 
+	
+	function getCountry() {
+		var geoUrl ="http://www.geoplugin.net/json.gp?jsoncallback=?";
+		$.getJSON(geoUrl, function(data){
+				countryName=data["geoplugin_countryName"];
+				countryCode=data["geoplugin_countryCode"]
+				getCountryBucket(countryCode);
+		});		
+	}
+	
+	function getCountryBucket(cntrCode){
+		var countryBucket="3";
+		if(cntrCode=="US" || cntrCode=="CA")
+			countryBucket="1";
+		//else if(cntrCode=="IN" || cntrCode=="LK" || cntrCode=="PK" || cntrCode=="BD")
+			//countryBucket="3";
+		
+		alert("----countryBucket-----"+countryBucket);
+	}
+
+
+
+
 </script>
 <noscript></noscript>
+</head>
 <body>
 
 

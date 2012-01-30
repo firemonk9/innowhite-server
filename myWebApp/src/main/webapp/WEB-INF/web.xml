@@ -255,12 +255,20 @@
     <url-pattern>/Organization</url-pattern>
   </servlet-mapping>
   <servlet>
-  
     <servlet-name>InviteServlet</servlet-name>
     <servlet-class>com.innowhite.whiteboard.Servlet.InviteServlet</servlet-class>
   </servlet>
   <servlet-mapping>
     <servlet-name>InviteServlet</servlet-name>
     <url-pattern>/servlet/InviteServlet</url-pattern>
+  </servlet-mapping>  
+  <servlet>
+    <servlet-name>MeetingMinutesServlet</servlet-name>
+    <servlet-class>com.innowhite.whiteboard.Servlet.MeetingMinutesServlet</servlet-class>
+  </servlet>
+  <servlet-mapping>
+    <servlet-name>MeetingMinutesServlet</servlet-name>
+    <url-pattern>/MeetingMinutes</url-pattern>
   </servlet-mapping>
+  
 </web-app>

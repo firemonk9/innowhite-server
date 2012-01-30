@@ -60,7 +60,7 @@ public class JoinRoomService {
 
 		log.debug("Entered setupJoinRoom roomId" + roomId + " userId " + userId
 				+ "  unique " + unique);
-
+		
 		ConferenceNumbersVO obj = getConferenceNumberVO(roomId, userId, unique);
 		if (obj == null) {
 			log.warn(" Conference object is null ...  ");
