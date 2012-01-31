@@ -30,5 +30,9 @@
 	<classpathentry kind="lib" path="WebContent/WEB-INF/lib/org.springframework.transaction-3.0.5.RELEASE.jar"/>
 	<classpathentry kind="lib" path="WebContent/WEB-INF/lib/spring-aop-3.0.5.RELEASE.jar"/>
 	<classpathentry kind="lib" path="WebContent/WEB-INF/lib/spring-integration-core-2.0.3.RELEASE.jar"/>
+	<classpathentry kind="var" path="ASPECTJRT_LIB"/>
+	<classpathentry kind="var" path="RED5_HOME"/>
+	<classpathentry kind="var" path="RED5_HOME/red5.jar"/>
+	<classpathentry kind="var" path="RED5_HOME/boot.jar"/>
 	<classpathentry kind="output" path="WebContent/WEB-INF/classes"/>
 </classpath>
