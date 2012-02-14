@@ -14,5 +14,7 @@ public class Constants {
     public static final String JOINED ="JOINED";
     
     public static final String LEFT ="LEFT";
+    public static final String SINGLE_ANSWER_QUESTION ="singleanswer";
+    public static final String MULTIPLE_ANSWER_QUESTION = "multipleanswers";
     
 }

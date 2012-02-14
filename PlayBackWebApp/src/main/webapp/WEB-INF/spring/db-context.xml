@@ -118,6 +118,11 @@
 		class="com.innowhite.PlayBackWebApp.dao.CallBackUrlsDao">
 		<property name="sessionFactory" ref="sessionFactory" />
 	</bean>
+	
+	<bean id="pollingDao" name="pollingDao"
+		class="com.innowhite.PlayBackWebApp.dao.PollingDao">
+		<property name="sessionFactory" ref="sessionFactory" />
+	</bean>
 
 
 
