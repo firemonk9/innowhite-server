@@ -270,5 +270,13 @@
     <servlet-name>MeetingMinutesServlet</servlet-name>
     <url-pattern>/MeetingMinutes</url-pattern>
   </servlet-mapping>
+  <servlet>
+    <servlet-name>PollingServlet</servlet-name>
+    <servlet-class>com.innowhite.whiteboard.Servlet.PollingServlet</servlet-class>
+  </servlet>
+  <servlet-mapping>
+    <servlet-name>PollingServlet</servlet-name>
+    <url-pattern>/Polling</url-pattern>
+  </servlet-mapping>
   
 </web-app>

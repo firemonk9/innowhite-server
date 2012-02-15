@@ -37,6 +37,7 @@ PUBLIC "-//ibatis.apache.org//DTD SQL Map Config 2.0//EN"
 	<sqlMap resource="ibatis-mappings/audio_data.xml" />
 	<sqlMap resource="ibatis-mappings/call_back_urls.xml" />
 	<sqlMap resource="ibatis-mappings/meeting_minutes.xml" />
+	<sqlMap resource="ibatis-mappings/poll_question.xml" />
 	
 	
 	
