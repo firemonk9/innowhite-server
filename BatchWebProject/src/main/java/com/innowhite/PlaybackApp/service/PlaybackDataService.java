@@ -225,6 +225,15 @@ public class PlaybackDataService {
 				}
 			}
 
+			log.debug("_______________________________________________________________");
+			log.debug("Number of videos after padding:: " + videoDataList.size());
+			for (int i = 0; i < videoDataList.size(); i++) {
+				log.debug("Video " + i + " start-time:: " + videoDataList.get(i).getStartTime());
+				log.debug("Video " + i + " end-time:: " + videoDataList.get(i).getEndTime());
+				log.debug("Video " + i + " file-path:: " + videoDataList.get(i).getFilePath());
+			}
+			log.debug("_______________________________________________________________");
+			
 			/*
 			 * Each session has a Session Bucket sessionBucket contains audios,
 			 * videos of only that particular session audios & videos are
@@ -350,7 +359,7 @@ public class PlaybackDataService {
 //							paddedSessionVideoDatalist = padSessionVideoPlaylist(sessionVideoDataList, maxVideoDimensions, roomId);
 							// uniformSessionVideoDataList = setVideoFormatResolution(paddedSessionVideoPlaylist, videoDimensions);
 							// uniformSessionVideoDataList = VideoImageMagick.formatSessionVideoPlaylist(paddedSessionVideoDatalist, maxVideoDimensions, playbackVO);
-							uniformSessionVideoDataList = setDimensionsSessionVideoPlaylist(videoDataList, maxVideoDimensions, playbackVO);
+							uniformSessionVideoDataList = setDimensionsSessionVideoPlaylist(sessionVideoDataList, maxVideoDimensions, playbackVO);
 //						} else {
 //							log.debug("session does not contain screenshare video... no padding");
 							// Set resolution of all Session Bucket Videos
@@ -604,8 +613,9 @@ public class PlaybackDataService {
 				long padDuration = (dbDuration - actualDuration);
 
 				log.debug(" ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~");
-				log.debug(" start time for screen share video:: " + PlaybackUtil.secondsToHours(start_time));
-				log.debug(" end time for screen share video:: " + PlaybackUtil.secondsToHours(end_time));
+				log.debug(" start_time(getTime):: "+start_time);
+				log.debug(" start time for screen share video.. (newDate):: " + new Date(start_time)+" (secondsToHours):: " + PlaybackUtil.secondsToHours(start_time));
+				log.debug(" end time for screen share video.. (newDate):: " + new Date(end_time)+" (secondsToHours):: " + PlaybackUtil.secondsToHours(end_time));
 				log.debug(" Actual (ffmpeg) video duration :: " + actualDuration);
 				log.debug(" Expected (database) video duration :: " + dbDuration);
 				log.debug(" duration to pad is ::" + padDuration);
@@ -666,7 +676,8 @@ public class PlaybackDataService {
 
 				log.debug("-->adding screen share video to paddingSessionVideoPlaylist");
 				vd = new VideoData();
-				vd.setStartTime(new Date(start_time + padDuration));
+				vd.setStartTime(new Date(start_time + (padDuration*1000)));
+//				vd.setStartTime(new Date(start_time));
 				vd.setEndTime(sessionVideoDataList.get(i).getEndTime());
 				vd.setFilePath(sessionVideoDataList.get(i).getFilePath());
 				vd.setDuration(sessionVideoDataList.get(i).getDuration());
