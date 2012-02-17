@@ -3,13 +3,57 @@
 "http://ibatis.apache.org/dtd/sql-map-2.dtd">
 <sqlMap>
 
+		
+	<resultMap id="pollQuestMapId"
+		class="com.innowhite.whiteboard.persistence.beans.PollQuestion">
+		<result property="id" column="id" />
+		<result property="questType" column="quest_type" />
+		<result property="userId" column="user_id" />
+		<result property="questDesc" column="quest_desc" />
+		<result property="createdDate" column="created_date" />
+		<result property="updatedDate" column="updated_date" />
+		
+	</resultMap>
 	
-		  
-	<select id="pollQuestMaxId" resultClass="java.lang.Integer">
-		select max(id) from poll_question 
+	<select id="pollQuestionList" parameterClass="java.lang.Integer" resultMap="pollQuestMapId">
+		select * from poll_question where user_id =#userId# order by id asc 
 	</select>
 	
+	<parameterMap id="insertPollQuestParamsMap"
+		class="com.innowhite.whiteboard.persistence.beans.PollQuestion">
+		<parameter property="questType" jdbcType="VARCHAR" />		
+		<parameter property="userId" jdbcType="INTEGER" />
+		<parameter property="questDesc" jdbcType="VARCHAR" />
 		
+	</parameterMap>
+      
+    <insert id="savePollQuestion" parameterMap="insertPollQuestParamsMap">
+		INSERT INTO poll_question (
+		quest_type,
+		user_id,
+		quest_desc,
+		created_date,
+		updated_date)
+		VALUES
+		(?,?,?,now(),null)
+
+		<selectKey keyProperty="id" resultClass="java.lang.Long">
+			SELECT @@identity
+		</selectKey>
+	</insert>
+	
+		
+	<update id="updatePollQuestion" parameterClass="com.innowhite.whiteboard.persistence.beans.PollQuestion">
+		update poll_question set quest_desc= #questDesc#,updated_date=now() where id = #id#
+	</update>
+	
+	<delete id="deletePollQuestion" parameterClass="java.lang.Long">
+		delete from poll_question where id = #questId#
+	</delete>
+	
+	<select id="pollQuestMaxId" resultClass="java.lang.Integer">
+		select ifnull(max(id),0) from poll_question 
+	</select>
       
 </sqlMap>
  

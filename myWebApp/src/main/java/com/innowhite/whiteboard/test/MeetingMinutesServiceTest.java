@@ -5,7 +5,6 @@ import java.util.List;
 
 import com.innowhite.whiteboard.persistence.beans.MeetingMinutesVo;
 import com.innowhite.whiteboard.service.MeetingMinutesService;
-import com.innowhite.whiteboard.service.PollingService;
 
 /**
  * @author tanuja
@@ -42,24 +41,19 @@ public class MeetingMinutesServiceTest {
 			MeetingMinutesService.deleteMeetingMinute(meetMinId,roomId);
 		}
 		
-		public void getPollId(){
-			String pollIdXml=PollingService.getPollID();
-			System.out.println("======pollIdXml====="+pollIdXml);
-		}
+		
 		
 		public static void main(String[] args) {
 			
 			MeetingMinutesServiceTest mmObj =new MeetingMinutesServiceTest();
 			
-			//mmObj.insertMeetingMinutes();
+			mmObj.insertMeetingMinutes();
 			//mmObj.displayMeetingMinutes();
 			//mmObj.updateMeetingMinutes();
 			//mmObj.deleteMeetingMinutes();
 			
 			
 			
-			mmObj.getPollId();
-		
 		}
 
 }
