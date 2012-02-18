@@ -5,6 +5,7 @@ import java.util.ArrayList;
 import java.util.Date;
 import java.util.HashMap;
 import java.util.Iterator;
+import java.util.LinkedHashMap;
 import java.util.List;
 
 import org.slf4j.Logger;
@@ -239,7 +240,7 @@ public class PlaybackDataService {
 			 * videos of only that particular session audios & videos are
 			 * trimmed and audio-video formats changed to "same-name".avi
 			 */
-			HashMap<SessionRecordings, SessionBucket> sessionMap = new HashMap<SessionRecordings, SessionBucket>();
+			LinkedHashMap<SessionRecordings, SessionBucket> sessionMap = new LinkedHashMap<SessionRecordings, SessionBucket>();
 
 			if (sessionRecordingsList.size() == 0) {
 				log.debug("ERROR ALERT:: No sessions in this room");
@@ -259,7 +260,7 @@ public class PlaybackDataService {
 					// if room has audios, find which of them lie in the current
 					// session
 					if (audioDataList.size() == 0) {
-						log.debug("ALERT:::No audios in this room");
+						log.debug("ERROR ALERT:::No audios in this room");
 					} else {
 						for (int j = 0; j < audioDataList.size(); j++) {
 							// session audios in mp3 format
@@ -339,7 +340,7 @@ public class PlaybackDataService {
 					}
 
 					log.debug("--------------------------------------------------------------");
-					log.debug("SESSION "+sessionCounter+":: PREPARING SESSION VIDEO (pad screenshare, frmtRes(IM) and concat)");
+					log.debug("SESSION "+sessionCounter+":: PREPARING SESSION VIDEO (setResolution and concat)");
 					log.debug("--------------------------------------------------------------");
 					// sessionVideoDataList = session videos
 					List<VideoData> sessionVideoDataList = sessionBucket.getVideoDataList();
@@ -499,7 +500,7 @@ public class PlaybackDataService {
 			vidHeight = paddedSessionVideoDatalist.get(i).getHeight();
 			padWidth = ((maxWidth - vidWidth) / 2);
 			padHeight = ((maxHeight - vidHeight) / 2);
-			log.debug("--->printing vido data: " + paddedSessionVideoDatalist.get(i));
+			log.debug("--->printing video data: " + paddedSessionVideoDatalist.get(i));
 			String color = "black";
 			log.debug("--->Setting deminesions of video" + i);
 			cmd = " -i " + in_path + " -vf pad=" + maxWidth + ":" + maxHeight + ":" + padWidth + ":" + padHeight + ":" + color + " -sameq " + out_path_flv;
