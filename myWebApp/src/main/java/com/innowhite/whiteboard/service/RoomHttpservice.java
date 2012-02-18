@@ -44,7 +44,7 @@ public class RoomHttpservice {
 
     public static String getRoomDetailService(String roomId) {
 
-	log.debug(" Enterd roomCloseService roomID " + roomId);
+	log.debug(" Enterd getRoomDetailService roomID " + roomId);
 	try {
 	    if (roomId != null)
 		roomId = roomId.trim();

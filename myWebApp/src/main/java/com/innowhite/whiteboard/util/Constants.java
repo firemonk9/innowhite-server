@@ -77,6 +77,7 @@ public class Constants {
 		public static boolean bsessionFlag = true;
 		//8109193567
 		public static String EQUAL="=";
-		
+		public static final String SINGLE_ANSWER_QUESTION ="singleanswer";
+		public static final String MULTIPLE_ANSWER_QUESTION = "multipleanswers";
 }
 
