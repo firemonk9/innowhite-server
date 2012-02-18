@@ -247,7 +247,7 @@ public class PlaybackDataService {
 				ArrayList<String> finalVideoPlaylist = new ArrayList<String>();
 
 				log.debug("--------------------------------------------------------------");
-				log.debug("Preparing session buckets for each session!");
+				log.debug("PREPARING SESSION BUCKETS!");
 				log.debug("--------------------------------------------------------------");
 				for (int i = 0; i < sessionRecordingsList.size(); i++) {
 					long sessionStartTime = sessionRecordingsList.get(i).getStartTime().getTime();
@@ -281,12 +281,12 @@ public class PlaybackDataService {
 					}
 					sessionMap.put(sessionRecordingsList.get(i), sb);
 				}
-				log.debug("SESSION BUCKETS PREPARED!!");
+				log.debug(sessionMap.size()+" SESSION BUCKETS PREPARED!!");
 
 				log.debug("--------------------------------------------------------------");
 				log.debug("Preparing Audio and Video for each session!");
 				log.debug("--------------------------------------------------------------");
-				Iterator sessionKeys = sessionMap.keySet().iterator();
+				Iterator sessionKeys = sessionMap.keySet().iterator(); 
 				int sessionCounter = 0;
 				while (sessionKeys.hasNext()) {
 					// to maintain a count of all the sessions
@@ -299,7 +299,7 @@ public class PlaybackDataService {
 
 					SessionBucket sessionBucket = sessionMap.get(session);
 					log.debug("--------------------------------------------------------------");
-					log.debug("PREPARING SESSION AUDIO(pad and concat)");
+					log.debug("SESSION "+sessionCounter+":: PREPARING SESSION AUDIO(pad and concat)");
 					log.debug("--------------------------------------------------------------");
 					// sessionAudioDataList contains - session audios
 					List<AudioData> sessionAudioDataList = sessionBucket.getAudioDataList();
@@ -339,7 +339,7 @@ public class PlaybackDataService {
 					}
 
 					log.debug("--------------------------------------------------------------");
-					log.debug("PREPARING SESSION VIDEO (pad screenshare, frmtRes(IM) and concat)");
+					log.debug("SESSION "+sessionCounter+":: PREPARING SESSION VIDEO (pad screenshare, frmtRes(IM) and concat)");
 					log.debug("--------------------------------------------------------------");
 					// sessionVideoDataList = session videos
 					List<VideoData> sessionVideoDataList = sessionBucket.getVideoDataList();
@@ -388,7 +388,7 @@ public class PlaybackDataService {
 					log.debug("##################### Final session video path::" + sessionVideo.getFilePath());
 
 					log.debug("--------------------------------------------------------------");
-					log.debug("MERGING FINAL SESSION VIDEO-AUDIO:");
+					log.debug("SESSION "+sessionCounter+":: MERGING SESSION VIDEO-AUDIO:");
 					log.debug("--------------------------------------------------------------");
 					/*
 					 * if no audio. then the video paths are directly added to
@@ -396,13 +396,13 @@ public class PlaybackDataService {
 					 * corresponding videos
 					 */
 					if (sessionAudio != null) {
-						String sessionVideoPlaylist = mergeAudioVideo(sessionAudio, sessionVideo);
-						log.debug("sessionVideoPlaylist :: " + sessionVideoPlaylist);
-						finalVideoPlaylist.add(sessionVideoPlaylist);
+						String finalSessionVideoPath = mergeAudioVideo(sessionAudio, sessionVideo);
+						log.debug("Adding SessionVideoPath to plalist :: " + finalSessionVideoPath);
+						finalVideoPlaylist.add(finalSessionVideoPath);
 					} else {
 						// long duration = sessionVideo.getEndTime().getTime() -
 						// sessionVideo.getStartTime().getTime();
-						log.debug("sessionVideoPlaylist :: " + sessionVideo.getFilePath()); // +"##"+duration);
+						log.debug("Adding SessionVideoPath to plalist :: " + sessionVideo.getFilePath()); // +"##"+duration);
 						finalVideoPlaylist.add(sessionVideo.getFilePath()); // +"##"+duration);
 					}
 				}
@@ -410,7 +410,7 @@ public class PlaybackDataService {
 				// room
 
 				log.debug("--------------------------------------------------------------");
-				log.debug("SESSION DONE! Adding to finalVideoPlaylist");
+				log.debug("ADDING "+finalVideoPlaylist+ " SESSIONS TO finalVideoPlaylist!");
 				log.debug("--------------------------------------------------------------");
 				List<PlayBackPlayList> listPlayback = new ArrayList<PlayBackPlayList>();
 				PlayBackPlayList playlist = null;
@@ -428,14 +428,21 @@ public class PlaybackDataService {
 					// convert all playlist videos to .flv
 					String flv_filepath = convertAVItoFLV(finalSessionVideoPath);
 					playlist = setPlayBackPlayList(flv_filepath, roomId);
-					log.debug("_______________________________________________________________");
 					log.debug("sessionVideoPlaylist::flv_filepath :: " + flv_filepath);
-					log.debug("_______________________________________________________________");
 					listPlayback.add(playlist);
 				}
-
+				
+				log.debug("_______________________________________________________________");
+				for(int i=0;i<listPlayback.size();i++){
+					log.debug("playlist video no. "+i+":: "+listPlayback.get(i).toString());
+				}
+				log.debug("_______________________________________________________________");
+				
 				// concat videos to prepare a single video for the meeting
-				String meetingRoomVideoPath = meetingRoomVideo(listPlayback, roomId);
+				String meetingRoomVideoPath = setMeetingRoomVideo(listPlayback, roomId);
+				log.debug("--------------------------------------------------------------");
+				log.debug("Uploading Meeting Room Video (Path) to youtube:: "+meetingRoomVideoPath);
+				log.debug("--------------------------------------------------------------");
 				PlayBackPlayList meetingRoomVideo = setPlayBackPlayList(meetingRoomVideoPath, roomId);
 
 				// upload to youtube and get-set the youtube url of the
@@ -451,10 +458,8 @@ public class PlaybackDataService {
 						log.debug("roomName: " + roomName + "\t roomDescription: " + roomDescription);
 					}
 					String youtubeURL = ytUpload.uploadVideo(meetingRoomVideo.getFilePath(), roomName, roomDescription);
-					log.debug("_______________________________________________________________");
 					log.debug("meetingRoomVideoPath :: " + meetingRoomVideoPath);
-					log.debug("youtubeURL :: " + youtubeURL);
-					log.debug("_______________________________________________________________");
+					log.debug("################### youtubeURL :: " + youtubeURL);
 					meetingRoomVideo.setYoutubeUrl(youtubeURL);
 
 					// send notification so that the innowhite server can send
@@ -542,16 +547,16 @@ public class PlaybackDataService {
 		return playlist;
 	}
 
-	private String meetingRoomVideo(List<PlayBackPlayList> listPlayback, String roomId) {
-		log.debug("Preparing flowPlayerPlaylist..............");
+	private String setMeetingRoomVideo(List<PlayBackPlayList> listPlayback, String roomId) {
+		log.debug("Preparing setMeetingRoomVideo..............");
 		// mencoder.exe -oac copy -ovc lavc wb_audio3.avi
 		// screen_share_audio3.avi -o complete33.avi
 		String meetingRoomVideoPath = listPlayback.get(0).getFilePath().replace(".flv", "_meeting.flv");
-		;
+		
 		String cmd = null;
 		if (listPlayback.size() > 1) {
 			log.debug("listPlayback.size() > 1");
-			cmd = " -oac copy -ovc copy ";
+			cmd = " -oac mp3lame -ovc copy -msglevel all=4 -force-avi-aspect 1.777 ";
 			for (int i = 0; i < listPlayback.size(); i++) {
 				cmd = cmd + " " + listPlayback.get(i).getFilePath();
 			}

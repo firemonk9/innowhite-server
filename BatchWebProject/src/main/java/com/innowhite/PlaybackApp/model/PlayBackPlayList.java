@@ -133,5 +133,17 @@ public class PlayBackPlayList implements Serializable {
     // public static void main(String[] args) {
     // //whiteboard
     // }
-
+    
+    public String toString(){
+    	
+	StringBuffer sb = new StringBuffer();
+	sb.append(" filePath: "+filePath);
+	sb.append(" width: "+width);
+	sb.append(" height: "+height);
+	sb.append(" duration: "+duration);
+	sb.append(" size: "+size);
+	sb.append(" id: "+id);
+	sb.append(" roomName: "+roomName);
+	return sb.toString();
+    }
 }
