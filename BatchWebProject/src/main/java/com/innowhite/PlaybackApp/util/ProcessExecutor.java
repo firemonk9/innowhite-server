@@ -130,13 +130,13 @@ class StreamGobbler extends Thread {
 						|| this.videohm.get("height") == null
 						|| this.videohm.get("width") == ""
 						|| this.videohm.get("height") == "") {
-					log.debug("could not get width and heght with ffmpeg...");
+					//log.debug("could not get width and heght with ffmpeg...");
 					if (this.videohm.get("dimensions") != null) {
 						String dim[] = this.videohm.get("dimensions")
 								.split("x");
 						this.videohm.put("width", dim[0]);
 						this.videohm.put("height", dim[1]);
-						log.debug("since width and height are null.. setting them through Stream's dimensions");
+						log.debug("setting width and height through Stream's dimensions");
 					} else {
 						log.warn("even dimensions is null... somethings wrong!");
 					}
