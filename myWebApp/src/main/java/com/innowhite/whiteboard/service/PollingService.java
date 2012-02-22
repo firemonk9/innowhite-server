@@ -60,8 +60,9 @@ public class PollingService {
 	 }
 	
 	/* To save given options for a question */
-	public static void savePollingAnswerOptions(String strOptionDesc,int intQuestId, int intOptionId){
+	public static long savePollingAnswerOptions(String strOptionDesc,long intQuestId, int intOptionId){
 		log.debug("==entered savePollingAnswerOptions==");
+		long returnOptionUniqueId=0;
 		try {
 	    	PollAnswerOptions paoObj = new PollAnswerOptions();
 	    	
@@ -69,17 +70,18 @@ public class PollingService {
 	    	paoObj.setOptionId(intOptionId);
 	    	paoObj.setQuestId(intQuestId);
 	    	 
-	    	PollingDAO.savePollingAnswerOptions(paoObj);
+	    	returnOptionUniqueId = PollingDAO.savePollingAnswerOptions(paoObj);
 			 
 		  } catch (Exception e) {
 			    e.printStackTrace();
 		  }
-		 
+		 return returnOptionUniqueId;
 	 }
 	
 	/* To save user entered answer for a selected question */
-	public static void savePollingUserAnswer(int intQuestId, int intOptionId,int intUserId,String strRoomId){
+	public static long savePollingUserAnswer(long intQuestId, int intOptionId,int intUserId,String strRoomId){
 		log.debug("==entered savePollingUserAnswer==");
+		long returnUniqueId = 0;
 		try {
 	    	PollUserAnswers puaObj = new PollUserAnswers();
 	    	
@@ -88,10 +90,11 @@ public class PollingService {
 	    	puaObj.setQuestId(intQuestId);
 	    	puaObj.setRoomId(strRoomId);
 	 		 
-	    	PollingDAO.savePollingUserAnswer(puaObj);
+	    	returnUniqueId = PollingDAO.savePollingUserAnswer(puaObj);
 		  } catch (Exception e) {
 			    e.printStackTrace();
 		  }
+		return returnUniqueId;
 	 }
 	
 	/* To display all the questions created based on user */
@@ -109,11 +112,11 @@ public class PollingService {
 	}
 	
 	/* To display the available options for a specific question */
-	public static List<PollAnswerOptions> getPollAnswerOptionsForQuestion(int intQuestId){
+	public static List<PollAnswerOptions> getPollAnswerOptionsForQuestion(long questId){
 		log.debug("==entered getPollAnswerOptionsForQuestion==");
 		List<PollAnswerOptions> ansOptionsList = new ArrayList<PollAnswerOptions>();
 		try{
-			ansOptionsList = PollingDAO.getPollAnswerOptionsForQuestion(intQuestId);
+			ansOptionsList = PollingDAO.getPollAnswerOptionsForQuestion(questId);
 			
 			return ansOptionsList;
 		}catch(Exception e){
@@ -123,11 +126,11 @@ public class PollingService {
 	}
 	
 	/* To display all users answers for a question */
-	public static List<PollUserAnswers> getAllUsersAnswerForQuestion(long intQuestId){
+	public static List<PollUserAnswers> getAllUsersAnswerForQuestion(long longQuestId){
 		log.debug("==entered getAllUsersAnswerForQuestion==");
 		List<PollUserAnswers> usersAnswerList = new ArrayList<PollUserAnswers>();
 		try{
-			usersAnswerList = PollingDAO.getAllUsersAnswerForQuestion(intQuestId);
+			usersAnswerList = PollingDAO.getAllUsersAnswerForQuestion(longQuestId);
 			
 			return usersAnswerList;
 		}catch(Exception e){

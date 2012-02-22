@@ -55,10 +55,10 @@ public class PollingDAO {
     }
     
     /* To save given options for a question */
-    public static void savePollingAnswerOptions(PollAnswerOptions pollAnswerOptions){
+    public static long savePollingAnswerOptions(PollAnswerOptions pollAnswerOptions){
     	log.debug("==entered==PollingDAO== savePollingAnswerOptions==");
+    	long retunrVal=0;
     	try{
-    		long retunrVal=0;
     		if(pollAnswerOptions!=null){
     			Object obj = sqlMapClient.insert("savePollAnswerOptions", pollAnswerOptions);
 	    	    log.debug(" returned from savePollingAnswerOptions is : " + obj);
@@ -67,13 +67,14 @@ public class PollingDAO {
     	}catch(SQLException e){
     		e.printStackTrace();
     	}
+    	return retunrVal;	
     }
     
     /* To save user entered answer for a selected question */ 
-    public static void savePollingUserAnswer(PollUserAnswers pollUserAnswer){
+    public static long savePollingUserAnswer(PollUserAnswers pollUserAnswer){
     	log.debug("==entered==PollingDAO== savePollingUserAnswer==");
+    	long retunrVal=0;
     	try{
-    		long retunrVal=0;
     		if(pollUserAnswer!=null){
     			Object obj = sqlMapClient.insert("savePollUserAnswers", pollUserAnswer);
 	    	    log.debug(" returned from savePollingUserAnswer is : " + obj);
@@ -82,7 +83,7 @@ public class PollingDAO {
     	}catch(SQLException e){
     		e.printStackTrace();
     	}
-    	
+    	return retunrVal;
     }
     
     /* To display all the questions created based on user */
@@ -100,11 +101,11 @@ public class PollingDAO {
      }
     
     /* To display the available options for a specific question */
-    public static List<PollAnswerOptions> getPollAnswerOptionsForQuestion(int intQuestId){
+    public static List<PollAnswerOptions> getPollAnswerOptionsForQuestion(long longQuestId){
     	log.debug("==entered==PollingDAO== getPollAnswerOptionsForQuestion==");
     	List<PollAnswerOptions> answerOptionsList = new ArrayList<PollAnswerOptions>();
     	try{
-    		answerOptionsList =(List)sqlMapClient.queryForList("answerOptionsList", intQuestId);
+    		answerOptionsList =(List)sqlMapClient.queryForList("answerOptionsList", longQuestId);
     		
     	}catch(SQLException e){
     		e.printStackTrace();
@@ -115,11 +116,11 @@ public class PollingDAO {
     
     /* To display all users answers for a question */
     @Transactional
-    public static List<PollUserAnswers> getAllUsersAnswerForQuestion(long intQuestId){
+    public static List<PollUserAnswers> getAllUsersAnswerForQuestion(long longQuestId){
     	log.debug("==entered==PollingDAO== getAllUsersAnswerForQuestion==");
     	List<PollUserAnswers> usersAnswerList = new ArrayList<PollUserAnswers>();
     	try{
-    		usersAnswerList =(List)sqlMapClient.queryForList("userAnswersList", intQuestId);
+    		usersAnswerList =(List)sqlMapClient.queryForList("userAnswersList", longQuestId);
     		
     	}catch(SQLException e){
     		e.printStackTrace();
