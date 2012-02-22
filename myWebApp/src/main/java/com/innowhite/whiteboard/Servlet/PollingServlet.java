@@ -68,7 +68,7 @@ public class PollingServlet extends HttpServlet {
         	intReturnVal =PollingService.updateUserAnswer(userAnsUniqueId,intOptionId,strRoomId);
         }else if(reqAction!=null && reqAction!="" && reqAction.equals("getpollquestions")){
         	
-        	List<PollQuestion> questList = PollingService.getPollQuestionsForUser(intUserId);
+        	String returnXML = PollingService.getPollQuestionsForUser(intUserId);
         	
         }else if(reqAction!=null && reqAction!="" && reqAction.equals("getpolloptions")){
         	List<PollAnswerOptions> ansOptionsList = PollingService.getPollAnswerOptionsForQuestion(longQuestId);

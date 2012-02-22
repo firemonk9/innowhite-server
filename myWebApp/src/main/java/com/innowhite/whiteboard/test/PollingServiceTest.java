@@ -44,8 +44,8 @@ public class PollingServiceTest {
 		
 		// User ID
 		public void getPollQuestionsForUser(){
-			List<PollQuestion> questList = PollingService.getPollQuestionsForUser(99);
-			System.out.println("====No of questions by user==========="+questList.size());
+			String returnXML = PollingService.getPollQuestionsForUser(99);
+			System.out.println("====Questions for user in XML======"+returnXML);
 		}
 		
 		//Question ID
@@ -94,11 +94,11 @@ public class PollingServiceTest {
 			
 				PollingServiceTest pstObj =new PollingServiceTest();
 				
-				pstObj.insertQuestion();
+				//pstObj.insertQuestion();
 				//pstObj.insertOption();
 				//pstObj.insertUserAnswer();
 				
-				//pstObj.getPollQuestionsForUser();
+				pstObj.getPollQuestionsForUser();
 				//pstObj.getAnswerOptionsForQuestion();
 				//pstObj.getAllUsersAnswerForQuestion();
 				

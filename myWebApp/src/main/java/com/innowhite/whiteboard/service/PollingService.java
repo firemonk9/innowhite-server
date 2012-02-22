@@ -6,9 +6,14 @@ import java.util.List;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
+import com.innowhite.whiteboard.persistence.beans.AudioDataVO;
+import com.innowhite.whiteboard.persistence.beans.PlayBackPlayListVO;
 import com.innowhite.whiteboard.persistence.beans.PollAnswerOptions;
 import com.innowhite.whiteboard.persistence.beans.PollQuestion;
 import com.innowhite.whiteboard.persistence.beans.PollUserAnswers;
+import com.innowhite.whiteboard.persistence.beans.RoomUsersVO;
+import com.innowhite.whiteboard.persistence.beans.RoomVO;
+import com.innowhite.whiteboard.persistence.beans.VideoDataVO;
 import com.innowhite.whiteboard.persistence.dao.PollingDAO;
 
 
@@ -60,7 +65,7 @@ public class PollingService {
 	 }
 	
 	/* To save given options for a question */
-	public static long savePollingAnswerOptions(String strOptionDesc,long intQuestId, int intOptionId){
+	public static long savePollingAnswerOptions(String strOptionDesc,long longQuestId, int intOptionId){
 		log.debug("==entered savePollingAnswerOptions==");
 		long returnOptionUniqueId=0;
 		try {
@@ -68,7 +73,7 @@ public class PollingService {
 	    	
 	    	paoObj.setOptionDesc(strOptionDesc);
 	    	paoObj.setOptionId(intOptionId);
-	    	paoObj.setQuestId(intQuestId);
+	    	paoObj.setQuestId(longQuestId);
 	    	 
 	    	returnOptionUniqueId = PollingDAO.savePollingAnswerOptions(paoObj);
 			 
@@ -79,7 +84,7 @@ public class PollingService {
 	 }
 	
 	/* To save user entered answer for a selected question */
-	public static long savePollingUserAnswer(long intQuestId, int intOptionId,int intUserId,String strRoomId){
+	public static long savePollingUserAnswer(long longQuestId, int intOptionId,int intUserId,String strRoomId){
 		log.debug("==entered savePollingUserAnswer==");
 		long returnUniqueId = 0;
 		try {
@@ -87,7 +92,7 @@ public class PollingService {
 	    	
 	    	puaObj.setUserId(intUserId);
 	    	puaObj.setOptionId(intOptionId);
-	    	puaObj.setQuestId(intQuestId);
+	    	puaObj.setQuestId(longQuestId);
 	    	puaObj.setRoomId(strRoomId);
 	 		 
 	    	returnUniqueId = PollingDAO.savePollingUserAnswer(puaObj);
@@ -98,17 +103,50 @@ public class PollingService {
 	 }
 	
 	/* To display all the questions created based on user */
-	public static List<PollQuestion> getPollQuestionsForUser(int intUserId){
+	public static String getPollQuestionsForUser(int intUserId){
 		log.debug("==entered getPollQuestionsForUser==");
 		List<PollQuestion> questList = new ArrayList<PollQuestion>();
+		String returnXML = null;
 		try{
 			questList = PollingDAO.getPollQuestionsForUser(intUserId);
 			
-			return questList;
+			returnXML = convertToXML(questList, intUserId);
+			 
+			return returnXML;
 		}catch(Exception e){
 			e.printStackTrace();
 			return null;
 		}
+	}
+	
+	private static String convertToXML(List<PollQuestion> questList, int intUserId) {
+
+		StringBuffer xml = new StringBuffer();
+		xml.append("<?xml version=\"1.0\" encoding=\"ISO-8859-1\"?>");
+		xml.append("<PollQuestions>");
+		xml.append("<userId>" + intUserId + "</userId>");
+		xml.append("<QuestionsCount>" + questList.size() + "</QuestionsCount>");
+		
+		if (questList != null){
+				// list all questions
+				xml.append("<QuestionList>");
+				for (PollQuestion pollQuest : questList) {
+			   
+					xml.append("<QuestionDetails>");
+					xml.append("<id>" + pollQuest.getId() + "</id>");
+					xml.append("<questType>" + pollQuest.getQuestType() + "</questType>");
+					xml.append("<userId>" + pollQuest.getUserId() + "</userId>");
+					xml.append("<questDesc>" + pollQuest.getQuestDesc() + "</questDesc>");
+					xml.append("<createdDate>" + pollQuest.getCreatedDate() + "</createdDate>");
+					xml.append("<updatedDate>" + pollQuest.getUpdatedDate() + "</updatedDate>");
+					xml.append("</QuestionDetails>");
+			     }
+				xml.append("</QuestionList>");
+		}
+		
+		xml.append("</PollQuestions>");
+		
+		return xml.toString();
 	}
 	
 	/* To display the available options for a specific question */
@@ -140,13 +178,13 @@ public class PollingService {
 	}
 	
 	/* To update the poll question description */
-	public static int updatePollQuestion(long intQuestId, String strQuestDesc){
+	public static int updatePollQuestion(long longQuestId, String strQuestDesc){
 		log.debug("==entered updatePollQuestion==");
 		int intReturnval=0;
 		try{
 			PollQuestion pq = new PollQuestion();
 	    	
-	    	pq.setId(intQuestId);
+	    	pq.setId(longQuestId);
 	    	pq.setQuestDesc(strQuestDesc);
 	    	intReturnval = PollingDAO.updatePollQuestion(pq);
 			
@@ -157,7 +195,7 @@ public class PollingService {
 	}
 	
 	/* To update selected option description for a question */
-	public static int updatePollAnswerOption(long intQuestId, int intOptionId,String strOptionDesc){
+	public static int updatePollAnswerOption(long longQuestId, int intOptionId,String strOptionDesc){
 		log.debug("==entered updatePollAnswerOption==");
 		int intReturnval=0;
 		try{
@@ -165,7 +203,7 @@ public class PollingService {
 	    	
 	    	paoObj.setOptionDesc(strOptionDesc);
 	    	paoObj.setOptionId(intOptionId);
-	    	paoObj.setQuestId(intQuestId);
+	    	paoObj.setQuestId(longQuestId);
 	    	
 	    	intReturnval = PollingDAO.updatePollAnswerOption(paoObj);
 			
@@ -208,14 +246,14 @@ public class PollingService {
 	}
 	
 	/* To delete selected option for a question */		
-	public static int deletePollAnswerOptions(long id, long intQuestId, int intOptionId){
+	public static int deletePollAnswerOptions(long id, long longQuestId, int intOptionId){
 		log.debug("==entered deletePollAnswerOptions==");
 		int intReturnVal=0;
 		try{
 			
 			PollAnswerOptions paoObj = new PollAnswerOptions();
 			paoObj.setId(id);
-			paoObj.setQuestId(intQuestId);
+			paoObj.setQuestId(longQuestId);
 			paoObj.setOptionId(intOptionId);
 	    	
 			intReturnVal = PollingDAO.deletePollAnswerOptions(paoObj);
