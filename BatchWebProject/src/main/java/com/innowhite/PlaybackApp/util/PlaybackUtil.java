@@ -1,9 +1,13 @@
 package com.innowhite.PlaybackApp.util;
 
 import java.io.File;
+import java.text.DateFormat;
+import java.text.SimpleDateFormat;
 import java.util.Calendar;
+import java.util.Date;
 import java.util.HashMap;
 import java.util.List;
+import java.util.Locale;
 import java.util.concurrent.TimeUnit;
 
 import org.slf4j.Logger;
@@ -160,7 +164,16 @@ public class PlaybackUtil {
 		log.debug("Converted " + millis + "millis to " + hours + ":" + minutes
 				+ ":" + seconds);
 		return (hours + ":" + minutes + ":" + seconds + ".000");
-		// slog.debug("seconds to hours::" + hh + ":" + mm + ":" + ss);
+		// slog.debug("seconds to hours::" + hh + ":" + mm + ":" + ss);		
+		
+//		Date date2 = new Date(millis);
+////		System.out.println("new Date(millis):: "+date2);
+//		DateFormat formatter2 = DateFormat.getTimeInstance();
+//		String hhmmss = formatter2.format(date2).split(" ")[0];
+////		System.out.println("format and split:: "+ formatter2.format(date2).split(" ")[0]);
+//		System.out.println("Converted "+millis+"millis to "+hhmmss);
+//		return hhmmss;
+		
 	}
 
 	/* Send the object Audio and video and the windows folder */
