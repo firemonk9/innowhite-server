@@ -42,8 +42,19 @@ public class VideoData implements Serializable {
     String videoType;
     
     
+    @Column(name = "status")
+    String status;
+    
       
-    public String getVideoType() {
+    public String getStatus() {
+		return status;
+	}
+
+	public void setStatus(String status) {
+		this.status = status;
+	}
+
+	public String getVideoType() {
         return videoType;
     }
 
