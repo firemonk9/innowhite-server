@@ -683,11 +683,16 @@ public class PlaybackDataService {
 				log.debug("-->adding screen share video to paddingSessionVideoPlaylist");
 				vd = new VideoData();
 				//Screen-share hack
-				if(i==0 && videoType.equals("DESKTOP")){
+//				if(i==0){
+					// i==0 with padD = SS starts.. not working
 					vd.setStartTime(new Date(start_time));
-				}else{
-					vd.setStartTime(new Date(start_time + (padDuration*1000)));
-				}
+//					log.debug("screen share hack. right shifting start time of ss video by: "+(padDuration*1000));
+//				}
+//				else{
+//					
+//					vd.setStartTime(new Date(start_time + (padDuration*1000)));
+//					log.debug("screen share hack not applied. ss video start_time: "+new Date(start_time));
+//				}
 //				vd.setStartTime(new Date(start_time));
 				vd.setEndTime(sessionVideoDataList.get(i).getEndTime());
 				vd.setFilePath(sessionVideoDataList.get(i).getFilePath());
