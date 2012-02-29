@@ -21,5 +21,9 @@ InnowhiteRed5/.classpath
 InnowhiteRed5/.settings/
 videoApp/.classpath
 myWebApp/.settings/
-
+MP4Converter/.settings
+MP4Converter/bin
+MP4Converter/target
+MP4Converter/.classpath
+MP4Converter/.project
 
