@@ -1,0 +1,54 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans"
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:aop="http://www.springframework.org/schema/aop"
+	xsi:schemaLocation="http://www.springframework.org/schema/aop http://www.springframework.org/schema/aop/spring-aop-3.0.xsd
+		http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans-3.0.xsd
+		http://www.springframework.org/schema/context http://www.springframework.org/schema/context/spring-context-3.0.xsd
+		http://www.springframework.org/schema/jee http://www.springframework.org/schema/jee/spring-jee-3.0.xsd
+		http://www.springframework.org/schema/jms http://www.springframework.org/schema/jms/spring-jms-3.0.xsd
+		http://www.springframework.org/schema/lang http://www.springframework.org/schema/lang/spring-lang-3.0.xsd"
+	xmlns:context="http://www.springframework.org/schema/context"
+	xmlns:jee="http://www.springframework.org/schema/jee" xmlns:jms="http://www.springframework.org/schema/jms"
+	xmlns:lang="http://www.springframework.org/schema/lang" xmlns:p="http://www.springframework.org/schema/p">
+
+
+	<import resource="db-context.xml"/>	
+
+
+	<!-- A connection to ActiveMQ -->
+	<bean id="amqConnectionFactory" class="org.apache.activemq.ActiveMQConnectionFactory"
+		p:brokerURL="tcp://messaging.innowhite.com:61616" />
+
+
+	<!-- A cached connection to wrap the ActiveMQ connection -->
+	<bean id="cachedConnectionFactory"	class="org.springframework.jms.connection.CachingConnectionFactory"
+		p:targetConnectionFactory-ref="amqConnectionFactory" p:sessionCacheSize="10" />
+
+
+	<!-- A POJO that implements the JMS message listener for MP4Converter  -->
+	<bean id="MP4ConverterMsgListener" class="com.innowhite.mp4converter.messaging.MP4ConverterMsgListener">
+ 		<property name="mp4ConverterService" ref="mp4ConverterService" /> 
+	</bean>
+	
+	<!-- The Spring message listener container configuration -->
+	<jms:listener-container container-type="default" connection-factory="cachedConnectionFactory" acknowledge="auto">
+	<jms:listener destination="Innowhite.mp4converter" ref="MP4ConverterMsgListener"
+			method="onMessage" />
+	</jms:listener-container>
+	
+	
+	<bean id="mp4ConverterService" name="mp4ConverterService"
+		class="com.innowhite.mp4converter.service.MP4ConverterService">
+		<property name="mp4ConverterDAO" ref="mp4ConverterDAO" />
+	</bean>
+	
+	
+	
+	<bean id="ffmpeginfoVO" name="ffmpeginfoVO" class="com.innowhite.mp4converter.model.FFMPEGInfoVO">
+
+		<property name="winFFmpegPath" value="${winFFmpegPath}" />
+		<!-- Innowhite.properties file is in another folder. Need to check once.  -->
+		
+	</bean>
+
+</beans>

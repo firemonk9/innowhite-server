@@ -17,6 +17,7 @@ import com.innowhite.PlaybackApp.dao.PlayBackPlayListDao;
 import com.innowhite.PlaybackApp.dao.RoomDao;
 import com.innowhite.PlaybackApp.dao.SessionRecordingDao;
 import com.innowhite.PlaybackApp.dao.VideoDataDao;
+import com.innowhite.PlaybackApp.messaging.MP4ConverterMsgProducer;
 import com.innowhite.PlaybackApp.model.AudioData;
 import com.innowhite.PlaybackApp.model.CallBackUrlsData;
 import com.innowhite.PlaybackApp.model.PlayBackPlayList;
@@ -65,7 +66,12 @@ public class PlaybackDataService {
 	public void setRoomDao(RoomDao roomDao) {
 		this.roomDao = roomDao;
 	}
-
+	
+	public void setMp4ConverterMsgService(MP4ConverterMsgProducer mp4ConverterMsgProducer) {
+		this.mp4ConverterMsgService = mp4ConverterMsgProducer;
+	}
+	
+	private MP4ConverterMsgProducer mp4ConverterMsgService;
 	private RoomDao roomDao;
 	private AudioDataDao audioDataDao;
 	private VideoDataDao videoDataDao;
@@ -445,7 +451,7 @@ public class PlaybackDataService {
 				log.debug("Uploading Meeting Room Video (Path) to youtube:: "+meetingRoomVideoPath);
 				log.debug("--------------------------------------------------------------");
 				PlayBackPlayList meetingRoomVideo = setPlayBackPlayList(meetingRoomVideoPath, roomId);
-
+				String fileId = meetingRoomVideo.getId();
 				// upload to youtube and get-set the youtube url of the
 				// meeting-room video
 				if (upload) {
@@ -473,6 +479,11 @@ public class PlaybackDataService {
 						}
 						NotifyPlayBackReadyStatus.notifyPlayBackReady(roomId, null);
 					}
+				}else if (meetingRoomVideoPath != null){
+					String winFilePath = null;
+					String strMessage= meetingRoomVideoPath +"_"+ fileId +"_"+ winFilePath;
+					mp4ConverterMsgService.sendMessage(strMessage);
+					
 				}
 
 				updateFinalVideoTable(meetingRoomVideo, playBackPlayListDao);
