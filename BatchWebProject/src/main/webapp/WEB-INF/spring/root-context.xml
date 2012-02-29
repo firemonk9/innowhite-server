@@ -207,8 +207,8 @@
 		<property name="sessionRecordingsDao" ref="sessionRecordingsDao" />
 		<property name="playbackVO" ref="playBackVO" />
 		<property name="playBackPlayListDao" ref="playBackPlayListDao" />
-				<property name="callBackUrlsDao" ref="callBackUrlsDao" />
-
+		<property name="callBackUrlsDao" ref="callBackUrlsDao" />
+		<property name="mp4ConverterMsgProducer" ref="mp4ConverterMsgProducer" />
 
 
 	</bean>
@@ -228,11 +228,11 @@
 	</bean>
 
 
-	<bean id="mp4ConverterMsgService" class="com.innowhite.PlaybackApp.messaging.MP4ConverterMsgProducer">
-		<property name="jmsTemplate" ref="mp4ConverterProducer"></property>
+	<bean id="mp4ConverterMsgProducer" name="mp4ConverterMsgProducer" class="com.innowhite.PlaybackApp.messaging.MP4ConverterMsgProducer">
+		<property name="jmsTemplate" ref="mp4ConverterJMSTemplate"></property>
 	</bean>
 
-	<bean id="mp4ConverterProducer" class="org.springframework.jms.core.JmsTemplate"
+	<bean id="mp4ConverterJMSTemplate" class="org.springframework.jms.core.JmsTemplate"
 		p:connectionFactory-ref="cachedConnectionFactory"
 		p:defaultDestination-ref="mp4converterDataDestination" />
 		

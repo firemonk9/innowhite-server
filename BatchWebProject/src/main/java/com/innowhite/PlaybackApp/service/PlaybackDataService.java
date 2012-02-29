@@ -67,11 +67,11 @@ public class PlaybackDataService {
 		this.roomDao = roomDao;
 	}
 	
-	public void setMp4ConverterMsgService(MP4ConverterMsgProducer mp4ConverterMsgProducer) {
-		this.mp4ConverterMsgService = mp4ConverterMsgProducer;
+	public void setMp4ConverterMsgProducer(MP4ConverterMsgProducer mp4ConverterMsgProducer) {
+		this.mp4ConverterMsgProducer = mp4ConverterMsgProducer;
 	}
 	
-	private MP4ConverterMsgProducer mp4ConverterMsgService;
+	private MP4ConverterMsgProducer mp4ConverterMsgProducer;
 	private RoomDao roomDao;
 	private AudioDataDao audioDataDao;
 	private VideoDataDao videoDataDao;
@@ -482,7 +482,7 @@ public class PlaybackDataService {
 				}else if (meetingRoomVideoPath != null){
 					String winFilePath = null;
 					String strMessage= meetingRoomVideoPath +"_"+ fileId +"_"+ winFilePath;
-					mp4ConverterMsgService.sendMessage(strMessage);
+					mp4ConverterMsgProducer.sendMessage(strMessage);
 					
 				}
 
