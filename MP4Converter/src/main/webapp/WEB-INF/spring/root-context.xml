@@ -43,9 +43,13 @@
 		<property name="ffmpegInfoVO" ref="ffmpegInfoVO" />
 	</bean>
 	
+	<bean id="mp4ConverterDAO" name="mp4ConverterDAO"
+		class="com.innowhite.mp4converter.dao.MP4ConverterDAO">
+		<property name="sessionFactory" ref="sessionFactory" />
+	</bean>
 	
 	
-	<bean id="ffmpeginfoVO" name="ffmpeginfoVO" class="com.innowhite.mp4converter.model.FFMPEGInfoVO">
+	<bean id="ffmpegInfoVO" name="ffmpegInfoVO" class="com.innowhite.mp4converter.model.FFMPEGInfoVO">
 
 		<property name="winFFmpegPath" value="${winFFmpegPath}" />
 		<!-- Innowhite.properties file is in another folder. Need to check once.  -->

@@ -67,10 +67,6 @@
 		</property>
 	</bean>
 
-	<bean id="mp4ConverterDAO" name="mp4ConverterDAO"
-		class="com.innowhite.mp4converter.dao.MP4ConverterDAO">
-		<property name="sessionFactory" ref="sessionFactory" />
-	</bean>
-
+	
 	
 </beans>

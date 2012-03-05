@@ -19,25 +19,28 @@ import com.innowhite.mp4converter.util.ConverterUtil;
 public class MP4ConverterService {
 	
 	private static final Logger log = LoggerFactory.getLogger(MP4ConverterService.class);
+	
 	private MP4ConverterDAO mp4ConverterDAO = null;	
 	private FFMPEGInfoVO ffmpegInfoVO = null;
 	
-	public MP4ConverterDAO getmp4ConverterDAO() {
+	public MP4ConverterDAO getMp4ConverterDAO() {
 		return mp4ConverterDAO;
 	}
 
-	public void setmp4ConverterDAO(MP4ConverterDAO mp4ConverterDAO) {
+	public void setMp4ConverterDAO(MP4ConverterDAO mp4ConverterDAO) {
 		this.mp4ConverterDAO = mp4ConverterDAO;
 	}
 
-	public FFMPEGInfoVO getffmpegInfoVO() {
+	public FFMPEGInfoVO getFfmpegInfoVO() {
 		return ffmpegInfoVO;
 	}
-	public void setffmpegInfoVO(FFMPEGInfoVO playbackVO) {
+
+	public void setFfmpegInfoVO(FFMPEGInfoVO ffmpegInfoVO) {
 		this.ffmpegInfoVO = ffmpegInfoVO;
-	}	
+	}
+
+
 	
-		
 	public void processFLVFile(String inputFilePath, String fileId, String winPath){
 		log.debug("entered processFLVFile");
 		if(ConverterUtil.isWindows()==true){
