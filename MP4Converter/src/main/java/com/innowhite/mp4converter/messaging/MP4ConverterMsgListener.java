@@ -27,16 +27,14 @@ public class MP4ConverterMsgListener implements MessageListener{
 
     public void onMessage(Message message) {
     	log.debug(" enter onMessage for MP4ConverterMsgListener Data " + message);
-
-		if (message instanceof TextMessage) {
+    	if (message instanceof TextMessage) {
 			try{
 				String msg = message.getStringProperty("text");
 				
 				String arr[] = msg.split("_");
 				String filePath = arr[0];
 				String fileId = arr[1];
-				String winPath = arr[2];
-				mp4ConverterService.processFLVFile(filePath,fileId,winPath);
+				mp4ConverterService.processFLVFile(filePath,fileId);
 				
 			 } catch (JMSException ex) {
 			log.error(ex.getMessage(), ex);

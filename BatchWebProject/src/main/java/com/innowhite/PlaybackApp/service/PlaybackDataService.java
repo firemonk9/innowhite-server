@@ -479,9 +479,10 @@ public class PlaybackDataService {
 						}
 						NotifyPlayBackReadyStatus.notifyPlayBackReady(roomId, null);
 					}
-				}else if (meetingRoomVideoPath != null){
-					String winFilePath = null;
-					String strMessage= meetingRoomVideoPath +"_"+ fileId +"_"+ winFilePath;
+				}
+				if (meetingRoomVideoPath != null){
+					
+					String strMessage= meetingRoomVideoPath +"_"+ fileId;
 					mp4ConverterMsgProducer.sendMessage(strMessage);
 					
 				}

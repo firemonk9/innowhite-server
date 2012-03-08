@@ -8,6 +8,15 @@ package com.innowhite.mp4converter.model;
 public class FFMPEGInfoVO {
 	
 	private String winFFmpegPath;
+	private String winFilePath;
+
+	public String getWinFilePath() {
+		return winFilePath;
+	}
+
+	public void setWinFilePath(String winFilePath) {
+		this.winFilePath = winFilePath;
+	}
 
 	public String getWinFFmpegPath() {
 		return winFFmpegPath;

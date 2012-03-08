@@ -1,18 +1,78 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <beans xmlns="http://www.springframework.org/schema/beans"
 	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:aop="http://www.springframework.org/schema/aop"
-	xsi:schemaLocation="http://www.springframework.org/schema/aop http://www.springframework.org/schema/aop/spring-aop-3.0.xsd
-		http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans-3.0.xsd
-		http://www.springframework.org/schema/context http://www.springframework.org/schema/context/spring-context-3.0.xsd
-		http://www.springframework.org/schema/jee http://www.springframework.org/schema/jee/spring-jee-3.0.xsd
-		http://www.springframework.org/schema/jms http://www.springframework.org/schema/jms/spring-jms-3.0.xsd
-		http://www.springframework.org/schema/lang http://www.springframework.org/schema/lang/spring-lang-3.0.xsd"
+	xmlns:tx="http://www.springframework.org/schema/tx"
+	xsi:schemaLocation="
+       http://www.springframework.org/schema/jms 
+       http://www.springframework.org/schema/jms/spring-jms-3.0.xsd
+       http://www.springframework.org/schema/beans 
+       http://www.springframework.org/schema/beans/spring-beans-3.0.xsd
+       http://www.springframework.org/schema/tx 
+       http://www.springframework.org/schema/tx/spring-tx-3.0.xsd
+       http://www.springframework.org/schema/aop 
+       http://www.springframework.org/schema/aop/spring-aop-3.0.xsd"
 	xmlns:context="http://www.springframework.org/schema/context"
 	xmlns:jee="http://www.springframework.org/schema/jee" xmlns:jms="http://www.springframework.org/schema/jms"
 	xmlns:lang="http://www.springframework.org/schema/lang" xmlns:p="http://www.springframework.org/schema/p">
 
 
-	<import resource="db-context.xml"/>	
+	<description>Example configuration to get you started.</description>
+
+
+	<tx:annotation-driven />
+
+
+	<bean id="transactionManager"
+		class="org.springframework.orm.hibernate3.HibernateTransactionManager">
+		<property name="sessionFactory" ref="sessionFactory" />
+	</bean>
+
+	<bean id="placeholderConfig"
+		class="org.springframework.beans.factory.config.PropertyPlaceholderConfigurer">
+		<property name="locations">
+			<list>
+
+				<value>WEB-INF/spring/innowhite.properties</value>
+				
+			</list>
+		</property>
+	</bean>
+
+	<bean id="dataSource" class="org.apache.commons.dbcp.BasicDataSource"
+		destroy-method="close">
+		<property name="driverClassName" value="${driver}" />
+		<property name="url" value="${url}" />
+		<property name="username" value="${user}" />
+		<property name="password" value="${pword}" />
+	</bean>
+
+	<bean id="sessionFactory"
+		class="org.springframework.orm.hibernate3.annotation.AnnotationSessionFactoryBean">
+		<property name="dataSource" ref="dataSource" />
+		<property name="packagesToScan" value="com.innowhite.mp4converter" />
+		<property name="schemaUpdate" value="false" />
+		<property name="configurationClass" value="org.hibernate.cfg.AnnotationConfiguration" />
+
+		<property name="hibernateProperties">
+			<props>
+				<prop key="hibernate.format_sql">true</prop>
+				<prop key="hibernate.dialect">org.hibernate.dialect.MySQLDialect</prop>
+				<!-- <prop key="hibernate.hbm2ddl.auto">create</prop> -->
+				<!-- <prop key="hibernate.hbm2ddl.auto">create</prop> -->
+				<prop key="hibernate.show_sql">true</prop>
+				<prop key="use_sql_comments">true</prop>
+
+				<prop key="hibernate.c3p0.acquire_increment">${hibernate.c3p0.acquireIncrement}</prop>
+				<prop key="hibernate.c3p0.idle_test_period">${hibernate.c3p0.idleConnectionTestPeriod}</prop>
+				<prop key="hibernate.c3p0.timeout">${hibernate.c3p0.maxIdleTime}</prop>
+				<prop key="hibernate.c3p0.max_size">${hibernate.c3p0.maxPoolSize}</prop>
+				<prop key="hibernate.c3p0.min_size">${hibernate.c3p0.minPoolSize}</prop>
+			</props>
+		</property>
+		
+	</bean>
+	
+	
 
 
 	<!-- A connection to ActiveMQ -->
@@ -52,6 +112,7 @@
 	<bean id="ffmpegInfoVO" name="ffmpegInfoVO" class="com.innowhite.mp4converter.model.FFMPEGInfoVO">
 
 		<property name="winFFmpegPath" value="${winFFmpegPath}" />
+		<property name="winFilePath" value="${winFilePath}" />
 		<!-- Innowhite.properties file is in another folder. Need to check once.  -->
 		
 	</bean>
