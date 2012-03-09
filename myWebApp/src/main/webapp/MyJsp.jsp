@@ -1,4 +1,5 @@
 
+<%@page import="com.innowhite.whiteboard.persistence.beans.ServerVO"%>
 <%@page import="com.innowhite.whiteboard.service.LoadBalancerService"%>
 <%@page import="com.innowhite.whiteboard.util.InnowhiteConstants"%>
 <%@page import="java.util.Enumeration"%><!-- saved from url=(0014)about:internet -->
@@ -33,7 +34,8 @@ if(userName==null || userName.equals("null")){
 	String orgName = (String) request.getParameter("orgName");
 	String view = (String) request.getParameter("view");
 	String skypeId = LoadBalancerService.getSkypeId();
-
+    ServerVO audioSerVO = LoadBalancerService.getServerURL("AUDIO",orgName);
+	
 	// Whiteboard server and port
 	String wbSer = (String) request.getAttribute(InnowhiteConstants.WHITEBOARD_SERVER);
 	String wbSerPort = (String) request.getAttribute(InnowhiteConstants.WHITEBOARD_SERVER_PORT);
@@ -541,7 +543,7 @@ if ( hasProductInstall && !hasRequestedVersion ) {
 			"id", "<%=userName%>",
 			"quality", "high",
 			"bgcolor", "#ffffff",
-			"flashVars","wbSer=<%=wbSer%>&wbSerPort=<%=wbSerPort%>&phoneNum=<%=phoneNum%>&meetingNum=<%=meetingNum%>&orgName=<%=orgName%>&view=<%=view%>&joinroom=<%=joinroom%>&clientname=<%=clientname%>&groupLeader=<%=groupLeader%>",
+			"flashVars","audSer=<%=audioSerVO.getServerAddr()%>&audSerPort=<%=audioSerVO.getServerPort()%>&wbSer=<%=wbSer%>&wbSerPort=<%=wbSerPort%>&phoneNum=<%=phoneNum%>&meetingNum=<%=meetingNum%>&orgName=<%=orgName%>&joinroom=<%=joinroom%>&clientname=<%=clientname%>&groupLeader=<%=groupLeader%>",
 				"name", "<%=userName%>", "allowScriptAccess", "sameDomain",
 				"type", "application/x-shockwave-flash", "pluginspage",
 				"http://www.adobe.com/go/getflashplayer", "allowFullScreen",

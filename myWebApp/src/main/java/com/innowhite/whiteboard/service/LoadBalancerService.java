@@ -11,84 +11,82 @@ import com.innowhite.whiteboard.persistence.dao.ServerDAO;
 
 public class LoadBalancerService {
 
-    // stores appName vs list of servers
-    private static HashMap<String, List<ServerVO>> serversMap = new HashMap<String, List<ServerVO>>();
+	// stores appName vs list of servers
+	private static HashMap<String, List<ServerVO>> serversMap = new HashMap<String, List<ServerVO>>();
 
-    // stores appName vs current counter
-    private static HashMap<String, Integer> serversCounter = new HashMap<String, Integer>();
+	// stores appName vs current counter
+	private static HashMap<String, Integer> serversCounter = new HashMap<String, Integer>();
 
-    private static final Logger log = LoggerFactory.getLogger(LoadBalancerService.class);
+	private static final Logger log = LoggerFactory.getLogger(LoadBalancerService.class);
 
-    private static String skypeId = null;
-    
-    public static void forceClearCache() {
-	log.info("clearing server_data cache ...");
-	serversMap = new HashMap<String, List<ServerVO>>();
-	serversCounter = new HashMap<String, Integer>();
-    }
+	private static String skypeId = null;
 
-    /*
-     * this is a simple round robin algorithem. It returns next server addr to
-     * the request
-     */
-    public static synchronized ServerVO getServerURL(String appName, String orgName) {
-
-	if (serversMap != null && serversMap.get(appName) == null) {
-	    populateCache(appName);
+	public static void forceClearCache() {
+		log.info("clearing server_data cache ...");
+		serversMap = new HashMap<String, List<ServerVO>>();
+		serversCounter = new HashMap<String, Integer>();
 	}
 
-	List<ServerVO> serverList = serversMap.get(appName);
-	if (serverList != null && serverList.size() > 0) {
+	/*
+	 * this is a simple round robin algorithem. It returns next server addr to
+	 * the request
+	 */
+	public static synchronized ServerVO getServerURL(String appName, String orgName) {
 
-	    int val = serversCounter.get(appName);
+		if (serversMap != null && serversMap.get(appName) == null) {
+			populateCache(appName);
+		}
 
-	    log.debug("appName:  " + appName + "  val " + val + " serverList.size " + serverList.size());
-	    ServerVO obj = serverList.get(val);
-	    if (obj != null) {
-		if ((val + 1) == serverList.size())
-		    val = 0;
-		else
-		    val++;
-		serversCounter.put(appName, val);
+		List<ServerVO> serverList = serversMap.get(appName);
+		if (serverList != null && serverList.size() > 0) {
 
-		return obj;
-	    }
+			int val = serversCounter.get(appName);
+
+			log.debug("appName:  " + appName + "  val " + val + " serverList.size " + serverList.size());
+			ServerVO obj = serverList.get(val);
+			if (obj != null) {
+				if ((val + 1) == serverList.size())
+					val = 0;
+				else
+					val++;
+				serversCounter.put(appName, val);
+
+				return obj;
+			}
+		}
+
+		log.warn(" did not find any server for appName:: " + appName);
+
+		return null;
 	}
 
-	log.warn(" did not find any server for appName:: "+appName);
-	
-	return null;
-    }
+	/* populates the cache */
+	private static void populateCache(String appName) {
+		log.info("populateCache  getting server info frmo database... ");
+		List<ServerVO> list = ServerDAO.getServers(appName);
+		if (list == null || list.size() == 0) {
+			log.warn(" there is no matching server for appName :: " + appName);
+		} else {
+			serversMap.put(appName, list);
+			serversCounter.put(appName, 0);
+		}
 
-    /* populates the cache */
-    private static void populateCache(String appName) {
-	log.info("populateCache  getting server info frmo database... ");
-	List<ServerVO> list = ServerDAO.getServers(appName);
-	if (list == null || list.size() == 0) {
-	    log.warn(" there is no matching server for appName :: " + appName);
-	} else {
-	    serversMap.put(appName, list);
-	    serversCounter.put(appName, 0);
 	}
 
-    }
-    
-    
-    public static String getSkypeId(){
-	
-	if(skypeId != null)
-	    return skypeId;
-	else{
-	    try{
-	    ServerVO obj =  getServerURL("SKYPE",null);
-	    skypeId = obj.getServerAddr();
-	    return skypeId;
-	    }catch(Exception e){
-		log.error(e.getMessage(),e);
-	    }
+	public static String getSkypeId() {
+
+		if (skypeId != null)
+			return skypeId;
+		else {
+			try {
+				ServerVO obj = getServerURL("SKYPE", null);
+				skypeId = obj.getServerAddr();
+				return skypeId;
+			} catch (Exception e) {
+				log.error(e.getMessage(), e);
+			}
+		}
+		return null;
 	}
-	return null;
-    }
-    
 
 }

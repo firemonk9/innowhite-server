@@ -14,7 +14,7 @@
 	
 	
 	<appender name="FA" class="org.apache.log4j.FileAppender">
-		<param name="File" value="c:\\logs\\DocConversion.log" />
+		<param name="File" value="Z:\\logs\\DocConversion.log" />
 <!-- 		<param name="File" value="/opt/InnowhiteData/logs/DocConversion.log" /> -->
 		
 

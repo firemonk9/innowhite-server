@@ -57,4 +57,33 @@ public class MakeExectuable {
 		return null;
 	}
 
+	public static String setWriteAll(String fileName){
+		try {
+			
+			log.debug("setWriteAll: "+fileName);
+			
+			String[] cmd = new String[1];
+			cmd[0] = "chmod a+w "+fileName;
+			
+			Runtime rt = Runtime.getRuntime();
+			Process proc = rt.exec( "chmod a+w "+fileName );
+			
+			InputStream stderr = proc.getErrorStream();
+			InputStreamReader isr = new InputStreamReader(stderr);
+			BufferedReader br = new BufferedReader(isr);
+			String line = null;
+			String error = "";
+			while ((line = br.readLine()) != null){
+				error += line;
+				log.debug("line: "+line);
+			}
+			int exitVal = proc.waitFor();
+			log.debug("return setWriteAll exitVal: "+exitVal);
+			
+		} catch (Exception err) {
+			err.printStackTrace();
+		}
+		return null;
+	}
+	
 }
