@@ -24,9 +24,9 @@ public class MP4ConverterDAO {
 		try {
 			Session session = sessionFactory.getCurrentSession();
 
-			String query = "update PlayBackPlayList pp set pp.downloadUrl=:mp4FilePath  where pp.id=:fileId";
-			returnVal = session.createQuery(query).setString("mp4FilePath", playBackObj.getDownloadUrl())
-					.setString("fileId", playBackObj.getId()).executeUpdate();
+			String query = "update PlayBackPlayList set mp4Path=:mp4Path  where id=:id";
+			returnVal = session.createQuery(query).setString("mp4Path", playBackObj.getMp4Path())
+					.setLong("id", playBackObj.getId()).executeUpdate();
 			session.clear();
 			session.flush();
 			log.debug("retuned updateMp4FilePath val " + returnVal);
