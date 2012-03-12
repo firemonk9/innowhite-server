@@ -42,7 +42,7 @@ public class MP4ConverterService {
 
 	
 	public void processFLVFile(String unixFLVPath, String fileId){
-		log.debug("entered processFLVFile");
+		log.debug("entered processFLVFile"+ "====" +fileId+ "====" +  unixFLVPath);
 		
 		String winFilePath =  ffmpegInfoVO.getWinFilePath();
 		String fileName = unixFLVPath.substring(unixFLVPath.lastIndexOf("/")+1);    // test.flv
@@ -53,7 +53,7 @@ public class MP4ConverterService {
 	}
 		
 	public void convertToMp4(String inputFLVPath, String fileId, String unixFLVPath){
-		log.debug("entered convertToMp4");
+		log.debug("entered convertToMp4======"+inputFLVPath);
 			
 		try{
 			//inputFLVPath="C:/FLVVideoFiles/test.flv";
@@ -73,11 +73,13 @@ public class MP4ConverterService {
 				Process proc = Runtime.getRuntime().exec(command);
 				log.debug("Exit:");
 				
+				updateFinalVideoTable(fileId, outMp4FilePath, unixFLVPath);	
+					
 			}else{
 				log.debug("----There is no file to convert-------");
 			}
 			
-			updateFinalVideoTable(fileId, outMp4FilePath, unixFLVPath);
+			
 				
 		}catch(Exception e){
 			e.printStackTrace();
@@ -102,8 +104,8 @@ public class MP4ConverterService {
 			
 			mp4ConverterDAO.updateMp4FilePath(playBackObj);
 			
-		}catch(Exception e){
-			e.printStackTrace();
+		}catch(Exception ex){
+			log.error(ex.getMessage(), ex);
 		}
 		log.debug("leaving updateFinalVideoTable  ");
 	}

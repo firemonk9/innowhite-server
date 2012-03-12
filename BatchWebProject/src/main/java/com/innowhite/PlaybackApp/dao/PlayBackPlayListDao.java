@@ -1,5 +1,7 @@
 package com.innowhite.PlaybackApp.dao;
 
+import java.io.Serializable;
+
 import org.hibernate.SessionFactory;
 import org.hibernate.classic.Session;
 import org.slf4j.Logger;
@@ -19,25 +21,31 @@ public class PlayBackPlayListDao {
     }
 
     @Transactional
-    public void savePlayBackPlayList(PlayBackPlayList flowPlayerVideo) {
-
-//	for (PlayBackPlayList obj : flowPlayerVideo) {
+    public String savePlayBackPlayList(PlayBackPlayList flowPlayerVideo) {
+    	log.debug("-----Entered savePlayBackPlayList ---");
+    	String returnFileId = null;
+    	//	for (PlayBackPlayList obj : flowPlayerVideo) {
 	    // hard coding the server 2 addr for now. will need to change it.
     	flowPlayerVideo.setServer("innos2.innowhite.com");
-	    save(flowPlayerVideo);
-//    }
+    	returnFileId =  save(flowPlayerVideo);
+    	//    }
+    	log.debug("-----Leaving savePlayBackPlayList ------returnfileId-----"+returnFileId);
+    	return returnFileId;
     }
 
     @Transactional
-    public void save(PlayBackPlayList video) {
-	try {
-	    Session session = sessionFactory.getCurrentSession();
-	    session.save(video);
-	    session.flush();
-	    session.clear();
-	} catch (Exception e) {
-	    e.printStackTrace();
-	}
+    public String save(PlayBackPlayList video) {
+    	Serializable returnFileId=0;
+		try {
+		    Session session = sessionFactory.getCurrentSession();
+		    returnFileId = session.save(video);
+		    session.flush();
+		    session.clear();
+		    log.debug("--PlayBackPlayListDao---Leaving save ----returnfileId---"+returnFileId);
+		} catch (Exception e) {
+		    e.printStackTrace();
+		}
+	return returnFileId.toString();
     }
 
 }

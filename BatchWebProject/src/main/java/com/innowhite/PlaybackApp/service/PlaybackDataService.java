@@ -114,6 +114,9 @@ public class PlaybackDataService {
 		// if (args != null ) {
 		// roomId = args;
 		// }
+		
+		String retFileId = null; // This is playback_playlist's generate fileID (uniqueId)
+		
 
 		try {
 
@@ -451,7 +454,6 @@ public class PlaybackDataService {
 				log.debug("Uploading Meeting Room Video (Path) to youtube:: "+meetingRoomVideoPath);
 				log.debug("--------------------------------------------------------------");
 				PlayBackPlayList meetingRoomVideo = setPlayBackPlayList(meetingRoomVideoPath, roomId);
-				String fileId = meetingRoomVideo.getId();
 				// upload to youtube and get-set the youtube url of the
 				// meeting-room video
 				if (upload) {
@@ -480,15 +482,17 @@ public class PlaybackDataService {
 						NotifyPlayBackReadyStatus.notifyPlayBackReady(roomId, null);
 					}
 				}
-				if (meetingRoomVideoPath != null){
+				
+				retFileId = updateFinalVideoTable(meetingRoomVideo, playBackPlayListDao);
+				
+				log.debug("######### retFileId :: " + retFileId);
+				if (meetingRoomVideoPath!=null && retFileId!=null){
 					
-					String strMessage= meetingRoomVideoPath +"_"+ fileId;
+					String strMessage= meetingRoomVideoPath +"^"+ retFileId;
 					mp4ConverterMsgProducer.sendMessage(strMessage);
-					
 				}
-
-				updateFinalVideoTable(meetingRoomVideo, playBackPlayListDao);
 			}
+			
 		} catch (Exception e) {
 			log.error(e.getMessage(), e);
 		}
@@ -1498,8 +1502,9 @@ public class PlaybackDataService {
 		return finalVideoPlaylist;
 	}
 
-	private static void updateFinalVideoTable(PlayBackPlayList meetingRoomVideo, PlayBackPlayListDao playBackPlayListDao) {
+	private static String updateFinalVideoTable(PlayBackPlayList meetingRoomVideo, PlayBackPlayListDao playBackPlayListDao) {
 		log.debug("Inside updateFinalVideoTable ..............");
+		String returnFileId = null;
 		// ClassPathXmlApplicationContext appContext = new
 		// ClassPathXmlApplicationContext(new String[] { "root-context.xml" });
 		// of course, an ApplicationContext is just a BeanFactory
@@ -1507,7 +1512,8 @@ public class PlaybackDataService {
 
 		// PlayBackPlayListDao sessionRecordingsDao = (PlayBackPlayListDao)
 		// factory.getBean("playBackPlayListDao");
-		playBackPlayListDao.savePlayBackPlayList(meetingRoomVideo);
+		returnFileId = playBackPlayListDao.savePlayBackPlayList(meetingRoomVideo);
+		return returnFileId;
 	}
 
 }
