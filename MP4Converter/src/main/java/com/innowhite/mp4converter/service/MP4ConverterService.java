@@ -10,6 +10,7 @@ import com.innowhite.mp4converter.dao.MP4ConverterDAO;
 import com.innowhite.mp4converter.model.FFMPEGInfoVO;
 import com.innowhite.mp4converter.model.PlayBackPlayList;
 import com.innowhite.mp4converter.util.ConverterUtil;
+import com.innowhite.mp4converter.util.ProcessExecutor;
 
 /**
  * @author Tanuja
@@ -69,8 +70,11 @@ public class MP4ConverterService {
 				String command = ffmpegPath+" -i "+inputFLVPath+" "+outMp4FilePath;
 				
 				log.debug("Before dispatching command...");
-						
-				Process proc = Runtime.getRuntime().exec(command);
+				
+				
+				ProcessExecutor pe = new ProcessExecutor();
+				pe.executeProcess(command, null, true);
+				//Process proc = Runtime.getRuntime().exec(command);
 				log.debug("Exit:");
 				
 				updateFinalVideoTable(fileId, outMp4FilePath, unixFLVPath);	

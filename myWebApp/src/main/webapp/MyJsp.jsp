@@ -35,7 +35,8 @@ if(userName==null || userName.equals("null")){
 	String view = (String) request.getParameter("view");
 	String skypeId = LoadBalancerService.getSkypeId();
     ServerVO audioSerVO = LoadBalancerService.getServerURL("AUDIO",orgName);
-	
+    ServerVO skypeSerVO = LoadBalancerService.getServerURL("SKYPE",orgName);
+    
 	// Whiteboard server and port
 	String wbSer = (String) request.getAttribute(InnowhiteConstants.WHITEBOARD_SERVER);
 	String wbSerPort = (String) request.getAttribute(InnowhiteConstants.WHITEBOARD_SERVER_PORT);

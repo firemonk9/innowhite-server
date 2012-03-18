@@ -53,6 +53,11 @@ public class SessionDetailService {
 	    List<PlayBackPlayListVO> playList = PlayBackPlayListDAO.getPlayList(roomId);
 	    log.debug("  users size ::  " + playList.size());
 
+	    // get list of playback play list
+//	    List<PlayBackPlayListVO> playList = PlayBackPlayListDAO.getPlayList(roomId);
+//	    log.debug("  users size ::  " + playList.size());
+
+	    
 	    returnXML = convertToXML(roomId, videos, users, audios, room, playList);
 
 	} else {
@@ -75,11 +80,27 @@ public class SessionDetailService {
 	xml.append("<sessionStartTime>" + room.getStartDate() + "</sessionStartTime>");
 	xml.append("<sessionEndTime>" + room.getEndDate() + "</sessionEndTime>");
 
-	if (playList != null)
+	if (playList != null && playList.size() > 0)
 	    xml.append("<sessionRecording>" + true + "</sessionRecording>");
 	else
 	    xml.append("<sessionRecording>" + false + "</sessionRecording>");
 
+	if (audios != null && audios.size() > 0)
+	    xml.append("<audioUsed>" + true + "</audioUsed>");
+	else
+	    xml.append("<audioUsed>" + false + "</audioUsed>");
+	
+	if (videos != null && videos.size() > 0 && videoExists("VIDEO",videos))
+	    xml.append("<videoUsed>" + true + "</videoUsed>");
+	else
+	    xml.append("<videoUsed>" + false + "</videoUsed>");
+	
+	if (videos != null && videos.size() > 0 && videoExists("DESKTOP",videos))
+	    xml.append("<screenShareUsed>" + true + "</screenShareUsed>");
+	else
+	    xml.append("<screenShareUsed>" + false + "</screenShareUsed>");
+
+	
 	
 	// list all videos
 	xml.append("<sessionUsers>");
@@ -153,5 +174,18 @@ public class SessionDetailService {
 	return xml.toString();
 
     }
+
+	private static boolean videoExists(String vType, List<VideoDataVO> videos) {
+		
+		if(videos != null && vType != null){
+			
+			for ( VideoDataVO v :videos){
+				if(v.getVideoType()!=null && v.getVideoType().equals(vType)){
+					return true;
+				}
+			}
+		}
+		return false;
+	}
 
 }
