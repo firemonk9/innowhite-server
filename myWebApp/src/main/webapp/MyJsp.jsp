@@ -224,8 +224,8 @@ function start_screen_share (stream_id,recordStatus, serverUrl,roomId,port)
 	var userAgent = typeof(window.navigator.userAgent) != 'udefined' ? window.navigator.userAgent : '';
 	 if( userAgent.search(/MSIE/) >= 0)
 	{
-		$.openDOMWindow({windowSourceID:'#popUpTemplate'});
-		setTimeout("$('#DOMWindow .DOMWindowContent').html($('#notSapportedBrowser').html())",300);
+		$.openDOMWindow({windowSourceID:'#popUpTemplate', width:'0px', height:'0px'});
+		setTimeout("$('#DOMWindow .DOMWindowContent').html($('#notSapportedBrowser').html())",0);
 		return false;
 	} 
 	if(!pluginIsLoad())
@@ -304,8 +304,8 @@ function setRecordingStatus(myRecordStatus, myRoomName){
 
 function openHelpWindow()
 {
-	$.openDOMWindow({windowSourceID:'#popUpTemplate',overlayOpacity:50});
-	setTimeout("$('#DOMWindow .DOMWindowContent').html($('#helpWindow').html())",300);
+	$.openDOMWindow({windowSourceID:'#popUpTemplate',overlayOpacity:50, width:'0px', height:'0px'});
+	setTimeout("$('#DOMWindow .DOMWindowContent').html($('#helpWindow').html())",0);
 
 }
 
@@ -318,7 +318,6 @@ function plugin()
 
 
   function openCenteredWindow() {
-
 	var url = null;
 	if (navigator.appVersion.indexOf("Win")!=-1)
 		url="loadWinPlugin.html";
@@ -409,8 +408,8 @@ function plugin()
 	{
 		if(pluginIsLoad())
 		{
-			$.openDOMWindow({windowSourceID:'#popUpTemplate'});
-			setTimeout("$('#DOMWindow .DOMWindowContent').html($('#pluginInstalled').html())",300);
+			$.openDOMWindow({windowSourceID:'#popUpTemplate', height:'0px', width:'0px'});
+			setTimeout("$('#DOMWindow .DOMWindowContent').html($('#pluginInstalledTemplateId').html())",0);
 			return true;
 		}
 		pluginRefresh();
@@ -439,8 +438,8 @@ function plugin()
 		})
 	function showDownloadPlugin()
 	{
-		$.openDOMWindow({windowSourceID:'#popUpTemplate'});
-		setTimeout("$('#DOMWindow .DOMWindowContent').html($('#downloadPlugin').html())",300);
+			$.openDOMWindow({windowSourceID:'#popUpTemplate', height:'0px', width:'0px'});
+    		setTimeout("$('#DOMWindow .DOMWindowContent').html($('#downloadPluginTemplate').html())",0);
 	}
     function detectPluginSystem(downloadElement)
 	{
@@ -462,13 +461,9 @@ function plugin()
 	
 	function showReloadPage()
 	{
-		$.openDOMWindow({windowSourceID:'#popUpTemplate'});
-		setTimeout("$('#DOMWindow .DOMWindowContent').html($('#reloadPage').html())",300);
-//		setTimeout("$('#DOMWindowContent').html($('#reloadPage').html())",300);		
+		$.openDOMWindow({windowSourceID:'#popUpTemplate', width:'0px', height:'0px'});
+		setTimeout("$('#DOMWindow .DOMWindowContent').html($('#reloadPage').html())",0);
 	} 
-//-->
-//-->
-
 
 var countryName =null; var countryCode=null; 
 	
@@ -564,42 +559,72 @@ if ( hasProductInstall && !hasRequestedVersion ) {
 			<div></div>
 		</object>
 		<br />
-
 	</div>
-	<div id="downloadPlugin" style="display: none;">
-
-		<h3>To share your screen, a plugin download is required. Please
-			click on the "download now" button to start download of Innowhite
-			ScreenShare plugin.</h3>
-		<a target="_blank" href="" onmousedown="detectPluginSystem(this);">
-			<img src="history/download.png" width="30%"
-			style="border: none; position: absolute; bottom: 10px; left: 50%; margin-left: -60px;" />
-		</a>
-	</div>
-
 	
-	<div id="notSapportedBrowser" style="display: none;">Internet Explorer
-		 is not supported to share the screen. Please use Firefox or Google
-		Chrome for sharing Screen.</div>
-	<div id="pluginInstalled" style="display: none;">Now You can
-		start sharing your screen during Innowhite meting sessions. Enjoy!</div>
-	<div id="reloadPage" style="display: none;">
-		<h4>Plugin cannot be loaded dynamically for Safari and Chrome in Mac</h4>
-
-		Please <b>quit</b> your browser and open again for plugin to get loaded and enjoy screen share.
+	<div id="popUpTemplate" style="display:none">
+		<div class="DOMWindowContent"></div> 
 	</div>
-
-
-	<div id="popUpTemplate" style="display: none">
-		<a href="" onclick="$.closeDOMWindow();return false;"
-			style="display: block; float: right; margin-right: 10px;">close</a><br />
-		<img src="history/InnowhiteLogo.png"
-			style="position: absolute; top: 10px;" />
-		<div style="margin-bottom: 30px;">&nbsp;</div>
-		<hr width=100%>
-		<br>
-		<br>
-		<div class="DOMWindowContent" style="width:100%;height: 100%;"></div>
+	
+	<div id="notSapportedBrowser" style="display: none;">
+		<div class="popup-audio" style="left:456px;top:124.5px;">
+				<div class="close">
+					<a href="" onclick="$.closeDOMWindow();return false;" style="display:block;float:right;margin-right:10px;">
+					<img src="images/pop-close-btn.png" alt="close"></a>
+				</div>
+				<div class="pop-heading1">Screen Share </div>
+				<br><br>Internet Explorer is not supported to share the screen. Please use Firefox or Google Chrome for sharing Screen.
+		</div>
+	</div>
+	
+	<div id="reloadPage" style="display: none;">
+		<div class="popup-audio" style="left:456px;top:124.5px;">
+				<div class="close">
+					<a href="" onclick="$.closeDOMWindow();return false;" style="display:block;float:right;margin-right:10px;">
+					<img src="images/pop-close-btn.png" alt="close"></a>
+				</div>
+				<div class="pop-heading1">Screen Share </div>
+				<br><br>
+				<h4>Plugin cannot be loaded dynamically for Safari and Chrome in Mac</h4>
+				Please <b>quit</b> your browser and open again for plugin to get loaded and enjoy screen share.
+		</div>
+	</div>
+	
+	<div id="downloadPluginTemplate" style="display:none;">
+		<div class="popup-audio" style="left:456px;top:124.5px;">
+			<div class="close">
+				<a href="" onclick="$.closeDOMWindow();return false;" style="display:block;float:right;margin-right:10px;">
+				<img src="images/pop-close-btn.png" alt="close"></a>
+			</div>
+			<div class="pop-heading1" >Screen Share </div>
+			<br><br>
+			<div id="downloadPlugin" class="pop-form1 login1" width="100%" height="100%">
+				<div class="help-tabs ahelp-tabs" id="ht1">
+						<div class="icon-share">
+							<img src="images/ss.png" alt="audio" width="130" height="85" >
+						</div>
+						<div class="text-heading">To share your screen, a plugin download is required.
+						Please click on The "Download" button to start download of Innowhite ScreenShare plugin. </div>
+						<div class="download-button">
+							<a target="_blank" href="" onmousedown="detectPluginSystem(this);">
+							<img src="images/button-download.png" /></a>
+						</div>
+				</div>
+			</div>
+		</div>
+	</div>
+	
+	<div id="pluginInstalledTemplateId" style="display:none;">
+		<div class="popup-audio-enjoy" style="left:350px;top:120.5px;">
+			<div class="close">
+				<a href="" onclick="$.closeDOMWindow();return false;" style="display:block;float:right;margin-right:10px;">
+					<img src="images/pop-close-btn.png" alt="close"></a>
+			</div>
+			<div class="enjoy">
+				<div class="plugin">Please click on the
+					 <img src="images/ss-icons.png" alt="download" /> icon to start screen sharing
+				 </div>
+			</div>
+		</div>
 	</div>
 	
 	<a href="skype:<%=skypeId%>?call" id="skypeid"><img src="http://download.skype.com/share/skypebuttons/buttons/call_green_white_153x63.png"  style="border: none;" width="153" height="63" alt="Skype Me!" /></a>
