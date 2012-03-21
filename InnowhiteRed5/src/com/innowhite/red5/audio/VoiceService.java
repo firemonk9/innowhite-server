@@ -32,64 +32,62 @@ import com.innowhite.red5.util.InnowhiteConstants;
  * */
 public class VoiceService extends ApplicationAdapter {
 
-    private static Logger log = Red5LoggerFactory.getLogger(VoiceService.class, InnowhiteConstants.APP_NAME);
+	private static Logger log = Red5LoggerFactory.getLogger(VoiceService.class, InnowhiteConstants.APP_NAME);
 
-    private FreeSwitchGateway freeSwitchGateway;
+	private FreeSwitchGateway freeSwitchGateway;
 
+	public void recordStart(String roomId) {
+		String conference = getConfId(roomId);
+		freeSwitchGateway.startRecord(conference, 0);
+	}
 
+	public void recordStop(String roomId) {
+		String conference = getConfId(roomId);
+		freeSwitchGateway.stopRecord(conference, 0);
+	}
 
-    public void recordStart(String roomId) {
-	String conference = getConfId(roomId);
-	freeSwitchGateway.startRecord(conference, 0);
-    }
+	public void muteAllUsers(String roomId, boolean mute) {
+		String conference = getConfId(roomId);
+		log.info("Mute all users in room[$conference]");
+		// freeSwitchGateway.mute(conference, mute);
+	}
 
-    public void recordStop(String roomId) {
-	String conference = getConfId(roomId);
-	freeSwitchGateway.stopRecord(conference, 0);
-    }
+	// public boolean isRoomMuted(String roomId){
+	// String conference =getConfId(roomId);
+	// return freeSwitchGateway.isRoomMuted(conference);
+	// }
 
-    public void muteAllUsers(String roomId, boolean mute) {
-	String conference = getConfId(roomId);
-	log.debug("Mute all users in room[$conference]");
-	// freeSwitchGateway.mute(conference, mute);
-    }
+	public void muteUnmuteUser(String roomId, Integer userid, Boolean mute) {
+		String conference = getConfId(roomId);
+		log.info("MuteUnmute request for user [$userid] in room[$conference]");
+		// System.err.println("------ Invoked muteUnmuteUser ----------  ");
+		freeSwitchGateway.mute(conference, userid, mute);
+	}
 
-    // public boolean isRoomMuted(String roomId){
-    // String conference =getConfId(roomId);
-    // return freeSwitchGateway.isRoomMuted(conference);
-    // }
+	// public void lockMuteUser(String roomId,Integer userid, Boolean lock) {
+	// String conference =getConfId(roomId);
+	// log.debug("Lock request for user [$userid] in room[$conference]");
+	// freeSwitchGateway.lock(conference, userid, lock);
+	// }
 
-    public void muteUnmuteUser(String roomId, Integer userid, Boolean mute) {
-	String conference = getConfId(roomId);
-	log.debug("MuteUnmute request for user [$userid] in room[$conference]");
-	// System.err.println("------ Invoked muteUnmuteUser ----------  ");
-	freeSwitchGateway.mute(conference, userid, mute);
-    }
+	public void kickUSer(String roomId, Integer userid) {
+		String conference = getConfId(roomId);
+		log.info("KickUser $userid from $conference roomId" + roomId + " userid: " + userid + "  conference " + conference);
+		// System.err.println("------ Invoked kickUSer ----------  ");
+		freeSwitchGateway.eject(conference, userid);
+	}
 
-    // public void lockMuteUser(String roomId,Integer userid, Boolean lock) {
-    // String conference =getConfId(roomId);
-    // log.debug("Lock request for user [$userid] in room[$conference]");
-    // freeSwitchGateway.lock(conference, userid, lock);
-    // }
+	public void setFreeSwitchGateway(FreeSwitchGateway s) {
+		log.debug("Setting voice server");
+		freeSwitchGateway = s;
+		log.debug("Setting voice server DONE");
+	}
 
-    public void kickUSer(String roomId, Integer userid) {
-	String conference = getConfId(roomId);
-	log.debug("KickUser $userid from $conference roomId" + roomId + " userid: " + userid + "  conference " + conference);
-	// System.err.println("------ Invoked kickUSer ----------  ");
-	freeSwitchGateway.eject(conference, userid);
-    }
+	private String getConfId(String roomId) {
+		if (roomId != null)
+			return roomId.substring(2);
+		else
+			return null;
 
-    public void setFreeSwitchGateway(FreeSwitchGateway s) {
-	log.debug("Setting voice server");
-	freeSwitchGateway = s;
-	log.debug("Setting voice server DONE");
-    }
-
-    private String getConfId(String roomId) {
-	if (roomId != null)
-	    return roomId.substring(2);
-	else
-	    return null;
-
-    }
+	}
 }

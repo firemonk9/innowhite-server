@@ -24,11 +24,11 @@ public class ProcessExecutor {
 
 			// any error message?
 			StreamGobbler errorGobbler = new StreamGobbler(
-					proc.getErrorStream(), "ERR", videohm, printLog);
+					proc.getErrorStream(), "ERR", printLog);
 
 			// any output?
 			StreamGobbler outputGobbler = new StreamGobbler(
-					proc.getInputStream(), "OUT", videohm, printLog);
+					proc.getInputStream(), "OUT", printLog);
 
 			// Start the threads
 			errorGobbler.start();
@@ -74,10 +74,10 @@ class StreamGobbler extends Thread {
 	boolean printLog = false;
 
 	StreamGobbler(InputStream is, String type,
-			HashMap<String, String> videohmin, boolean printLog) {
+			 boolean printLog) {
 		this.is = is;
 		this.type = type;
-		this.videohm = videohmin;
+		
 		this.printLog = printLog;
 	}
 
@@ -86,46 +86,18 @@ class StreamGobbler extends Thread {
 			InputStreamReader isr = new InputStreamReader(is);
 			BufferedReader br = new BufferedReader(isr);
 			String line = null;
-			if (this.videohm != null) {
-
-				// log.debug(" starting sleep for the thred ... ");
+							// log.debug(" starting sleep for the thred ... ");
 				// Thread.sleep(10000);
 				// log.debug(" Thread woke up");
 
 				while ((line = br.readLine()) != null) {
 					// log.debug(" line ::::---- "+line);
-
-					if (line.contains("duration")) {
-						getSubstr(line, "duration", this.videohm);
-					} else if (line.contains("width")) {
-						getSubstr(line, "width", this.videohm);
-					} else if (line.contains("height")) {
-						getSubstr(line, "height", this.videohm);
-					} else if (line.contains("filesize")) {
-						getSubstr(line, "filesize", this.videohm);
-					} else if (line.contains("Stream")) {
-						getSubstr2(line, "dimensions", this.videohm);
-					} else if(line.contains("Duration")) {
-						getSubstr3(line, "Duration", this.videohm);
-					}
+					log.debug(" line "+line);		
+					
 				}
-				if (this.videohm.get("width") == null
-						|| this.videohm.get("height") == null
-						|| this.videohm.get("width") == ""
-						|| this.videohm.get("height") == "") {
-					//log.debug("could not get width and heght with ffmpeg...");
-					if (this.videohm.get("dimensions") != null) {
-						String dim[] = this.videohm.get("dimensions")
-								.split("x");
-						this.videohm.put("width", dim[0]);
-						this.videohm.put("height", dim[1]);
-						log.debug("setting width and height through Stream's dimensions");
-					} else {
-						log.warn("even dimensions is null... somethings wrong!");
-					}
-				}
+				
 
-			}
+			
 			// Show output in development
 			if (printLog)
 				log.debug(type + ">" + line);

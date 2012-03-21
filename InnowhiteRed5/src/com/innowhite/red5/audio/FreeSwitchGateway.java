@@ -118,33 +118,33 @@ public class FreeSwitchGateway extends Observable implements IEslEventListener {
 	public void startRecord(String confRoom, Integer participant) {
 		RecordAudioCommand mpc = new RecordAudioCommand(confRoom, participant, true);
 		String jobId = managerConnection.getESLClient().sendAsyncApiCommand(mpc.getCommand(), mpc.getCommandArgs());
-		log.debug("startRecord called for room " + confRoom + " jobid [{}]" + participant + " jobId " + jobId);
+		log.info("startRecord called for room " + confRoom + " jobid [{}]" + participant + " jobId " + jobId);
 	}
 
 	public void stopRecord(String confRoom, Integer participant) {
 		RecordAudioCommand mpc = new RecordAudioCommand(confRoom, participant, false);
 		String jobId = managerConnection.getESLClient().sendAsyncApiCommand(mpc.getCommand(), mpc.getCommandArgs());
-		log.debug("stopRecord called for room " + confRoom + " jobid [{}]" + participant + " jobId " + jobId);
+		log.info("stopRecord called for room " + confRoom + " jobid [{}]" + participant + " jobId " + jobId);
 	}
 
 	// @Override
 	public void mute(String confRoom, Integer participant, Boolean mute) {
 		MuteParticipantCommand mpc = new MuteParticipantCommand(confRoom, participant, mute, 0);
 		String jobId = managerConnection.getESLClient().sendAsyncApiCommand(mpc.getCommand(), mpc.getCommandArgs());
-		log.debug("mute called for room [{}] jobid [{}]", confRoom, jobId);
+		log.info("mute called for room [{}] jobid [{}]", confRoom, jobId);
 	}
 
 	public void invalidConference(String confRoom, Integer participant, Boolean mute) {
 		MuteParticipantCommand mpc = new MuteParticipantCommand(confRoom, participant, mute, 0);
 		String jobId = managerConnection.getESLClient().sendAsyncApiCommand(mpc.getCommand(), mpc.getCommandArgs());
-		log.debug("mute called for room [{}] jobid [{}]", confRoom, jobId);
+		log.info("mute called for room [{}] jobid [{}]", confRoom, jobId);
 	}
 
 	// @Override
 	public void eject(String confRoom, Integer participant) {
 		EjectParticipantCommand mpc = new EjectParticipantCommand(confRoom, participant, 0);
 		String jobId = managerConnection.getESLClient().sendAsyncApiCommand(mpc.getCommand(), mpc.getCommandArgs());
-		log.debug("eject/kick called for room [{}]  participant [{}]", confRoom, participant);
+		log.info("eject/kick called for room [{}]  participant [{}]", confRoom, participant);
 
 	}
 
@@ -211,24 +211,24 @@ public class FreeSwitchGateway extends Observable implements IEslEventListener {
 
 	public void conferenceEventMute(String confName, int confSize, EslEvent event) {
 
-		String uniqueId = getFSUniqueIdFromEvent(event);
+		//String uniqueId = getFSUniqueIdFromEvent(event);
 		Integer memberId = this.getMemeberIdFromEvent(event);
 
 		ParticipantMutedEvent pj = new ParticipantMutedEvent("" + memberId, confName, true);
 		audioEventListener.handleConferenceEvent(pj);
 
-		log.debug("Conference [{}] MUTE [{}]", confName, uniqueId);
+		log.info("Conference [{}] MUTE [{}]", confName, memberId);
 	}
 
 	public void conferenceEventUnMute(String confName, int confSize, EslEvent event) {
 
-		String uniqueId = getFSUniqueIdFromEvent(event);
+		//String uniqueId = getFSUniqueIdFromEvent(event);
 		Integer memberId = this.getMemeberIdFromEvent(event);
 
 		ParticipantMutedEvent pj = new ParticipantMutedEvent("" + memberId, confName, true);
 		audioEventListener.handleConferenceEvent(pj);
 
-		log.debug("Conference [{}] UNMUTE [{}]", confName, uniqueId);
+		log.info("Conference [{}] UNMUTE [{}]", confName, memberId);
 	}
 
 	/*
@@ -236,7 +236,7 @@ public class FreeSwitchGateway extends Observable implements IEslEventListener {
 	 */
 	public void conferenceEventAction(String confName, int confSize, String action, EslEvent event) {
 
-		String uniqueId = getFSUniqueIdFromEvent(event);
+		//String uniqueId = getFSUniqueIdFromEvent(event);
 		Integer memberId = this.getMemeberIdFromEvent(event);
 		StringBuilder sb = new StringBuilder("");
 		sb.append("" + memberId);
@@ -245,13 +245,13 @@ public class FreeSwitchGateway extends Observable implements IEslEventListener {
 		sb.append("]");
 
 		// log.debug("Conference leave: "+sb);
-		log.debug("Conference Action talk: memberId " + memberId + "  confName " + confName + " confSize " + confSize + " event " + event + "  action " + action);
+		//log.debug("Conference Action talk: memberId " + memberId + "  confName " + confName + " confSize " + confSize + " event " + event + "  action " + action);
 
 		if (resultMap.get(action) != null) {
 			ParticipantTalkingEvent pj = new ParticipantTalkingEvent("" + memberId, confName, resultMap.get(action));
 			audioEventListener.handleConferenceEvent(pj);
 
-			log.debug("Conference Action talk: memberId " + memberId + "  confName " + confName + " confSize " + confSize + " event " + event + "  action " + action);
+		//	log.debug("Conference Action talk: memberId " + memberId + "  confName " + confName + " confSize " + confSize + " event " + event + "  action " + action);
 		}
 		// log.info ("Conference [{}] Action [{}]", confName, sb.toString());
 	}
