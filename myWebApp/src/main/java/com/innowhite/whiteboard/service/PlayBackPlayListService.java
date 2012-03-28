@@ -27,6 +27,7 @@ public class PlayBackPlayListService {
 	    sb.append("<height>" + playBackPlayListVO.getHeight() + "</height>");
 	    sb.append("<youtube>" + playBackPlayListVO.getYoutubeUrl() + "</youtube>");
 	    sb.append("<status>" + playBackPlayListVO.getStatus() + "</status>");
+	    sb.append("<mp4path>" + playBackPlayListVO.getMp4Path() + "</mp4path>");
 
 	    sb.append("</videoSrc>");
 	}

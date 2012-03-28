@@ -17,6 +17,7 @@
 		<result property="height" column="height" />
 		<result property="youtubeUrl" column="youtube_url" />
 		<result property="status" column="status" />
+		<result property="mp4Path" column="mp4_path" />
 		
 		
 		
@@ -28,7 +29,7 @@
 
 	<select id="getPlayListQuery" resultMap="playListMapId" parameterClass="java.lang.String">
 		select
-		duration, file_path, server , size , width, height,youtube_url,status  from playback_playlist where room_id=#room_id# order by id asc;
+		duration, file_path, server , size , width, height,youtube_url,status,mp4_path  from playback_playlist where room_id=#room_id# order by id asc;
 	</select>
 
 

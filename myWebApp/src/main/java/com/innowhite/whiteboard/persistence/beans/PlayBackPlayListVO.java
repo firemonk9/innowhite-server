@@ -11,7 +11,16 @@ public class PlayBackPlayListVO {
     private String height;
     private String youtubeUrl;
     private String status;
+    private String mp4Path;
     
+    public String getMp4Path() {
+		return mp4Path;
+	}
+
+	public void setMp4Path(String mp4Path) {
+		this.mp4Path = mp4Path;
+	}
+
     
     public String getStatus() {
         return status;
@@ -85,4 +94,5 @@ public class PlayBackPlayListVO {
 	this.server = server;
     }
 
+	
 }
