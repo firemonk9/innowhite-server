@@ -9,9 +9,9 @@
 
 <%
 	String userName = request.getParameter("userName");
-if(userName==null || userName.equals("null")){
-	userName = "whiteboardF";
-}
+	if(userName==null || userName.equals("null")){
+		userName = "whiteboardF";
+	}
 	String path = request.getContextPath();
 	String basePath = request.getScheme() + "://"
 			+ request.getServerName() + ":" + request.getServerPort()
@@ -109,7 +109,6 @@ if(userName==null || userName.equals("null")){
 		}
 	}
 %>
-
 <html lang="en">
 
 <!--
@@ -124,29 +123,24 @@ Learn more about Flex at http://flex.org
 
 <head>
 <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+<title></title>
+
 <script src="http://jquery.com/src/jquery-latest.pack.js"></script>
+<script src="AC_OETags.js" language="javascript"></script>
+<script type="text/javascript" src="http://download.skype.com/share/skypebuttons/js/skypeCheck.js"></script>
 
 <!--  BEGIN Browser History required section -->
 <link rel="stylesheet" type="text/css" href="history/history.css" />
 <link rel="stylesheet" type="text/css" media="screen" href="resources/styles/styles.css"  /> 
 <!--  END Browser History required section -->
 
-<title></title>
-<script src="AC_OETags.js" language="javascript"></script>
-
-<!--  BEGIN Browser History required section -->
-<script src="js/jquery.DOMWindow.js" language="javascript"></script>
-<!--  END Browser History required section -->
-
-
-<script type="text/javascript" src="http://download.skype.com/share/skypebuttons/js/skypeCheck.js"></script>
-
 <style>
-body {
-	margin: 0px;
-	overflow: hidden
-}
+	body {
+		margin: 0px;
+		overflow: hidden
+	}
 </style>
+
 <script language="JavaScript" type="text/javascript">
 // -----------------------------------------------------------------------------
 // Globals
@@ -164,130 +158,101 @@ var innowhitePluginLoaded = false;
 // -->
 
 
-		function plugin0()
-        {
-			//alert(" in plugin0 "+document.getElementById('plugin0'));
-            return document.getElementById('plugin0');
-        }
+function plugin0(){
+	  return document.getElementById('plugin0');
+}
+
+function close_session(moderator){
+
+   	// alert(" in close session .. take the user to another window.");
+   	 allowConfirm=false;
+   	 var url="http://innowhite.com";
+   	 if(moderator != null){
+  			if(moderator == true){
+  				window.open(url,"_self");
+  			} else{
+  				window.open(url,"_self");
+  			}
+   	  }
+}
 
 
+function make_skype_call(){
+		var a =1;
+		//document.getElementById('skypeid').click();
+		//$('#skypeid').click();
+		//skype:innowhiteconf?call.click();
+		//skype().innowhiteConf?call;
+		allowConfirm=false;
+		var ele = document.getElementById('skypeid');
 
-
-     function close_session(moderator)
-     {
-
-    	// alert(" in close session .. take the user to another window.");
-    	allowConfirm=false;
-    	 var url="http://innowhite.com";
-    	 if(moderator != null)
-    	 {
-    			if(moderator == true){
-
-    				window.open(url,"_self");
-    			} else
-    			{
-    				window.open(url,"_self");
-    			}
-    	  }
-     }
-
-
-     function make_skype_call(){
-    	 var a =1;
-    	 //document.getElementById('skypeid').click();
-    	 //$('#skypeid').click();
-    	 //skype:innowhiteconf?call.click();
-    	 //skype().innowhiteConf?call;
-    	  allowConfirm=false;
-    	      var ele = document.getElementById('skypeid');
-
-            if (ele != null)
-			{
+		if (ele != null){
 			  if (ele.fireEvent) {
 			    ele.fireEvent("onclick");
-			  }
-			  else
-			  {
+			  }else {
 				var evt = document.createEvent("MouseEvents");
-            	evt.initMouseEvent("click", true, true, window,
+			    evt.initMouseEvent("click", true, true, window,
 			                               0, 0, 0, 0, 0, false, false, false, false, 0, null);
-            	ele.dispatchEvent(evt);
+			    ele.dispatchEvent(evt);
 			  }
-            }
-            allowConfirm=true;
-     }
+		}
+        allowConfirm=true;
+}
    
      
 var screen_sharing=false;
 
-function start_screen_share (stream_id,recordStatus, serverUrl,roomId,port)
-{
-	var userAgent = typeof(window.navigator.userAgent) != 'udefined' ? window.navigator.userAgent : '';
-	 if( userAgent.search(/MSIE/) >= 0)
-	{
-		$.openDOMWindow({windowSourceID:'#popUpTemplate', width:'0px', height:'0px'});
-		setTimeout("$('#DOMWindow .DOMWindowContent').html($('#notSapportedBrowser').html())",0);
-		return false;
-	} 
-	if(!pluginIsLoad())
-	{
-		pluginRefresh();
-	}
-	//plugin().start_screen_share(stream_id);
-	try
-    {
-		
-		if(serverUrl == null)
-			serverUrl='main.innowhite.com';
-		
-		if(port == null)
-			port=80;
-    	//alert(" in start_screen_share"+pluginLoaded);
-		if(pluginIsLoad()){
-			plugin0().start_capture(stream_id, recordStatus, 75,2,serverUrl,roomId,port,15);
-			screen_sharing=true;
-			return "STARTED";
-		}
-		else
-		{
-			showDownloadPlugin();
-			return "NOT_SUPPORTED_BROWSER"
-		}
-
-     }
-
-    catch(err)
-    {
-    	//alert(err);
-    	return "PLUGIN_NOT_AVAILABLE";
-    	 //  document.write(err.message + "<br/>")
-    }
-
-	//"STARTED"
-	//"FAILED_TO_START"
-	//"PLUGIN_NOT_AVAILABLE"
+function start_screen_share (stream_id,recordStatus, serverUrl,roomId,port){
+		 var userAgent = typeof(window.navigator.userAgent) != 'udefined' ? window.navigator.userAgent : '';
+		 if( userAgent.search(/MSIE/) >= 0){
+		 
+			 	centerPopup('notSapportedBrowser'); 
+				loadpopup('notSapportedBrowser');
+			
+				//$.openDOMWindow({windowSourceID:'#popUpTemplate', width:'0px', height:'0px'});
+				//setTimeout("$('#DOMWindow .DOMWindowContent').html($('#notSapportedBrowser').html())",0);
+				return false;
+		 } 
+		 if(!pluginIsLoad()){
+			pluginRefresh();
+		 }
+		//plugin().start_screen_share(stream_id);
+		 try{
+				if(serverUrl == null)
+					serverUrl='main.innowhite.com';
+				
+				if(port == null)
+					port=80;
+		    	//alert(" in start_screen_share"+pluginLoaded);
+				if(pluginIsLoad()){
+					plugin0().start_capture(stream_id, recordStatus, 75,2,serverUrl,roomId,port,15);
+					screen_sharing=true;
+					return "STARTED";
+				}else{
+					showDownloadPlugin();
+					return "NOT_SUPPORTED_BROWSER"
+				}
+	     }catch(err){
+	    	return "PLUGIN_NOT_AVAILABLE";
+	     }
+	
+		//"STARTED"
+		//"FAILED_TO_START"
+		//"PLUGIN_NOT_AVAILABLE"
 }
 
 
-function stop_screen_share()
-{
+function stop_screen_share(){
 
-	try
-    {
-		if(pluginIsLoad()){
-			plugin0().stop_capture();
-			screen_sharing=false;
-			return "STOPPED";
+		try{
+			if(pluginIsLoad()){
+				plugin0().stop_capture();
+				screen_sharing=false;
+				return "STOPPED";
+			}
+	    }catch(err){
+			return "PLUGIN_NOT_AVAILABLE";
 		}
-    }
-
-	catch(err)
-	{
-		//alert(err);
-		return "PLUGIN_NOT_AVAILABLE";
-		 //  document.write(err.message + "<br/>")
-	}
-
 
 }
 
@@ -295,30 +260,27 @@ var recording=false;
 var roomName="";
 
 function setRecordingStatus(myRecordStatus, myRoomName){
-	recording= myRecordStatus;
-	roomName = myRoomName;
+		recording= myRecordStatus;
+		roomName = myRoomName;
 	
 }
 
 
-
-
-function openHelpWindow()
-{
-	$.openDOMWindow({windowSourceID:'#popUpTemplate',overlayOpacity:50, width:'0px', height:'0px'});
-	setTimeout("$('#DOMWindow .DOMWindowContent').html($('#helpWindow').html())",0);
-
+function openHelpWindow(){
+			centerPopup('helpWindow'); 
+			loadpopup('helpWindow');
+			
+			//$.openDOMWindow({windowSourceID:'#popUpTemplate',overlayOpacity:50, width:'0px', height:'0px'});
+			//setTimeout("$('#DOMWindow .DOMWindowContent').html($('#helpWindow').html())",0);
 }
 
 
-function plugin()
-{
-	//alert(" in plugin0 ");
+function plugin(){
     return document.getElementById('plugin0');
 }
 
 
-  function openCenteredWindow() {
+function openCenteredWindow() {
 	var url = null;
 	if (navigator.appVersion.indexOf("Win")!=-1)
 		url="loadWinPlugin.html";
@@ -341,217 +303,240 @@ function plugin()
 }
 
 
-  // boolean value
-  var allowConfirm=true;
+// boolean value
+var allowConfirm=true;
+var loadUrl = "servlet/SessionRecording"; 
+// window.onbeforeunload = confirmExit;
+window.onunload = test;
   
-  var loadUrl = "servlet/SessionRecording"; 
-//  window.onbeforeunload = confirmExit;
-  window.onunload = test;
-  function test(){
+function test(){
 	  //alert(" Session Recording is stopping");
-	  if(recording == true)
-	  {
-		  
+	  if(recording == true){
 		 // alert("sending to net");
 		  $.get(loadUrl, { roomId: roomName, recordStatus: "recordStopKill" } );
 		  alert(" Session Recording is stopping");
 		 // $("#result").html(ajax_load).load(loadUrl, "language=php&version=5");    
 	  }
-  	//<? header("Location:logout.php"); ?>
-  	//alert('user is exiting');
-  }
+  	  //<? header("Location:logout.php"); ?>
+  	  //alert('user is exiting');
+}
   
  
+	  
+function confirmExit(evt) {
+	    if(allowConfirm == true)
+	        return "Are you sure you want to close this session ?";
+}
   
-  function confirmExit(evt)
-  {
-    if(allowConfirm == true)
-        return "Are you sure you want to close this session ?";
-   
-  }
-  
-  
- /*  window.onbeforeunload = function() {
+var pluginContent =	'<object id="plugin0" type="application/x-innowhite" width="300" height="300">'
+   +'<param name="onload" value="pluginLoaded" /><div></div>'
++'</object>';
 
 
-        return "Do yuo want to close this session ?"
+function pluginIsLoad(){
 
-    } */
-
-
-//////blugin detection
-
-	var pluginContent =	'<object id="plugin0" type="application/x-innowhite" width="300" height="300">'
-    +'<param name="onload" value="pluginLoaded" /><div></div>'
-	+'</object>';
-	function pluginIsLoad()
-	{
 		var object = plugin0();
-
-		if(!object)
-		{
+	
+		if(!object){
 			return false;
 		}
-		if(!object.get_inno_version)
-		{
+		if(!object.get_inno_version){
 			return false;
 		}
 		return true;
-	}
-	function pluginRefresh()
-	{
+}
+
+function pluginRefresh(){
 		var plugin = plugin0();
-
 		document.getElementById('pluginContainer').innerHTML = pluginContent;
-	}
+}
 
-	function pluginDetection()
-	{
-		if(pluginIsLoad())
-		{
-			$.openDOMWindow({windowSourceID:'#popUpTemplate', height:'0px', width:'0px'});
-			setTimeout("$('#DOMWindow .DOMWindowContent').html($('#pluginInstalledTemplateId').html())",0);
-			return true;
-		}
-		pluginRefresh();
-		setTimeout('pluginDetection()',10);
+function pluginDetection(){
+	if(pluginIsLoad()){
+			$("#downloadPluginTemplate").fadeOut("fast");
+			centerPopup('pluginInstalledTemplate'); 
+			loadpopup('pluginInstalledTemplate');
+		
+		//$.openDOMWindow({windowSourceID:'#popUpTemplate', height:'0px', width:'0px'});
+		//setTimeout("$('#DOMWindow .DOMWindowContent').html($('#pluginInstalledTemplateId').html())",0);
+		return true;
 	}
-	function fixForFF()
-	{
-		if(pluginIsLoad())
-		{
+	pluginRefresh();
+	setTimeout('pluginDetection()',10);
+}
+
+function fixForFF(){
+	if(pluginIsLoad()){
+		return;
+	}
+	pluginRefresh();
+	setTimeout('fixForFF()',10);
+}
+
+$(document).ready(function(){
+		if(window.navigator.userAgent.search(/Firefox/) == -1){
 			return;
 		}
-		pluginRefresh();
-		setTimeout('fixForFF()',10);
-	}
-	$(document).ready(function(){
-			if(window.navigator.userAgent.search(/Firefox/) == -1)
-			{
-				return;
-			}
-			if(pluginIsLoad())
-			{
-				return;
-			}
+		if(pluginIsLoad()){
+			return;
+		}
 
-			fixForFF();
-		})
-	function showDownloadPlugin()
-	{
-			$.openDOMWindow({windowSourceID:'#popUpTemplate', height:'0px', width:'0px'});
-    		setTimeout("$('#DOMWindow .DOMWindowContent').html($('#downloadPluginTemplate').html())",0);
+		fixForFF();
+});
+
+var widthone=0; var heightone=0;
+function centerPopup(objid){
+ 
+    		if(widthone=='0')
+    			widthone = document.documentElement.clientWidth; 
+    		if(heightone=='0')
+    			heightone = document.documentElement.clientHeight; 
+    		
+    		var popupHeight =0; var popupWidth=0;
+    		popupHeight = $("#"+objid).height();  
+    		popupWidth = $("#"+objid).width();
+
+    		//centering  
+    		$("#"+objid).css({  
+    		"position": "absolute",  
+    		"top": heightone/2-popupHeight/2,  
+    		"left": widthone/2-popupWidth/2  
+    		});  
+    		//only need force for IE6  
+    		$("#backgroundPopup").css({  
+    		"height": heightone  
+    		});  
+}  
+
+function loadpopup(objid){
+		$("#backgroundPopup").css({  
+   				"opacity": "0.7"  
+   		});  
+   		$("#backgroundPopup").fadeIn("slow");  
+   		$("#"+objid).fadeIn("fast"); 
+}
+		
+function disablePopup(obj){  
+    		var objid = $(obj).parent('div').parent('div').attr('id');
+    		$("#backgroundPopup").fadeOut("slow");  
+    		$("#"+objid).fadeOut("fast");  
+}    
+  	
+
+function showDownloadPlugin(){
+
+		centerPopup('downloadPluginTemplate'); 
+		loadpopup('downloadPluginTemplate');
+
+		//$.openDOMWindow({windowSourceID:'#popUpTemplate', height:'0px', width:'0px'});
+		//setTimeout("$('#DOMWindow .DOMWindowContent').html($('#downloadPluginTemplate').html())",0);
+}
+
+function detectPluginSystem(downloadElement){
+
+	var platform = window.navigator.platform;
+	if(platform.indexOf('Win') != -1){
+		downloadElement.href = 'http://demo.innowhite.com/InnowhitePlugin.msi';
 	}
-    function detectPluginSystem(downloadElement)
-	{
-		var platform = window.navigator.platform;
-		if(platform.indexOf('Win') != -1)
-		{
-			downloadElement.href = 'http://demo.innowhite.com/InnowhitePlugin.msi';
-		}
-		if(platform.indexOf('Mac') != -1)
-		{
-			downloadElement.href = 'http://demo.innowhite.com/InnowhitePlugin.pkg';
-		}
-		if(platform.indexOf('Mac') != -1 && (( window.navigator.userAgent.search(/Chrome/) != -1 ) ||  (window.navigator.userAgent.search(/Safari/) != -1 )))
-		{
-			setTimeout('showReloadPage()',10000);
-		} 
-		pluginDetection();
+	if(platform.indexOf('Mac') != -1){
+		downloadElement.href = 'http://demo.innowhite.com/InnowhitePlugin.pkg';
 	}
-	
-	function showReloadPage()
-	{
-		$.openDOMWindow({windowSourceID:'#popUpTemplate', width:'0px', height:'0px'});
-		setTimeout("$('#DOMWindow .DOMWindowContent').html($('#reloadPage').html())",0);
+	if(platform.indexOf('Mac') != -1 && (( window.navigator.userAgent.search(/Chrome/) != -1 ) ||  (window.navigator.userAgent.search(/Safari/) != -1 ))){
+		setTimeout('showReloadPage()',10000);
 	} 
+	pluginDetection();
+}
+
+function showReloadPage(){
+
+	 	centerPopup('reloadPage'); 
+		loadpopup('reloadPage');
+
+		//$.openDOMWindow({windowSourceID:'#popUpTemplate', width:'0px', height:'0px'});
+		//setTimeout("$('#DOMWindow .DOMWindowContent').html($('#reloadPage').html())",0);
+} 
 
 var countryName =null; var countryCode=null; 
 	
-	function getCountry() {
-		var geoUrl ="http://www.geoplugin.net/json.gp?jsoncallback=?";
-		$.getJSON(geoUrl, function(data){
-				countryName=data["geoplugin_countryName"];
-				countryCode=data["geoplugin_countryCode"]
-				getCountryBucket(countryCode);
-		});		
-	}
-	
-	function getCountryBucket(cntrCode){
-		var countryBucket="3";
-		if(cntrCode=="US" || cntrCode=="CA")
-			countryBucket="1";
-		//else if(cntrCode=="IN" || cntrCode=="LK" || cntrCode=="PK" || cntrCode=="BD")
-			//countryBucket="3";
-		
-		alert("----countryBucket-----"+countryBucket);
-	}
+function getCountry() {
+	var geoUrl ="http://www.geoplugin.net/json.gp?jsoncallback=?";
+	$.getJSON(geoUrl, function(data){
+			countryName=data["geoplugin_countryName"];
+			countryCode=data["geoplugin_countryCode"]
+			getCountryBucket(countryCode);
+	});		
+}
 
-
+function getCountryBucket(cntrCode){
+	var countryBucket="3";
+	if(cntrCode=="US" || cntrCode=="CA")
+		countryBucket="1";
+}
 
 
 </script>
 <noscript></noscript>
 </head>
+
 <body>
 
 
 	<script>
 
-// Version check for the Flash Player that has the ability to start Player Product Install (6.0r65)
-var hasProductInstall = DetectFlashVer(6, 0, 65);
-
-// Version check based upon the values defined in globals
-var hasRequestedVersion = DetectFlashVer(requiredMajorVersion, requiredMinorVersion, requiredRevision);
-
-if ( hasProductInstall && !hasRequestedVersion ) {
-	// DO NOT MODIFY THE FOLLOWING FOUR LINES
-	// Location visited after installation is complete if installation is required
-	var MMPlayerType = (isIE == true) ? "ActiveX" : "PlugIn";
-	var MMredirectURL = window.location;
-    document.title = document.title.slice(0, 47) + " - Flash Player Installation";
-    var MMdoctitle = document.title;
-
-	AC_FL_RunContent(
-		"src", "playerProductInstall",
-		"FlashVars", "MMredirectURL="+MMredirectURL+'&MMplayerType='+MMPlayerType+'&MMdoctitle='+MMdoctitle+"",
+		// Version check for the Flash Player that has the ability to start Player Product Install (6.0r65)
+		var hasProductInstall = DetectFlashVer(6, 0, 65);
+		
+		// Version check based upon the values defined in globals
+		var hasRequestedVersion = DetectFlashVer(requiredMajorVersion, requiredMinorVersion, requiredRevision);
+		
+		if ( hasProductInstall && !hasRequestedVersion ) {
+			// DO NOT MODIFY THE FOLLOWING FOUR LINES
+			// Location visited after installation is complete if installation is required
+			var MMPlayerType = (isIE == true) ? "ActiveX" : "PlugIn";
+			var MMredirectURL = window.location;
+		    document.title = document.title.slice(0, 47) + " - Flash Player Installation";
+		    var MMdoctitle = document.title;
+		
+			AC_FL_RunContent(
+				"src", "playerProductInstall",
+				"FlashVars", "MMredirectURL="+MMredirectURL+'&MMplayerType='+MMPlayerType+'&MMdoctitle='+MMdoctitle+"",
+				"width", "100%",
+				"height", "100%",
+				"align", "middle",
+				"id", "whiteboardF",
+				"quality", "high",
+				"bgcolor", "#ffffff",
+				"name", "whiteboardF",
+				"allowScriptAccess","sameDomain",
+				"type", "application/x-shockwave-flash",
+				"pluginspage", "http://www.adobe.com/go/getflashplayer",
+				"allowFullScreen","true"
+			);
+		} else if (hasRequestedVersion) {
+			// if we've detected an acceptable version
+			// embed the Flash Content SWF when all tests are passed
+			AC_FL_RunContent(
+					"src", "<%=userName%>",
 		"width", "100%",
 		"height", "100%",
+		'wmode', "opaque",
 		"align", "middle",
-		"id", "whiteboardF",
+		"id", "<%=userName%>",
 		"quality", "high",
 		"bgcolor", "#ffffff",
-		"name", "whiteboardF",
-		"allowScriptAccess","sameDomain",
-		"type", "application/x-shockwave-flash",
-		"pluginspage", "http://www.adobe.com/go/getflashplayer",
-		"allowFullScreen","true"
-	);
-} else if (hasRequestedVersion) {
-	// if we've detected an acceptable version
-	// embed the Flash Content SWF when all tests are passed
-	AC_FL_RunContent(
-			"src", "<%=userName%>",
-			"width", "100%",
-			"height", "100%",
-			'wmode', "opaque",
-			"align", "middle",
-			"id", "<%=userName%>",
-			"quality", "high",
-			"bgcolor", "#ffffff",
-			"flashVars","audSer=<%=audioSerVO.getServerAddr()%>&audSerPort=<%=audioSerVO.getServerPort()%>&wbSer=<%=wbSer%>&wbSerPort=<%=wbSerPort%>&phoneNum=<%=phoneNum%>&meetingNum=<%=meetingNum%>&orgName=<%=orgName%>&joinroom=<%=joinroom%>&clientname=<%=clientname%>&groupLeader=<%=groupLeader%>",
-				"name", "<%=userName%>", "allowScriptAccess", "sameDomain",
-				"type", "application/x-shockwave-flash", "pluginspage",
-				"http://www.adobe.com/go/getflashplayer", "allowFullScreen",
-				"true");
-	} else { // flash is too old or we can't detect the plugin
-		var alternateContent = 'Alternate HTML content should be placed here. '
-				+ 'This content requires the Adobe Flash Player. '
-				+ '<a href=http://www.adobe.com/go/getflash/>Get Flash</a>';
-		document.write(alternateContent); // insert non-flash content
-	}
+		"flashVars","audSer=<%=audioSerVO.getServerAddr()%>&audSerPort=<%=audioSerVO.getServerPort()%>&wbSer=<%=wbSer%>&wbSerPort=<%=wbSerPort%>&phoneNum=<%=phoneNum%>&meetingNum=<%=meetingNum%>&orgName=<%=orgName%>&joinroom=<%=joinroom%>&clientname=<%=clientname%>&groupLeader=<%=groupLeader%>",
+		"name", "<%=userName%>", "allowScriptAccess", "sameDomain",
+					"type", "application/x-shockwave-flash", "pluginspage",
+					"http://www.adobe.com/go/getflashplayer", "allowFullScreen",
+					"true");
+		} else { // flash is too old or we can't detect the plugin
+			var alternateContent = 'Alternate HTML content should be placed here. '
+					+ 'This content requires the Adobe Flash Player. '
+					+ '<a href=http://www.adobe.com/go/getflash/>Get Flash</a>';
+			document.write(alternateContent); // insert non-flash content
+		}
 
-</script>
+	</script>
 
 	<div id="pluginContainer">
 		<object id="plugin0" type="application/x-innowhite" width="300"
@@ -562,75 +547,65 @@ if ( hasProductInstall && !hasRequestedVersion ) {
 		<br />
 	</div>
 	
-	<div id="popUpTemplate" style="display:none">
-		<div class="DOMWindowContent"></div> 
-	</div>
-	
-	<div id="notSapportedBrowser" style="display: none;">
-		<div class="popup-audio" style="left:456px;top:124.5px;">
-				<div class="close">
-					<a href="" onclick="$.closeDOMWindow();return false;" style="display:block;float:right;margin-right:10px;">
-					<img src="images/pop-close-btn.png" alt="close"></a>
-				</div>
-				<div class="pop-heading1">Screen Share </div>
-				<br><br>Internet Explorer is not supported to share the screen. Please use Firefox or Google Chrome for sharing Screen.
-		</div>
-	</div>
-	
-	<div id="reloadPage" style="display: none;">
-		<div class="popup-audio" style="left:456px;top:124.5px;">
-				<div class="close">
-					<a href="" onclick="$.closeDOMWindow();return false;" style="display:block;float:right;margin-right:10px;">
-					<img src="images/pop-close-btn.png" alt="close"></a>
-				</div>
-				<div class="pop-heading1">Screen Share </div>
-				<br><br>
-				<h4>Plugin cannot be loaded dynamically for Safari and Chrome in Mac</h4>
-				Please <b>quit</b> your browser and open again for plugin to get loaded and enjoy screen share.
-		</div>
-	</div>
-	
-	<div id="downloadPluginTemplate" style="display:none;">
-		<div class="popup-audio" style="left:456px;top:124.5px;">
+	<div id="backgroundPopup" class="backgroundfade"></div> 
+
+	<div id="notSapportedBrowser" style="display:none;" class="popup-audio">
 			<div class="close">
-				<a href="" onclick="$.closeDOMWindow();return false;" style="display:block;float:right;margin-right:10px;">
+				<a href="" onclick="disablePopup(this);return false;" style="display:block;float:right;margin-right:10px;">
+						<img src="images/pop-close-btn.png" alt="close"></a>
+			</div>
+			<div class="pop-heading1">Screen Share </div>
+			<br><br>Internet Explorer is not supported to share the screen. Please use Firefox or Google Chrome for sharing Screen.
+	</div>
+
+	<div id="reloadPage" class="popup-audio" style="display: none;">
+			<div class="close">
+				<a href="" onclick="disablePopup(this);return false;" style="display:block;float:right;margin-right:10px;">
+							<img src="images/pop-close-btn.png" alt="close"></a>
+			</div>
+			<div class="pop-heading1">Screen Share </div>
+			<br><br>
+			<h4>Plugin cannot be loaded dynamically for Safari and Chrome in Mac</h4>
+			Please <b>quit</b> your browser and open again for plugin to get loaded and enjoy screen share.
+	</div>
+
+	<div id="downloadPluginTemplate" style="display:none;" class="popup-audio">
+			<div class="close">
+				<a href="" onclick="disablePopup(this);return false;" style="display:block;float:right;margin-right:10px;">
 				<img src="images/pop-close-btn.png" alt="close"></a>
 			</div>
 			<div class="pop-heading1" >Screen Share </div>
 			<br><br>
 			<div id="downloadPlugin" class="pop-form1 login1" width="100%" height="100%">
 				<div class="help-tabs ahelp-tabs" id="ht1">
-						<div class="icon-share">
-							<img src="images/ss.png" alt="audio" width="130" height="85" >
-						</div>
-						<div class="text-heading">To share your screen, a plugin download is required.
-						Please click on The "Download" button to start download of Innowhite ScreenShare plugin. </div>
-						<div class="download-button">
-							<a target="_blank" href="" onmousedown="detectPluginSystem(this);">
-							<img src="images/button-download.png" /></a>
-						</div>
+					<div class="icon-share">
+						<img src="images/ss.png" alt="audio" width="130" height="85" >
+					</div>
+					<div class="text-heading">To share your screen, a plugin download is required.
+					Please click on The "Download" button to start download of Innowhite ScreenShare plugin. </div>
+					<div class="download-button">
+						<a target="_blank" href="" onmousedown="detectPluginSystem(this);">
+						<img src="images/button-download.png" /></a>
+					</div>
 				</div>
 			</div>
-		</div>
 	</div>
-	
-	<div id="pluginInstalledTemplateId" style="display:none;">
-		<div class="popup-audio-enjoy" style="left:350px;top:120.5px;">
+
+	<div id="pluginInstalledTemplate" class="popup-audio-enjoy" style="display:none;">
 			<div class="close">
-				<a href="" onclick="$.closeDOMWindow();return false;" style="display:block;float:right;margin-right:10px;">
-					<img src="images/pop-close-btn.png" alt="close"></a>
+				<a href="" onclick="disablePopup(this);return false;" style="display:block;float:right;margin-right:10px;">
+						<img src="images/pop-close-btn.png" alt="close"></a>
 			</div>
 			<div class="enjoy">
 				<div class="plugin">Please click on the
 					 <img src="images/ss-icons.png" alt="download" /> icon to start screen sharing
 				 </div>
 			</div>
-		</div>
 	</div>
-	
-	<a href="skype:<%=skypeId%>?call" id="skypeid"><img src="http://download.skype.com/share/skypebuttons/buttons/call_green_white_153x63.png"  style="border: none;" width="153" height="63" alt="Skype Me!" /></a>
-	
-	<!--
+
+<a href="skype:<%=skypeId%>?call" id="skypeid"><img src="http://download.skype.com/share/skypebuttons/buttons/call_green_white_153x63.png"  style="border: none;" width="153" height="63" alt="Skype Me!" /></a>
+
+<!--
 <object id="plugin0" type="application/x-innowhite" width="300" height="300">
     <param name="onload" value="pluginLoaded" />
 </object>

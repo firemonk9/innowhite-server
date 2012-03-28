@@ -628,7 +628,7 @@ p{
     padding:8px 50px 0px 25px;
     }
     
-    .popup-audio-enjoy{
+.popup-audio-enjoy{
     width:590px;
     height:411px;
     position:fixed;
@@ -636,7 +636,7 @@ p{
     z-index:5;
     top:100px;
     left:300px;
-    padding:40px 40px 40px 35px;
+    padding:8px 0px 0px 0px;
     }
 
 .popup-audio .close{
@@ -645,15 +645,16 @@ p{
     margin-top: 19px;
     }
     
-    .popup-audio-enjoy .close{
+.popup-audio-enjoy .close{
     float:right;
     cursor:pointer;
+    margin-top: 19px;
     }
 .popup-audio-enjoy  .pop-heading1{
     color:#9EC73F;
     }
     
-    .popup-audio .pop-heading1{
+.popup-audio .pop-heading1{
     color:#9EC73F;
     }
 .help-tabs-head{
@@ -1272,3 +1273,19 @@ ul.help-tabs-head li.active{
 .help-tabs{
     margin-top:-1px;
     }
+    
+
+.backgroundfade{  
+display:none;  
+position:fixed;  
+_position:absolute; /* hack for internet explorer 6*/  
+height:100%;  
+width:100%;  
+top:0;  
+left:0;  
+background:#000000;  
+border:1px solid #cecece;  
+z-index:1;  
+}
+
+
