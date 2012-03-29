@@ -205,12 +205,10 @@ var screen_sharing=false;
 function start_screen_share (stream_id,recordStatus, serverUrl,roomId,port){
 		 var userAgent = typeof(window.navigator.userAgent) != 'udefined' ? window.navigator.userAgent : '';
 		 if( userAgent.search(/MSIE/) >= 0){
-		 
-			 	centerPopup('notSapportedBrowser'); 
+				
+				$("#notSapportedBrowser").center();
 				loadpopup('notSapportedBrowser');
 			
-				//$.openDOMWindow({windowSourceID:'#popUpTemplate', width:'0px', height:'0px'});
-				//setTimeout("$('#DOMWindow .DOMWindowContent').html($('#notSapportedBrowser').html())",0);
 				return false;
 		 } 
 		 if(!pluginIsLoad()){
@@ -267,11 +265,9 @@ function setRecordingStatus(myRecordStatus, myRoomName){
 
 
 function openHelpWindow(){
-			centerPopup('helpWindow'); 
+
+			$("#helpWindow").center();
 			loadpopup('helpWindow');
-			
-			//$.openDOMWindow({windowSourceID:'#popUpTemplate',overlayOpacity:50, width:'0px', height:'0px'});
-			//setTimeout("$('#DOMWindow .DOMWindowContent').html($('#helpWindow').html())",0);
 }
 
 
@@ -354,12 +350,10 @@ function pluginRefresh(){
 function pluginDetection(){
 	if(pluginIsLoad()){
 			$("#downloadPluginTemplate").fadeOut("fast");
-			centerPopup('pluginInstalledTemplate'); 
+			$("#pluginInstalledTemplate").center();
 			loadpopup('pluginInstalledTemplate');
 		
-		//$.openDOMWindow({windowSourceID:'#popUpTemplate', height:'0px', width:'0px'});
-		//setTimeout("$('#DOMWindow .DOMWindowContent').html($('#pluginInstalledTemplateId').html())",0);
-		return true;
+			return true;
 	}
 	pluginRefresh();
 	setTimeout('pluginDetection()',10);
@@ -384,29 +378,13 @@ $(document).ready(function(){
 		fixForFF();
 });
 
-var widthone=0; var heightone=0;
-function centerPopup(objid){
- 
-    		if(widthone=='0')
-    			widthone = document.documentElement.clientWidth; 
-    		if(heightone=='0')
-    			heightone = document.documentElement.clientHeight; 
-    		
-    		var popupHeight =0; var popupWidth=0;
-    		popupHeight = $("#"+objid).height();  
-    		popupWidth = $("#"+objid).width();
-
-    		//centering  
-    		$("#"+objid).css({  
-    		"position": "absolute",  
-    		"top": heightone/2-popupHeight/2,  
-    		"left": widthone/2-popupWidth/2  
-    		});  
-    		//only need force for IE6  
-    		$("#backgroundPopup").css({  
-    		"height": heightone  
-    		});  
-}  
+jQuery.fn.center = function () {
+    	    this.css("position","absolute");
+    	    this.css("top", (($(window).height() - this.outerHeight()) / 2) +  $(window).scrollTop() + "px");
+    	    this.css("left", (($(window).width() - this.outerWidth()) / 2) +  $(window).scrollLeft() + "px");
+    	    return this;
+}
+	     
 
 function loadpopup(objid){
 		$("#backgroundPopup").css({  
@@ -425,11 +403,9 @@ function disablePopup(obj){
 
 function showDownloadPlugin(){
 
-		centerPopup('downloadPluginTemplate'); 
+		$("#downloadPluginTemplate").center();
 		loadpopup('downloadPluginTemplate');
 
-		//$.openDOMWindow({windowSourceID:'#popUpTemplate', height:'0px', width:'0px'});
-		//setTimeout("$('#DOMWindow .DOMWindowContent').html($('#downloadPluginTemplate').html())",0);
 }
 
 function detectPluginSystem(downloadElement){
@@ -449,11 +425,9 @@ function detectPluginSystem(downloadElement){
 
 function showReloadPage(){
 
-	 	centerPopup('reloadPage'); 
+		$("#reloadPage").center();
 		loadpopup('reloadPage');
 
-		//$.openDOMWindow({windowSourceID:'#popUpTemplate', width:'0px', height:'0px'});
-		//setTimeout("$('#DOMWindow .DOMWindowContent').html($('#reloadPage').html())",0);
 } 
 
 var countryName =null; var countryCode=null; 
