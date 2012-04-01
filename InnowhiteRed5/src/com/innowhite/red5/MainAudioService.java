@@ -166,7 +166,7 @@ public class MainAudioService {
 	}
 
 	private void talking(String confRoom, String participant, Boolean talking) {
-		log.debug("room ::  " + confRoom + "  Participant " + participant + " is talking = " + talking);
+		//log.debug("room ::  " + confRoom + "  Participant " + participant + " is talking = " + talking);
 		// RoomInfo soi = voiceRooms.get(room);
 
 		String room = UserCacheService.getActualRoom(confRoom);
@@ -227,7 +227,7 @@ public class MainAudioService {
 
 	public void handleConferenceEvent(ConferenceEvent event) {
 
-		log.debug("Hurray --------- " + event);
+		//log.debug("Hurray --------- " + event);
 		try {
 			if (event instanceof ParticipantJoinedEvent) {
 				ParticipantJoinedEvent pje = (ParticipantJoinedEvent) event;
