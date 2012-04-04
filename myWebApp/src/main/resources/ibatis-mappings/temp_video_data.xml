@@ -1,0 +1,53 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE sqlMap PUBLIC "-//ibatis.apache.org//DTD SQL Map 2.0//EN"
+"http://ibatis.apache.org/dtd/sql-map-2.dtd">
+<sqlMap>
+
+
+
+	<parameterMap id="saveVideoBinaryDataResultMap"
+		class="com.innowhite.whiteboard.persistence.beans.WhiteboardFrameVO">
+
+		<parameter property="roomId" jdbcType="VARCHAR" />
+		<parameter property="seq" jdbcType="INTEGER" />
+		<parameter property="data" jdbcType="VARBINARY" />
+		<parameter property="fileId" jdbcType="VARCHAR" />
+
+	</parameterMap>
+
+	
+
+	<resultMap id="selectVideoBinaryDataMap"
+		class="com.innowhite.whiteboard.persistence.beans.WhiteboardFrameVO">		
+		<result property="seq" column="seq" />
+		<result property="data" column="data" />
+	</resultMap>
+
+
+	<select id="selectVideoBinaryData" parameterClass="java.lang.String"
+		resultMap="selectVideoBinaryDataMap">
+
+		select data, seq from temp_video_data where
+		file_id=
+		#fileId# order
+		by seq asc
+	</select>
+
+
+	<insert id="insertVideoBinaryData" parameterMap="saveVideoBinaryDataResultMap">
+		INSERT INTO
+		temp_video_data (
+		room_id,seq,data,file_id)
+		VALUES
+		( ?,?,?,?)	
+		
+	</insert>
+	
+	 <delete id="deleteFrames" parameterClass="int" >
+      	delete from user_media where id=#id#      
+      </delete>
+	
+
+
+</sqlMap>
+ 

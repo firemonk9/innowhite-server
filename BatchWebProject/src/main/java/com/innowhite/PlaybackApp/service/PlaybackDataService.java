@@ -78,6 +78,11 @@ public class PlaybackDataService {
 	private SessionRecordingDao sessionRecordingsDao;
 	private PlaybackVO playbackVO = null;
 	private PlayBackPlayListDao playBackPlayListDao = null;
+	private CreateWhiteboardVideoFilesService createWhiteboardVideoFilesService=null;
+
+	public void setCreateWhiteboardVideoFilesService(CreateWhiteboardVideoFilesService createWhiteboardVideoFilesService) {
+		this.createWhiteboardVideoFilesService = createWhiteboardVideoFilesService;
+	}
 
 	public PlayBackPlayListDao getPlayBackPlayListDao() {
 		return playBackPlayListDao;
@@ -124,7 +129,9 @@ public class PlaybackDataService {
 			// factory.getBean("sessionRecordingsDao");
 
 			PlaybackUtil.setPlaybackVO(playbackVO);
-
+			
+			createWhiteboardVideoFilesService.createFiles(roomId);
+			
 			List<SessionRecordings> sessionRecordingsList = sessionRecordingsDao.getSessionRecordingList(roomId);
 
 			if (sessionRecordingsList != null && sessionRecordingsList.size() == 0) {

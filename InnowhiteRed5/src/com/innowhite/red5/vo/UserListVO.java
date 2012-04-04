@@ -24,6 +24,7 @@ public class UserListVO {
 	boolean closeRoom;
 	int seq;
 	int voiceConfJoined;
+	String callSource;
 	
 	
 	
@@ -49,6 +50,14 @@ public class UserListVO {
 //	public void setTalking(boolean isTalking) {
 //		this.isTalking = isTalking;
 //	}
+
+	public String getCallSource() {
+		return callSource;
+	}
+
+	public void setCallSource(String callSource) {
+		this.callSource = callSource;
+	}
 
 	public Long getUserJoinedTime() {
 		return userJoinedTime;

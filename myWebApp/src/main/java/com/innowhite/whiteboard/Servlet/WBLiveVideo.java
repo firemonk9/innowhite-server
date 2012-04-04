@@ -54,6 +54,7 @@ public class WBLiveVideo extends HttpServlet {
 			// instead of the InputStream directly?
 			String roomId = request.getParameter("roomId");
 			String startRecord = request.getParameter("startRecord");
+			String counter = request.getParameter("counter");
 
 			roomId = roomId.trim();
 			// log.debug(" entered doPost with  roomId :"+roomId+"  ");
@@ -71,7 +72,7 @@ public class WBLiveVideo extends HttpServlet {
 					if (myData != null && myData.length() > 0) {
 
 						byte[] input = decoder.decodeBuffer(myData);
-						WhiteboardToVideoService.writeToFile(input, roomId, startRecord);
+						WhiteboardToVideoService.writeToFile(input, roomId, startRecord,counter);
 
 					}
 
@@ -82,7 +83,7 @@ public class WBLiveVideo extends HttpServlet {
 			} else {
 				if (myData != null) {
 					byte[] input = decoder.decodeBuffer(myData);
-					WhiteboardToVideoService.writeToFile(input, roomId, startRecord);
+					WhiteboardToVideoService.writeToFile(input, roomId, startRecord,counter);
 				}
 			}
 			// String xmlReply = "<Reply><Message>"+msg+"</Message></Reply>";

@@ -159,6 +159,12 @@
 		<property name="sessionFactory" ref="sessionFactory" />
 	</bean>
 
+
+	<bean id="whiteboardFrameVideoDao" name="whiteboardFrameVideoDao"
+		class="com.innowhite.PlaybackApp.dao.WhiteboardFrameVideoDao">
+		<property name="sessionFactory" ref="sessionFactory" />
+	</bean>
+
 	<bean id="audioDataDao" name="audioDataDao"
 		class="com.innowhite.PlaybackApp.dao.AudioDataDao">
 		<property name="sessionFactory" ref="sessionFactory" />
@@ -200,7 +206,7 @@
 	<!-- </bean> -->
 
 	<bean id="playbackDataservice" name="playbackDataservice"
-		class="com.innowhite.PlaybackApp.service.PlaybackDataService" >
+		class="com.innowhite.PlaybackApp.service.PlaybackDataService">
 		<property name="audioDataDao" ref="audioDataDao" />
 		<property name="videoDataDao" ref="videoDataDao" />
 		<property name="roomDao" ref="roomDao" />
@@ -209,6 +215,8 @@
 		<property name="playBackPlayListDao" ref="playBackPlayListDao" />
 		<property name="callBackUrlsDao" ref="callBackUrlsDao" />
 		<property name="mp4ConverterMsgProducer" ref="mp4ConverterMsgProducer" />
+		<property name="createWhiteboardVideoFilesService" ref="createWhiteboardVideoFilesService" />
+
 
 
 	</bean>
@@ -228,16 +236,23 @@
 	</bean>
 
 
-	<bean id="mp4ConverterMsgProducer" name="mp4ConverterMsgProducer" class="com.innowhite.PlaybackApp.messaging.MP4ConverterMsgProducer">
+	<bean id="mp4ConverterMsgProducer" name="mp4ConverterMsgProducer"
+		class="com.innowhite.PlaybackApp.messaging.MP4ConverterMsgProducer">
 		<property name="jmsTemplate" ref="mp4ConverterJMSTemplate"></property>
 	</bean>
 
 	<bean id="mp4ConverterJMSTemplate" class="org.springframework.jms.core.JmsTemplate"
 		p:connectionFactory-ref="cachedConnectionFactory"
 		p:defaultDestination-ref="mp4converterDataDestination" />
-		
+
 	<bean id="mp4converterDataDestination" class="org.apache.activemq.command.ActiveMQQueue">
 		<constructor-arg value="Innowhite.mp4converter" />
+	</bean>
+
+	<bean id="createWhiteboardVideoFilesService" name="createWhiteboardVideoFilesService"
+		class="com.innowhite.PlaybackApp.service.CreateWhiteboardVideoFilesService">
+		<property name="whiteboardFrameVideoDao" ref="whiteboardFrameVideoDao"></property>
+
 	</bean>
 
 </beans>

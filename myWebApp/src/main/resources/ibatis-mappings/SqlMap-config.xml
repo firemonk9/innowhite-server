@@ -40,6 +40,8 @@ PUBLIC "-//ibatis.apache.org//DTD SQL Map Config 2.0//EN"
 	<sqlMap resource="ibatis-mappings/poll_question.xml" />
 	<sqlMap resource="ibatis-mappings/poll_answer_options.xml" />
 	<sqlMap resource="ibatis-mappings/poll_user_answers.xml" />
+	<sqlMap resource="ibatis-mappings/temp_video_data.xml" />
+	
 	
 	
 	
