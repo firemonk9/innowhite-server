@@ -45,7 +45,7 @@ public class WhiteboardFrameVideoDao {
 		log.debug(" Entered  deleteRoomData for room : " + roomId);
 		Session session = sessionFactory.getCurrentSession();
 
-		String hql = "delete from WhiteboardVideoFrame  where roomId = " + roomId;
+		String hql = "delete from WhiteboardVideoFrame  where roomId = '" + roomId+"'";
 		Query query = session.createQuery(hql);
 		int row = query.executeUpdate();
 		log.debug(" deleted   records : " + row + " for room " + roomId);
