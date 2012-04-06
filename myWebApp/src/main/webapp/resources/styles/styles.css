@@ -644,12 +644,23 @@ p{
     cursor:pointer;
     margin-top: 19px;
     }
+
+.popup-audio .closebutton{
+	display:block;
+	float:right;
+}
     
 .popup-audio-enjoy .close{
     float:right;
     cursor:pointer;
-    margin-top: 19px;
+    margin-top: 30px;
     }
+.popup-audio-enjoy .closeicon{
+	display:block;
+	float:right;
+	margin-right:20px;
+}   
+    
 .popup-audio-enjoy  .pop-heading1{
     color:#9EC73F;
     }
