@@ -1,0 +1,46 @@
+<project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+  xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
+  <modelVersion>4.0.0</modelVersion>
+
+  <groupId>com.innowhite.pluginapplet</groupId>
+  <artifactId>PluginApplet</artifactId>
+  <version>0.0.1-SNAPSHOT</version>
+  <packaging>jar</packaging>
+
+  <name>PluginApplet</name>
+ 
+
+  <properties>
+    <java-version>1.6</java-version>
+    <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
+  </properties>
+   
+ <build>
+   <finalName>PluginApplet</finalName>
+    <plugins>
+      <plugin>
+        <groupId>org.apache.maven.plugins</groupId>
+        <artifactId>maven-jar-plugin</artifactId>
+        <executions>
+	          <execution>
+	            <goals>
+	              <goal>sign</goal>
+	            </goals>
+	            <phase>package</phase>
+	          </execution>
+        </executions>
+         <configuration>
+	           <keystore>src/main/resources/keystore.jks</keystore>
+	           <alias>selfsigned</alias>
+	           <storepass>innowhite</storepass>
+	           <keypass>innowhite</keypass>
+	           <archive>
+	           		<addMavenDescriptor>false</addMavenDescriptor>
+	           </archive>
+	           <signedjar>${project.build.directory}/signed/${project.build.finalName}.jar</signedjar>
+         </configuration> 
+      </plugin>
+    </plugins>
+  </build>
+  
+</project>
