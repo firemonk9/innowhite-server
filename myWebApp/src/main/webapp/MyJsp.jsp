@@ -130,8 +130,11 @@ Learn more about Flex at http://flex.org
 <script type="text/javascript" src="http://download.skype.com/share/skypebuttons/js/skypeCheck.js"></script>
 
 <!--  BEGIN Browser History required section -->
+
+<!--[if IE]> <link rel="stylesheet" type="text/css" href="resources/styles/ie.css" />    <![endif]-->
+<!--[if !IE]><!-->	<link rel="stylesheet" type="text/css" href="resources/styles/styles.css" />  <!--<![endif]-->
 <link rel="stylesheet" type="text/css" href="history/history.css" />
-<link rel="stylesheet" type="text/css" media="screen" href="resources/styles/styles.css"  /> 
+
 <!--  END Browser History required section -->
 
 <style>
@@ -203,25 +206,35 @@ function make_skype_call(){
 var screen_sharing=false;
 
 function start_screen_share (stream_id,recordStatus, serverUrl,roomId,port){
-		 var userAgent = typeof(window.navigator.userAgent) != 'udefined' ? window.navigator.userAgent : '';
-		 if( userAgent.search(/MSIE/) >= 0){
+ 	var userAgent = typeof(window.navigator.userAgent) != 'udefined' ? window.navigator.userAgent : '';
+	if(!pluginIsLoad()){
+		pluginRefresh();
+	}
+	
+	try{
+		if(serverUrl == null)
+			serverUrl='main.innowhite.com';
+		
+		if(port == null)
+			port=80;
+
+		if( userAgent.search(/MSIE/) >= 0){
+				if(pluginIsLoad()){
+					 var applet = "<APPLET archive='PluginApplet.jar' CODE='com.innowhite.pluginapplet.ScreenShareApplet.class' NAME='pluginapplet' HEIGHT='100' WIDTH='100' >  </APPLET>";
+			         var body = document.getElementsByTagName("body")[0];
+			         var div = document.createElement("div");
+			         div.innerHTML = applet;
+			         body.appendChild(div);
 				
-				$("#notSapportedBrowser").center();
-				loadpopup('notSapportedBrowser');
+					document.pluginapplet.startScreenShare(stream_id, recordStatus, 75,2,serverUrl,roomId,port,15)
+					screen_sharing=true;
+					return "STARTED";
+				}else{
+					showDownloadPlugin();
+					return "NOT_SUPPORTED_BROWSER"
+				}
+		}else{
 			
-				return false;
-		 } 
-		 if(!pluginIsLoad()){
-			pluginRefresh();
-		 }
-		//plugin().start_screen_share(stream_id);
-		 try{
-				if(serverUrl == null)
-					serverUrl='main.innowhite.com';
-				
-				if(port == null)
-					port=80;
-		    	//alert(" in start_screen_share"+pluginLoaded);
 				if(pluginIsLoad()){
 					plugin0().start_capture(stream_id, recordStatus, 75,2,serverUrl,roomId,port,15);
 					screen_sharing=true;
@@ -230,18 +243,19 @@ function start_screen_share (stream_id,recordStatus, serverUrl,roomId,port){
 					showDownloadPlugin();
 					return "NOT_SUPPORTED_BROWSER"
 				}
-	     }catch(err){
-	    	return "PLUGIN_NOT_AVAILABLE";
-	     }
-	
-		//"STARTED"
-		//"FAILED_TO_START"
-		//"PLUGIN_NOT_AVAILABLE"
+		}
+     }catch(err){
+    	return "PLUGIN_NOT_AVAILABLE";
+     }
+     
+//"STARTED"
+//"FAILED_TO_START"
+//"PLUGIN_NOT_AVAILABLE"
 }
 
 
 function stop_screen_share(){
-
+alert("-----inside stop-screen-share function---------");
 		try{
 			if(pluginIsLoad()){
 				plugin0().stop_capture();
@@ -545,7 +559,7 @@ function getCountryBucket(cntrCode){
 
 	<div id="downloadPluginTemplate" style="display:none;" class="popup-audio">
 			<div class="close">
-				<a href="" onclick="disablePopup(this);return false;" style="display:block;float:right;margin-right:10px;">
+				<a href="" onclick="disablePopup(this);return false;" class="closebutton">
 				<img src="images/pop-close-btn.png" alt="close"></a>
 			</div>
 			<div class="pop-heading1" >Screen Share </div>
@@ -567,7 +581,7 @@ function getCountryBucket(cntrCode){
 
 	<div id="pluginInstalledTemplate" class="popup-audio-enjoy" style="display:none;">
 			<div class="close">
-				<a href="" onclick="disablePopup(this);return false;" style="display:block;float:right;margin-right:10px;">
+				<a href="" onclick="disablePopup(this);return false;" class="closeicon" >
 						<img src="images/pop-close-btn.png" alt="close"></a>
 			</div>
 			<div class="enjoy">
@@ -577,13 +591,7 @@ function getCountryBucket(cntrCode){
 			</div>
 	</div>
 
-<a href="skype:<%=skypeId%>?call" id="skypeid"><img src="http://download.skype.com/share/skypebuttons/buttons/call_green_white_153x63.png"  style="border: none;" width="153" height="63" alt="Skype Me!" /></a>
-
-<!--
-<object id="plugin0" type="application/x-innowhite" width="300" height="300">
-    <param name="onload" value="pluginLoaded" />
-</object>
--->
+	<a href="skype:<%=skypeId%>?call" id="skypeid"><img src="http://download.skype.com/share/skypebuttons/buttons/call_green_white_153x63.png"  style="border: none;" width="153" height="63" alt="Skype Me!" /></a>
 
 </body>
 </html>
