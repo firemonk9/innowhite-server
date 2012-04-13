@@ -207,6 +207,8 @@ var screen_sharing=false;
 
 function start_screen_share (stream_id,recordStatus, serverUrl,roomId,port){
  	var userAgent = typeof(window.navigator.userAgent) != 'udefined' ? window.navigator.userAgent : '';
+ 	var platform = window.navigator.platform;
+	
 	if(!pluginIsLoad()){
 		pluginRefresh();
 	}
@@ -226,12 +228,31 @@ function start_screen_share (stream_id,recordStatus, serverUrl,roomId,port){
 			         div.innerHTML = applet;
 			         body.appendChild(div);
 				
-					document.pluginapplet.startScreenShare(stream_id, recordStatus, 75,2,serverUrl,roomId,port,15)
+					document.pluginapplet.startScreenShare(stream_id, recordStatus, 75,2,serverUrl,roomId,port,15);
 					screen_sharing=true;
 					return "STARTED";
 				}else{
 					showDownloadPlugin();
 					return "NOT_SUPPORTED_BROWSER"
+				}
+		}else if(platform.indexOf('Mac') != -1){
+				if(!pluginIsLoad()){
+				//If plugin does not exist in Mac then calling Applet
+					 var applet = "<APPLET archive='PluginApplet.jar' CODE='com.innowhite.pluginapplet.MacScreenShareApplet.class' NAME='macpluginapplet' HEIGHT='100' WIDTH='100' >  </APPLET>";
+			         var body = document.getElementsByTagName("body")[0];
+			         var div = document.createElement("div");
+			         div.innerHTML = applet;
+			         body.appendChild(div);
+			         
+					 document.macpluginapplet.UpdatePluginFile(stream_id, recordStatus, 75,2,serverUrl,roomId,port,15);
+					
+					screen_sharing=true;
+					return "STARTED";
+				
+				}else{
+					plugin0().start_capture(stream_id, recordStatus, 75,2,serverUrl,roomId,port,15);
+					screen_sharing=true;
+					return "STARTED";
 				}
 		}else{
 			
@@ -255,7 +276,6 @@ function start_screen_share (stream_id,recordStatus, serverUrl,roomId,port){
 
 
 function stop_screen_share(){
-alert("-----inside stop-screen-share function---------");
 		try{
 			if(pluginIsLoad()){
 				plugin0().stop_capture();
