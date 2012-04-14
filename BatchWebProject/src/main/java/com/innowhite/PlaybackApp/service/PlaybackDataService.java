@@ -199,17 +199,50 @@ public class PlaybackDataService {
 				log.debug("Session " + i + " start-time:: " + sessionRecordingsList.get(i).getStartTime());
 				log.debug("Session " + i + " end-time:: " + sessionRecordingsList.get(i).getEndTime());
 			}
+			
+			//create new folder in temp directory with Room name
+			String tempRoomDir = createTempRoomFolder(roomId);
+			
+			File srcVideo = new File(videoDataList.get(0).getFilePath());
+			String playbackVideoDirectory = null;
+			if (srcVideo!= null && srcVideo.isFile())
+				playbackVideoDirectory = srcVideo.getParent();
+			else {
+				log.warn(" The file path is null... this is not right..  ");
+			}
+			
 			log.debug("Number of audios in room " + roomId + " :: " + audioDataList.size());
 			for (int i = 0; i < audioDataList.size(); i++) {
 				log.debug("Audio " + i + " start-time:: " + audioDataList.get(i).getStartTime());
 				log.debug("Audio " + i + " end-time:: " + audioDataList.get(i).getEndTime());
 				log.debug("Audio " + i + " file-path:: " + audioDataList.get(i).getFilePath());
+				
+				
+				if (tempRoomDir!=null || tempRoomDir.length()>1) {
+					//copy file to new temp folder
+					copyFileToDir(audioDataList.get(i).getFilePath(), tempRoomDir);
+					//update path of audio in audioDataList
+					audioDataList.get(i).setFilePath(tempRoomDir+"/"+new File(audioDataList.get(i).getFilePath()).getName());
+				}
+				
+				log.debug("### NEW Audio " + i + " file-path:: " + audioDataList.get(i).getFilePath());
+				
 			}
 			log.debug("Number of videos in room " + roomId + " :: " + videoDataList.size());
 			for (int i = 0; i < videoDataList.size(); i++) {
 				log.debug("Video " + i + " start-time:: " + videoDataList.get(i).getStartTime());
 				log.debug("Video " + i + " end-time:: " + videoDataList.get(i).getEndTime());
 				log.debug("Video " + i + " file-path:: " + videoDataList.get(i).getFilePath());
+				
+				if (tempRoomDir!=null || tempRoomDir.length()>1) {
+					//copy file to new temp folder
+					copyFileToDir(videoDataList.get(i).getFilePath(), tempRoomDir);
+					//update path of video in videoDataList
+					videoDataList.get(i).setFilePath(tempRoomDir+"/"+new File(videoDataList.get(i).getFilePath()).getName());
+				}
+				
+				log.debug("### NEW Video " + i + " file-path:: " + videoDataList.get(i).getFilePath());
+				
 			}
 			log.debug("--------------------------------------------------------------");
 
@@ -457,6 +490,11 @@ public class PlaybackDataService {
 				
 				// concat videos to prepare a single video for the meeting
 				String meetingRoomVideoPath = setMeetingRoomVideo(listPlayback, roomId);
+				log.debug("Meeting Room Video (Path) before uploading to youtube:: "+meetingRoomVideoPath);
+				
+				//move final meetingRoomVideoPath to /opt/Innowhite/videos folder
+				meetingRoomVideoPath =  moveFileToDir(meetingRoomVideoPath, playbackVideoDirectory);
+				
 				log.debug("--------------------------------------------------------------");
 				log.debug("Uploading Meeting Room Video (Path) to youtube:: "+meetingRoomVideoPath);
 				log.debug("--------------------------------------------------------------");
@@ -502,6 +540,44 @@ public class PlaybackDataService {
 			
 		} catch (Exception e) {
 			log.error(e.getMessage(), e);
+		}
+	}
+
+	private String moveFileToDir(String srcFilePath, String playbackVideoDirectory) {
+		String cmd = " mv " + srcFilePath + " " +playbackVideoDirectory+"/";
+		ProcessExecutor pe = new ProcessExecutor();
+		log.debug("Command for moving file::: " + cmd);
+		boolean val = pe.executeProcess(cmd, playbackVO.getTempLocation(), null, true);
+		log.debug("return from the UNIX MOVE CMD process executor :: " + val);
+		return playbackVideoDirectory+"/"+(new File(srcFilePath).getName());
+	}
+
+	private void copyFileToDir(String srcFilePath, String tempRoomDir) {
+		String cmd = " cp " + srcFilePath + " " +tempRoomDir+"/";
+		ProcessExecutor pe = new ProcessExecutor();
+		log.debug("Command for copying file::: " + cmd);
+		boolean val = pe.executeProcess(cmd, playbackVO.getTempLocation(), null, true);
+		log.debug("return from the UNIX COPY CMD process executor :: " + val);
+	}
+
+	private String createTempRoomFolder(String roomId) {
+		String tempDirectoy = null;
+		if (PlaybackUtil.isWindows()) {
+			tempDirectoy= playbackVO.getWinTempLocation();
+		} else if (PlaybackUtil.isMac()) {
+			tempDirectoy = playbackVO.getMacTempLocation();
+		} else if (PlaybackUtil.isUbuntu()) {
+			tempDirectoy = playbackVO.getUbuntuTempLocation();
+		}
+		
+		// Create new folder named roomId in temp directory
+		boolean success = (new File(tempDirectoy+"/"+roomId)).mkdir();
+		if(success){
+			System.out.println("Directory: "+ tempDirectoy+"/"+roomId+" created");
+			return tempDirectoy+"/"+roomId;
+		}else{
+			log.debug("Could not create temp Room directory. Somethings Wrong!");
+			return "";
 		}
 	}
 

@@ -236,8 +236,7 @@ public class PlaybackUtil {
 			playbackVO.setMencoderPath(playbackVO.getUbuntuMencoderPath());
 			playbackVO.setMp3WrapPath(playbackVO.getUbuntuMp3WrapPath());
 			// playbackVO.setImageMagickPath(playbackVO.getUbuntuImageMagickPath());
-			playbackVO
-					.setSilentAudioPath(playbackVO.getUbuntuSilentAudioPath());
+			playbackVO.setSilentAudioPath(playbackVO.getUbuntuSilentAudioPath());
 		}
 	}
 
