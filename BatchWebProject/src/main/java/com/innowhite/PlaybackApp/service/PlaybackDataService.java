@@ -410,7 +410,7 @@ public class PlaybackDataService {
 							// uniformSessionVideoDataList = setVideoFormatResolution(paddedSessionVideoPlaylist, videoDimensions);
 							// uniformSessionVideoDataList = VideoImageMagick.formatSessionVideoPlaylist(paddedSessionVideoDatalist, maxVideoDimensions, playbackVO);
 						
-						paddedSessionVideoDataList = padBucketVideoPlaylist(sessionVideoDataList, maxVideoDimensions, roomId);
+						paddedSessionVideoDataList = padBucketVideoPlaylist(sessionVideoDataList, sessionStartTime, maxVideoDimensions, roomId);
 						log.debug("_______________________________________________________________");
 						log.debug("Number of videos after padding :: " + paddedSessionVideoDataList.size());
 						for (int i = 0; i < paddedSessionVideoDataList.size(); i++) {
@@ -554,7 +554,7 @@ public class PlaybackDataService {
 		}
 	}
 
-	private List<VideoData> padBucketVideoPlaylist(List<VideoData> sessionVideoDataList, String maxVideoDimensions, String roomId) {
+	private List<VideoData> padBucketVideoPlaylist(List<VideoData> sessionVideoDataList, long sessionStartTime, String maxVideoDimensions, String roomId) {
 		
 		log.debug("Inside padVideoPlaylist.................");
 
@@ -562,28 +562,45 @@ public class PlaybackDataService {
 		List<VideoData> tempSessionVideoPlaylist = new ArrayList<VideoData>();
 		VideoData vd = null;
 		
-		for (int i = 1; i < sessionVideoDataList.size(); i++) {
+		for (int i = 0; i < sessionVideoDataList.size(); i++) {
 			vd = new VideoData();
 			long videoStartTime = sessionVideoDataList.get(i).getStartTime().getTime();
 			long prevVideoEndTime = sessionVideoDataList.get(i - 1).getEndTime().getTime();
 			
-//			log.debug("sessionStartTime: " + PlaybackUtil.secondsToHours(sessionStartTime));
+			log.debug("sessionStartTime: " + PlaybackUtil.secondsToHours(sessionStartTime));
 			log.debug("videoStartTime: " + sessionVideoDataList.get(i).getStartTime());
 			log.debug("prevVideoStartTime: " + sessionVideoDataList.get(i-1).getStartTime());
 			
-			if ((videoStartTime - prevVideoEndTime) > 0) {
-				log.debug("there is a gap between video and previous video");
-				VideoData ssVideo = createScreenShareVideo(sessionVideoDataList.get(i), videoStartTime - prevVideoEndTime, maxVideoDimensions, roomId);
-				log.debug("ssVideoPath: " + ssVideo);
-				
-				ssVideo.setStartTime(new Date(prevVideoEndTime));
-				ssVideo.setEndTime(new Date(videoStartTime));
-	
-				tempSessionVideoPlaylist.add(vd);
-				tempSessionVideoPlaylist.add(sessionVideoDataList.get(i));
+			// if its the first video of the session
+			if (i == 0) {
+				if ((videoStartTime - sessionStartTime) > 0) {
+					log.debug("video Starts after session Start");
+					VideoData ssVideo = createScreenShareVideo(sessionVideoDataList.get(i), videoStartTime - sessionStartTime, maxVideoDimensions, roomId);
+					log.debug("ssVideoPath: " + ssVideo);
+					vd.setStartTime(new Date(sessionStartTime));
+					vd.setEndTime(new Date(videoStartTime));
+
+					tempSessionVideoPlaylist.add(vd);
+					tempSessionVideoPlaylist.add(sessionVideoDataList.get(i));
+
+				} else {
+					log.debug("video and session Start at the same Time");
+					tempSessionVideoPlaylist.add(tempSessionVideoPlaylist.get(i));
+				}
 			} else {
-				log.debug("next video Starts soon after previous video");
-				tempSessionVideoPlaylist.add(sessionVideoDataList.get(i));
+				if ((videoStartTime - prevVideoEndTime) > 0) {
+					log.debug("there is a gap between video and previous video");
+					VideoData ssVideo = createScreenShareVideo(sessionVideoDataList.get(i), videoStartTime - prevVideoEndTime, maxVideoDimensions, roomId);
+					log.debug("ssVideoPath: " + ssVideo);
+					ssVideo.setStartTime(new Date(prevVideoEndTime));
+					ssVideo.setEndTime(new Date(videoStartTime));
+		
+					tempSessionVideoPlaylist.add(vd);
+					tempSessionVideoPlaylist.add(sessionVideoDataList.get(i));
+				} else {
+					log.debug("next video Starts soon after previous video");
+					tempSessionVideoPlaylist.add(sessionVideoDataList.get(i));
+				}
 			}
 		}
 		return tempSessionVideoPlaylist;
@@ -773,6 +790,7 @@ public class PlaybackDataService {
 		return meetingRoomVideoPath;
 	}
 
+
 	private List<VideoData> padSessionVideoPlaylist(List<VideoData> sessionVideoDataList, String maxVideoDimensions, String roomId) {
 		// Temporary sessionVideoPlaylist contains videos for this session
 		log.debug("Inside padSessionVideoPlaylist...........................................");
@@ -821,42 +839,43 @@ public class PlaybackDataService {
 				if (padDuration == 0) {
 					log.debug("Padding is not needed as the pad duration is 0");
 					return sessionVideoDataList;
+				}else{
+
+					// if (padDuration > 0 && padDuration < 7) {
+					// actualDuration-dbDuration
+					// -s "+maxVideoDimensions+"
+					// String cmd =
+					// " -r 1 -b 200 -i %03d.jpg "+newVideoPath+" padScreenShareVideo.avi";
+					// PlaybackUtil.invokeFfmpegProcess(curDir);
+	
+					VideoData ssVideo = createScreenShareVideo(sessionVideoDataList.get(i), padDuration, maxVideoDimensions, roomId);
+					
+					log.debug("-->adding screen share pad video to paddingSessionVideoPlaylist");
+					tempSessionVideoPlaylist.add(ssVideo);
+	
+					log.debug("-->adding screen share video to paddingSessionVideoPlaylist");
+					vd = new VideoData();
+					//Screen-share hack
+	//				if(i==0){
+						// i==0 with padD = SS starts.. not working
+						vd.setStartTime(new Date(start_time));
+	//					log.debug("screen share hack. right shifting start time of ss video by: "+(padDuration*1000));
+	//				}
+	//				else{
+	//					vd.setStartTime(new Date(start_time + (padDuration*1000)));
+	//					log.debug("screen share hack not applied. ss video start_time: "+new Date(start_time));
+	//				}
+	//				vd.setStartTime(new Date(start_time));
+					vd.setEndTime(sessionVideoDataList.get(i).getEndTime());
+					vd.setFilePath(sessionVideoDataList.get(i).getFilePath());
+					vd.setDuration(sessionVideoDataList.get(i).getDuration());
+					vd.setHeight(sessionVideoDataList.get(i).getHeight());
+					vd.setWidth(sessionVideoDataList.get(i).getWidth());
+					vd.setVideoType(sessionVideoDataList.get(i).getVideoType());
+					vd.setId(sessionVideoDataList.get(i).getId());
+					vd.setRoomName(sessionVideoDataList.get(i).getRoomName());
+					tempSessionVideoPlaylist.add(vd);
 				}
-
-				// if (padDuration > 0 && padDuration < 7) {
-				// actualDuration-dbDuration
-				// -s "+maxVideoDimensions+"
-				// String cmd =
-				// " -r 1 -b 200 -i %03d.jpg "+newVideoPath+" padScreenShareVideo.avi";
-				// PlaybackUtil.invokeFfmpegProcess(curDir);
-
-				VideoData ssVideo = createScreenShareVideo(sessionVideoDataList.get(i), padDuration, maxVideoDimensions, roomId);
-				
-				log.debug("-->adding screen share pad video to paddingSessionVideoPlaylist");
-				tempSessionVideoPlaylist.add(ssVideo);
-
-				log.debug("-->adding screen share video to paddingSessionVideoPlaylist");
-				vd = new VideoData();
-				//Screen-share hack
-//				if(i==0){
-					// i==0 with padD = SS starts.. not working
-					vd.setStartTime(new Date(start_time));
-//					log.debug("screen share hack. right shifting start time of ss video by: "+(padDuration*1000));
-//				}
-//				else{
-//					vd.setStartTime(new Date(start_time + (padDuration*1000)));
-//					log.debug("screen share hack not applied. ss video start_time: "+new Date(start_time));
-//				}
-//				vd.setStartTime(new Date(start_time));
-				vd.setEndTime(sessionVideoDataList.get(i).getEndTime());
-				vd.setFilePath(sessionVideoDataList.get(i).getFilePath());
-				vd.setDuration(sessionVideoDataList.get(i).getDuration());
-				vd.setHeight(sessionVideoDataList.get(i).getHeight());
-				vd.setWidth(sessionVideoDataList.get(i).getWidth());
-				vd.setVideoType(sessionVideoDataList.get(i).getVideoType());
-				vd.setId(sessionVideoDataList.get(i).getId());
-				vd.setRoomName(sessionVideoDataList.get(i).getRoomName());
-				tempSessionVideoPlaylist.add(vd);
 			} else {
 				log.debug("-->adding whiteboard video to paddingSessionVideoPlaylist");
 				tempSessionVideoPlaylist.add(sessionVideoDataList.get(i));
@@ -1086,6 +1105,7 @@ public class PlaybackDataService {
 		return vd;
 	}
 
+	
 	private List<AudioData> padAudioPlaylist(List<AudioData> sessionAudioDataList, long sessionStartTime) {
 		log.debug("Inside padAudioPlaylist.................");
 
