@@ -163,9 +163,6 @@ public class PlaybackDataService {
 				}
 			}
 
-			// Process each of the video files to transcode for seek.
-			PreProcessFLV.processFLV(videoDataList, playbackVO);
-
 			// PlayBackPlayListDao playBackPlayListDao = (PlayBackPlayListDao)
 			// factory.getBean("playBackPlayListDao");
 			// List<VideoData> videoDataList =
@@ -244,7 +241,9 @@ public class PlaybackDataService {
 				log.debug("### NEW Video " + i + " file-path:: " + videoDataList.get(i).getFilePath());
 				
 			}
-			log.debug("--------------------------------------------------------------");
+			
+			// Process each of the video files to transcode for seek.
+			PreProcessFLV.processFLV(videoDataList, playbackVO);
 
 			// TODO determining max height/width of videos
 			log.debug("--------------------------------------------------------------");
