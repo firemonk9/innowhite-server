@@ -580,12 +580,14 @@ public class PlaybackDataService {
 						vd.setStartTime(new Date(sessionStartTime));
 						vd.setEndTime(new Date(videoStartTime));
 
-						log.debug(">>>adding sspad and screen share videos to list..");
+						log.debug(">>>adding sspad video to list..");
+						log.debug(">>>adding screen share video to list..");
 						tempSessionVideoPlaylist.add(vd);
 						tempSessionVideoPlaylist.add(sessionVideoDataList.get(i));
 
 					} else {
 						log.debug("video and session Start at the same Time");
+						log.debug(">>>adding screen share video to list..");
 						tempSessionVideoPlaylist.add(sessionVideoDataList.get(i));
 					}
 				} else {
@@ -602,11 +604,13 @@ public class PlaybackDataService {
 						ssVideo.setStartTime(new Date(prevVideoEndTime));
 						ssVideo.setEndTime(new Date(videoStartTime));
 						
-						log.debug(">>>adding sspad and screen share videos to list..");
+						log.debug(">>>adding sspad video to list..");
+						log.debug(">>>adding screen share video to list..");
 						tempSessionVideoPlaylist.add(vd);
 						tempSessionVideoPlaylist.add(sessionVideoDataList.get(i));
 					} else {
 						log.debug("next video Starts soon after previous video");
+						log.debug(">>>adding screen share video to list..");
 						tempSessionVideoPlaylist.add(sessionVideoDataList.get(i));
 					}
 				}
@@ -664,7 +668,9 @@ public class PlaybackDataService {
 	
 	private List<VideoData> padSessionVideoPlaylist(List<VideoData> sessionVideoDataList, String maxVideoDimensions, String roomId) {
 		// Temporary sessionVideoPlaylist contains videos for this session
-		log.debug("Inside padSessionVideoPlaylist...........................................");
+		log.debug("---------------------------------");
+		log.debug("Inside padSessionVideoPlaylist...");
+		log.debug("---------------------------------");
 		List<VideoData> tempSessionVideoPlaylist = new ArrayList<VideoData>();
 		VideoData vd = null;
 		
@@ -700,8 +706,8 @@ public class PlaybackDataService {
 
 				log.debug(" ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~");
 				log.debug(" start_time(getTime):: "+start_time);
-				log.debug(" start time for screen share video.. (newDate):: " + new Date(start_time)+" (secondsToHours):: " + PlaybackUtil.secondsToHours(start_time));
-				log.debug(" end time for screen share video.. (newDate):: " + new Date(end_time)+" (secondsToHours):: " + PlaybackUtil.secondsToHours(end_time));
+				log.debug(" start time for screen share video.. (newDate):: " + new Date(start_time));
+				log.debug(" end time for screen share video.. (newDate):: " + new Date(end_time));
 				log.debug(" Actual (ffmpeg) video duration :: " + actualDuration);
 				log.debug(" Expected (database) video duration :: " + dbDuration);
 				log.debug(" duration to pad is ::" + padDuration);
@@ -711,8 +717,9 @@ public class PlaybackDataService {
 					log.debug("Padding is not needed for this video "+i+" as the pad duration is 0");
 //					log.debug("Checking for any gap after prev video");
 					//return sessionVideoDataList;
+					log.debug("--->adding screen share video to paddingSessionVideoPlaylist");
+					tempSessionVideoPlaylist.add(sessionVideoDataList.get(i));
 				}else{
-
 					// if (padDuration > 0 && padDuration < 7) {
 					// actualDuration-dbDuration
 					// -s "+maxVideoDimensions+"
@@ -722,10 +729,10 @@ public class PlaybackDataService {
 	
 					VideoData ssVideo = createScreenShareVideo(sessionVideoDataList.get(i), padDuration, maxVideoDimensions, roomId);
 					
-					log.debug("-->adding screen share pad video to paddingSessionVideoPlaylist");
+					log.debug("--->adding ss pad video to paddingSessionVideoPlaylist");
 					tempSessionVideoPlaylist.add(ssVideo);
 	
-					log.debug("-->adding screen share video to paddingSessionVideoPlaylist");
+					log.debug("--->adding screen share video to paddingSessionVideoPlaylist");
 					vd = new VideoData();
 					//Screen-share hack
 	//				if(i==0){
@@ -749,7 +756,7 @@ public class PlaybackDataService {
 					tempSessionVideoPlaylist.add(vd);
 				}
 			} else {
-				log.debug("-->adding whiteboard video to paddingSessionVideoPlaylist");
+				log.debug("--->adding whiteboard video to paddingSessionVideoPlaylist");
 				tempSessionVideoPlaylist.add(sessionVideoDataList.get(i));
 			}
 		}
