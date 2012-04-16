@@ -647,8 +647,10 @@ public class PlaybackDataService {
 		int width = Integer.parseInt(dim[0]) - 10;
 		int height = Integer.parseInt(dim[1]) - 10;
 		String ss_pad_scaled_path = ss_pad_output_path.replace(".flv", "_" + width + "x" + height + ".flv");
-		cmd = " " + ss_pad_output_path + " -oac copy -ovc lavc -vf scale=" + width + ":" + height + " -o " + ss_pad_scaled_path;
-		PlaybackUtil.invokeMencoderProcess(cmd);
+//		cmd = " " + ss_pad_output_path + " -oac copy -ovc lavc -vf scale=" + width + ":" + height + " -o " + ss_pad_scaled_path;
+//		PlaybackUtil.invokeMencoderProcess(cmd);
+		cmd = " -i " + ss_pad_output_path + " -s "+width+"x"+height+" -ar 44100 -ab 64k "+ss_pad_scaled_path;
+		PlaybackUtil.invokeFfmpegProcess(cmd);
 		
 		VideoData vd = new VideoData();
 		vd.setStartTime(new Date(start_time));
@@ -812,6 +814,7 @@ public class PlaybackDataService {
 		String out_path_flv=null;
 		for (int i = 0; i < paddedSessionVideoDatalist.size(); i++) {
 			in_path = paddedSessionVideoDatalist.get(i).getFilePath();
+			log.debug("");
 			out_path = in_path.replace(".flv", "_overlay_avi.avi");
 			out_path_flv = in_path.replace(".flv", "_overlay.flv");
 			vidWidth = paddedSessionVideoDatalist.get(i).getWidth();
