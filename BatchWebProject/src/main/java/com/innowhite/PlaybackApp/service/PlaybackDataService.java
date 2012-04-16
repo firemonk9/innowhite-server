@@ -605,7 +605,7 @@ public class PlaybackDataService {
 						
 						log.debug(">>>adding sspad video to list..");
 						log.debug(">>>adding screen share video to list..");
-						tempSessionVideoPlaylist.add(vd);
+						tempSessionVideoPlaylist.add(ssVideo);
 						tempSessionVideoPlaylist.add(sessionVideoDataList.get(i));
 					} else {
 						log.debug("next video Starts soon after previous video");
