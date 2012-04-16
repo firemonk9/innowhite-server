@@ -562,7 +562,8 @@ public class PlaybackDataService {
 		
 		for (int i = 0; i < sessionVideoDataList.size(); i++) {
 			String videoType = sessionVideoDataList.get(i).getVideoType();
-			if( videoType != null && videoType.equals("DESKTOP")){
+//			if( videoType != null && videoType.equals("DESKTOP")){
+				
 				vd = new VideoData();
 				long videoStartTime = sessionVideoDataList.get(i).getStartTime().getTime();
 				
@@ -591,7 +592,7 @@ public class PlaybackDataService {
 					}
 				} else {
 					
-					long prevVideoEndTime = sessionVideoDataList.get(i - 1).getEndTime().getTime();
+					long prevVideoEndTime = sessionVideoDataList.get(i-1).getEndTime().getTime();
 					
 					if ((videoStartTime - prevVideoEndTime) > 0) {
 						log.debug("i>0:: prevVideoEndTime: " + sessionVideoDataList.get(i-1).getEndTime());
@@ -613,10 +614,10 @@ public class PlaybackDataService {
 						tempSessionVideoPlaylist.add(sessionVideoDataList.get(i));
 					}
 				}
-			}else{
-				log.debug(">>>adding whiteboard to list..");
-				tempSessionVideoPlaylist.add(sessionVideoDataList.get(i));
-			}
+//			}else{
+//				log.debug(">>>adding whiteboard to list..");
+//				tempSessionVideoPlaylist.add(sessionVideoDataList.get(i));
+//			}
 		}
 		return tempSessionVideoPlaylist;
 	}
@@ -637,7 +638,12 @@ public class PlaybackDataService {
 		String uniquePath = PlaybackUtil.getUnique();
 
 		log.debug("creating ss padding video.. cutting the 1hr video to specified duration..");
-		String ss_pad_input_path = "/opt/InnowhiteData/scripts/ScreenSharePad.flv";
+		String ss_pad_input_path  = null;
+		if(videoData.getVideoType().equals("DESKTOP")){
+			ss_pad_input_path = "/opt/InnowhiteData/scripts/screen_share_started.flv";
+		}else{
+			ss_pad_input_path = "/opt/InnowhiteData/scripts/screen_share_stopped.flv";
+		}
 		String ss_pad_output_path = curDir + "/" + roomId + "_ss_pad_" + uniquePath + ".flv";
 		cmd = " -i " + ss_pad_input_path + " -t " + PlaybackUtil.secondsToHours(duration * 1000) + " -ar 44100 -ab 64k " + ss_pad_output_path;
 		PlaybackUtil.invokeFfmpegProcess(cmd);
