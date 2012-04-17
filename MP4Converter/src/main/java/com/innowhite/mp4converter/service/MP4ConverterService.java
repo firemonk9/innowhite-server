@@ -50,6 +50,7 @@ public class MP4ConverterService {
 		String inputFLVPath=winFilePath + fileName;									// Z:/videos/ + test.flv
 		if(ConverterUtil.isWindows()==true){
 			convertToMp4(inputFLVPath, fileId, unixFLVPath);
+			convertToWebM(inputFLVPath, fileId, unixFLVPath);
 		}
 	}
 		
@@ -77,10 +78,50 @@ public class MP4ConverterService {
 				//Process proc = Runtime.getRuntime().exec(command);
 				log.debug("Exit:");
 				
-				updateFinalVideoTable(fileId, outMp4FilePath, unixFLVPath);	
+				updateFinalVideoTable(fileId, outMp4FilePath, unixFLVPath, true);	
 					
 			}else{
-				log.debug("----There is no file to convert-------");
+				log.warn("----There is no file to convert-------"+inputFLVPath);
+			}
+			
+			
+				
+		}catch(Exception e){
+			log.error(""+e.getMessage(),e);
+			e.printStackTrace();
+		}
+		log.debug("leaving convertToMp4  ");
+		
+	}
+	
+	public void convertToWebM(String inputFLVPath, String fileId, String unixFLVPath){
+		log.debug("entered convertToWebM======"+inputFLVPath);
+			
+		try{
+			//inputFLVPath="C:/FLVVideoFiles/test.flv";
+			//String ffmpegPath = "C:\\ffmpeg-git-b6ff81d-win32-static\\bin\\ffmpeg.exe";
+			
+			String outMp4FilePath = inputFLVPath.replace(".flv", ".webm");
+			String ffmpegPath=ffmpegInfoVO.getWinFFmpegPath();
+			
+			File myFile = new File(inputFLVPath);
+				
+			if (myFile.exists()) {
+					
+				String command = ffmpegPath+" -i "+inputFLVPath+" "+outMp4FilePath;
+				
+				log.debug("Before dispatching command...");
+				
+				
+				ProcessExecutor pe = new ProcessExecutor();
+				pe.executeProcess(command, null, true);
+				//Process proc = Runtime.getRuntime().exec(command);
+				log.debug("Exit:");
+				
+				updateFinalVideoTable(fileId, outMp4FilePath, unixFLVPath, false);	
+					
+			}else{
+				log.warn("----There is no file to convert-------"+inputFLVPath);
 			}
 			
 			
@@ -93,7 +134,8 @@ public class MP4ConverterService {
 	}
 	
 	
-	public void updateFinalVideoTable(String strFileId, String mp4FilePath, String unixFLVPath ){
+	
+	public void updateFinalVideoTable(String strFileId, String mp4FilePath, String unixFLVPath, boolean mp4 ){
 		log.debug("entered updateFinalVideoTable");
 		try{
 			
@@ -103,7 +145,11 @@ public class MP4ConverterService {
 			
 			
 			PlayBackPlayList playBackObj = new PlayBackPlayList();
-			playBackObj.setMp4Path(unixMP4Path);
+			if(mp4 == true)
+				playBackObj.setMp4Path(unixMP4Path);
+			else
+				playBackObj.setWebmPath(unixMP4Path);
+			
 			playBackObj.setId(Long.parseLong(strFileId));
 			
 			mp4ConverterDAO.updateMp4FilePath(playBackObj);

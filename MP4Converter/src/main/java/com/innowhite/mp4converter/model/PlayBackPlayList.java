@@ -53,6 +53,18 @@ public class PlayBackPlayList implements Serializable {
     
     @Column(name = "mp4_path")
     String mp4Path;
+    
+    @Column(name = "webm_path")
+    String webmPath;
+    
+
+	public String getWebmPath() {
+		return webmPath;
+	}
+
+	public void setWebmPath(String webmPath) {
+		this.webmPath = webmPath;
+	}
 
 	public long getId() {
 		return id;
