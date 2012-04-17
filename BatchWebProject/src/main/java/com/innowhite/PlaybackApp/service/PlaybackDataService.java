@@ -163,9 +163,6 @@ public class PlaybackDataService {
 				}
 			}
 
-			// Process each of the video files to transcode for seek.
-			PreProcessFLV.processFLV(videoDataList, playbackVO);
-
 			// PlayBackPlayListDao playBackPlayListDao = (PlayBackPlayListDao)
 			// factory.getBean("playBackPlayListDao");
 			// List<VideoData> videoDataList =
@@ -244,7 +241,9 @@ public class PlaybackDataService {
 				log.debug("### NEW Video " + i + " file-path:: " + videoDataList.get(i).getFilePath());
 				
 			}
-			log.debug("--------------------------------------------------------------");
+			
+			// Process each of the video files to transcode for seek.
+			PreProcessFLV.processFLV(videoDataList, playbackVO);
 
 			// TODO determining max height/width of videos
 			log.debug("--------------------------------------------------------------");
@@ -563,7 +562,8 @@ public class PlaybackDataService {
 		
 		for (int i = 0; i < sessionVideoDataList.size(); i++) {
 			String videoType = sessionVideoDataList.get(i).getVideoType();
-			if( videoType != null && videoType.equals("DESKTOP")){
+//			if( videoType != null && videoType.equals("DESKTOP")){
+				
 				vd = new VideoData();
 				long videoStartTime = sessionVideoDataList.get(i).getStartTime().getTime();
 				
@@ -592,7 +592,7 @@ public class PlaybackDataService {
 					}
 				} else {
 					
-					long prevVideoEndTime = sessionVideoDataList.get(i - 1).getEndTime().getTime();
+					long prevVideoEndTime = sessionVideoDataList.get(i-1).getEndTime().getTime();
 					
 					if ((videoStartTime - prevVideoEndTime) > 0) {
 						log.debug("i>0:: prevVideoEndTime: " + sessionVideoDataList.get(i-1).getEndTime());
@@ -606,7 +606,7 @@ public class PlaybackDataService {
 						
 						log.debug(">>>adding sspad video to list..");
 						log.debug(">>>adding screen share video to list..");
-						tempSessionVideoPlaylist.add(vd);
+						tempSessionVideoPlaylist.add(ssVideo);
 						tempSessionVideoPlaylist.add(sessionVideoDataList.get(i));
 					} else {
 						log.debug("next video Starts soon after previous video");
@@ -614,10 +614,10 @@ public class PlaybackDataService {
 						tempSessionVideoPlaylist.add(sessionVideoDataList.get(i));
 					}
 				}
-			}else{
-				log.debug(">>>adding whiteboard to list..");
-				tempSessionVideoPlaylist.add(sessionVideoDataList.get(i));
-			}
+//			}else{
+//				log.debug(">>>adding whiteboard to list..");
+//				tempSessionVideoPlaylist.add(sessionVideoDataList.get(i));
+//			}
 		}
 		return tempSessionVideoPlaylist;
 	}
@@ -638,7 +638,12 @@ public class PlaybackDataService {
 		String uniquePath = PlaybackUtil.getUnique();
 
 		log.debug("creating ss padding video.. cutting the 1hr video to specified duration..");
-		String ss_pad_input_path = "/opt/InnowhiteData/scripts/ScreenSharePad.flv";
+		String ss_pad_input_path  = null;
+		if(videoData.getVideoType().equals("DESKTOP")){
+			ss_pad_input_path = "/opt/InnowhiteData/scripts/screen_share_started.flv";
+		}else{
+			ss_pad_input_path = "/opt/InnowhiteData/scripts/screen_share_stopped.flv";
+		}
 		String ss_pad_output_path = curDir + "/" + roomId + "_ss_pad_" + uniquePath + ".flv";
 		cmd = " -i " + ss_pad_input_path + " -t " + PlaybackUtil.secondsToHours(duration * 1000) + " -ar 44100 -ab 64k " + ss_pad_output_path;
 		PlaybackUtil.invokeFfmpegProcess(cmd);
@@ -648,8 +653,10 @@ public class PlaybackDataService {
 		int width = Integer.parseInt(dim[0]) - 10;
 		int height = Integer.parseInt(dim[1]) - 10;
 		String ss_pad_scaled_path = ss_pad_output_path.replace(".flv", "_" + width + "x" + height + ".flv");
-		cmd = " " + ss_pad_output_path + " -oac copy -ovc lavc -vf scale=" + width + ":" + height + " -o " + ss_pad_scaled_path;
-		PlaybackUtil.invokeMencoderProcess(cmd);
+//		cmd = " " + ss_pad_output_path + " -oac copy -ovc lavc -vf scale=" + width + ":" + height + " -o " + ss_pad_scaled_path;
+//		PlaybackUtil.invokeMencoderProcess(cmd);
+		cmd = " -i " + ss_pad_output_path + " -s "+width+"x"+height+" -ar 44100 -ab 64k "+ss_pad_scaled_path;
+		PlaybackUtil.invokeFfmpegProcess(cmd);
 		
 		VideoData vd = new VideoData();
 		vd.setStartTime(new Date(start_time));
@@ -813,6 +820,7 @@ public class PlaybackDataService {
 		String out_path_flv=null;
 		for (int i = 0; i < paddedSessionVideoDatalist.size(); i++) {
 			in_path = paddedSessionVideoDatalist.get(i).getFilePath();
+			log.debug("");
 			out_path = in_path.replace(".flv", "_overlay_avi.avi");
 			out_path_flv = in_path.replace(".flv", "_overlay.flv");
 			vidWidth = paddedSessionVideoDatalist.get(i).getWidth();
