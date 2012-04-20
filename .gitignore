@@ -26,4 +26,6 @@ MP4Converter/bin
 MP4Converter/target
 MP4Converter/.classpath
 MP4Converter/.project
-
+DocTransformation/.classpath
+DocTransformation/.project
+PluginApplet/target/

@@ -22,5 +22,15 @@
 		<servlet-name>CreatePlaybackSession</servlet-name>
 		<url-pattern>/servlets/CreatePlaybackSession</url-pattern>
 	</servlet-mapping>
+	
+	<servlet>
+		<servlet-name>DBPollerServlet</servlet-name>
+		<servlet-class>com.innowhite.PlaybackApp.servlet.DBPollerServlet</servlet-class>
+		<load-on-startup>1</load-on-startup>
+	</servlet>
+	<servlet-mapping>
+		<servlet-name>DBPollerServlet</servlet-name>
+		<url-pattern>/</url-pattern>
+	</servlet-mapping>
 
 </web-app>

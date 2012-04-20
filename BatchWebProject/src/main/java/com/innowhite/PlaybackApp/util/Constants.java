@@ -15,4 +15,6 @@ public class Constants {
     
     public static final String LEFT ="LEFT";
     
+    public static final int DEFAULT_POLLING_FREQ  = 10*60*1000;
+    
 }

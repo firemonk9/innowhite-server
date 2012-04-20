@@ -254,5 +254,10 @@
 		<property name="whiteboardFrameVideoDao" ref="whiteboardFrameVideoDao"></property>
 
 	</bean>
+	
+	<bean id="dbPollerService" name="dbPollerService"
+		class="com.innowhite.PlaybackApp.service.DBPollerService">
+		<property name="roomDao" ref="roomDao" />
+	</bean>
 
 </beans>
