@@ -1,5 +1,6 @@
 package com.innowhite.mp4converter.dao;
 
+import org.hibernate.Query;
 import org.hibernate.SessionFactory;
 import org.hibernate.classic.Session;
 import org.slf4j.Logger;
@@ -34,6 +35,25 @@ public class MP4ConverterDAO {
 		    e.printStackTrace();
 		}
 	}
+	
+	 @Transactional
+	    public int getRoomMaxID() {
+	    	int intmaxId = 0;
+			try {
+					log.debug("Entered getRoomMaxID");
+					Session session = sessionFactory.getCurrentSession();
+					Query query = session.createSQLQuery("select max(id) from room");
+					intmaxId = (Integer) query.uniqueResult();
+					log.debug("Inside getRoomMaxID with intmaxId :" + intmaxId);
+					   
+					session.clear();
+					session.flush();
+			} catch (Exception e) {
+			    log.error(e.getMessage(),e);
+			}
+			return intmaxId;	
+			
+		 }
 	
 	
 }

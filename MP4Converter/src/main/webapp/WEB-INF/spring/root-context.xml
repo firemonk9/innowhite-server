@@ -97,24 +97,22 @@
 	</jms:listener-container>
 	
 	
-	<bean id="mp4ConverterService" name="mp4ConverterService"
-		class="com.innowhite.mp4converter.service.MP4ConverterService">
+	<bean id="mp4ConverterService" name="mp4ConverterService" class="com.innowhite.mp4converter.service.MP4ConverterService">
 		<property name="mp4ConverterDAO" ref="mp4ConverterDAO" />
 		<property name="ffmpegInfoVO" ref="ffmpegInfoVO" />
 	</bean>
 	
-	<bean id="mp4ConverterDAO" name="mp4ConverterDAO"
-		class="com.innowhite.mp4converter.dao.MP4ConverterDAO">
+	<bean id="mp4ConverterDAO" name="mp4ConverterDAO" class="com.innowhite.mp4converter.dao.MP4ConverterDAO">
 		<property name="sessionFactory" ref="sessionFactory" />
 	</bean>
 	
-	
 	<bean id="ffmpegInfoVO" name="ffmpegInfoVO" class="com.innowhite.mp4converter.model.FFMPEGInfoVO">
-
 		<property name="winFFmpegPath" value="${winFFmpegPath}" />
 		<property name="winFilePath" value="${winFilePath}" />
-		<!-- Innowhite.properties file is in another folder. Need to check once.  -->
-		
+	</bean>
+	
+	<bean id="dbPollerService" name="dbPollerService" class="com.innowhite.mp4converter.service.DBPollerService">
+		<property name="mp4ConverterDAO" ref="mp4ConverterDAO" />
 	</bean>
 
 </beans>
