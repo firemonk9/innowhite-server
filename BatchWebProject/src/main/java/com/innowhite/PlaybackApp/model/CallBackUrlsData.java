@@ -1,7 +1,6 @@
 package com.innowhite.PlaybackApp.model;
 
 import java.io.Serializable;
-import java.util.Date;
 
 import javax.persistence.Column;
 import javax.persistence.Entity;
@@ -29,6 +28,9 @@ public class CallBackUrlsData implements Serializable {
 
     @Column(name = "playback_ready_url")
     String playbackReadyUrl;
+    
+    @Column(name = "source")
+    String source;
 
     public String getPlaybackReadyUrl() {
         return playbackReadyUrl;
@@ -55,6 +57,14 @@ public class CallBackUrlsData implements Serializable {
     public Long getId() {
 	return id;
     }
+    
+    public String getSource() {
+		return source;
+	}
+
+	public void setSource(String source) {
+		this.source = source;
+	}
 
     public static void main(String[] args) {
 	//whiteboard

@@ -37,13 +37,13 @@ public class CallBackUrlsDao {
 
 	    RoomData roomVo = (RoomData) list2.get(0);
 	    String orgName = roomVo.getOrgName();
+	    String source = roomVo.getSource();
 
 	    crit = session.createCriteria(CallBackUrlsData.class);
 	    @SuppressWarnings("unchecked")
-	    List<CallBackUrlsData> list = crit.add(Restrictions.eq("orgName", orgName)).list();
+	    List<CallBackUrlsData> list = crit.add(Restrictions.eq("orgName", orgName)).add(Restrictions.eq("source", source)).list();
 	    if(list != null && list.size() ==1)
 	 	return list.get(0);
-	    
 	}
 	session.clear();
 	session.flush();

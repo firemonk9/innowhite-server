@@ -24,7 +24,7 @@
 	<select id="getCallBackUrls" resultMap="CallBackUrlsResult"
 		parameterClass="java.lang.String">
 		 select close_Room_Url,playback_Ready_Url,lock_Room_Url, invite_send_emails_url from call_back_urls c, room r where r.room_id=#roomId# 
-		 and c.org_name = r.org_name 
+		 and c.org_name = r.org_name and c.source = r.source
       </select>
       
       

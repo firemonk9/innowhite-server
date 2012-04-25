@@ -13,7 +13,8 @@ import javax.persistence.Table;
 @Table(name = "room")
 public class RoomData implements Serializable {
 
-    /**
+
+	/**
 	 * 
 	 */
    // private static final long serialVersionUID = 1L;
@@ -31,6 +32,9 @@ public class RoomData implements Serializable {
 
     @Column(name = "org_name")
     String orgName;
+    
+    @Column(name = "source")
+    String source;
     
     
     public String getOrgName() {
@@ -65,6 +69,14 @@ public class RoomData implements Serializable {
     public Long getId() {
 	return id;
     }
+    
+    public String getSource() {
+		return source;
+	}
+
+	public void setSource(String source) {
+		this.source = source;
+	}
 
     public static void main(String[] args) {
 	//whiteboard

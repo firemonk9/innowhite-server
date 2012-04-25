@@ -533,7 +533,7 @@ public class PlaybackDataService {
 						if (callBackVO != null) {
 							url = callBackVO.getPlaybackReadyUrl();
 						}
-						NotifyPlayBackReadyStatus.notifyPlayBackReady(roomId, null);
+						NotifyPlayBackReadyStatus.notifyPlayBackReady(roomId, url);
 					}
 				}
 				

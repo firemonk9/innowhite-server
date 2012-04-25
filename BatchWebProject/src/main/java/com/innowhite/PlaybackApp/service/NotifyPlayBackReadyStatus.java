@@ -48,7 +48,8 @@ public class NotifyPlayBackReadyStatus {
 
 	    log.debug(" prechecksum string checksumStr  " + checksumStr + " computed checksum is : " + comptedCheckum);
 
-	    String finalURL = Constants.ROOM_CLOSE_URL + Constants.ROOM_STR + roomId + "&checksum=" + comptedCheckum;
+	   // String finalURL = Constants.ROOM_CLOSE_URL + Constants.ROOM_STR + roomId + "&checksum=" + comptedCheckum;
+	    String finalURL = notifyPlayBackStatusUrl + Constants.ROOM_STR + roomId + "&checksum=" + comptedCheckum;
 
 	    log.debug(" executing the url to notify of playback video ready :: " + finalURL);
 

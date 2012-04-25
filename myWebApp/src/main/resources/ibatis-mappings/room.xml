@@ -20,6 +20,7 @@
 		<parameter property="course" jdbcType="VARCHAR" />
 		<parameter property="lessonPlanId" jdbcType="VARCHAR" />
 		<parameter property="roomLiveConnectStatus" jdbcType="VARCHAR" />
+		<parameter property="source" jdbcType="VARCHAR" />
 	</parameterMap>
 
 	<insert id="createRoom" parameterMap="roomObject">
@@ -27,10 +28,10 @@
 		(room_id,room_name, org_name, users_count, view_count,
 		group_leader, start_date,
 		end_date, inserted_date, record, course,
-		lesson_plan_id,room_live_connect_status)
+		lesson_plan_id,room_live_connect_status,source)
 		VALUES
 		(?,?,?,?,?,?, ?, ?, ?,
-		?, ?, ?,?)
+		?, ?, ?,?,?)
 
 		<selectKey keyProperty="id" resultClass="java.lang.Integer">
 			SELECT @@identity

@@ -18,6 +18,7 @@ public class RoomVO {
 	private String course;
 	private String lessonPlanId;
 	private String roomLiveConnectStatus;
+	private String source;
 	
 	
 	
@@ -116,6 +117,12 @@ public class RoomVO {
 	}
 	public void setEndDate(String endDate) {
 		this.endDate = endDate;
+	}
+	public String getSource() {
+		return source;
+	}
+	public void setSource(String source) {
+		this.source = source;
 	}
 	
 	

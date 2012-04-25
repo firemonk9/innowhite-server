@@ -3,7 +3,7 @@ package com.innowhite.whiteboard.persistence.beans;
 
 public class CallBackURLsVO {
 
-    public int getId() {
+	public int getId() {
 	return id;
     }
 
@@ -50,7 +50,14 @@ public class CallBackURLsVO {
     public void setOrgName(String orgName) {
         this.orgName = orgName;
     }
+    
+    public String getSource() {
+		return source;
+	}
 
+	public void setSource(String source) {
+		this.source = source;
+	}
 
     private int id;
     private String orgName;
@@ -58,6 +65,7 @@ public class CallBackURLsVO {
     private String playbackReadyUrl;
     private String lockRoomUrl;
     private String inviteSendEmailsUrl;
+    private String source;
 
    
 
@@ -69,6 +77,7 @@ public class CallBackURLsVO {
 	sb.append("\n playbackReadyUrl: " + playbackReadyUrl);
 	sb.append("\n lockRoomUrl: " + lockRoomUrl);
 	sb.append("\n inviteSendEmailsUrl: " + inviteSendEmailsUrl);
+	sb.append("\n source: " + source);
 
 	return sb.toString();
     }

@@ -26,7 +26,7 @@ public class CallBackUrlsDAO {
 	//
 	// ovo.setHostName("room192");
 
-	System.err.println(getCallBackVO("room192"));
+	System.err.println(getCallBackVO("room2"));
 
     }
 

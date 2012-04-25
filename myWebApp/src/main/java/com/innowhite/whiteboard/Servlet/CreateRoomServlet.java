@@ -2,7 +2,8 @@ package com.innowhite.whiteboard.Servlet;
 
 import java.io.IOException;
 import java.io.PrintWriter;
-import java.util.StringTokenizer;
+import java.net.MalformedURLException;
+import java.net.URL;
 
 import javax.servlet.ServletException;
 import javax.servlet.http.HttpServlet;
@@ -11,11 +12,11 @@ import javax.servlet.http.HttpServletResponse;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+import org.springframework.util.StringUtils;
 
 import com.innowhite.whiteboard.service.LessonPlanGetDataService;
 import com.innowhite.whiteboard.service.WhiteboardAuthenticatorService;
 import com.innowhite.whiteboard.test.InnowhiteServiceTest;
-import com.innowhite.whiteboard.util.Constants;
 import com.innowhite.whiteboard.util.InnowhiteConstants;
 
 /**
@@ -43,11 +44,7 @@ public class CreateRoomServlet extends HttpServlet {
 
 		log.debug(" entereing doget: CreateRoomServlet ");
 
-		
-		
-		
 		String checkSum = "";
-		// String queryStringWithoutcheckSum = null;
 		String parentOrg = "";
 		String validServiceStatus = InnowhiteConstants.AUTH_FAILED;
 		String roomId = "";
@@ -56,27 +53,11 @@ public class CreateRoomServlet extends HttpServlet {
 		String queryString = request.getQueryString();
 		log.debug("request query String " + queryString);
 		String queryStringArray[] = queryString.split("&checksum=");
-
 		log.debug(queryStringArray[0]);
-
 		parentOrg = request.getParameter(InnowhiteConstants.PARENT_ORG);
 		
-		
 		String hostURL =null;
-//		if (parentOrg.indexOf(Constants.WEB_DELIMITER) > 0) {
-//			StringTokenizer st = new StringTokenizer(parentOrg,
-//					Constants.WEB_DELIMITER);
-//
-//			parentOrg = st.nextToken();
-//			hostURL= st.nextToken();
-//			
-//			if(parentOrg != null )
-//				parentOrg = parentOrg.trim();
-//			
-//			if(hostURL != null )
-//				hostURL = hostURL.trim();
-//			
-//		}
+		URL url;String source = "";String domainName = "";
 
 		checkSum = request.getParameter(InnowhiteConstants.CHECKSUM);
 		roomName = request.getParameter("roomName");
@@ -84,7 +65,25 @@ public class CreateRoomServlet extends HttpServlet {
 		String courseId = request.getParameter("course_id");
 		inetLessonID = request.getParameter("lesson_plan_id");
 		String view = request.getParameter("view");
-	//	String hostName = request.getServerName();
+		String sourceURL = (request.getRequestURL()).toString();
+		
+		if(sourceURL != null )
+			sourceURL = sourceURL.trim();
+		
+		try {
+			 url = new URL(sourceURL);
+			 domainName = url.getHost();
+			 log.debug("domainName: " + domainName);
+			 int occurance = StringUtils.countOccurrencesOf(domainName, ".");
+			
+			  if(domainName.contains("www") || occurance>1){
+				  source = domainName.split("\\.")[1];
+			  }else{
+				  source = domainName.split("\\.")[0];
+			  }
+		} catch (MalformedURLException e) {
+			e.printStackTrace();
+		}
 
 		log.debug("orgName: " + parentOrg);
 		log.debug("clientURL: " + hostURL);
@@ -95,6 +94,7 @@ public class CreateRoomServlet extends HttpServlet {
 		log.debug("course: " + courseId);
 		log.debug("inetLessonID: " + inetLessonID);
 		log.debug("view: " + view);
+		log.debug("source: " + source);
 	//	log.debug("sb: " + hostName.toString());
 
 		// validServiceStatus =
@@ -104,7 +104,7 @@ public class CreateRoomServlet extends HttpServlet {
 		// if(validServiceStatus.equals(InnowhiteConstants.SUCCESS))
 		// {
 		roomId = WhiteboardAuthenticatorService.createRoom(parentOrg, roomName,
-				record, courseId, inetLessonID, view);
+				record, courseId, inetLessonID, view,source);
 		// }
 		if (roomId != null && roomId.length() > 0) {
 			validServiceStatus = InnowhiteConstants.SUCCESS;

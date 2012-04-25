@@ -29,6 +29,9 @@ public class CallBackUrlsData implements Serializable {
 
     @Column(name = "close_room_url")
     String close_room_url;
+    
+    @Column(name = "source")
+    String source;
 
     public String getOrgName() {
         return orgName;
@@ -57,5 +60,13 @@ public class CallBackUrlsData implements Serializable {
     public static void main(String[] args) {
 	//whiteboard
     }
+
+	public String getSource() {
+		return source;
+	}
+
+	public void setSource(String source) {
+		this.source = source;
+	}
 
 }

@@ -76,7 +76,7 @@ public class WhiteboardAuthenticatorService {
 	}
     }
 
-    public static String createRoom(String orgName, String roomName, String record, String course, String inetLessonID, String view) {
+    public static String createRoom(String orgName, String roomName, String record, String course, String inetLessonID, String view,String source) {
 
 	long today = Calendar.getInstance().getTimeInMillis();
 
@@ -105,6 +105,7 @@ public class WhiteboardAuthenticatorService {
 	roomVO.setInsertedDate(WhiteBoardUtil.getDateTime());
 	roomVO.setRecord(record);
 	roomVO.setCourse(course);
+	roomVO.setSource(source);
 
 	if (view != null && view.contains("PRIVATE"))
 	    roomVO.setRoomLiveConnectStatus("FORBID");
