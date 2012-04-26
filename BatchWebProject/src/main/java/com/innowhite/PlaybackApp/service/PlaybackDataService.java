@@ -528,12 +528,12 @@ public class PlaybackDataService {
 					// send notification so that the innowhite server can send
 					// email to all users in the room.
 					if (youtubeURL != null && youtubeURL.length() > 0) {
-						CallBackUrlsData callBackVO = callBackUrlsDao.getURLData(roomId);
-						String url = null;
-						if (callBackVO != null) {
-							url = callBackVO.getPlaybackReadyUrl();
-						}
-						NotifyPlayBackReadyStatus.notifyPlayBackReady(roomId, url);
+//						CallBackUrlsData callBackVO = callBackUrlsDao.getURLData(roomId);
+//						String url = null;
+//						if (callBackVO != null) {
+//							url = callBackVO.getPlaybackReadyUrl();
+//						}
+						//NotifyPlayBackReadyStatus.notifyPlayBackReady(roomId, url);
 					}
 				}
 				

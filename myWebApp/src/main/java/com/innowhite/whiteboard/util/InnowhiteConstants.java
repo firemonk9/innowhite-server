@@ -53,8 +53,13 @@ public class InnowhiteConstants {
 	 
 	 
 	 public static final String WHITEBOARD_SERVER_DATA = "WHITEBOARD";
+	 
 	 public static final String WHITEBOARD_SERVER = "wbSer";
 	 public static final String WHITEBOARD_SERVER_PORT = "wbSerPort";
+	 
+	 public static final String RTMPT_SERVER = "rtmptSer";
+	 public static final String RTMPT_SERVER_PORT = "rtmptSerPort";
+	 
 	 
 	 public static final String PREVIOUS_SESSION = "previousSession";
 	public static final String ORG_NAME = "orgName";

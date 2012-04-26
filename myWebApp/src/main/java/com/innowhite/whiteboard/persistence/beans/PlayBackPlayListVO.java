@@ -12,8 +12,17 @@ public class PlayBackPlayListVO {
     private String youtubeUrl;
     private String status;
     private String mp4Path;
+    private String webmPath;
     
-    public String getMp4Path() {
+    public String getWebmPath() {
+		return webmPath;
+	}
+
+	public void setWebmPath(String webmPath) {
+		this.webmPath = webmPath;
+	}
+
+	public String getMp4Path() {
 		return mp4Path;
 	}
 

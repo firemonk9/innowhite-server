@@ -34,6 +34,8 @@
 	String orgName = (String) request.getParameter("orgName");
 	String view = (String) request.getParameter("view");
 	String skypeId = LoadBalancerService.getSkypeId();
+	
+	
     ServerVO audioSerVO = LoadBalancerService.getServerURL("AUDIO",orgName);
     ServerVO skypeSerVO = LoadBalancerService.getServerURL("SKYPE",orgName);
     
@@ -41,6 +43,12 @@
 	String wbSer = (String) request.getAttribute(InnowhiteConstants.WHITEBOARD_SERVER);
 	String wbSerPort = (String) request.getAttribute(InnowhiteConstants.WHITEBOARD_SERVER_PORT);
 
+	
+	// Whiteboard server and port
+	String rtmptSer = (String) request.getAttribute(InnowhiteConstants.RTMPT_SERVER);
+	String rtmptSerPort = (String) request.getAttribute(InnowhiteConstants.RTMPT_SERVER_PORT);
+
+	
 	String phoneNum = (String) request.getAttribute(InnowhiteConstants.PHONE_NUM);
 	String meetingNum = (String) request.getAttribute(InnowhiteConstants.MEETING_NUM);
 
@@ -130,11 +138,8 @@ Learn more about Flex at http://flex.org
 <script type="text/javascript" src="http://download.skype.com/share/skypebuttons/js/skypeCheck.js"></script>
 
 <!--  BEGIN Browser History required section -->
-
-<!--[if IE]> <link rel="stylesheet" type="text/css" href="resources/styles/ie.css" />    <![endif]-->
-<!--[if !IE]><!-->	<link rel="stylesheet" type="text/css" href="resources/styles/styles.css" />  <!--<![endif]-->
 <link rel="stylesheet" type="text/css" href="history/history.css" />
-
+<link rel="stylesheet" type="text/css" media="screen" href="resources/styles/styles.css"  /> 
 <!--  END Browser History required section -->
 
 <style>
@@ -206,56 +211,25 @@ function make_skype_call(){
 var screen_sharing=false;
 
 function start_screen_share (stream_id,recordStatus, serverUrl,roomId,port){
- 	var userAgent = typeof(window.navigator.userAgent) != 'udefined' ? window.navigator.userAgent : '';
- 	var platform = window.navigator.platform;
-	
-	if(!pluginIsLoad()){
-		pluginRefresh();
-	}
-	
-	try{
-		if(serverUrl == null)
-			serverUrl='main.innowhite.com';
-		
-		if(port == null)
-			port=80;
-
-		if( userAgent.search(/MSIE/) >= 0){
-				if(pluginIsLoad()){
-					 var applet = "<APPLET archive='PluginApplet.jar' CODE='com.innowhite.pluginapplet.ScreenShareApplet.class' NAME='pluginapplet' HEIGHT='100' WIDTH='100' >  </APPLET>";
-			         var body = document.getElementsByTagName("body")[0];
-			         var div = document.createElement("div");
-			         div.innerHTML = applet;
-			         body.appendChild(div);
+		 var userAgent = typeof(window.navigator.userAgent) != 'udefined' ? window.navigator.userAgent : '';
+		 if( userAgent.search(/MSIE/) >= 0){
 				
-					document.pluginapplet.startScreenShare(stream_id, recordStatus, 75,2,serverUrl,roomId,port,15);
-					screen_sharing=true;
-					return "STARTED";
-				}else{
-					showDownloadPlugin();
-					return "NOT_SUPPORTED_BROWSER"
-				}
-		}else if(platform.indexOf('Mac') != -1){
-				if(!pluginIsLoad()){
-				//If plugin does not exist in Mac then calling Applet
-					 var applet = "<APPLET archive='PluginApplet.jar' CODE='com.innowhite.pluginapplet.MacScreenShareApplet.class' NAME='macpluginapplet' HEIGHT='100' WIDTH='100' >  </APPLET>";
-			         var body = document.getElementsByTagName("body")[0];
-			         var div = document.createElement("div");
-			         div.innerHTML = applet;
-			         body.appendChild(div);
-			         
-					 document.macpluginapplet.UpdatePluginFile(stream_id, recordStatus, 75,2,serverUrl,roomId,port,15);
-					
-					screen_sharing=true;
-					return "STARTED";
-				
-				}else{
-					plugin0().start_capture(stream_id, recordStatus, 75,2,serverUrl,roomId,port,15);
-					screen_sharing=true;
-					return "STARTED";
-				}
-		}else{
+				$("#notSapportedBrowser").center();
+				loadpopup('notSapportedBrowser');
 			
+				return false;
+		 } 
+		 if(!pluginIsLoad()){
+			pluginRefresh();
+		 }
+		//plugin().start_screen_share(stream_id);
+		 try{
+				if(serverUrl == null)
+					serverUrl='main.innowhite.com';
+				
+				if(port == null)
+					port=80;
+		    	//alert(" in start_screen_share"+pluginLoaded);
 				if(pluginIsLoad()){
 					plugin0().start_capture(stream_id, recordStatus, 75,2,serverUrl,roomId,port,15);
 					screen_sharing=true;
@@ -264,18 +238,18 @@ function start_screen_share (stream_id,recordStatus, serverUrl,roomId,port){
 					showDownloadPlugin();
 					return "NOT_SUPPORTED_BROWSER"
 				}
-		}
-     }catch(err){
-    	return "PLUGIN_NOT_AVAILABLE";
-     }
-     
-//"STARTED"
-//"FAILED_TO_START"
-//"PLUGIN_NOT_AVAILABLE"
+	     }catch(err){
+	    	return "PLUGIN_NOT_AVAILABLE";
+	     }
+	
+		//"STARTED"
+		//"FAILED_TO_START"
+		//"PLUGIN_NOT_AVAILABLE"
 }
 
 
 function stop_screen_share(){
+
 		try{
 			if(pluginIsLoad()){
 				plugin0().stop_capture();
@@ -446,10 +420,10 @@ function detectPluginSystem(downloadElement){
 
 	var platform = window.navigator.platform;
 	if(platform.indexOf('Win') != -1){
-		downloadElement.href = 'http://demo.innowhite.com/InnowhitePlugin.msi';
+		downloadElement.href = 'https://innowhite.com/InnowhitePlugin.msi';
 	}
 	if(platform.indexOf('Mac') != -1){
-		downloadElement.href = 'http://demo.innowhite.com/InnowhitePlugin.pkg';
+		downloadElement.href = 'https://innowhite.com/InnowhitePlugin.pkg';
 	}
 	if(platform.indexOf('Mac') != -1 && (( window.navigator.userAgent.search(/Chrome/) != -1 ) ||  (window.navigator.userAgent.search(/Safari/) != -1 ))){
 		setTimeout('showReloadPage()',10000);
@@ -532,7 +506,7 @@ function getCountryBucket(cntrCode){
 		"id", "<%=userName%>",
 		"quality", "high",
 		"bgcolor", "#ffffff",
-		"flashVars","audSer=<%=audioSerVO.getServerAddr()%>&audSerPort=<%=audioSerVO.getServerPort()%>&wbSer=<%=wbSer%>&wbSerPort=<%=wbSerPort%>&phoneNum=<%=phoneNum%>&meetingNum=<%=meetingNum%>&orgName=<%=orgName%>&joinroom=<%=joinroom%>&clientname=<%=clientname%>&groupLeader=<%=groupLeader%>",
+		"flashVars","rtmptSer=<%=rtmptSer%>&rtmptSerPort=<%=rtmptSerPort%>&audSer=<%=audioSerVO.getServerAddr()%>&audSerPort=<%=audioSerVO.getServerPort()%>&wbSer=<%=wbSer%>&wbSerPort=<%=wbSerPort%>&phoneNum=<%=phoneNum%>&meetingNum=<%=meetingNum%>&orgName=<%=orgName%>&joinroom=<%=joinroom%>&clientname=<%=clientname%>&groupLeader=<%=groupLeader%>",
 		"name", "<%=userName%>", "allowScriptAccess", "sameDomain",
 					"type", "application/x-shockwave-flash", "pluginspage",
 					"http://www.adobe.com/go/getflashplayer", "allowFullScreen",
@@ -579,7 +553,7 @@ function getCountryBucket(cntrCode){
 
 	<div id="downloadPluginTemplate" style="display:none;" class="popup-audio">
 			<div class="close">
-				<a href="" onclick="disablePopup(this);return false;" class="closebutton">
+				<a href="" onclick="disablePopup(this);return false;" style="display:block;float:right;margin-right:10px;">
 				<img src="images/pop-close-btn.png" alt="close"></a>
 			</div>
 			<div class="pop-heading1" >Screen Share </div>
@@ -601,7 +575,7 @@ function getCountryBucket(cntrCode){
 
 	<div id="pluginInstalledTemplate" class="popup-audio-enjoy" style="display:none;">
 			<div class="close">
-				<a href="" onclick="disablePopup(this);return false;" class="closeicon" >
+				<a href="" onclick="disablePopup(this);return false;" style="display:block;float:right;margin-right:10px;">
 						<img src="images/pop-close-btn.png" alt="close"></a>
 			</div>
 			<div class="enjoy">
@@ -611,7 +585,13 @@ function getCountryBucket(cntrCode){
 			</div>
 	</div>
 
-	<a href="skype:<%=skypeId%>?call" id="skypeid"><img src="http://download.skype.com/share/skypebuttons/buttons/call_green_white_153x63.png"  style="border: none;" width="153" height="63" alt="Skype Me!" /></a>
+<a href="skype:<%=skypeId%>?call" id="skypeid"><img src="http://download.skype.com/share/skypebuttons/buttons/call_green_white_153x63.png"  style="border: none;" width="153" height="63" alt="Skype Me!" /></a>
+
+<!--
+<object id="plugin0" type="application/x-innowhite" width="300" height="300">
+    <param name="onload" value="pluginLoaded" />
+</object>
+-->
 
 </body>
 </html>
