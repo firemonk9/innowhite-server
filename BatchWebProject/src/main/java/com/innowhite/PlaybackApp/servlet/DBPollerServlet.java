@@ -33,7 +33,7 @@ public class DBPollerServlet extends HttpServlet{
 		if (context != null) {
 			Timer t = new Timer();
 			DBPollerService st = (DBPollerService) context.getBean("dbPollerService");
-			t.scheduleAtFixedRate(st, 0, Constants.DEFAULT_POLLING_FREQ);
+			t.scheduleAtFixedRate(st, Constants.DEFAULT_POLLING_FREQ, Constants.DEFAULT_POLLING_FREQ);
 		}
     }
 	
