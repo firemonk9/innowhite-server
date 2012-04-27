@@ -26,29 +26,32 @@ public class CallBackUrlsDao {
 	@Transactional
 	public CallBackUrlsData getURLData(String roomId) {
 
-		log.debug("entered getURLData");
-		Session session = sessionFactory.getCurrentSession();
+		try {
+			log.debug("entered getURLData");
+			Session session = sessionFactory.getCurrentSession();
 
-		Criteria crit = session.createCriteria(RoomData.class);
-		@SuppressWarnings("unchecked")
-		List<RoomData> list2 = crit.add(Restrictions.eq("roomName", roomId)).list();
-
-		if (list2 != null && list2.size() == 1) {
-
-			RoomData roomVo = (RoomData) list2.get(0);
-			String orgName = roomVo.getOrgName();
-			String source = roomVo.getSource();
-
-			crit = session.createCriteria(CallBackUrlsData.class);
+			Criteria crit = session.createCriteria(RoomData.class);
 			@SuppressWarnings("unchecked")
-			List<CallBackUrlsData> list = crit.add(Restrictions.eq("orgName", orgName)).add(Restrictions.eq("source", source)).list();
-			if (list != null && list.size() == 1)
-				return list.get(0);
+			List<RoomData> list2 = crit.add(Restrictions.eq("roomName", roomId)).list();
 
+			if (list2 != null && list2.size() == 1) {
+
+				RoomData roomVo = (RoomData) list2.get(0);
+				String orgName = roomVo.getOrgName();
+				String source = roomVo.getSource();
+
+				crit = session.createCriteria(CallBackUrlsData.class);
+				@SuppressWarnings("unchecked")
+				List<CallBackUrlsData> list = crit.add(Restrictions.eq("orgName", orgName)).add(Restrictions.eq("source", source)).list();
+				if (list != null && list.size() == 1)
+					return list.get(0);
+
+			}
+			session.clear();
+			session.flush();
+		} catch (Exception e) {
+			log.error(e.getMessage(), e);
 		}
-		session.clear();
-		session.flush();
-
 		return null;
 	}
 

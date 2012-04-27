@@ -84,7 +84,7 @@ public class MP4ConverterDAO {
 			roomName = (String) query.uniqueResult().toString();
 			
 			
-			log.debug("Entered getRoomID  :" + roomName);
+			log.debug("Exiting getRoomID  :" + roomName);
 
 			session.clear();
 			session.flush();

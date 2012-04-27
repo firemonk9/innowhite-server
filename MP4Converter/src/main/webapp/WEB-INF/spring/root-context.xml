@@ -100,7 +100,15 @@
 	<bean id="mp4ConverterService" name="mp4ConverterService" class="com.innowhite.mp4converter.service.MP4ConverterService">
 		<property name="mp4ConverterDAO" ref="mp4ConverterDAO" />
 		<property name="ffmpegInfoVO" ref="ffmpegInfoVO" />
+		<property name="callBackUrlsDao" ref="callBackUrlsDao" />
+		
 	</bean>
+	
+	
+	<bean id="callBackUrlsDao" name="callBackUrlsDao" class="com.innowhite.mp4converter.dao.CallBackUrlsDao">
+		<property name="sessionFactory" ref="sessionFactory" />
+	</bean>
+	
 	
 	<bean id="mp4ConverterDAO" name="mp4ConverterDAO" class="com.innowhite.mp4converter.dao.MP4ConverterDAO">
 		<property name="sessionFactory" ref="sessionFactory" />

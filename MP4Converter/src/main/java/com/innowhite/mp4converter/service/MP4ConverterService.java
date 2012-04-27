@@ -53,7 +53,7 @@ public class MP4ConverterService {
 
 	public void processFLVFile(String unixFLVPath, String fileId) {
 		log.debug("entered processFLVFile" + "====" + fileId + "====" + unixFLVPath);
-
+		try{
 		String winFilePath = ffmpegInfoVO.getWinFilePath();
 		String fileName = unixFLVPath.substring(unixFLVPath.lastIndexOf("/") + 1); // test.flv
 		String inputFLVPath = winFilePath + fileName; // Z:/videos/ + test.flv
@@ -70,6 +70,9 @@ public class MP4ConverterService {
 			}
 			NotifyPlayBackReadyStatus.notifyPlayBackReady(roomName, url);
 
+		}
+		}catch(Exception e){
+			log.error("" + e.getMessage(), e);
 		}
 	}
 
