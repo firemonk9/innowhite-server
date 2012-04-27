@@ -9,7 +9,8 @@ public class PlayBackPlayListService {
 
 	public static void main(String args[]) {
 		// System.err.println(getPlayListXML("Dhiraj4"));
-		System.err.println(getServerURL("c:/qwe/qweqw/test.mp4"));
+		System.err.println(getFilePath("/opt/InnowhiteData/videos/826913489_0_1288434469_v_bucket_overlay_avi_session1_meeting.webm"));
+		
 	}
 
 	public static String getPlayListXML(String roomId) {
@@ -26,14 +27,22 @@ public class PlayBackPlayListService {
 			sb.append("<width>" + playBackPlayListVO.getWidth() + "</width>");
 			sb.append("<height>" + playBackPlayListVO.getHeight() + "</height>");
 			sb.append("<youtube>" + playBackPlayListVO.getYoutubeUrl() + "</youtube>");
-			sb.append("<status>" + playBackPlayListVO.getStatus() + "</status>");
-			sb.append("<mp4path>" + playBackPlayListVO.getMp4Path() + "</mp4path>");
-			sb.append("<webMpath>" + playBackPlayListVO.getWebmPath() + "</webMpath>");
-
+			sb.append("<status>" + playBackPlayListVO.getStatus() + "</status>");			
+			sb.append("<mp4path>" + getFilePath(playBackPlayListVO.getMp4Path()) + "</mp4path>");
+			sb.append("<webMpath>" + getFilePath(playBackPlayListVO.getWebmPath()) + "</webMpath>");
 			sb.append("</videoSrc>");
 		}
 
 		return sb.toString();
+	}
+
+	private static String getFilePath(String path) {
+		if(path != null){
+			if(path.indexOf("/") > -1){
+				return path.substring(path.lastIndexOf("/")+1);
+			}
+		}
+		return null;
 	}
 
 	private static String getServerURL(String absPath) {
