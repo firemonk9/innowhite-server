@@ -163,9 +163,10 @@ public class MP4ConverterService {
 				playBackObj.setWebmPath(unixMP4Path);
 
 			playBackObj.setId(Long.parseLong(strFileId));
-
-			mp4ConverterDAO.updateMp4FilePath(playBackObj);
-
+			if(mp4)
+				mp4ConverterDAO.updateMp4FilePath(playBackObj);
+			else
+				mp4ConverterDAO.updateWebMFilePath(playBackObj);
 		} catch (Exception ex) {
 			log.error(ex.getMessage(), ex);
 		}

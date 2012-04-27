@@ -15,41 +15,41 @@ import com.innowhite.mp4converter.model.RoomData;
 
 public class CallBackUrlsDao {
 
-    SessionFactory sessionFactory;
+	SessionFactory sessionFactory;
 
-    private static final Logger log = LoggerFactory.getLogger(CallBackUrlsDao.class);
+	private static final Logger log = LoggerFactory.getLogger(CallBackUrlsDao.class);
 
-    public void setSessionFactory(SessionFactory sessionFactory) {
-	this.sessionFactory = sessionFactory;
-    }
-    
-    @Transactional
-    public CallBackUrlsData getURLData(String roomId) {
-
-	log.debug("entered getURLData");
-	Session session = sessionFactory.getCurrentSession();
-
-	Criteria crit = session.createCriteria(RoomData.class);
-	@SuppressWarnings("unchecked")
-	List<RoomData> list2 = crit.add(Restrictions.eq("roomName", roomId)).list();
-
-	if (list2 != null && list2.size() == 1) {
-
-	    RoomData roomVo = (RoomData) list2.get(0);
-	    String orgName = roomVo.getOrgName();
-	    String source = roomVo.getSource();
-
-	    crit = session.createCriteria(CallBackUrlsData.class);
-	    @SuppressWarnings("unchecked")
-	    List<CallBackUrlsData> list = crit.add(Restrictions.eq("orgName", orgName)).add(Restrictions.eq("source", source)).list();
-	    if(list != null && list.size() ==1)
-	 	return list.get(0);
-	    
+	public void setSessionFactory(SessionFactory sessionFactory) {
+		this.sessionFactory = sessionFactory;
 	}
-	session.clear();
-	session.flush();
 
-	return null;
-    }
+	@Transactional
+	public CallBackUrlsData getURLData(String roomId) {
+
+		log.debug("entered getURLData");
+		Session session = sessionFactory.getCurrentSession();
+
+		Criteria crit = session.createCriteria(RoomData.class);
+		@SuppressWarnings("unchecked")
+		List<RoomData> list2 = crit.add(Restrictions.eq("roomName", roomId)).list();
+
+		if (list2 != null && list2.size() == 1) {
+
+			RoomData roomVo = (RoomData) list2.get(0);
+			String orgName = roomVo.getOrgName();
+			String source = roomVo.getSource();
+
+			crit = session.createCriteria(CallBackUrlsData.class);
+			@SuppressWarnings("unchecked")
+			List<CallBackUrlsData> list = crit.add(Restrictions.eq("orgName", orgName)).add(Restrictions.eq("source", source)).list();
+			if (list != null && list.size() == 1)
+				return list.get(0);
+
+		}
+		session.clear();
+		session.flush();
+
+		return null;
+	}
 
 }

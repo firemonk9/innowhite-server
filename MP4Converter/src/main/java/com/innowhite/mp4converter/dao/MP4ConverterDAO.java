@@ -19,6 +19,24 @@ public class MP4ConverterDAO {
 	}
 
 	@Transactional
+	public void updateWebMFilePath(PlayBackPlayList playBackObj) {
+		log.debug("entered updateMp4FilePath");
+		int returnVal = 0;
+		try {
+			Session session = sessionFactory.getCurrentSession();
+
+			String query = "update PlayBackPlayList set webmPath=:webmPath  where id=:id";
+			returnVal = session.createQuery(query).setString("webmPath", playBackObj.getWebmPath()).setLong("id", playBackObj.getId()).executeUpdate();
+			session.clear();
+			session.flush();
+			log.debug("retuned updateMp4FilePath val " + returnVal);
+		} catch (Exception e) {
+			log.error(e.getMessage(), e);
+		}
+	}
+
+	
+	@Transactional
 	public void updateMp4FilePath(PlayBackPlayList playBackObj) {
 		log.debug("entered updateMp4FilePath");
 		int returnVal = 0;
@@ -31,10 +49,10 @@ public class MP4ConverterDAO {
 			session.flush();
 			log.debug("retuned updateMp4FilePath val " + returnVal);
 		} catch (Exception e) {
-			e.printStackTrace();
+			log.error(e.getMessage(), e);
 		}
 	}
-
+	
 	@Transactional
 	public int getRoomMaxID() {
 		int intmaxId = 0;
@@ -61,8 +79,11 @@ public class MP4ConverterDAO {
 			log.debug("Entered getRoomID");
 			Session session = sessionFactory.getCurrentSession();
 			Long val = Long.parseLong(id);
-			Query query = session.createSQLQuery("select roomName from PlayBackPlayList where id=:id").setLong("id", val);
-			roomName = (String) query.uniqueResult();
+			String strquery = "select room_id from playback_playlist where id=:id";
+			Query query = session.createSQLQuery(strquery).setLong("id", val);
+			roomName = (String) query.uniqueResult().toString();
+			
+			
 			log.debug("Entered getRoomID  :" + roomName);
 
 			session.clear();
