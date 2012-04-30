@@ -28,7 +28,6 @@ import com.innowhite.PlaybackApp.util.PlaybackUtil;
 import com.innowhite.PlaybackApp.util.PlaybackVO;
 import com.innowhite.PlaybackApp.util.ProcessExecutor;
 
-//
 
 public class PlaybackDataService {
 
@@ -1292,77 +1291,91 @@ public class PlaybackDataService {
 
 	}
 
-	private static void prepareAudioForSessionBucket(SessionBucket sb, int j, AudioData audioData, long sessionStartTime, long sessionEndTime) {
+	private void prepareAudioForSessionBucket(SessionBucket sb, int j, AudioData audioData, long sessionStartTime, long sessionEndTime) {
 		log.debug("-----------------------------------------");
 		log.debug("preparing Audio " + j + " ForSessionBucket.....");
 		log.debug("-----------------------------------------");
-		long audioStartTime = audioData.getStartTime().getTime();
-		long audioEndTime = audioData.getEndTime().getTime();
-		String audioPath = audioData.getFilePath();
-		log.debug("audioStartStime::" + audioData.getStartTime());
-		log.debug("audioEndStime::" + audioData.getEndTime());
-		log.debug("audio Path::" + audioPath);
-
-		String cmd = null;
-		 String newAudioPath = PlaybackUtil.getUnique();
-		boolean sessionBucketFlag = true;
-		AudioData ad = new AudioData();
-
-		String out_audio_path = audioPath.replace(".wav", "_" + newAudioPath + "_a_bucket.mp3");
-
-		if (audioStartTime <= sessionStartTime && audioEndTime <= sessionEndTime && audioEndTime >= sessionStartTime) {
-			log.debug("audioStartTime<=sessionStartTime && audioEndTime<=sessionEndTime && audioEndTime>=sessionStartTime");
-			// cmd =
-			// "-i "+audioPath+" -ss "+PlaybackUtil.secondsToHours(sessionStartTime-audioStartTime)+" -t "+PlaybackUtil.secondsToHours(audioEndTime-sessionStartTime)+" -ab 32k -acodec libmp3lame -qscale 8 -ab 196608 "
-			// +audioPath.replace(".wav", newAudioPath+".mp3");
-			cmd = " -i " + audioPath + " -ss " + PlaybackUtil.secondsToHours(sessionStartTime - audioStartTime) + " -t " + PlaybackUtil.secondsToHours(audioEndTime - sessionStartTime)
-					+ " -ar 44100 -ab 64k " + out_audio_path;
-			executeFfmpegAndSetAudioData(cmd, ad, sessionStartTime, audioEndTime, out_audio_path);
-		} else if (audioStartTime <= sessionStartTime && audioEndTime >= sessionEndTime) {
-			log.debug("audioStartTime<=sessionStartTime && audioEndTime>=sessionEndTime");
-			// cmd =
-			// "-i "+audioPath+" -ss "+PlaybackUtil.secondsToHours(sessionStartTime-audioStartTime)+" -t "+PlaybackUtil.secondsToHours(sessionEndTime-sessionStartTime)+" -ab 32k -acodec libmp3lame -qscale 8 -ab 196608 "
-			// +audioPath.replace(".wav", newAudioPath+".mp3");
-			cmd = " -i " + audioPath + " -ss " + PlaybackUtil.secondsToHours(sessionStartTime - audioStartTime) + " -t " + PlaybackUtil.secondsToHours(sessionEndTime - sessionStartTime)
-					+ " -ar 44100 -ab 64k " + out_audio_path;
-			executeFfmpegAndSetAudioData(cmd, ad, sessionStartTime, sessionEndTime, out_audio_path);
-		}
-		// audio in b/w the session
-		else if (audioStartTime >= sessionStartTime && audioStartTime <= sessionEndTime && audioEndTime <= sessionEndTime && audioEndTime >= sessionStartTime) {
-			log.debug("audioStartTime>=sessionStartTime && audioStartTime<=sessionEndTime && audioEndTime<=sessionEndTime && audioEndTime>=sessionStartTime");
-			// cmd =
-			// "-i "+audioPath+" -ss 00:00:00 -t "+PlaybackUtil.secondsToHours(audioEndTime-audioStartTime)+"  -ab 32k -acodec libmp3lame -qscale 8 -ab 196608 "
-			// +audioPath.replace(".wav", newAudioPath+".mp3");
-			cmd = " -i " + audioPath + " -ss 00:00:00 -t " + PlaybackUtil.secondsToHours(audioEndTime - audioStartTime) + " -ar 44100 -ab 64k " + out_audio_path;
-			executeFfmpegAndSetAudioData(cmd, ad, audioStartTime, audioEndTime, out_audio_path);
-		}
-		// starts in b/w and ends after
-		else if (audioStartTime >= sessionStartTime && audioStartTime <= sessionEndTime && audioEndTime >= sessionEndTime) {
-			log.debug("audioStartTime >= sessionStartTime && audioStartTime<=sessionEndTime && audioEndTime >= sessionEndTime");
-			// cmd =
-			// "-i "+audioPath+" -ss 00:00:00 -t "+PlaybackUtil.secondsToHours(sessionEndTime-audioStartTime)+"  -ab 32k -acodec libmp3lame -qscale 8 -ab 196608 "
-			// +audioPath.replace(".wav", newAudioPath+".mp3");
-			cmd = " -i " + audioPath + " -ss 00:00:00 -t " + PlaybackUtil.secondsToHours(sessionEndTime - audioStartTime) + " -ar 44100 -ab 64k " + out_audio_path;
-			executeFfmpegAndSetAudioData(cmd, ad, audioStartTime, sessionEndTime, out_audio_path);
-		} else {
-			sessionBucketFlag = false;
-		}
-
-		if (sessionBucketFlag) {
-			// log.debug("audioData"+j+"::"+ad);
-			// log.debug("audioData: Start Time:: "+ad.getStartTime());
-			// log.debug("audioData: End Time:: "+ad.getEndTime());
-			if (ad != null) {
-				log.debug("audioData: File Path:: " + ad.getFilePath());
-				sb.getAudioDataList().add(ad);
-			} else {
-				log.warn("no audio");
-				// log.debug("audioData: File Path:: " + ad.getFilePath());
-				// sb.getAudioDataList().add(ad);
+		try{
+			
+			String roomId = audioData.getRoomName();
+			Date audioEndDate =  audioData.getEndTime();
+			log.debug("audioEndDate from audio_data table::::" + audioData.getEndTime());
+			if(audioEndDate==null || audioEndDate.equals(null)){
+				audioEndDate = roomDao.getRoomEndDate(roomId);
 			}
-			log.debug("Audio " + j + " was added to session bucket!");
-		} else {
-			log.debug("Audio " + j + " was NOT added to session bucket!");
+			log.debug("audioEndDate--::::" + audioEndDate);	
+			
+			long audioStartTime = audioData.getStartTime().getTime();
+			long audioEndTime = audioEndDate.getTime();
+			String audioPath = audioData.getFilePath();
+			log.debug("audioStartTime::" + audioStartTime);
+			log.debug("audioEndTime::" + audioEndTime);
+			log.debug("audio Path::" + audioPath);
+	
+			String cmd = null;
+			 String newAudioPath = PlaybackUtil.getUnique();
+			boolean sessionBucketFlag = true;
+			AudioData ad = new AudioData();
+	
+			String out_audio_path = audioPath.replace(".wav", "_" + newAudioPath + "_a_bucket.mp3");
+	
+			if (audioStartTime <= sessionStartTime && audioEndTime <= sessionEndTime && audioEndTime >= sessionStartTime) {
+				log.debug("audioStartTime<=sessionStartTime && audioEndTime<=sessionEndTime && audioEndTime>=sessionStartTime");
+				// cmd =
+				// "-i "+audioPath+" -ss "+PlaybackUtil.secondsToHours(sessionStartTime-audioStartTime)+" -t "+PlaybackUtil.secondsToHours(audioEndTime-sessionStartTime)+" -ab 32k -acodec libmp3lame -qscale 8 -ab 196608 "
+				// +audioPath.replace(".wav", newAudioPath+".mp3");
+				cmd = " -i " + audioPath + " -ss " + PlaybackUtil.secondsToHours(sessionStartTime - audioStartTime) + " -t " + PlaybackUtil.secondsToHours(audioEndTime - sessionStartTime)
+						+ " -ar 44100 -ab 64k " + out_audio_path;
+				executeFfmpegAndSetAudioData(cmd, ad, sessionStartTime, audioEndTime, out_audio_path);
+			} else if (audioStartTime <= sessionStartTime && audioEndTime >= sessionEndTime) {
+				log.debug("audioStartTime<=sessionStartTime && audioEndTime>=sessionEndTime");
+				// cmd =
+				// "-i "+audioPath+" -ss "+PlaybackUtil.secondsToHours(sessionStartTime-audioStartTime)+" -t "+PlaybackUtil.secondsToHours(sessionEndTime-sessionStartTime)+" -ab 32k -acodec libmp3lame -qscale 8 -ab 196608 "
+				// +audioPath.replace(".wav", newAudioPath+".mp3");
+				cmd = " -i " + audioPath + " -ss " + PlaybackUtil.secondsToHours(sessionStartTime - audioStartTime) + " -t " + PlaybackUtil.secondsToHours(sessionEndTime - sessionStartTime)
+						+ " -ar 44100 -ab 64k " + out_audio_path;
+				executeFfmpegAndSetAudioData(cmd, ad, sessionStartTime, sessionEndTime, out_audio_path);
+			}
+			// audio in b/w the session
+			else if (audioStartTime >= sessionStartTime && audioStartTime <= sessionEndTime && audioEndTime <= sessionEndTime && audioEndTime >= sessionStartTime) {
+				log.debug("audioStartTime>=sessionStartTime && audioStartTime<=sessionEndTime && audioEndTime<=sessionEndTime && audioEndTime>=sessionStartTime");
+				// cmd =
+				// "-i "+audioPath+" -ss 00:00:00 -t "+PlaybackUtil.secondsToHours(audioEndTime-audioStartTime)+"  -ab 32k -acodec libmp3lame -qscale 8 -ab 196608 "
+				// +audioPath.replace(".wav", newAudioPath+".mp3");
+				cmd = " -i " + audioPath + " -ss 00:00:00 -t " + PlaybackUtil.secondsToHours(audioEndTime - audioStartTime) + " -ar 44100 -ab 64k " + out_audio_path;
+				executeFfmpegAndSetAudioData(cmd, ad, audioStartTime, audioEndTime, out_audio_path);
+			}
+			// starts in b/w and ends after
+			else if (audioStartTime >= sessionStartTime && audioStartTime <= sessionEndTime && audioEndTime >= sessionEndTime) {
+				log.debug("audioStartTime >= sessionStartTime && audioStartTime<=sessionEndTime && audioEndTime >= sessionEndTime");
+				// cmd =
+				// "-i "+audioPath+" -ss 00:00:00 -t "+PlaybackUtil.secondsToHours(sessionEndTime-audioStartTime)+"  -ab 32k -acodec libmp3lame -qscale 8 -ab 196608 "
+				// +audioPath.replace(".wav", newAudioPath+".mp3");
+				cmd = " -i " + audioPath + " -ss 00:00:00 -t " + PlaybackUtil.secondsToHours(sessionEndTime - audioStartTime) + " -ar 44100 -ab 64k " + out_audio_path;
+				executeFfmpegAndSetAudioData(cmd, ad, audioStartTime, sessionEndTime, out_audio_path);
+			} else {
+				sessionBucketFlag = false;
+			}
+	
+			if (sessionBucketFlag) {
+				// log.debug("audioData"+j+"::"+ad);
+				// log.debug("audioData: Start Time:: "+ad.getStartTime());
+				// log.debug("audioData: End Time:: "+ad.getEndTime());
+				if (ad != null) {
+					log.debug("audioData: File Path:: " + ad.getFilePath());
+					sb.getAudioDataList().add(ad);
+				} else {
+					log.warn("no audio");
+					// log.debug("audioData: File Path:: " + ad.getFilePath());
+					// sb.getAudioDataList().add(ad);
+				}
+				log.debug("Audio " + j + " was added to session bucket!");
+			} else {
+				log.debug("Audio " + j + " was NOT added to session bucket!");
+			}
+		}catch(Exception e){
+			log.error(e.getMessage(),e);
+			e.printStackTrace();
 		}
 
 	}
