@@ -28,6 +28,7 @@ import com.innowhite.red5.util.InnowhiteConstants;
 import com.innowhite.red5.util.UserInfo;
 import com.innowhite.red5.util.Utility;
 import com.innowhite.red5.vo.ChatVO;
+import com.innowhite.red5.vo.RoomSharedVO;
 import com.innowhite.red5.vo.RoomVO;
 import com.innowhite.red5.vo.ShapeEventsVO;
 import com.innowhite.red5.vo.UserListVO;
@@ -48,6 +49,7 @@ public class Main extends MultiThreadedApplicationAdapter {
 
 	private HashMap<String, RoomVO> shapeSeqMap = new HashMap<String, RoomVO>();
 	private HashMap<String, Integer> chatSeqMap = new HashMap<String, Integer>();
+	private HashMap<String, Integer> roomInfoSeqMap = new HashMap<String, Integer>();
 	// private HashMap<String, Integer> userSeqMap = new HashMap<String,
 	// Integer>();
 
@@ -112,14 +114,6 @@ public class Main extends MultiThreadedApplicationAdapter {
 
 	public boolean updateShapeEvents(ShapeEventsVO v) {
 
-		// if(v.getElems()!=null)
-		// {
-		// ArrayList elems=v.getElems();
-		// for(int i=0;i<elems.size();++i)
-		// {
-		// PointVO v1=(PointVO)elems.get(i);
-		// }
-		// }
 		try {
 			ISharedObject objectDrawingSO = this.getSharedObject(Red5.getConnectionLocal().getScope(), "ObjectDrawingSO");
 
@@ -141,13 +135,7 @@ public class Main extends MultiThreadedApplicationAdapter {
 			}
 
 			v.setObjDate(timeVal);
-			// log.debug(" obj time:: "+timeVal);
 			roomVO.setSeqNum(num);
-			// shapeSeqMap.put(Red5.getConnectionLocal().getScope().getName(),
-			// num);
-
-			// SavingData.saveToFile(v,
-			// Red5.getConnectionLocal().getScope().getName());
 
 			long l = (new Date()).getTime() - (Long) scope.getAttribute("START_TIME");
 
@@ -197,14 +185,6 @@ public class Main extends MultiThreadedApplicationAdapter {
 				// userListSO.setAttribute(uservo.getUsername(), uservo);
 
 			} else {
-
-				// Remove a user if request from from moderator to remove to a
-				// user..
-				// if(uservo.getRemoveMe() != null &&
-				// userListSO.getAttribute(uservo.getRemoveMe()) != null){
-				// userListSO.removeAttribute(uservo.getRemoveMe());
-				// }
-
 			}
 
 			int num = videoSeqMap.get(Red5.getConnectionLocal().getScope().getName());
@@ -213,17 +193,6 @@ public class Main extends MultiThreadedApplicationAdapter {
 			userListSO.setAttribute("" + num++, uservo);
 
 			videoSeqMap.put(Red5.getConnectionLocal().getScope().getName(), num);
-			// Map<String, Object> m = userListSO.getData();
-			// Iterator itert = m.keySet().iterator();
-			// while (itert.hasNext()) {
-			// String objj = (String) itert.next();
-			// if (m.get(objj) != null) {
-			// // UserListVO cannot be cast to ShapeEventsVO
-			//
-			// UserListVO seo = (UserListVO) m.get(objj);
-			// // log.debug(m+"   "+"  "+objj+"   " );
-			// }
-			// }
 
 			// log.debug(" the size of user list is ########: " + num);
 		} catch (Exception e) {
@@ -241,10 +210,52 @@ public class Main extends MultiThreadedApplicationAdapter {
 			chatSeqMap.put(Red5.getConnectionLocal().getScope().getName(), num);
 
 			chatSO.setAttribute("" + chatvo.getSeq(), chatvo);
-			SavingData.saveToFile(chatvo, Red5.getConnectionLocal().getScope().getName());
+			//SavingData.saveToFile(chatvo, Red5.getConnectionLocal().getScope().getName());
 		} catch (Exception e) {
 			e.printStackTrace();
 		}
+		return true;
+	}
+
+	public boolean updateRoom12(RoomSharedVO mroomvo) {
+		try {
+			System.err.println("testing ...mroomvo"+mroomvo);
+			ISharedObject roomInfoSO = this.getSharedObject(Red5.getConnectionLocal().getScope(), "MyRoomSO");
+
+			//int num = roomInfoSeqMap.get(Red5.getConnectionLocal().getScope().getName());
+			//roomInfoSO.setSeq(num++);
+			//roomInfoSeqMap.put(Red5.getConnectionLocal().getScope().getName(), num);
+
+			roomInfoSO.setAttribute("" + 0, mroomvo);
+			
+			System.err.println(" userso :: lock : " + mroomvo.isLock());
+
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
+		return true;
+	}
+
+	public boolean updateRoom12(boolean lock, String moderator, String presenter) {
+		try {
+			System.err.println("testing ...updateRoom12 lock"+lock);
+			ISharedObject roomInfoSO = this.getSharedObject(Red5.getConnectionLocal().getScope(), "MyRoomSO");
+			RoomSharedVO mroomvo = new RoomSharedVO();
+			mroomvo.setLock(lock);
+			mroomvo.setModerator(moderator);
+			mroomvo.setPresenter(presenter);
+			roomInfoSO.setAttribute("" + 0, mroomvo);
+			
+		//	System.err.println(" userso :: lock : " + lock + " moderator: " + moderator + "  presenter:" + presenter);
+			//List<Object> l = new ArrayList<Object>();
+//			l.add(lock);
+//			l.add(moderator);
+//			l.add(presenter);
+			//userSO.sendMessage("receiveRoomInfo", l);
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
+
 		return true;
 	}
 
@@ -417,8 +428,8 @@ public class Main extends MultiThreadedApplicationAdapter {
 			// this.createSharedObject(room, "CurrentCounterSO", false);
 			this.createSharedObject(room, "UserListSO", false);
 			this.createSharedObject(room, "ChatSO", false);
-
 			this.createSharedObject(room, "VideoDisplaySO", false);
+			this.createSharedObject(room, "MyRoomSO", false);
 
 			room.setAttribute("keyValue", new Integer(0));
 			RoomVO roomVO = new RoomVO();
@@ -431,23 +442,10 @@ public class Main extends MultiThreadedApplicationAdapter {
 
 			log.debug(" setting the seq " + videoSeqMap.size() + " chat soze  " + chatSeqMap.size());
 
-			// ISharedObject userSharedObj = this.getSharedObject(room,
-			// "UserListSO");
-
 			String msg = room.getName() + "_STARTED_" + sc.getCreationTime();
 
 			messagingService.sendRoomMessage(msg);
 
-			// UserCacheService.addRoomIdUserSharedObj(room.getName(),
-			// userSharedObj);
-
-			// UserCacheService.addRoomIdUserSharedObj(room.getName(),this.getSharedObject(room,
-			// room.getName()));
-
-			// temp code begin
-
-			// log.debug(" :::: "+);
-			// temp code end
 		} catch (Exception e) {
 			e.printStackTrace();
 		}
@@ -457,10 +455,6 @@ public class Main extends MultiThreadedApplicationAdapter {
 	private boolean checkRoomExists(String str) {
 		return true;
 
-		// if(str == "wbroom9")
-		// return true;
-		// else
-		// return false;
 	}
 
 	/**
@@ -506,12 +500,7 @@ public class Main extends MultiThreadedApplicationAdapter {
 						if (clientNamesMap.get(conn.getScope().getName()).size() > 1)
 
 							log.debug(" clientNamesMap  " + clientNamesMap + " size :" + clientNamesMap.size());
-						// Utility.printMap(map);
 
-						// clientNamesMap.put(client.getId(),
-						// (String)params[0]);
-
-						// }
 					}
 
 				}
@@ -675,16 +664,6 @@ public class Main extends MultiThreadedApplicationAdapter {
 
 	public void updateUserJoinVoiceConf(String userID, String roomID) {
 
-		// Object o = Red5.get;
-		// System.err.println(o.getClass()+"   ");
-
-		// o = Red5.getConnectionLocal().get
-
-		// UserListVO uservo = (UserListVO)userListSO.getAttribute("Harry");
-		// uservo.setUserAudioEnter(3);
-		//
-		// userListSO.setAttribute("Harry",uservo);
-
 	}
 
 	/**
@@ -698,12 +677,7 @@ public class Main extends MultiThreadedApplicationAdapter {
 		super.roomDisconnect(conn);
 		Constants.bsessionFlag = false;
 		log.debug(" roomDisconnect  ###### ");
-		// log.info("RoomDisconnect Called for : " + conn.getScope().getName());
-		// int x = WhiteboardAuthenticationDAOImpl.updatePlayBackInActive(conn
-		// .getScope().getName());
-		// System.out
-		// .println("x value after update in roomDisconnect to update Inactive flag. "
-		// + conn.getScope().getName() + "  x " + x);
+
 	}
 
 	/** {@inheritDoc} */

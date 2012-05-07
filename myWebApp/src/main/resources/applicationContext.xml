@@ -25,7 +25,7 @@
 
 	<!-- A destination in ActiveMQ -->
 	<bean id="destination" class="org.apache.activemq.command.ActiveMQQueue">
-		<constructor-arg value="FOO.TEST" />
+		<constructor-arg value="Innowhite.documents" />
 	</bean>
 
 	<!-- A destination in ActiveMQ -->

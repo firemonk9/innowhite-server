@@ -4,7 +4,32 @@ import java.io.Serializable;
 
 public class RoomSharedVO implements Serializable {
 
+	/**
+	 * 
+	 */
+	private static final long serialVersionUID = 1L;
 	private boolean lock;
+	private String presenter;
+	private String moderator;
+	private int roomStartTime;
+	private int roomEndTime;
+
+
+	public String getPresenter() {
+		return presenter;
+	}
+
+	public void setPresenter(String presenter) {
+		this.presenter = presenter;
+	}
+
+	public String getModerator() {
+		return moderator;
+	}
+
+	public void setModerator(String moderator) {
+		this.moderator = moderator;
+	}
 
 	public boolean isLock() {
 		return lock;
@@ -30,7 +55,5 @@ public class RoomSharedVO implements Serializable {
 		this.roomEndTime = roomEndTime;
 	}
 
-	private int roomStartTime;
-	private int roomEndTime;
-
+	
 }

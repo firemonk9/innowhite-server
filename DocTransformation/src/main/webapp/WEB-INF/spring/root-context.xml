@@ -40,7 +40,7 @@
 	<!-- The Spring message listener container configuration -->
 	<jms:listener-container container-type="default"
 		connection-factory="connectionFactory" acknowledge="auto">
-		<jms:listener destination="FOO.TEST" ref="simpleMessageListener"
+		<jms:listener destination="Innowhite.documents" ref="simpleMessageListener"
 			method="onMessage" />
 	</jms:listener-container>
 
