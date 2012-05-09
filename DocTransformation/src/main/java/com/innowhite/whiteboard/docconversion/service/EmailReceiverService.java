@@ -65,7 +65,6 @@ public class EmailReceiverService {
 			Address[] strAdd = mimeMessage.getFrom();
 			InternetAddress fromAddress = null;
 			String fromEmail = null;
-
 			for (int i = 0; i < strAdd.length; i++) {
 				if (strAdd[i] instanceof InternetAddress) {
 
@@ -74,10 +73,11 @@ public class EmailReceiverService {
 					break;
 				}
 			}
-
 			log.debug("fromEmail :::" + fromEmail);
+
 			docConversionBean.setSenderEmail(fromEmail);
-			
+			docConversionBean.setUserID("innowhite");  //Get userid dynamically.
+
 			log.debug("mimeMessage.getContentType() :::"
 					+ mimeMessage.getContentType());
 
@@ -103,7 +103,6 @@ public class EmailReceiverService {
 	private boolean handleMultipart(MimeMultipart mp) {
 		log.info(" Entering handleMultipart...");
 		int conversionId = -1;
-		String userId = "innowhite";
 		boolean isAttachment = false;
 		try {
 			int count = mp.getCount();
@@ -116,8 +115,11 @@ public class EmailReceiverService {
 					log.debug("content InputStream...fileName:::"
 							+ bp.getFileName());
 
-					conversionId = saveLDCToGetConversionId(userId, docConversionBean.getSenderEmail());
-					File dir = new File(docConversionBean.getDocSharedLoc() + conversionId);
+					conversionId = saveLDCToGetConversionId(
+							docConversionBean.getUserID(),
+							docConversionBean.getSenderEmail());
+					File dir = new File(docConversionBean.getDocSharedLoc()
+							+ conversionId);
 					boolean dirCreated = dir.mkdir();
 
 					String filePath = dir + separator + bp.getFileName();
@@ -136,7 +138,6 @@ public class EmailReceiverService {
 						out.close();
 					}
 					isAttachment = true;
-					docConversionBean.setUserID(userId);
 					docConversionBean.setFilePath(filePath);
 					docConversionBean.setConversionID(conversionId);
 
