@@ -6,6 +6,7 @@ public class LiveDocConversionVO {
 	private String thumbnailsCreated;
 	private String swfCreated;
 	private String userID;
+	private String senderEmail;
 	
 	
 	public int getConversionID() {
@@ -39,6 +40,12 @@ public class LiveDocConversionVO {
 		return "LiveDocConversionVO [conversionID=" + conversionID
 				+ ", thumbnailsCreated=" + thumbnailsCreated + ", swfCreated="
 				+ swfCreated + ", userID=" + userID + "]";
+	}
+	public String getSenderEmail() {
+		return senderEmail;
+	}
+	public void setSenderEmail(String senderEmail) {
+		this.senderEmail = senderEmail;
 	}
 	
 	

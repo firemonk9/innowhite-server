@@ -53,6 +53,7 @@
 	
 	<bean id="docConvBean" name="docConvBean" class="com.innowhite.whiteboard.docconversion.vo.DocConversionBean">
 		<property name="serverFilePath" value="${SHARED_PATH}" />
+		<property name="docSharedLoc" value="${DOCUMENT_SHARE_LOCATION}" />
 	</bean>
 	
 	<bean id="msgPersistDao" name="msgPersistDao"

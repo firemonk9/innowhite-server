@@ -76,6 +76,8 @@ public class EmailReceiverService {
 			}
 
 			log.debug("fromEmail :::" + fromEmail);
+			docConversionBean.setSenderEmail(fromEmail);
+			
 			log.debug("mimeMessage.getContentType() :::"
 					+ mimeMessage.getContentType());
 
@@ -101,9 +103,8 @@ public class EmailReceiverService {
 	private boolean handleMultipart(MimeMultipart mp) {
 		log.info(" Entering handleMultipart...");
 		int conversionId = -1;
-		String userId = "altanuja";
+		String userId = "innowhite";
 		boolean isAttachment = false;
-		String fromEmail = null;
 		try {
 			int count = mp.getCount();
 			for (int i = 0; i < count; i++) {
@@ -115,8 +116,8 @@ public class EmailReceiverService {
 					log.debug("content InputStream...fileName:::"
 							+ bp.getFileName());
 
-					conversionId = saveLDCToGetConversionId(userId, fromEmail);
-					File dir = new File("Z:/pptx/" + conversionId);
+					conversionId = saveLDCToGetConversionId(userId, docConversionBean.getSenderEmail());
+					File dir = new File(docConversionBean.getDocSharedLoc() + conversionId);
 					boolean dirCreated = dir.mkdir();
 
 					String filePath = dir + separator + bp.getFileName();
