@@ -236,28 +236,6 @@ public class Main extends MultiThreadedApplicationAdapter {
 		return true;
 	}
 
-	public boolean updateRoom12(boolean lock, String moderator, String presenter) {
-		try {
-			System.err.println("testing ...updateRoom12 lock"+lock);
-			ISharedObject roomInfoSO = this.getSharedObject(Red5.getConnectionLocal().getScope(), "MyRoomSO");
-			RoomSharedVO mroomvo = new RoomSharedVO();
-			mroomvo.setLock(lock);
-			mroomvo.setModerator(moderator);
-			mroomvo.setPresenter(presenter);
-			roomInfoSO.setAttribute("" + 0, mroomvo);
-			
-		//	System.err.println(" userso :: lock : " + lock + " moderator: " + moderator + "  presenter:" + presenter);
-			//List<Object> l = new ArrayList<Object>();
-//			l.add(lock);
-//			l.add(moderator);
-//			l.add(presenter);
-			//userSO.sendMessage("receiveRoomInfo", l);
-		} catch (Exception e) {
-			e.printStackTrace();
-		}
-
-		return true;
-	}
 
 	public boolean updateVideo(VideoDisplayVO videovo) {
 		ISharedObject videoSO = this.getSharedObject(Red5.getConnectionLocal().getScope(), "VideoDisplaySO");
