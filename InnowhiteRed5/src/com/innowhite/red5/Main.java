@@ -210,7 +210,8 @@ public class Main extends MultiThreadedApplicationAdapter {
 			chatSeqMap.put(Red5.getConnectionLocal().getScope().getName(), num);
 
 			chatSO.setAttribute("" + chatvo.getSeq(), chatvo);
-			//SavingData.saveToFile(chatvo, Red5.getConnectionLocal().getScope().getName());
+			// SavingData.saveToFile(chatvo,
+			// Red5.getConnectionLocal().getScope().getName());
 		} catch (Exception e) {
 			e.printStackTrace();
 		}
@@ -219,15 +220,17 @@ public class Main extends MultiThreadedApplicationAdapter {
 
 	public boolean updateRoom12(RoomSharedVO mroomvo) {
 		try {
-			System.err.println("testing ...mroomvo"+mroomvo);
+			System.err.println("testing ...mroomvo" + mroomvo);
 			ISharedObject roomInfoSO = this.getSharedObject(Red5.getConnectionLocal().getScope(), "MyRoomSO");
 
-			//int num = roomInfoSeqMap.get(Red5.getConnectionLocal().getScope().getName());
-			//roomInfoSO.setSeq(num++);
-			//roomInfoSeqMap.put(Red5.getConnectionLocal().getScope().getName(), num);
+			// int num =
+			// roomInfoSeqMap.get(Red5.getConnectionLocal().getScope().getName());
+			// roomInfoSO.setSeq(num++);
+			// roomInfoSeqMap.put(Red5.getConnectionLocal().getScope().getName(),
+			// num);
 
 			roomInfoSO.setAttribute("" + 0, mroomvo);
-			
+
 			System.err.println(" userso :: lock : " + mroomvo.isLock());
 
 		} catch (Exception e) {
@@ -236,6 +239,30 @@ public class Main extends MultiThreadedApplicationAdapter {
 		return true;
 	}
 
+	public boolean updateRoom12(boolean lock, String moderator, String presenter,boolean recording, boolean webinar, boolean muteAudio, boolean autoJoin, boolean privateChat, String viewState ) {
+
+		try {
+			System.err.println("testing ...updateRoom12 lock" + lock);
+			ISharedObject roomInfoSO = this.getSharedObject(Red5.getConnectionLocal().getScope(), "MyRoomSO");
+			RoomSharedVO mroomvo = new RoomSharedVO();
+			mroomvo.setLock(lock);
+			mroomvo.setModerator(moderator);
+			mroomvo.setPresenter(presenter);
+			mroomvo.setRecording(recording);
+			mroomvo.setWebinar(webinar);
+			mroomvo.setMuteAudio(muteAudio);
+			mroomvo.setAutoJoin(autoJoin);
+			mroomvo.setPrivateChat(privateChat);
+			mroomvo.setViewState(viewState);
+			
+			
+			roomInfoSO.setAttribute("" + 0, mroomvo);
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
+		return true;
+
+	}
 
 	public boolean updateVideo(VideoDisplayVO videovo) {
 		ISharedObject videoSO = this.getSharedObject(Red5.getConnectionLocal().getScope(), "VideoDisplaySO");
