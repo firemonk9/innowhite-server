@@ -18,8 +18,17 @@ public class RoomSharedVO implements Serializable {
 	private boolean muteAudio;
 	private boolean autoJoin;
 	private boolean privateChat;
+	private String viewState;
 	
 	
+	public String getViewState() {
+		return viewState;
+	}
+
+	public void setViewState(String viewState) {
+		this.viewState = viewState;
+	}
+
 	public boolean isPrivateChat() {
 		return privateChat;
 	}
