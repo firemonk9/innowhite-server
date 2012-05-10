@@ -33,7 +33,7 @@ import com.innowhite.whiteboard.util.Utility;
 
 @SuppressWarnings("serial")
 public class UploadFileServlet extends HttpServlet {
-	 private  final Logger log = LoggerFactory.getLogger(this.getClass());
+	private final Logger log = LoggerFactory.getLogger(this.getClass());
 
 	/**
 	 * Constructor of the object.
@@ -64,8 +64,7 @@ public class UploadFileServlet extends HttpServlet {
 	 * @throws IOException
 	 *             if an error occurred
 	 */
-	public void doGet(HttpServletRequest request, HttpServletResponse response)
-			throws ServletException, IOException {
+	public void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 
 		response.setContentType("text/html");
 		PrintWriter out = response.getWriter();
@@ -97,13 +96,12 @@ public class UploadFileServlet extends HttpServlet {
 	 * @throws IOException
 	 *             if an error occurred
 	 */
-	public void doPost(HttpServletRequest request, HttpServletResponse response)
-			throws ServletException, IOException {
+	public void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 
 		log.debug(" Enter do post UploadFileServlet");
 		DiskFileItemFactory factory = new DiskFileItemFactory();
 		// maximum size that will be stored in memory
-		//factory.setSizeThreshold(4096);
+		// factory.setSizeThreshold(4096);
 		// the location for saving data that is larger than getSizeThreshold()
 
 		String urlPath = Constants.UBUNTU_FOLDER_PATH;
@@ -122,13 +120,11 @@ public class UploadFileServlet extends HttpServlet {
 		String conversionId = null;
 		String imageXML = null;
 
-		if (request.getParameter(Constants.IMAGE_DATE) != null
-				&& fileNameTe != null) {
+		if (request.getParameter(Constants.IMAGE_DATE) != null && fileNameTe != null) {
 			// save base 64 image
 			f = saveGraphImage(request);
 			log.debug(" inbox ::++++ " + request.getParameter("INBOX"));
-			if (request.getParameter("INBOX") != null
-					&& request.getParameter("INBOX").equals("true")) {
+			if (request.getParameter("INBOX") != null && request.getParameter("INBOX").equals("true")) {
 				UserImagesVO ui = new UserImagesVO();
 				ui.setUserName(request.getParameter("USER"));
 				ui.setImageFolderSeq(0);
@@ -152,18 +148,18 @@ public class UploadFileServlet extends HttpServlet {
 				fileUploadException = true;
 				log.error("fileUploadException", e);
 			}
-			
-			if(fileUploadException == true){
-				
+
+			if (fileUploadException == true) {
+
 				String errorXml = getFileMaxLimitErrorXML();
 				response.setContentType("text/xml");
 				PrintWriter out = response.getWriter();
 				out.println(errorXml);
 				out.close();
 				return;
-				
+
 			}
-			
+
 			// assume we know there are two files. The first file is a small
 			// text file, the second is unknown and is written to a file on
 			// the server
@@ -190,10 +186,7 @@ public class UploadFileServlet extends HttpServlet {
 
 				String fileNameVal = fileName;
 
-				f = new File(
-						InnowhiteProperties
-								.getPropertyVal(InnowhiteConstants.USER_UPLOADED_FILES),
-						fileNameVal);
+				f = new File(InnowhiteProperties.getPropertyVal(InnowhiteConstants.USER_UPLOADED_FILES), fileNameVal);
 				fi.write(f);
 
 				// ppt, doc, pdf
@@ -202,9 +195,7 @@ public class UploadFileServlet extends HttpServlet {
 					isDocument = true;
 					log.debug("enter document conversion");
 
-					conversionId = ProcessConversion.convertDocument(
-							f.getAbsolutePath(), user, desc, fileNameVal,
-							request.getContextPath(), true, fileName, false);
+					conversionId = ProcessConversion.convertDocument(f.getAbsolutePath(), user, desc, fileNameVal, request.getContextPath(), true, fileName, false);
 					// response.setContentType("text/xml");
 					// PrintWriter out = response.getWriter();
 					// out.write(ImageDAO.getImageXML(user,
@@ -214,8 +205,7 @@ public class UploadFileServlet extends HttpServlet {
 				{
 
 					log.debug("enter image gif, jpg, png upload part");
-					UserImagesVO ui = new UserImagesVO(user,
-							f.getAbsolutePath(), 0);
+					UserImagesVO ui = new UserImagesVO(user, f.getAbsolutePath(), 0);
 					if (desc != null && desc.length() > 0)
 						ui.setImageDescription(desc);
 					else
@@ -232,8 +222,7 @@ public class UploadFileServlet extends HttpServlet {
 					StringBuffer serverInfo = request.getRequestURL();
 					String s = request.getRequestURI();
 
-					imageXML = ImageService.getSingleImageXMLbyId(imageId,
-							serverInfo.toString());
+					imageXML = ImageService.getSingleImageXMLbyId(imageId, serverInfo.toString());
 					// String imageXML =
 
 					// tx.commit();
@@ -289,8 +278,7 @@ public class UploadFileServlet extends HttpServlet {
 		try {
 
 			String urlPath = Constants.UBUNTU_FOLDER_PATH;
-			urlPath = urlPath.replaceAll(Constants.APP_NAME, request
-					.getContextPath().substring(1));
+			urlPath = urlPath.replaceAll(Constants.APP_NAME, request.getContextPath().substring(1));
 			f = new File(urlPath, fileName);
 			fop = new FileOutputStream(f);
 			if (f.exists())

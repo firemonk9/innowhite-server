@@ -75,13 +75,7 @@ public class ProcessConversion {
 	 */
 	public static String convertDocument(String filePath, String user, String desc, String documentName, String serverURL, boolean saveInDB, String origFileName, boolean isInet) {
 
-		// Properties p = System.getProperties();
-		// Enumeration keys = p.keys();
-		// while (keys.hasMoreElements()) {
-		// String key = (String)keys.nextElement();
-		// String value = (String)p.get(key);
-		// log.debug(key + ": " + value);
-		// }
+
 
 		log.debug(" entered convertDocument ");
 
@@ -98,54 +92,54 @@ public class ProcessConversion {
 			return conversionId;
 		}
 
-		try {
-
-			log.debug(" the file is not pdf " + documentName);
-
-			String fileName = Utility.stripExtension(filePath);
-
-			// String urlPath = Constants.UPLOAD_FILES;
-			// urlPath = urlPath.replaceAll(Constants.APP_NAME,
-			// request.getContextPath().substring(1));
-
-			String urlPath = Constants.UBUNTU_FOLDER_PATH;
-			// urlPath = urlPath.replaceAll(Constants.APP_NAME,
-			// contextPath.substring(1));
-
-			inputFile = new File(filePath);
-			if (Utility.isPdf(filePath) == false) {
-				// File inputFile = new File(f);
-				outputFile = new File(fileName + ".pdf");
-
-				log.debug(" input :" + inputFile.getAbsolutePath());
-				log.debug(" output :" + outputFile.getAbsolutePath());
-
-				OpenOfficeConnection connection = new SocketOpenOfficeConnection(8100);
-
-				connection.connect();
-
-				// convert
-				DocumentConverter converter = new OpenOfficeDocumentConverter(connection);
-				converter.convert(inputFile, outputFile);
-				connection.disconnect();
-
-			} else {
-
-				outputFile = inputFile;
-			}
-
-			pdfName = outputFile.getName();
-			log.debug("  The pdf created is :" + pdfName + "  exists :" + outputFile.exists());
-			if (outputFile.exists() == true) {
-				str = MakeSWFFiles.createSwfFiles(pdfName, user, desc, documentName, saveInDB, serverURL, outputFile.getAbsolutePath(), origFileName, isInet);
-				log.debug(" exiting convertDocument ");
-			}
-
-		} catch (ConnectException e) {
-			// TODO Auto-generated catch block
-			log.error("connection exception ...", e);
-			e.printStackTrace();
-		}
+//		try {
+//
+//			log.debug(" the file is not pdf " + documentName);
+//
+//			String fileName = Utility.stripExtension(filePath);
+//
+//			// String urlPath = Constants.UPLOAD_FILES;
+//			// urlPath = urlPath.replaceAll(Constants.APP_NAME,
+//			// request.getContextPath().substring(1));
+//
+//			String urlPath = Constants.UBUNTU_FOLDER_PATH;
+//			// urlPath = urlPath.replaceAll(Constants.APP_NAME,
+//			// contextPath.substring(1));
+//
+//			inputFile = new File(filePath);
+//			if (Utility.isPdf(filePath) == false) {
+//				// File inputFile = new File(f);
+//				outputFile = new File(fileName + ".pdf");
+//
+//				log.debug(" input :" + inputFile.getAbsolutePath());
+//				log.debug(" output :" + outputFile.getAbsolutePath());
+//
+//				OpenOfficeConnection connection = new SocketOpenOfficeConnection(8100);
+//
+//				connection.connect();
+//
+//				// convert
+//				DocumentConverter converter = new OpenOfficeDocumentConverter(connection);
+//				converter.convert(inputFile, outputFile);
+//				connection.disconnect();
+//
+//			} else {
+//
+//				outputFile = inputFile;
+//			}
+//
+//			pdfName = outputFile.getName();
+//			log.debug("  The pdf created is :" + pdfName + "  exists :" + outputFile.exists());
+//			if (outputFile.exists() == true) {
+//				str = MakeSWFFiles.createSwfFiles(pdfName, user, desc, documentName, saveInDB, serverURL, outputFile.getAbsolutePath(), origFileName, isInet);
+//				log.debug(" exiting convertDocument ");
+//			}
+//
+//		} catch (ConnectException e) {
+//			// TODO Auto-generated catch block
+//			log.error("connection exception ...", e);
+//			e.printStackTrace();
+//		}
 
 		return str;
 
@@ -400,13 +394,8 @@ public class ProcessConversion {
 			urlPath = urlPath.replaceAll(Constants.APP_NAME, InnowhiteConstants.CONTEXT_PATH);
 
 			String outPutDir = urlPath;
-
-			// boolean val = (new File(outPutDir)).mkdir();
-
 			sr.append("convert" + " " + outPutDir + fileName + " -thumbnail 250x90 -unsharp 0x.5 " + outPutDir + "thumbn_" + fileName);
-
 			String ext = new String("" + Math.round((Math.random() * 1000000)));
-
 			File f = new File(InnowhiteProperties.getPropertyVal(InnowhiteConstants.TEMP_LOCATION) + ext + ".sh");
 			FileOutputStream fos = new FileOutputStream(f);
 			// char[] c = new char(sr);
@@ -419,7 +408,6 @@ public class ProcessConversion {
 			Command[0] = f.getAbsolutePath();
 
 			Process Findspace = Runtime.getRuntime().exec(Command);
-
 			BufferedReader Resultset = new BufferedReader(new InputStreamReader(Findspace.getInputStream()));
 
 			String line;

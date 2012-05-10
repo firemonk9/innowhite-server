@@ -26,7 +26,7 @@ public class CreateRoomServlet extends HttpServlet {
 	private static final long serialVersionUID = 1L;
 
 	private static final Logger log = LoggerFactory.getLogger(InnowhiteServiceTest.class);
-	
+
 	/**
 	 * @see HttpServlet#HttpServlet()
 	 */
@@ -39,8 +39,7 @@ public class CreateRoomServlet extends HttpServlet {
 	 * @see HttpServlet#doGet(HttpServletRequest request, HttpServletResponse
 	 *      response)
 	 */
-	protected void doGet(HttpServletRequest request,
-			HttpServletResponse response) throws ServletException, IOException {
+	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 
 		log.debug(" entereing doget: CreateRoomServlet ");
 
@@ -55,9 +54,11 @@ public class CreateRoomServlet extends HttpServlet {
 		String queryStringArray[] = queryString.split("&checksum=");
 		log.debug(queryStringArray[0]);
 		parentOrg = request.getParameter(InnowhiteConstants.PARENT_ORG);
-		
-		String hostURL =null;
-		URL url;String source = "";String domainName = "";
+
+		String hostURL = null;
+		URL url;
+		String source = "";
+		String domainName = "";
 
 		checkSum = request.getParameter(InnowhiteConstants.CHECKSUM);
 		roomName = request.getParameter("roomName");
@@ -65,29 +66,14 @@ public class CreateRoomServlet extends HttpServlet {
 		String courseId = request.getParameter("course_id");
 		inetLessonID = request.getParameter("lesson_plan_id");
 		String view = request.getParameter("view");
-		String sourceURL = (request.getRequestURL()).toString();
-		
-		if(sourceURL != null )
-			sourceURL = sourceURL.trim();
-		
-		try {
-			 url = new URL(sourceURL);
-			 domainName = url.getHost();
-			 log.debug("domainName: " + domainName);
-			 int occurance = StringUtils.countOccurrencesOf(domainName, ".");
-			
-			  if(domainName.contains("www") || occurance>1){
-				  source = domainName.split("\\.")[1];
-			  }else{
-				  source = domainName.split("\\.")[0];
-			  }
-		} catch (MalformedURLException e) {
-			e.printStackTrace();
-		}
+		String sourceURL = request.getParameter("cb");
+
+		if (sourceURL != null)
+			source = sourceURL.trim();
 
 		log.debug("orgName: " + parentOrg);
 		log.debug("clientURL: " + hostURL);
-		
+
 		log.debug("checkSum: " + checkSum);
 		log.debug("roomName: " + roomName);
 		log.debug("record: " + record);
@@ -95,7 +81,8 @@ public class CreateRoomServlet extends HttpServlet {
 		log.debug("inetLessonID: " + inetLessonID);
 		log.debug("view: " + view);
 		log.debug("source: " + source);
-	//	log.debug("sb: " + hostName.toString());
+		log.debug("sourceURL: " + sourceURL);
+		// log.debug("sb: " + hostName.toString());
 
 		// validServiceStatus =
 		// WhiteboardAuthenticatorService.validateRequest(queryStringWithoutcheckSum,
@@ -103,19 +90,17 @@ public class CreateRoomServlet extends HttpServlet {
 
 		// if(validServiceStatus.equals(InnowhiteConstants.SUCCESS))
 		// {
-		roomId = WhiteboardAuthenticatorService.createRoom(parentOrg, roomName,
-				record, courseId, inetLessonID, view,source);
+		roomId = WhiteboardAuthenticatorService.createRoom(parentOrg, roomName, record, courseId, inetLessonID, view, source);
 		// }
 		if (roomId != null && roomId.length() > 0) {
 			validServiceStatus = InnowhiteConstants.SUCCESS;
 		}
 
 		if (validServiceStatus == InnowhiteConstants.SUCCESS) {
-			
+
 			// Below code is only for lesson plan integration ex : inet
-			if(inetLessonID != null){
-				LessonPlanGetDataService.cacheAllData(courseId, inetLessonID,
-						hostURL);
+			if (inetLessonID != null) {
+				LessonPlanGetDataService.cacheAllData(courseId, inetLessonID, hostURL);
 			}
 		}
 		response.setContentType("text/xml");
@@ -135,8 +120,7 @@ public class CreateRoomServlet extends HttpServlet {
 	 * @see HttpServlet#doPost(HttpServletRequest request, HttpServletResponse
 	 *      response)
 	 */
-	protected void doPost(HttpServletRequest request,
-			HttpServletResponse response) throws ServletException, IOException {
+	protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		doPost(request, response);
 	}
 
