@@ -38,6 +38,21 @@
       <update id="updateLDCForSWFByConvID" parameterClass="java.util.HashMap">
 		 update live_doc_conversion set swf_created_time = now() , swf_created=#swfCreated# where id = #conversionID#
 	   </update>
+	   
+	   <parameterMap id="paramLiveConversion" class="com.innowhite.whiteboard.docconversion.vo.LiveDocConversionVO">
+			<parameter property="userID" jdbcType="VARCHAR" />
+			<parameter property="senderEmail" jdbcType="VARCHAR" />
+       </parameterMap>
+
+	   <insert id="insertLiveDocConversion" parameterMap="paramLiveConversion">
+			INSERT INTO live_doc_conversion (user_id,created_time,sender_email)
+			VALUES
+			( ?,now(),?)
+			<selectKey keyProperty="conversionID" resultClass="java.lang.Integer">
+				SELECT @@identity
+			</selectKey>
+	   </insert>
+	   
       
       
      

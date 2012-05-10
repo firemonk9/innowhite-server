@@ -14,6 +14,8 @@ public class DocConversionBean {
 	private String filePath;
 	private String serviceType;
 	private String serverFilePath;
+	private String senderEmail;
+	private String docSharedLoc;
 	
 	
 	public String getServerFilePath() {
@@ -55,6 +57,18 @@ public class DocConversionBean {
 		return "DocConversionBean [userID=" + userID + ", conversionID="
 				+ conversionID + ", filePath=" + filePath + ", serviceType="
 				+ serviceType + "]";
+	}
+	public String getSenderEmail() {
+		return senderEmail;
+	}
+	public void setSenderEmail(String senderEmail) {
+		this.senderEmail = senderEmail;
+	}
+	public String getDocSharedLoc() {
+		return docSharedLoc;
+	}
+	public void setDocSharedLoc(String docSharedLoc) {
+		this.docSharedLoc = docSharedLoc;
 	}
 	
 	
