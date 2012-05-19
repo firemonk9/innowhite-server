@@ -1,0 +1,203 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+  <head>
+    <meta http-equiv="content-type" content="text/html; charset=utf-8"/>
+    <title>Youtube popup with Jquery</title>
+    
+    <script type="text/javascript" src="http://jquery.com/src/jquery-latest.pack.js"></script>
+    <script type="text/javascript" src="http://www.google.com/jsapi" ></script>
+    <script type="text/javascript" src="js/swfobject.js" ></script>
+    <link rel="stylesheet" type="text/css" media="screen" href="resources/styles/styles.css"  /> 
+   
+    <script type="text/javascript">
+    
+	/* Functions for Simple Youtube Player */
+    
+		function youtube_parser(url){
+		    var regExp = /^.*((youtu.be\/)|(v\/)|(\/u\/\w\/)|(embed\/)|(watch\?))\??v?=?([^#\&\?]*).*/;
+		    var match = url.match(regExp);
+		    if (match&&match[7].length==11){
+		        return match[7];
+		    }else{
+		        $("#infodiv").show();
+		        $("#errordiv").show();
+		        return 0;
+		    }
+		}
+
+		function loadvideo_run() {
+			$("#infodiv").hide();  $("#errordiv").hide();
+			swfobject.removeSWF("ytPlayer");
+			
+			var youtubeUrl = $("#youtubeurl").val();
+			var videoID = youtube_parser(youtubeUrl);
+			if(videoID!=0 && videoID!=null){
+				$("#simplePopUpWindow").append('<div id="videoDiv"/>');
+				var params = { allowScriptAccess: "always" };
+				var atts = { id: "ytPlayer" };
+				swfobject.embedSWF("http://www.youtube.com/v/" + videoID + "?listType=search&version=3&enablejsapi=1&playerapiid=player1", 
+		                      "videoDiv", "480", "295", "9", null, null, params, atts);
+			}
+		}
+      
+		function loadpopup(objid){
+			$("#"+objid).center();
+			$("#backgroundPopup").css({  
+		  				"opacity": "0.7"  
+		  		});  
+		  	$("#backgroundPopup").fadeIn("slow");
+		  	$("#"+objid).fadeIn("fast");
+		  	if(objid=='chromeLessPopUpWindow'){
+		  		loadPlayer();
+		  	}
+		}
+      
+		function disablePopup(obj){  
+			var objid = $(obj).parent('div').parent('div').attr('id');
+			$("#backgroundPopup").fadeOut("slow");  
+			$("#"+objid).fadeOut("fast");  
+		} 
+		
+		 jQuery.fn.center = function () {
+	    	    this.css("position","absolute");
+	    	    this.css("top", (($(window).height() - this.outerHeight()) / 2) +  $(window).scrollTop() + "px");
+	    	    this.css("left", (($(window).width() - this.outerWidth()) / 2) +  $(window).scrollLeft() + "px");
+	    	    return this;
+	     }
+		
+		
+		/* Functions for Chromeless Youtube Player */
+		
+		// The "main method" of this video load. Called when someone clicks "Run".
+		function loadPlayer() {
+			$("#chromeLessPopUpWindow").append('<div id="videoDiv"/>');
+	        var params = { allowScriptAccess: "always" };
+	        var atts = { id: "ytPlayer" };
+	        swfobject.embedSWF("http://www.youtube.com/apiplayer?version=3&enablejsapi=1&playerapiid=player1",
+                           "videoDiv", "480", "295", "9", null, null, params, atts);
+     	}
+		
+		// This function is automatically called by the player once it loads
+	      function onYouTubePlayerReady(playerId) {
+	        ytplayer = document.getElementById("ytPlayer");
+	        setInterval(updatePlayerInfo, 250);
+	        updatePlayerInfo();
+	        ytplayer.addEventListener("onStateChange", "onPlayerStateChange");
+	        ytplayer.addEventListener("onError", "onPlayerError");
+	        ytplayer.cueVideoById("ylLzyHk54Z0");
+	      }
+	   // Update a particular HTML element with a new value
+	      function updateHTML(elmId, value) {
+	        document.getElementById(elmId).innerHTML = value;
+	      }
+	      
+	      // This function is called when an error is thrown by the player
+	      function onPlayerError(errorCode) {
+	        alert("An error occured of type:" + errorCode);
+	      }
+	      
+	      // This function is called when the player changes state
+	      function onPlayerStateChange(newState) {
+	        updateHTML("playerState", newState);
+	      }
+	      
+	      // Display information about the current state of the player
+	      function updatePlayerInfo() {
+	        // Also check that at least one function exists since when IE unloads the
+	        // page, it will destroy the SWF before clearing the interval.
+	        if(ytplayer && ytplayer.getDuration) {
+	          updateHTML("videoDuration", ytplayer.getDuration());
+	          updateHTML("videoCurrentTime", ytplayer.getCurrentTime());
+	          updateHTML("bytesTotal", ytplayer.getVideoBytesTotal());
+	          updateHTML("startBytes", ytplayer.getVideoStartBytes());
+	          updateHTML("bytesLoaded", ytplayer.getVideoBytesLoaded());
+	          updateHTML("volume", ytplayer.getVolume());
+	        }
+	      }
+	      
+	      // Allow the user to set the volume from 0-100
+	      function setVideoVolume() {
+	        var volume = parseInt(document.getElementById("volumeSetting").value);
+	        if(isNaN(volume) || volume < 0 || volume > 100) {
+	          alert("Please enter a valid volume between 0 and 100.");
+	        }
+	        else if(ytplayer){
+	          ytplayer.setVolume(volume);
+	        }
+	      }
+	      
+	      function playVideo() {
+	        if (ytplayer) {
+	          ytplayer.playVideo();
+	        }
+	      }
+	      
+	      function pauseVideo() {
+	        if (ytplayer) {
+	          ytplayer.pauseVideo();
+	        }
+	      }
+	      
+	      function muteVideo() {
+	        if(ytplayer) {
+	          ytplayer.mute();
+	        }
+	      }
+	      
+	      function unMuteVideo() {
+	        if(ytplayer) {
+	          ytplayer.unMute();
+	        }
+	      }
+		
+    </script>
+ </head>
+  
+  
+ <body style="font-family: Arial;border: 0 none;">
+ 
+    <div id="backgroundPopup" class="backgroundfade"></div>
+    <input type="button" value="Open Simplepopup !" onclick="loadpopup('simplePopUpWindow')"/> </br>
+    <input type="button" value="Open Chromelesspopup !" onclick="loadpopup('chromeLessPopUpWindow')"/>
+    
+    
+    <div id="simplePopUpWindow" style="display:none" class="youtubePopup">
+    	<div class="close">
+			<a href="" onclick="disablePopup(this);return false;" style="display:block;float:right;margin-right:10px;">
+					<img src="images/pop-close-btn.png" alt="close"></a>
+		</div>
+   		<div id="searchdiv">
+   			<span><input type="text" class="input-box" id="youtubeurl"/></span>
+   			<span><input type="button" value="Load Video" onclick="loadvideo_run()"/></span>
+   		</div>
+   		<div id="errordiv" class="errortext-msg" style="display:none">Invalid Url.</div>
+   		<div id="infodiv" class="pop-form1 login1" width="100%" height="100%">
+			<div class="help-tabs ahelp-tabs" style="height:260px;" id="ht1">
+				<div class="icon-share">
+					<img src="images/ss.png" alt="audio" width="130" height="85" >
+				</div>
+				<div class="text-heading">To share video, please enter valid youtube Url.
+				And click on The "Load Video" button. </div>
+			</div>
+		</div>
+    </div>
+    
+    
+    
+    <div id="chromeLessPopUpWindow" style="display:none" class="youtubePopup">
+    	<div class="close">
+			<a href="" onclick="disablePopup(this);return false;" style="display:block;float:right;margin-right:10px;">
+					<img src="images/pop-close-btn.png" alt="close"></a>
+		</div>
+    </div>
+    
+    <div id="videoInfo" style="display:none;">
+        <p>Player state: <span id="playerState">--</span></p>
+        <p>Current Time: <span id="videoCurrentTime">--:--</span> | Duration: <span id="videoDuration">--:--</span></p>
+        <p>Bytes Total: <span id="bytesTotal">--</span> | Start Bytes: <span id="startBytes">--</span> | Bytes Loaded: <span id="bytesLoaded">--</span></p>
+        <p>Controls: <a href="javascript:void(0);" onclick="playVideo();">Play</a> | <a href="javascript:void(0);" onclick="pauseVideo();">Pause</a> | <a href="javascript:void(0);" onclick="muteVideo();">Mute</a> | <a href="javascript:void(0);" onclick="unMuteVideo();">Unmute</a></p>
+        <p><input id="volumeSetting" type="text" size="3" />&nbsp;<a href="javascript:void(0)" onclick="setVideoVolume();">&lt;- Set Volume</a> | Volume: <span id="volume">--</span></p>
+      </div>
+    
+  </body>
+</html>
