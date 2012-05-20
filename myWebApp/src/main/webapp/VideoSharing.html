@@ -25,22 +25,23 @@
 		    }
 		}
 
-		function loadvideo_run() {
+		function loadSimpleYTPlayer() {
 			$("#infodiv").hide();  $("#errordiv").hide();
-			swfobject.removeSWF("ytPlayer");
+			swfobject.removeSWF("simpleytPlayer");
 			
 			var youtubeUrl = $("#youtubeurl").val();
 			var videoID = youtube_parser(youtubeUrl);
 			if(videoID!=0 && videoID!=null){
-				$("#simplePopUpWindow").append('<div id="videoDiv"/>');
+				$("#simplePopUpWindow").append('<div id="simplevideoDiv"/>');
 				var params = { allowScriptAccess: "always" };
-				var atts = { id: "ytPlayer" };
+				var atts = { id: "simpleytPlayer" };
 				swfobject.embedSWF("http://www.youtube.com/v/" + videoID + "?listType=search&version=3&enablejsapi=1&playerapiid=player1", 
-		                      "videoDiv", "480", "295", "9", null, null, params, atts);
+		                      "simplevideoDiv", "480", "295", "9", null, null, params, atts);
 			}
 		}
       
 		function loadpopup(objid){
+			resetAllFields();
 			$("#"+objid).center();
 			$("#backgroundPopup").css({  
 		  				"opacity": "0.7"  
@@ -48,11 +49,13 @@
 		  	$("#backgroundPopup").fadeIn("slow");
 		  	$("#"+objid).fadeIn("fast");
 		  	if(objid=='chromeLessPopUpWindow'){
-		  		loadPlayer();
+		  		loadChromeLessPlayer();
 		  	}
 		}
       
-		function disablePopup(obj){  
+		function disablePopup(obj){ 
+			swfobject.removeSWF("simpleytPlayer");
+			swfobject.removeSWF("chromeLessytPlayer");
 			var objid = $(obj).parent('div').parent('div').attr('id');
 			$("#backgroundPopup").fadeOut("slow");  
 			$("#"+objid).fadeOut("fast");  
@@ -65,26 +68,35 @@
 	    	    return this;
 	     }
 		
+		 function resetAllFields(){
+			 $("#youtubeurl").val("");
+			 swfobject.removeSWF("simpleytPlayer");
+			 $("#infodiv").show();  $("#errordiv").hide();
+			 
+		 }
 		
-		/* Functions for Chromeless Youtube Player */
+		 /* Functions for Chromeless Youtube Player */
 		
 		// The "main method" of this video load. Called when someone clicks "Run".
-		function loadPlayer() {
+		function loadChromeLessPlayer() {
+			swfobject.removeSWF("chromeLessytPlayer");
 			$("#chromeLessPopUpWindow").append('<div id="videoDiv"/>');
 	        var params = { allowScriptAccess: "always" };
-	        var atts = { id: "ytPlayer" };
+	        var atts = { id: "chromeLessytPlayer" };
 	        swfobject.embedSWF("http://www.youtube.com/apiplayer?version=3&enablejsapi=1&playerapiid=player1",
                            "videoDiv", "480", "295", "9", null, null, params, atts);
      	}
 		
 		// This function is automatically called by the player once it loads
 	      function onYouTubePlayerReady(playerId) {
-	        ytplayer = document.getElementById("ytPlayer");
-	        setInterval(updatePlayerInfo, 250);
-	        updatePlayerInfo();
-	        ytplayer.addEventListener("onStateChange", "onPlayerStateChange");
-	        ytplayer.addEventListener("onError", "onPlayerError");
-	        ytplayer.cueVideoById("ylLzyHk54Z0");
+	    	if ($('#chromeLessPopUpWindow:visible').length > 0){
+		        ytplayer = document.getElementById("chromeLessytPlayer");
+		        setInterval(updatePlayerInfo, 250);
+		        updatePlayerInfo();
+		        ytplayer.addEventListener("onStateChange", "onPlayerStateChange");
+		        ytplayer.addEventListener("onError", "onPlayerError");
+		        ytplayer.cueVideoById("ylLzyHk54Z0");
+			}
 	      }
 	   // Update a particular HTML element with a new value
 	      function updateHTML(elmId, value) {
@@ -168,7 +180,7 @@
 		</div>
    		<div id="searchdiv">
    			<span><input type="text" class="input-box" id="youtubeurl"/></span>
-   			<span><input type="button" value="Load Video" onclick="loadvideo_run()"/></span>
+   			<span><input type="button" value="Load Video" onclick="loadSimpleYTPlayer()"/></span>
    		</div>
    		<div id="errordiv" class="errortext-msg" style="display:none">Invalid Url.</div>
    		<div id="infodiv" class="pop-form1 login1" width="100%" height="100%">
@@ -181,8 +193,7 @@
 			</div>
 		</div>
     </div>
-    
-    
+       
     
     <div id="chromeLessPopUpWindow" style="display:none" class="youtubePopup">
     	<div class="close">
@@ -191,7 +202,7 @@
 		</div>
     </div>
     
-    <div id="videoInfo" style="display:none;">
+    <div id="chromeLessVideoInfo" style="display:none;">
         <p>Player state: <span id="playerState">--</span></p>
         <p>Current Time: <span id="videoCurrentTime">--:--</span> | Duration: <span id="videoDuration">--:--</span></p>
         <p>Bytes Total: <span id="bytesTotal">--</span> | Start Bytes: <span id="startBytes">--</span> | Bytes Loaded: <span id="bytesLoaded">--</span></p>
