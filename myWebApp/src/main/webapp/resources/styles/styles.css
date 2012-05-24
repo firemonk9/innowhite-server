@@ -1311,16 +1311,25 @@ ul.help-tabs-head li.active{
     float:right;
     cursor:pointer;
     }
-    
 .youtubePopup .input-box{
-    background:url(../../images/input-bg.jpg) repeat-x top;
     border:#CDCDCD solid 1px;
     height:20px;
-    width:320px;
+    width:290px;
     }
-        
 .youtubePopup .icon-share{width:470px;  margin-left:10px; text-align:center; padding-top:40px; }
-
-.youtubePopup .errortext-msg{font-size:10px; color: #F10909; line-height:24px; padding-top:10px;text-align:center;}
+.youtubePopup .errortext-msg{font-size:10px; color: #F10909; line-height:15px; padding-top:10px;text-align:center;}
 #errordiv {border-width:1px; border-style: solid; border-color: #E63E30; }
 
+#showHideImgdiv{
+    float:left;
+    cursor:pointer;
+    width:40px;
+    height:20px;
+    }
+#youtubeUrlDiv{
+	margin:0px;
+	height:36px;
+}
+.infodiv2{
+    margin-top:15px;
+    }

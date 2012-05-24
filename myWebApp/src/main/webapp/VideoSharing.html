@@ -28,10 +28,10 @@
 		function loadSimpleYTPlayer() {
 			$("#infodiv").hide();  $("#errordiv").hide();
 			swfobject.removeSWF("simpleytPlayer");
-			
 			var youtubeUrl = $("#youtubeurl").val();
 			var videoID = youtube_parser(youtubeUrl);
 			if(videoID!=0 && videoID!=null){
+				$("#youtubeUrlDiv").slideToggle("fast");
 				$("#simplePopUpWindow").append('<div id="simplevideoDiv"/>');
 				var params = { allowScriptAccess: "always" };
 				var atts = { id: "simpleytPlayer" };
@@ -48,6 +48,7 @@
 		  		});  
 		  	$("#backgroundPopup").fadeIn("slow");
 		  	$("#"+objid).fadeIn("fast");
+			$("#youtubeurl").focus();
 		  	if(objid=='chromeLessPopUpWindow'){
 		  		loadChromeLessPlayer();
 		  	}
@@ -72,7 +73,6 @@
 			 $("#youtubeurl").val("");
 			 swfobject.removeSWF("simpleytPlayer");
 			 $("#infodiv").show();  $("#errordiv").hide();
-			 
 		 }
 		
 		 /* Functions for Chromeless Youtube Player */
@@ -161,8 +161,13 @@
 	          ytplayer.unMute();
 	        }
 	      }
-		
+	      
+	      function toggleSearchDiv(){
+	    	  $("#youtubeUrlDiv").slideToggle("fast");
+	      }
+	      
     </script>
+    
  </head>
   
   
@@ -174,16 +179,20 @@
     
     
     <div id="simplePopUpWindow" style="display:none" class="youtubePopup">
+    	<div id="showHideImgdiv">
+    		<a href="" onclick="toggleSearchDiv();return false;"  style="display:block;float:left;margin-left:10px;">
+					<img src="resources/images/right.png" alt="show/hide" /></a>
+		</div>
     	<div class="close">
 			<a href="" onclick="disablePopup(this);return false;" style="display:block;float:right;margin-right:10px;">
-					<img src="images/pop-close-btn.png" alt="close"></a>
+					<img src="images/pop-close-btn.png" alt="close" /></a>
 		</div>
-   		<div id="searchdiv">
-   			<span><input type="text" class="input-box" id="youtubeurl"/></span>
+   		<div id="youtubeUrlDiv">
+   			<span><input type="text" class="input-box" id="youtubeurl" value="Enter URL here" onFocus='this.value="";' /></span>
    			<span><input type="button" value="Load Video" onclick="loadSimpleYTPlayer()"/></span>
    		</div>
    		<div id="errordiv" class="errortext-msg" style="display:none">Invalid Url.</div>
-   		<div id="infodiv" class="pop-form1 login1" width="100%" height="100%">
+   		<div id="infodiv" class="pop-form1 infodiv2" width="100%" height="100%">
 			<div class="help-tabs ahelp-tabs" style="height:260px;" id="ht1">
 				<div class="icon-share">
 					<img src="images/ss.png" alt="audio" width="130" height="85" >
