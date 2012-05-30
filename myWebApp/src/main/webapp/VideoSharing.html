@@ -7,12 +7,14 @@
     <script type="text/javascript" src="http://jquery.com/src/jquery-latest.pack.js"></script>
     <script type="text/javascript" src="http://www.google.com/jsapi" ></script>
     <script type="text/javascript" src="js/swfobject.js" ></script>
+    <!--  This is for div draaggable  -->
+    <script type="text/javascript" src="http://ajax.googleapis.com/ajax/libs/jqueryui/1.7.2/jquery-ui.js"></script>
     <link rel="stylesheet" type="text/css" media="screen" href="resources/styles/styles.css"  /> 
    
     <script type="text/javascript">
     
 	/* Functions for Simple Youtube Player */
-    
+
 		function youtube_parser(url){
 		    var regExp = /^.*((youtu.be\/)|(v\/)|(\/u\/\w\/)|(embed\/)|(watch\?))\??v?=?([^#\&\?]*).*/;
 		    var match = url.match(regExp);
@@ -42,6 +44,8 @@
       
 		function loadpopup(objid){
 			resetAllFields();
+			$("#simplePopUpWindow").draggable();
+			$("#chromeLessPopUpWindow").draggable();
 			$("#"+objid).center();
 			$("#backgroundPopup").css({  
 		  				"opacity": "0.7"  
