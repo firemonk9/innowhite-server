@@ -86,13 +86,17 @@ public class WhiteboardAuthenticatorService {
 	tod = tod.substring(6);
 	String roomId = tod + random;
 
+	int tempFirst = 0;
+	if (roomId.startsWith("0")) {
+		tempFirst = (int) (Math.random() * 8);
+		if(tempFirst ==0){
+			tempFirst++;
+		}
+		roomId = tempFirst + "" + roomId.substring(1);
+	}
+	
 	if (roomId.length() > 9) {
 	    roomId = roomId.substring(0,9);
-	}
-
-	
-	if (roomId.startsWith("0")) {
-	    roomId.replaceFirst("0", "1");
 	}
 	
 	log.debug("room ID " + roomId);
