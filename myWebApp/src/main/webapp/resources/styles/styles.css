@@ -1333,3 +1333,19 @@ ul.help-tabs-head li.active{
 .infodiv2{
     margin-top:15px;
     }
+    
+/*
+ * jQuery UI Progressbar 1.8.14
+ *
+ * Copyright 2011, AUTHORS.txt (http://jqueryui.com/about)
+ * Dual licensed under the MIT or GPL Version 2 licenses.
+ * http://jquery.org/license
+ * jquery-ui-1.8.14.custom.css
+ * http://docs.jquery.com/UI/Progressbar#theming
+ */
+ /* Component containers
+----------------------------------*/
+.ui-widget { font-family: Verdana,Arial,sans-serif; font-size: 1.1em; }
+.ui-widget-content { border: 1px solid #aaaaaa; color: #222222; }
+.ui-progressbar { height:1em; text-align: left; }
+.ui-progressbar .ui-progressbar-value {margin: 0px; height:100%;background-image: url(../../images/pbar-ani.gif); }
