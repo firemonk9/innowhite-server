@@ -8,39 +8,17 @@
     <script type="text/javascript" src="http://www.google.com/jsapi" ></script>
     <script type="text/javascript" src="js/swfobject.js" ></script>
     <script type="text/javascript" src="http://happylucky.googlecode.com/svn-history/r19/trunk/common/script/jquery-ui-1.8.14.custom.min.js"></script>
+    <script src="http://static.firebase.com/v0/firebase.js"></script>
     <link rel="stylesheet" type="text/css" media="screen" href="resources/styles/styles.css"  />
     
     <script type="text/javascript">
     
-	/* Functions for Simple Youtube Player */
-
-		function youtube_parser(url){
-		    var regExp = /^.*((youtu.be\/)|(v\/)|(\/u\/\w\/)|(embed\/)|(watch\?))\??v?=?([^#\&\?]*).*/;
-		    var match = url.match(regExp);
-		    if (match&&match[7].length==11){
-		        return match[7];
-		    }else{
-		        $("#infodiv").show();
-		        $("#errordiv").show();
-		        return 0;
-		    }
-		}
-
-		function loadSimpleYTPlayer() {
-			$("#infodiv").hide();  $("#errordiv").hide();
-			swfobject.removeSWF("simpleytPlayer");
-			var youtubeUrl = $("#youtubeurl").val();
-			var videoID = youtube_parser(youtubeUrl);
-			if(videoID!=0 && videoID!=null){
-				$("#youtubeUrlDiv").slideToggle("fast");
-				$("#simplePopUpWindow").append('<div id="simplevideoDiv"/>');
-				var params = { allowScriptAccess: "always" };
-				var atts = { id: "simpleytPlayer" };
-				swfobject.embedSWF("http://www.youtube.com/v/" + videoID + "?listType=search&version=3&enablejsapi=1&playerapiid=player1", 
-		                      "simplevideoDiv", "480", "295", "9", null, null, params, atts);
-			}
-		}
-      
+    	var firemonk9Ref = null; var roomId="234568";
+    	var messageText = "", videoID=0, videoStatus = "none", currenttime = 0;
+    	
+    	firemonk9Ref_roomId = new Firebase('http://gamma.firebase.com/Firemonk9/'+roomId);
+    
+		//Common functions for both players.
 		function loadpopup(objid){
 			resetAllFields();
 			$("#simplePopUpWindow").draggable();
@@ -61,9 +39,9 @@
 			swfobject.removeSWF("simpleytPlayer");
 			swfobject.removeSWF("chromeLessytPlayer");
 			$("#progressbar").remove();
-			var objid = $(obj).parent('div').parent('div').attr('id');
+			var objid = $(obj).parent('div').parent('div').attr('id'); $("#"+objid).fadeOut("fast"); 
 			$("#backgroundPopup").fadeOut("slow");  
-			$("#"+objid).fadeOut("fast");  
+			//$("#chromeLessPopUpWindow").fadeOut("fast"); $("#simplePopUpWindow").fadeOut("fast");
 		} 
 		
 		 jQuery.fn.center = function () {
@@ -78,11 +56,99 @@
 			 swfobject.removeSWF("simpleytPlayer");
 			 $("#infodiv").show();  $("#errordiv").hide();
 		 }
+		 
+		 function youtube_parser(url){
+			    var regExp = /^.*((youtu.be\/)|(v\/)|(\/u\/\w\/)|(embed\/)|(watch\?))\??v?=?([^#\&\?]*).*/;
+			    var match = url.match(regExp);
+			    if (match&&match[7].length==11){
+			        return match[7];
+			    }else{
+			        $("#infodiv").show();
+			        $("#errordiv").show();
+			        return 0;
+			    }
+		 }
+		 
+		  //This function is automatically called by the player once it loads
+	     function onYouTubePlayerReady(playerId) {
+	    	if ($('#chromeLessPopUpWindow:visible').length > 0){
+	    		$("#chromeLessPopUpWindow").append('<div id="progressbar" />');
+		        ytplayer = document.getElementById("chromeLessytPlayer");
+		        setInterval(updateytplayerProgressBar, 250);
+		        updateytplayerProgressBar();
+		        //ytplayer.addEventListener("onStateChange", "onPlayerStateChange");
+		        //ytplayer.addEventListener("onError", "onPlayerError");
+		        ytplayer.cueVideoById(videoID);
+			}else if($('#simplePopUpWindow:visible').length > 0){
+			    simpleytPlayer = document.getElementById("simpleytPlayer"); 
+			    if(simpleytPlayer){ 
+			    	simpleytPlayer.addEventListener( "onStateChange", "handlePlayerStateChange" ); 
+			    } 
+	        }
+		 }
+	
+		  
+		//Functions for Simple Youtube Player (Moderator)
+		function loadSimpleYTPlayer() {
+			$("#infodiv").hide();  $("#errordiv").hide();
+			swfobject.removeSWF("simpleytPlayer");
+			var youtubeUrl = $("#youtubeurl").val();
+			videoID = youtube_parser(youtubeUrl);
+			if(videoID!=0 && videoID!=null){
+				$("#youtubeUrlDiv").slideToggle("fast");
+				$("#simplePopUpWindow").append('<div id="simplevideoDiv"/>');
+				var params = { allowScriptAccess: "always" };
+				var atts = { id: "simpleytPlayer" };
+				swfobject.embedSWF("http://www.youtube.com/v/" + videoID + "?listType=search&version=3&enablejsapi=1&playerapiid=player1", 
+		                      "simplevideoDiv", "480", "295", "9", null, null, params, atts);
+			}
+		}
 		
-		 /* Functions for Chromeless Youtube Player */
+		function handlePlayerStateChange(state) {
+	    	 currenttime = simpleytPlayer.getCurrentTime();
+	    	 if(state == -1){
+	    		 videoStatus = "load"; //unstarted
+	    	 }else if(state == 1){
+	    		 videoStatus = "play";
+	    	 }else if(state == 2){
+	    		 videoStatus = "pause";
+	    	 }else if(state == 0){
+	    		 videoStatus = "end";
+	    	 }
+	    	 //else if(state == 3){
+	    		// videoStatus = "buffer"; 
+	    	// }
+	    	 messageText = videoID +"&"+videoStatus+"&"+currenttime;
+			 firemonk9Ref_roomId.push({msg:messageText});
+	     }
 		
-		// The "main method" of this video load. Called when someone clicks "Run".
-		function loadChromeLessPlayer() {
+		//-----------------------------------------------------------------------
+		//Functions for Chromeless Youtube Player 
+		firemonk9Ref_roomId.on('child_added', function(snapshot) {
+			  if(snapshot.val() === null) {
+			   		alert('User firemonk9Ref_roomId does not exist.');
+			  }else {
+				    var msgReceived = snapshot.val().msg;
+				    var msgArray = msgReceived.split("&");
+				    videoID = msgArray[0];
+				    videoStatus = msgArray[1];
+				    currenttime = msgArray[2];
+				    
+				    if($('#simplePopUpWindow:visible').length<=0){
+				    	if(videoStatus == "load"){
+					    	loadpopup('chromeLessPopUpWindow');
+					    }else if(videoStatus == "play"){
+					    	playVideo(currenttime);
+					    }else if(videoStatus == "pause"){
+					    	pauseVideo();
+					    }else if(videoStatus == "end"){
+					    	ytplayer.stopVideo();
+					    }
+				    }
+			  }
+		});
+		
+	  function loadChromeLessPlayer() {
 			swfobject.removeSWF("chromeLessytPlayer");
 			$("#progressbar").remove();
 			$("#chromeLessPopUpWindow").append('<div id="videoDiv"/>');
@@ -90,109 +156,33 @@
 	        var atts = { id: "chromeLessytPlayer" };
 	        swfobject.embedSWF("http://www.youtube.com/apiplayer?version=3&enablejsapi=1&playerapiid=player1",
                            "videoDiv", "480", "295", "9", null, null, params, atts);
-     	}
-		
-		// This function is automatically called by the player once it loads
-	      function onYouTubePlayerReady(playerId) {
-	    	if ($('#chromeLessPopUpWindow:visible').length > 0){
-	    		$("#chromeLessPopUpWindow").append('<div id="progressbar" />');
-		        ytplayer = document.getElementById("chromeLessytPlayer");
-		        setInterval(updatePlayerInfo, 250);
-		        updatePlayerInfo();
-		        ytplayer.addEventListener("onStateChange", "onPlayerStateChange");
-		        ytplayer.addEventListener("onError", "onPlayerError");
-		        ytplayer.cueVideoById("VTXU_rdQbz8");
-			}
-	      }
-		 
-		/*function updateProgressBar(){
-			var val= 0;
-			var interval = setInterval(function(){
-				val = val+1;
-				$("#progressDiv").progressbar({value : val });
-				$("#percent").text(val + '%');
-				if(val == parseInt(ytplayer.getDuration())){
-					clearInterval(interval);
-				}
-			}, 500);
-		}*/
-		
-	   // Update a particular HTML element with a new value
-	      function updateHTML(elmId, value) {
-	        document.getElementById(elmId).innerHTML = value;
-	      }
-	      
-	      // This function is called when an error is thrown by the player
-	      function onPlayerError(errorCode) {
-	        alert("An error occured of type:" + errorCode);
-	      }
-	      
-	      // This function is called when the player changes state
-	      function onPlayerStateChange(newState) {
-	        updateHTML("playerState", newState);
-	      }
-	      
-	      // Display information about the current state of the player
-	      function updatePlayerInfo() {
-	        // Also check that at least one function exists since when IE unloads the
-	        // page, it will destroy the SWF before clearing the interval.
-	        if(ytplayer && ytplayer.getDuration) {
-	          updateHTML("videoDuration", ytplayer.getDuration());
-	          updateHTML("videoCurrentTime", ytplayer.getCurrentTime());
-	          updateHTML("bytesTotal", ytplayer.getVideoBytesTotal());
-	          updateHTML("startBytes", ytplayer.getVideoStartBytes());
-	          updateHTML("bytesLoaded", ytplayer.getVideoBytesLoaded());
-	          updateHTML("volume", ytplayer.getVolume());
-	          
-	          updateytplayerProgressBar();
-	        }
-	      }
-	      
-	      function updateytplayerProgressBar() {
+      }
+			
+      function updateytplayerProgressBar() {
+    	  if(ytplayer && ytplayer.getDuration) {
 	    	  var val= ytplayer.getCurrentTime();
 	    	  var val2 = ytplayer.getDuration();
 	    	  var val3 = val/val2*100;
 	    	  $("#progressbar").progressbar({ value: val3});
-	      }
-	      
-	      // Allow the user to set the volume from 0-100
-	      function setVideoVolume() {
-	        var volume = parseInt(document.getElementById("volumeSetting").value);
-	        if(isNaN(volume) || volume < 0 || volume > 100) {
-	          alert("Please enter a valid volume between 0 and 100.");
-	        }
-	        else if(ytplayer){
-	          ytplayer.setVolume(volume);
-	        }
-	      }
-	      
-	      function playVideo() {
-	        if (ytplayer) {
-	          ytplayer.playVideo();
-	        }
-	      }
-	      
-	      function pauseVideo() {
-	        if (ytplayer) {
-	          ytplayer.pauseVideo();
-	        }
-	      }
-	      
-	      function muteVideo() {
-	        if(ytplayer) {
-	          ytplayer.mute();
-	        }
-	      }
-	      
-	      function unMuteVideo() {
-	        if(ytplayer) {
-	          ytplayer.unMute();
-	        }
-	      }
-	      
-	      function toggleSearchDiv(){
-	    	  $("#youtubeUrlDiv").slideToggle("fast");
-	      }
+    	  }
+      }
+      
+      function playVideo(currenttime) {
+        if (ytplayer) {
+          ytplayer.seekTo(currenttime,true);
+          ytplayer.playVideo();
+        }
+      }
+      
+      function pauseVideo() {
+        if (ytplayer) {
+          ytplayer.pauseVideo();
+        }
+      }
+      
+      function toggleSearchDiv(){
+    	  $("#youtubeUrlDiv").slideToggle("fast");
+      }
 	      
     </script>
     
@@ -203,8 +193,6 @@
  
     <div id="backgroundPopup" class="backgroundfade"></div>
     <input type="button" value="Open Simplepopup !" onclick="loadpopup('simplePopUpWindow')"/> </br>
-    <input type="button" value="Open Chromelesspopup !" onclick="loadpopup('chromeLessPopUpWindow')"/>
-    
     
     <div id="simplePopUpWindow" style="display:none" class="youtubePopup">
     	<div id="showHideImgdiv">
@@ -230,23 +218,13 @@
 			</div>
 		</div>
     </div>
-       
     
     <div id="chromeLessPopUpWindow" style="display:none" class="youtubePopup">
     	<div class="close">
 			<a href="" onclick="disablePopup(this);return false;" style="display:block;float:right;margin-right:10px;">
 					<img src="images/pop-close-btn.png" alt="close"></a>
 		</div>
-		
     </div>
-    
-    <div id="chromeLessVideoInfo" style="display:none;">
-        <p>Player state: <span id="playerState">--</span></p>
-        <p>Current Time: <span id="videoCurrentTime">--:--</span> | Duration: <span id="videoDuration">--:--</span></p>
-        <p>Bytes Total: <span id="bytesTotal">--</span> | Start Bytes: <span id="startBytes">--</span> | Bytes Loaded: <span id="bytesLoaded">--</span></p>
-        <p>Controls: <a href="javascript:void(0);" onclick="playVideo();">Play</a> | <a href="javascript:void(0);" onclick="pauseVideo();">Pause</a> | <a href="javascript:void(0);" onclick="muteVideo();">Mute</a> | <a href="javascript:void(0);" onclick="unMuteVideo();">Unmute</a></p>
-        <p><input id="volumeSetting" type="text" size="3" />&nbsp;<a href="javascript:void(0)" onclick="setVideoVolume();">&lt;- Set Volume</a> | Volume: <span id="volume">--</span></p>
-      </div>
-    
+      
   </body>
 </html>
