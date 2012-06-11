@@ -1301,11 +1301,16 @@ ul.help-tabs-head li.active{
 
 .youtubePopup {
     width:480px;
-    height:354px;
     position:fixed;
     background:#FFFFFF;
     padding:10px;
     z-index:1000;
+}
+.simpleyoutubepopupheight {
+ 	height:354px;
+}
+.chromelessyoutubepopupheight {
+ 	height:318px;
 }
 .youtubePopup .close{
     float:right;
