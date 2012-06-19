@@ -9,8 +9,8 @@ var usersReadyToPlay = 0;
 A popup will be generated. And moderator has option to enter youtube url in a input text box */
 function loadpopup(objid){
 	resetAllFields();
-	$("#simplePopUpWindow").draggable();
-	$("#chromeLessPopUpWindow").draggable();
+	$("#moderatorPopupWindow").draggable();
+	$("#participantPopUpWindow").draggable();
 	$("#"+objid).center();
 	$("#backgroundPopup").css({  
   				"opacity": "0.7"  
@@ -18,7 +18,7 @@ function loadpopup(objid){
   	$("#backgroundPopup").fadeIn("slow");
   	$("#"+objid).fadeIn("fast");
 	$("#youtubeurl").focus();
-  	if(objid=='chromeLessPopUpWindow'){
+  	if(objid=='participantPopUpWindow'){
   		loadChromeLessPlayer();
   	}
 }
@@ -35,21 +35,23 @@ function disablePopup(){
 	swfobject.removeSWF("simpleytPlayer");
 	//var objid = $(obj).parent('div').parent('div').attr('id'); $("#"+objid).fadeOut("fast"); 
 	$("#backgroundPopup").fadeOut("slow");  
-	$("#simplePopUpWindow").fadeOut("fast");
-	firemonk9Ref_roomId.push({msg:"closePopup"});
+	$("#moderatorPopupWindow").fadeOut("fast");
+	if(numberOfParticipants > 1){
+		messagesRef.push({msg:"closePopup"});
+	}
 } 
 
 /* This function called when moderator clicks on load video button.
    Simple embed video will be loaded. */
 function loadSimpleYTPlayer() {
-	usersReadyToPlay = 0;
+	usersReadyToPlay = 1; 
 	$("#infodiv").hide();  $("#errordiv").hide();
 	swfobject.removeSWF("simpleytPlayer");
 	var youtubeUrl = $("#youtubeurl").val();
 	videoID = youtube_parser(youtubeUrl);
 	if(videoID!=0 && videoID!=null){
 		$("#youtubeUrlDiv").slideToggle("fast");
-		$("#simplePopUpWindow").append('<div id="simplevideoDiv"/>');
+		$("#moderatorPopupWindow").append('<div id="simplevideoDiv"/>');
 		var params = { allowScriptAccess: "always" };
 		var atts = { id: "simpleytPlayer" };
 		swfobject.embedSWF("http://www.youtube.com/v/" + videoID + "?listType=search&version=3&enablejsapi=1&playerapiid=player1", 
@@ -84,27 +86,28 @@ function handleSimplePlayerStateChange(state) {
 	 if(state == -1){
 		 moderatorVideoStatus = "load";  
 		 sendMessage = true;
-	 }else if(state == 1 && usersReadyToPlay == 0){
+	 }else if(state == 1 && usersReadyToPlay == 1 && numberOfParticipants > 1){
 		 moderatorVideoStatus = "startBuffering";
 		 sendMessage = true;
-	 }else if(state == 1 && usersReadyToPlay > 0){
+	 }else if(state == 1 && (usersReadyToPlay == numberOfParticipants || usersReadyToPlay>1)){
 		 moderatorVideoStatus = "play";
 		 sendMessage = true;
-	 }else if(state == 2 && usersReadyToPlay > 0){
+	 }else if(state == 2 && (usersReadyToPlay == numberOfParticipants || usersReadyToPlay>1)){
 		 moderatorVideoStatus = "pause";
 		 sendMessage = true;
 	 }else if(state == 0){
 		 moderatorVideoStatus = "end";
 		 sendMessage = true;
 	 }
-	 if(sendMessage){
+	 if(sendMessage && (numberOfParticipants > 1)){
 		 messageText = moderatorVideoStatus +"&"+videoID+"&"+currenttime;
-		 firemonk9Ref_roomId.push({msg:messageText});
+		 messagesRef.push({msg:messageText});
 		 if(moderatorVideoStatus == "startBuffering"){
 			 ytplayer1.pauseVideo();
 		 }
 	 }
 }
+
 
 function toggleSearchDiv(){
 	  $("#youtubeUrlDiv").slideToggle("fast");

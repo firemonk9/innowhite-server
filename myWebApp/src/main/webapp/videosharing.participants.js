@@ -7,7 +7,7 @@ var participantVideoStatus = "none";
 function loadChromeLessPlayer() {
 	swfobject.removeSWF("chromeLessytPlayer");
 	$("#progressbar").remove();
-	$("#chromeLessPopUpWindow").append('<div id="videoDiv"/>');
+	$("#participantPopUpWindow").append('<div id="videoDiv"/>');
 	var params = { allowScriptAccess: "always" };
 	var atts = { id: "chromeLessytPlayer" };
 	swfobject.embedSWF("http://www.youtube.com/apiplayer?version=3&enablejsapi=1&playerapiid=player1",
@@ -19,7 +19,7 @@ function disableChromelessPopup(){
 	swfobject.removeSWF("chromeLessytPlayer");
 	$("#progressbar").remove();
 	$("#backgroundPopup").fadeOut("slow");  
-	$("#chromeLessPopUpWindow").fadeOut("fast");
+	$("#participantPopUpWindow").fadeOut("fast");
 }
 
 /*This function is to update progress bar based on video duration. */
@@ -52,7 +52,7 @@ function pauseVideo() {
 function handleChromelessPlayerStateChange(state) {
 	if(state == 1 && participantVideoStatus == "startBuffering"){ 
 		messageText = "endBuffering";
-		firemonk9Ref_roomId.push({msg:messageText});
+		messagesRef.push({msg:messageText});
 		ytplayer.pauseVideo();
 	}
 }
