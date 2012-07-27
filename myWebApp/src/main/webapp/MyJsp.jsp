@@ -1,4 +1,3 @@
-
 <%@page import="com.innowhite.whiteboard.persistence.beans.ServerVO"%>
 <%@page import="com.innowhite.whiteboard.service.LoadBalancerService"%>
 <%@page import="com.innowhite.whiteboard.util.InnowhiteConstants"%>
@@ -174,7 +173,7 @@ function close_session(moderator){
 
    	// alert(" in close session .. take the user to another window.");
    	 allowConfirm=false;
-   	 var url="http://innowhite.com";
+   	 var url="http://learnsocial.com";
    	 if(moderator != null){
   			if(moderator == true){
   				window.open(url,"_self");
