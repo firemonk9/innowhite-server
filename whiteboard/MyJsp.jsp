@@ -1,4 +1,3 @@
-
 <%@page import="com.innowhite.whiteboard.util.InnowhiteConstants"%>
 <%@page import="java.util.Enumeration"%><!-- saved from url=(0014)about:internet -->
 <%@page import="java.util.StringTokenizer"%>
@@ -361,11 +360,11 @@ function plugin()
 		var platform = window.navigator.platform;
 		if(platform.indexOf('Win') != -1)
 		{
-			downloadElement.href = 'http://demo.innowhite.com/whiteboard/InnowhitePlugin.msi';
+			downloadElement.href = 'http://demo.innowhite.com/whiteboard/ScreenSharePlugin.msi';
 		}
 		if(platform.indexOf('Mac') != -1)
 		{
-			downloadElement.href = 'http://demo.innowhite.com/whiteboard/InnowhitePlugin.pkg';
+			downloadElement.href = 'http://demo.innowhite.com/whiteboard/ScreenSharePlugin.pkg';
 		}
 		if(platform.indexOf('Mac') != -1 && window.navigator.userAgent.search(/Chrome/) != -1)
 		{
@@ -463,7 +462,7 @@ if ( hasProductInstall && !hasRequestedVersion ) {
 <div id="downloadPlugin" style="display: none;">
 
  	<h3>To share your screen, a plugin download is required.
- 	Please click on the "download now" button to start download of Innowhite ScreenShare plugin.</h3>
+ 	Please click on the "download now" button to start downloading the ScreenShare plugin.</h3>
   	<a target="_blank" href="" onmousedown="detectPluginSystem(this);">
    	<img src="/whiteboard/history/download.png" width="30%" style="border:none;position: absolute; bottom: 10px; left: 50%; margin-left: -60px;"/>
   	</a>
@@ -480,7 +479,7 @@ if ( hasProductInstall && !hasRequestedVersion ) {
  	</div>
  	<div id="pluginInstalled" style="display: none;">
 
-		Now You can start sharing your screen during Innowhite meting sessions. Enjoy!
+		Now You can start sharing your screen during the meeting sessions. Enjoy!
 	</div>
 	 <div id="reloadPage" style="display: none;">
 		<h4>We could not load the plugin dynamically</h4>
