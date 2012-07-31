@@ -1,3 +1,4 @@
+
 <%@page import="com.innowhite.whiteboard.persistence.beans.ServerVO"%>
 <%@page import="com.innowhite.whiteboard.service.LoadBalancerService"%>
 <%@page import="com.innowhite.whiteboard.util.InnowhiteConstants"%>
@@ -132,7 +133,7 @@ Learn more about Flex at http://flex.org
 <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
 <title></title>
 
-<script src="http://jquery.com/src/jquery-latest.pack.js"></script>
+<script src="http://code.jquery.com/jquery-latest.js"></script>
 <script src="AC_OETags.js" language="javascript"></script>
 <script type="text/javascript" src="http://download.skype.com/share/skypebuttons/js/skypeCheck.js"></script>
 
@@ -419,10 +420,10 @@ function detectPluginSystem(downloadElement){
 
 	var platform = window.navigator.platform;
 	if(platform.indexOf('Win') != -1){
-		downloadElement.href = 'https://innowhite.com/InnowhitePlugin.msi';
+		downloadElement.href = 'https://innowhite.com/ScreenSharePlugin.msi';
 	}
 	if(platform.indexOf('Mac') != -1){
-		downloadElement.href = 'https://innowhite.com/InnowhitePlugin.pkg';
+		downloadElement.href = 'https://innowhite.com/ScreenSharePlugin.pkg';
 	}
 	if(platform.indexOf('Mac') != -1 && (( window.navigator.userAgent.search(/Chrome/) != -1 ) ||  (window.navigator.userAgent.search(/Safari/) != -1 ))){
 		setTimeout('showReloadPage()',10000);
@@ -536,7 +537,7 @@ function getCountryBucket(cntrCode){
 						<img src="images/pop-close-btn.png" alt="close"></a>
 			</div>
 			<div class="pop-heading1">Screen Share </div>
-			<br><br>Internet Explorer is not supported to share the screen. Please use Firefox or Google Chrome for sharing Screen.
+			<br><br>Internet Explorer is not supported for screen sharing. Please use Firefox or Google Chrome for sharing Screen.
 	</div>
 
 	<div id="reloadPage" class="popup-audio" style="display: none;">
@@ -563,7 +564,7 @@ function getCountryBucket(cntrCode){
 						<img src="images/ss.png" alt="audio" width="130" height="85" >
 					</div>
 					<div class="text-heading">To share your screen, a plugin download is required.
-					Please click on The "Download" button to start download of Innowhite ScreenShare plugin. </div>
+					Please click on The "Download" button to start downloading the ScreenShare plugin. </div>
 					<div class="download-button">
 						<a target="_blank" href="" onmousedown="detectPluginSystem(this);">
 						<img src="images/button-download.png" /></a>

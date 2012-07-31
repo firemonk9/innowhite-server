@@ -279,4 +279,9 @@
     <url-pattern>/Polling</url-pattern>
   </servlet-mapping>
   
+   <error-page>
+	<exception-type>404</exception-type>
+	<location>/404.html</location>
+   </error-page>
+     
 </web-app>

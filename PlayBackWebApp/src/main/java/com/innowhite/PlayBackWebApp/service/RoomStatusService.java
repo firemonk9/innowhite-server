@@ -77,9 +77,8 @@ public class RoomStatusService {
 	    String roomId = arr[1];
 	    String status = arr[2];
 	    String time = arr[3];
-
+	    
 	    roomUserDataDao.updateUserRoomStatus(userId, status, roomId, time);
-
 	} catch (Exception e) {
 	    e.printStackTrace();
 	}
