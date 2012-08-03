@@ -2,6 +2,7 @@ package com.innowhite.PlayBackWebApp.dao;
 
 import java.util.Date;
 
+import org.hibernate.Query;
 import org.hibernate.SessionFactory;
 import org.hibernate.classic.Session;
 import org.slf4j.Logger;
@@ -94,5 +95,24 @@ public class RoomDataDao {
 		// /log.debug("");
 
 	}
+	
+	@Transactional
+    public Date getRoomEndDate(String roomId) {
+    	Date endDateObj = null;
+		try {
+				log.debug("Entered getRoomEndDate");
+				Session session = sessionFactory.getCurrentSession();
+				Query query = session.createSQLQuery("select end_date from room where room_id ='"+roomId+"' ");
+				endDateObj = (Date)(query.uniqueResult());
+				log.debug("Inside getRoomEndDate with endDateObj :" + endDateObj);
+				   
+				session.clear();
+				session.flush();
+		} catch (Exception e) {
+			log.error(e.getMessage(),e);
+		}
+		return endDateObj;	
+		
+	 }
 
 }

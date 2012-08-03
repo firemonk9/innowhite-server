@@ -1,12 +1,13 @@
 package com.innowhite.PlayBackWebApp.service;
 
+import java.util.ArrayList;
+import java.util.List;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
 import com.innowhite.PlayBackWebApp.dao.CallBackUrlsDao;
 import com.innowhite.PlayBackWebApp.dao.RoomDataDao;
 import com.innowhite.PlayBackWebApp.dao.RoomUserDataDao;
-import com.innowhite.PlayBackWebApp.model.CallBackUrlsData;
 
 public class RoomStatusService {
 
@@ -29,6 +30,8 @@ public class RoomStatusService {
     public void setRoomUserDataDao(RoomUserDataDao roomUserDataDao) {
 	this.roomUserDataDao = roomUserDataDao;
     }
+    
+    public static List<String> closedRoomIdsList = new ArrayList<String>();
 
     public void saveRoomStatus(String m) {
 	try {
@@ -45,19 +48,19 @@ public class RoomStatusService {
 
 	    // check if the room is stopped, invoke stop service.
 	    if (m != null && m.contains("_STOPPED_")) {
-
-		CallBackUrlsData callBackUrlsData = callBackUrlsDao.getURLData(roomId);
-
-		
-		String url = null;
-		if(callBackUrlsData != null){
-		    url=callBackUrlsData.getClose_room_url();
-		}else{
-		    
-		    log.warn("Not able to get URL from the data base for room ::  "+roomId);
-		}
-		// invoke remote http service to notify the room close.
-		InvokeRemoteHttpService.roomCloseService(roomId,url);
+	    	closedRoomIdsList.add(roomId);	    
+			/*CallBackUrlsData callBackUrlsData = callBackUrlsDao.getURLData(roomId);
+	
+			
+			String url = null;
+			if(callBackUrlsData != null){
+			    url=callBackUrlsData.getClose_room_url();
+			}else{
+			    
+			    log.warn("Not able to get URL from the data base for room ::  "+roomId);
+			}
+			// invoke remote http service to notify the room close.
+			InvokeRemoteHttpService.roomCloseService(roomId,url);*/
 
 	    }
 	} catch (Exception e) {

@@ -112,5 +112,11 @@
 		<property name="pollingDao" ref="pollingDao" />
 	</bean>
 	
+	<bean id="monitorRoomCloseService" name="monitorRoomCloseService"
+		class="com.innowhite.PlayBackWebApp.service.MonitorRoomCloseService">
+		<property name="callBackUrlsDao" ref="callBackUrlsDao" />
+		<property name="roomDataDao" ref="roomDataDao" />
+	</bean>
+	
 	
 </beans>
