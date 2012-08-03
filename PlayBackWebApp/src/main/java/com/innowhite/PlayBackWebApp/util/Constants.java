@@ -17,6 +17,6 @@ public class Constants {
     public static final String SINGLE_ANSWER_QUESTION ="singleanswer";
     public static final String MULTIPLE_ANSWER_QUESTION = "multipleanswers";
     
-    public static final int MONITOR_ROOM_CLOSE_FREQ = 20*60*1000;
+    public static final int MONITOR_ROOM_CLOSE_FREQ = 1*60*1000;
     
 }
