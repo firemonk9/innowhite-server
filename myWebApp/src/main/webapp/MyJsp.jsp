@@ -1,4 +1,3 @@
-
 <%@page import="com.innowhite.whiteboard.persistence.beans.ServerVO"%>
 <%@page import="com.innowhite.whiteboard.service.LoadBalancerService"%>
 <%@page import="com.innowhite.whiteboard.util.InnowhiteConstants"%>
@@ -420,10 +419,10 @@ function detectPluginSystem(downloadElement){
 
 	var platform = window.navigator.platform;
 	if(platform.indexOf('Win') != -1){
-		downloadElement.href = 'https://innowhite.com/ScreenSharePlugin.msi';
+		downloadElement.href = 'https://learnsocial.com/ScreenSharePlugin.msi';
 	}
 	if(platform.indexOf('Mac') != -1){
-		downloadElement.href = 'https://innowhite.com/ScreenSharePlugin.pkg';
+		downloadElement.href = 'https://learnsocial.com/ScreenSharePlugin.pkg';
 	}
 	if(platform.indexOf('Mac') != -1 && (( window.navigator.userAgent.search(/Chrome/) != -1 ) ||  (window.navigator.userAgent.search(/Safari/) != -1 ))){
 		setTimeout('showReloadPage()',10000);
