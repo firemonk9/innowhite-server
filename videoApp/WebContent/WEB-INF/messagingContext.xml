@@ -38,9 +38,6 @@
 
 	</bean>
 
-
-
-
 	<bean name="streamTopicListener"
 		class="com.innowhite.red5.stream.messaging.VideoStreamNameListener" />
 
@@ -48,9 +45,5 @@
 		cache="none" destination-type="topic">
 		<jms:listener destination="Innowhite.videoSecurity" ref="streamTopicListener" />
 	</jms:listener-container>
-
-
-
-
 
 </beans>

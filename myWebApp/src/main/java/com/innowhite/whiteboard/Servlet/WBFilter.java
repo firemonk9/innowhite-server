@@ -94,7 +94,7 @@ public class WBFilter implements Filter {
 		bValidRequest = true;
 	    } else {
 		bValidRequest = false;
-		response.sendError(response.SC_UNAUTHORIZED, "NOT AUTHROIZED.");
+		response.sendRedirect("http://learnsocial.com/404.html");
 	    }
 	}
 	/*

@@ -5,7 +5,7 @@
     http://www.springframework.org/schema/lang http://www.springframework.org/schema/lang/spring-lang-3.0.xsd">
 
 
-	<import resource="messagingContext.xml" />
+	<!-- <import resource="messagingContext.xml" /> -->
 
 	<bean id="placeholderConfig"
 		class="org.springframework.beans.factory.config.PropertyPlaceholderConfigurer">
@@ -24,16 +24,14 @@
 	</bean>
 
 
-	<bean id="videoService.service" class="com.innowhite.red5.stream.VideoService">
-
-	
+	<bean id="deskshare.service" class="com.innowhite.red5.stream.VideoService">
 
 	</bean>
 
 
 	<bean id="web.handler" class="com.innowhite.red5.stream.Application">
 
-		<property name="messagingService" ref="messagingService" />
+		<!-- <property name="messagingService" ref="messagingService" />  -->
 		<property name="recordPath" value="${recordPath}" />
 		<property name="enableSecurity" value="{enableSecurity}" />
 
@@ -78,17 +76,17 @@
 	</bean>
 
 
-	<bean id="messagingService" class="com.innowhite.red5.stream.messaging.MessagingService">
+	<!-- <bean id="messagingService" class="com.innowhite.red5.stream.messaging.MessagingService">
 		<property name="videoMessageService">
 			<ref bean="videoMessageService" />
 		</property>
-	</bean>
+	</bean> -->
 
 
 	<bean id="streamFilenameGenerator" class="com.innowhite.red5.stream.CustomFilenameGenerator">
 		<property name="recordPath" value="${recordPath}" />
 		<property name="playbackPath" value="${playbackPath}" />
-		<property name="messagingService" ref="messagingService" />
+	<!-- <property name="messagingService" ref="messagingService" /> -->
 	</bean>
 
 	<!-- <bean id="streamFilenameGenerator" -->

@@ -5,11 +5,11 @@
    xsi:schemaLocation="http://java.sun.com/xml/ns/j2ee http://java.sun.com/xml/ns/j2ee/web-app_2_4.xsd" 
    version="2.4"> 
  
-    <display-name>VideoApp</display-name>
+    <display-name>deskShare</display-name>
 	
 	<context-param>
 		<param-name>webAppRootKey</param-name>
-		<param-value>/VideoApp</param-value>
+		<param-value>/deskShare</param-value>
 	</context-param>
  
     <listener>

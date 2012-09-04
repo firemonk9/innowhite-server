@@ -1,0 +1,44 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<configuration>
+
+	<contextName>deskShare</contextName>
+
+	<jmxConfigurator contextName="deskShare" />
+
+
+	<appender name="console" class="org.apache.log4j.ConsoleAppender">
+		<param name="Target" value="System.out" />
+		<layout class="org.apache.log4j.PatternLayout">
+			<param name="ConversionPattern" value="%-5p: %c - %m%n" />
+		</layout>
+	</appender>
+
+	<appender name="OFLA" class="ch.qos.logback.core.FileAppender">
+		<File>/usr/share/red5/log/deskshare.log</File>
+		<!-- <File>/opt/InnowhiteData/logs/deskshare.log</File> -->
+		<Append>false</Append>
+		<Encoding>UTF-8</Encoding>
+		<BufferedIO>false</BufferedIO>
+		<ImmediateFlush>true</ImmediateFlush>
+		<layout class="ch.qos.logback.classic.PatternLayout">
+			<Pattern>
+				%date [%thread] %-5level %logger{35} - %msg%n
+			</Pattern>
+		</layout>
+	</appender>
+	<!-- <root> -->
+	<!-- <appender-ref ref="OFLA" /> -->
+	<!-- </root> -->
+	<!-- <logger name="org.red5.demos.oflaDemo"> -->
+	<!-- <level value="DEBUG" /> -->
+	<!-- </logger> -->
+
+
+	<root>
+		<level value="DEBUG" />
+		<appender-ref ref="OFLA" />
+		<appender-ref ref="console" />
+
+	</root>
+
+</configuration>
